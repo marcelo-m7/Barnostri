@@ -1,37 +1,8 @@
 serviceAccountKey.json
 # Node.js
 node_modules/
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-package-lock.json
-.pnpm-debug.log*
-
-# Optional: VS Code settings
-.vscode/
-
-# Optional: OS files
-.DS_Store
-Thumbs.db
 
 # Optional: environment files
 .env
 .env.local
 .env.*.local
-
-# Optional: build output
-dist/
-build/
-out/
-
-# Optional: coverage results
-coverage/
-
-# Optional: logs
-logs/
-*.log
-
-# Optional: cache
-.cache/
-.nyc_output/
