@@ -1,0 +1,23 @@
+{
+  "name": "barnostri",
+  "version": "1.0.0",
+  "description": "Sistema de pedidos para restaurantes/bares/quiosques.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcelo-m7/Barnostri.git"
+  },
+  "author": "Moninhay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcelo-m7/Barnostri/issues"
+  },
+  "homepage": "https://github.com/marcelo-m7/Barnostri#readme",
+  "dependencies": {
+    "firebase": "^11.10.0",
+    "firebase-admin": "^13.4.0"
+  }
+}

@@ -1,0 +1,60 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Usuários
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Restaurantes
+    match /restaurants/{restaurantId} {
+      allow read: if true;
+
+      // Apenas o dono pode escrever no restaurante
+      allow write: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'dono';
+
+      // Mesas do restaurante
+      match /tables/{tableId} {
+        allow read: if true;
+        allow write: if request.auth != null &&
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'dono';
+      }
+
+      // Cardápio do restaurante
+      match /menu/{itemId} {
+        allow read: if true;
+        allow write: if request.auth != null &&
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'dono';
+      }
+
+      // Pedidos
+      match /orders/{orderId} {
+        // Cliente pode criar pedidos
+        allow create: if request.auth != null &&
+          request.resource.data.userId == request.auth.uid;
+
+        // Cliente pode ler seus próprios pedidos
+        allow read: if request.auth != null &&
+          resource.data.userId == request.auth.uid;
+
+        // Garçom e dono podem ler e atualizar pedidos
+        allow read, update: if request.auth != null &&
+          (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'garcom' ||
+           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'dono');
+
+        // Ninguém pode deletar
+        allow delete: if false;
+      }
+    }
+
+    // Notificações
+    match /notifications/{notificationId} {
+      allow read: if request.auth != null &&
+        resource.data.userId == request.auth.uid;
+      allow write: if false;
+    }
+  }
+}
