@@ -333,15 +333,6 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 
-                const SizedBox(height: 48),
-                
-                // Footer
-                Text(
-                  '🏖️ Praia • Sabor • Tradição',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
-                  ),
-                ),
                       ],
                     ),
                   ),
