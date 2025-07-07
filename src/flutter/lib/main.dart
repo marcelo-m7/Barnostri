@@ -101,7 +101,42 @@ class HomePage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 
-                const SizedBox(height: 48),
+                const SizedBox(height: 24),
+                
+                // Configuration status banner
+                if (!SupabaseConfig.isConfigured)
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Colors.orange.withOpacity(0.3),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: Colors.orange.shade100,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            'Modo demonstração - Configure as credenciais do Supabase para usar recursos completos',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Colors.orange.shade100,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                
+                const SizedBox(height: 24),
                 
                 // Customer section
                 Container(

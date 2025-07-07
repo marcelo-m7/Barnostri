@@ -3,6 +3,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:provider/provider.dart';
 import '../theme.dart';
 import '../services/order_service.dart';
+import '../l10n/generated/app_localizations.dart';
 import 'menu_page.dart';
 
 class QrScannerPage extends StatefulWidget {
@@ -26,6 +27,8 @@ class _QrScannerPageState extends State<QrScannerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -33,7 +36,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Escanear Mesa',
+          l10n.scanQRTitle,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color: Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.bold,

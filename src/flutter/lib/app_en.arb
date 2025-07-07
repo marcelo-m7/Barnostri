@@ -1,0 +1,461 @@
+{
+  "@@locale": "en",
+  "appTitle": "Barnostri",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "welcomeMessage": "Welcome to Barnostri Beach Kiosk",
+  "@welcomeMessage": {
+    "description": "Welcome message on the home screen"
+  },
+  "scanQRCode": "Scan QR Code",
+  "@scanQRCode": {
+    "description": "Button to scan QR code"
+  },
+  "scanQRCodeDescription": "Scan the QR code on your table to start ordering",
+  "@scanQRCodeDescription": {
+    "description": "Description for QR code scanning"
+  },
+  "adminAccess": "Admin Access",
+  "@adminAccess": {
+    "description": "Admin access button"
+  },
+  "adminAccessDescription": "Access administrative functions",
+  "@adminAccessDescription": {
+    "description": "Description for admin access"
+  },
+  "menu": "Menu",
+  "@menu": {
+    "description": "Menu label"
+  },
+  "cart": "Cart",
+  "@cart": {
+    "description": "Cart label"
+  },
+  "orders": "Orders",
+  "@orders": {
+    "description": "Orders label"
+  },
+  "tables": "Tables",
+  "@tables": {
+    "description": "Tables label"
+  },
+  "categories": "Categories",
+  "@categories": {
+    "description": "Categories label"
+  },
+  "items": "Items",
+  "@items": {
+    "description": "Items label"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Search label"
+  },
+  "searchMenuItems": "Search menu items...",
+  "@searchMenuItems": {
+    "description": "Search placeholder text"
+  },
+  "addToCart": "Add to Cart",
+  "@addToCart": {
+    "description": "Add to cart button"
+  },
+  "quantity": "Quantity",
+  "@quantity": {
+    "description": "Quantity label"
+  },
+  "observations": "Observations",
+  "@observations": {
+    "description": "Observations label"
+  },
+  "observationsHint": "Special requests or notes...",
+  "@observationsHint": {
+    "description": "Observations hint text"
+  },
+  "price": "Price",
+  "@price": {
+    "description": "Price label"
+  },
+  "total": "Total",
+  "@total": {
+    "description": "Total label"
+  },
+  "subtotal": "Subtotal",
+  "@subtotal": {
+    "description": "Subtotal label"
+  },
+  "emptyCart": "Your cart is empty",
+  "@emptyCart": {
+    "description": "Empty cart message"
+  },
+  "emptyCartDescription": "Add items from the menu to start your order",
+  "@emptyCartDescription": {
+    "description": "Empty cart description"
+  },
+  "startOrdering": "Start Ordering",
+  "@startOrdering": {
+    "description": "Start ordering button"
+  },
+  "paymentMethod": "Payment Method",
+  "@paymentMethod": {
+    "description": "Payment method label"
+  },
+  "pix": "Pix",
+  "@pix": {
+    "description": "Pix payment method"
+  },
+  "card": "Card",
+  "@card": {
+    "description": "Card payment method"
+  },
+  "cash": "Cash",
+  "@cash": {
+    "description": "Cash payment method"
+  },
+  "checkout": "Checkout",
+  "@checkout": {
+    "description": "Checkout button"
+  },
+  "processingOrder": "Processing Order...",
+  "@processingOrder": {
+    "description": "Processing order message"
+  },
+  "orderPlaced": "Order Placed!",
+  "@orderPlaced": {
+    "description": "Order placed success message"
+  },
+  "orderPlacedDescription": "Your order has been successfully placed and is being prepared",
+  "@orderPlacedDescription": {
+    "description": "Order placed success description"
+  },
+  "orderNumber": "Order Number",
+  "@orderNumber": {
+    "description": "Order number label"
+  },
+  "trackOrder": "Track Order",
+  "@trackOrder": {
+    "description": "Track order button"
+  },
+  "orderReceived": "Order Received",
+  "@orderReceived": {
+    "description": "Order received status"
+  },
+  "inPreparation": "In Preparation",
+  "@inPreparation": {
+    "description": "In preparation status"
+  },
+  "ready": "Ready",
+  "@ready": {
+    "description": "Ready status"
+  },
+  "delivered": "Delivered",
+  "@delivered": {
+    "description": "Delivered status"
+  },
+  "cancelled": "Cancelled",
+  "@cancelled": {
+    "description": "Cancelled status"
+  },
+  "tableNumber": "Table {number}",
+  "@tableNumber": {
+    "description": "Table number display",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "itemsCount": "{count} items",
+  "@itemsCount": {
+    "description": "Items count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "admin": "Admin",
+  "@admin": {
+    "description": "Admin label"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email label"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password label"
+  },
+  "emailHint": "Enter your email",
+  "@emailHint": {
+    "description": "Email input hint"
+  },
+  "passwordHint": "Enter your password",
+  "@passwordHint": {
+    "description": "Password input hint"
+  },
+  "invalidEmail": "Please enter a valid email",
+  "@invalidEmail": {
+    "description": "Invalid email error"
+  },
+  "passwordRequired": "Password is required",
+  "@passwordRequired": {
+    "description": "Password required error"
+  },
+  "loginError": "Login failed. Please check your credentials.",
+  "@loginError": {
+    "description": "Login error message"
+  },
+  "demoMode": "Demo Mode",
+  "@demoMode": {
+    "description": "Demo mode label"
+  },
+  "demoCredentials": "Use: admin@barnostri.com / admin123",
+  "@demoCredentials": {
+    "description": "Demo credentials text"
+  },
+  "addItem": "Add Item",
+  "@addItem": {
+    "description": "Add item button"
+  },
+  "editItem": "Edit Item",
+  "@editItem": {
+    "description": "Edit item button"
+  },
+  "deleteItem": "Delete Item",
+  "@deleteItem": {
+    "description": "Delete item button"
+  },
+  "addCategory": "Add Category",
+  "@addCategory": {
+    "description": "Add category button"
+  },
+  "editCategory": "Edit Category",
+  "@editCategory": {
+    "description": "Edit category button"
+  },
+  "addTable": "Add Table",
+  "@addTable": {
+    "description": "Add table button"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "Name label"
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Description label"
+  },
+  "category": "Category",
+  "@category": {
+    "description": "Category label"
+  },
+  "available": "Available",
+  "@available": {
+    "description": "Available label"
+  },
+  "unavailable": "Unavailable",
+  "@unavailable": {
+    "description": "Unavailable label"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Error label"
+  },
+  "success": "Success",
+  "@success": {
+    "description": "Success label"
+  },
+  "warning": "Warning",
+  "@warning": {
+    "description": "Warning label"
+  },
+  "close": "Close",
+  "@close": {
+    "description": "Close button"
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "Remove button"
+  },
+  "update": "Update",
+  "@update": {
+    "description": "Update button"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Back button"
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Next button"
+  },
+  "previous": "Previous",
+  "@previous": {
+    "description": "Previous button"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading message"
+  },
+  "noItemsFound": "No items found",
+  "@noItemsFound": {
+    "description": "No items found message"
+  },
+  "tryAgain": "Try Again",
+  "@tryAgain": {
+    "description": "Try again button"
+  },
+  "scanQRTitle": "Scan QR Code",
+  "@scanQRTitle": {
+    "description": "QR scan page title"
+  },
+  "scanQRInstructions": "Position the QR code within the frame to scan",
+  "@scanQRInstructions": {
+    "description": "QR scan instructions"
+  },
+  "manualEntry": "Manual Entry",
+  "@manualEntry": {
+    "description": "Manual entry button"
+  },
+  "manualEntryDescription": "Enter table number manually",
+  "@manualEntryDescription": {
+    "description": "Manual entry description"
+  },
+  "enterTableNumber": "Enter Table Number",
+  "@enterTableNumber": {
+    "description": "Enter table number dialog title"
+  },
+  "tableNumberHint": "Enter table number (e.g., 1, 2, 3...)",
+  "@tableNumberHint": {
+    "description": "Table number input hint"
+  },
+  "invalidTableNumber": "Invalid table number",
+  "@invalidTableNumber": {
+    "description": "Invalid table number error"
+  },
+  "orderStatus": "Order Status",
+  "@orderStatus": {
+    "description": "Order status label"
+  },
+  "orderDetails": "Order Details",
+  "@orderDetails": {
+    "description": "Order details label"
+  },
+  "orderTime": "Order Time",
+  "@orderTime": {
+    "description": "Order time label"
+  },
+  "paymentStatus": "Payment Status",
+  "@paymentStatus": {
+    "description": "Payment status label"
+  },
+  "paid": "Paid",
+  "@paid": {
+    "description": "Paid status"
+  },
+  "unpaid": "Unpaid",
+  "@unpaid": {
+    "description": "Unpaid status"
+  },
+  "pending": "Pending",
+  "@pending": {
+    "description": "Pending status"
+  },
+  "approved": "Approved",
+  "@approved": {
+    "description": "Approved status"
+  },
+  "updateStatus": "Update Status",
+  "@updateStatus": {
+    "description": "Update status button"
+  },
+  "markAsReady": "Mark as Ready",
+  "@markAsReady": {
+    "description": "Mark as ready button"
+  },
+  "markAsDelivered": "Mark as Delivered",
+  "@markAsDelivered": {
+    "description": "Mark as delivered button"
+  },
+  "orderUpdated": "Order status updated successfully",
+  "@orderUpdated": {
+    "description": "Order updated success message"
+  },
+  "orderUpdateError": "Failed to update order status",
+  "@orderUpdateError": {
+    "description": "Order update error message"
+  },
+  "confirmDelete": "Are you sure you want to delete this item?",
+  "@confirmDelete": {
+    "description": "Delete confirmation message"
+  },
+  "deleteConfirmation": "Delete Confirmation",
+  "@deleteConfirmation": {
+    "description": "Delete confirmation dialog title"
+  },
+  "itemDeleted": "Item deleted successfully",
+  "@itemDeleted": {
+    "description": "Item deleted success message"
+  },
+  "itemAdded": "Item added successfully",
+  "@itemAdded": {
+    "description": "Item added success message"
+  },
+  "itemUpdated": "Item updated successfully",
+  "@itemUpdated": {
+    "description": "Item updated success message"
+  },
+  "categoryAdded": "Category added successfully",
+  "@categoryAdded": {
+    "description": "Category added success message"
+  },
+  "tableAdded": "Table added successfully",
+  "@tableAdded": {
+    "description": "Table added success message"
+  },
+  "fillAllFields": "Please fill all required fields",
+  "@fillAllFields": {
+    "description": "Fill all fields error message"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language label"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings label"
+  },
+  "portuguese": "Portuguese",
+  "@portuguese": {
+    "description": "Portuguese language"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language"
+  },
+  "french": "French",
+  "@french": {
+    "description": "French language"
+  }
+}
