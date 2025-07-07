@@ -1,4 +1,7 @@
 # Barnostri
 
-Este projeto utiliza um monorepo com Flutter e Supabase.
-Consulte `docs/README.md` para detalhes da estrutura.
+Este repositório utiliza um **monorepo** contendo o aplicativo Flutter e a
+configuração do Supabase. O pacote `packages/shared_models` concentra modelos e
+utilidades compartilhadas entre módulos de cliente e administrador.
+
+Consulte `docs/README.md` para uma visão geral da estrutura.

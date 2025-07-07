@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../core/modelos/app_models.dart';
+import 'package:shared_models/shared_models.dart';
 import '../core/tema/theme.dart';
 import '../core/servicos/order_service.dart';
 
