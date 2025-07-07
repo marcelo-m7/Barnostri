@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/app_models.dart';
-import '../services/order_service.dart';
-import '../services/menu_service.dart';
-import '../supabase/supabase_config.dart';
-import '../widgets/order_status_widget.dart';
-import '../theme.dart';
+import '../../core/modelos/app_models.dart';
+import '../../core/servicos/order_service.dart';
+import '../../core/servicos/menu_service.dart';
+import '../../core/servicos/supabase/supabase_config.dart';
+import '../../widgets/order_status_widget.dart';
+import '../../core/tema/theme.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/app_models.dart';
-import '../services/order_service.dart';
-import '../theme.dart';
-import '../widgets/order_status_widget.dart';
+import '../../../core/modelos/app_models.dart';
+import '../../../core/servicos/order_service.dart';
+import '../../../core/tema/theme.dart';
+import '../../../widgets/order_status_widget.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
