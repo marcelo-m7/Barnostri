@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_models/shared_models.dart';
-import 'supabase/supabase_config.dart';
 
 class OrderService extends ChangeNotifier {
   static final OrderService _instance = OrderService._internal();
