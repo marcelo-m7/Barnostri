@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'core/tema/theme.dart';
-import 'core/servicos/supabase/supabase_config.dart';
+import 'package:shared_models/shared_models.dart';
 import 'core/servicos/order_service.dart';
 import 'core/servicos/menu_service.dart';
 import 'core/servicos/language_service.dart';

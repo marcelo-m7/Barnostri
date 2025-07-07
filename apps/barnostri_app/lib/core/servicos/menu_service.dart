@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../modelos/app_models.dart';
-import 'supabase/supabase_config.dart';
+import 'package:shared_models/shared_models.dart';
 
 class MenuService extends ChangeNotifier {
   static final MenuService _instance = MenuService._internal();

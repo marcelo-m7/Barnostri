@@ -24,6 +24,8 @@ dependencies:
   provider: 6.1.2
   http: '>=1.0.0'
   uuid: '>=3.0.0'
+  shared_models:
+    path: ../../packages/shared_models
 
 dev_dependencies:
   flutter_test:
