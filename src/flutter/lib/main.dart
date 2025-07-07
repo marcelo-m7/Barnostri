@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'theme.dart';
 import 'supabase/supabase_config.dart';
 import 'services/order_service.dart';
 import 'services/menu_service.dart';
+import 'services/language_service.dart';
 import 'pages/qr_scanner_page.dart';
 import 'pages/admin_page.dart';
+import 'widgets/language_selector.dart';
+import 'l10n/generated/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,14 +18,17 @@ void main() async {
   // Initialize Supabase
   await SupabaseConfig.initialize();
   
-  // Set Portuguese locale
-  Intl.defaultLocale = 'pt_BR';
+  // Initialize Language Service
+  final languageService = LanguageService();
+  await languageService.initialize();
   
-  runApp(const BarnostriApp());
+  runApp(BarnostriApp(languageService: languageService));
 }
 
 class BarnostriApp extends StatelessWidget {
-  const BarnostriApp({super.key});
+  final LanguageService languageService;
+  
+  const BarnostriApp({super.key, required this.languageService});
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +36,35 @@ class BarnostriApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => OrderService()),
         ChangeNotifierProvider(create: (_) => MenuService()),
+        ChangeNotifierProvider.value(value: languageService),
       ],
-      child: MaterialApp(
-        title: 'Barnostri - Sabores da Praia',
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        themeMode: ThemeMode.system,
-        home: const HomePage(),
-        debugShowCheckedModeBanner: false,
+      child: Consumer<LanguageService>(
+        builder: (context, languageService, child) {
+          return MaterialApp(
+            title: 'Barnostri',
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: ThemeMode.system,
+            home: const HomePage(),
+            debugShowCheckedModeBanner: false,
+            // Localization configuration
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: LanguageService.supportedLocales,
+            locale: languageService.currentLocale,
+            // Fallback locale resolution
+            localeResolutionCallback: (deviceLocale, supportedLocales) {
+              if (deviceLocale != null) {
+                return languageService.getBestMatchingLocale([deviceLocale]);
+              }
+              return LanguageService.defaultLocale;
+            },
+          );
+        },
       ),
     );
   }
@@ -47,10 +75,49 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
-        child: Container(
+        child: Column(
+          children: [
+            // Demo Mode Banner
+            if (!SupabaseConfig.isConfigured)
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withOpacity(0.1),
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.orange.withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      color: Colors.orange,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '${l10n.demoMode} - ${l10n.demoCredentials}',
+                      style: TextStyle(
+                        color: Colors.orange.shade800,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            Expanded(
+              child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -64,8 +131,17 @@ class HomePage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Language Selector
+                Align(
+                  alignment: Alignment.topRight,
+                  child: LanguageSelectorButton(),
+                ),
+                const SizedBox(height: 24),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                 // Logo
                 Container(
                   padding: const EdgeInsets.all(32),
@@ -84,7 +160,7 @@ class HomePage extends StatelessWidget {
                 
                 // Title
                 Text(
-                  'Barnostri',
+                  l10n.appTitle,
                   style: Theme.of(context).textTheme.displayMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.bold,
@@ -94,7 +170,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 8),
                 
                 Text(
-                  'Sabores únicos da praia carioca',
+                  l10n.welcomeMessage,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
                   ),
@@ -159,7 +235,7 @@ class HomePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Faça seu pedido',
+                        l10n.scanQRCode,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary,
                           fontWeight: FontWeight.bold,
@@ -167,7 +243,7 @@ class HomePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Escaneie o QR Code da sua mesa\npara ver o cardápio e fazer pedidos',
+                        l10n.scanQRCodeDescription,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                         ),
@@ -183,7 +259,7 @@ class HomePage extends StatelessWidget {
                           );
                         },
                         icon: const Icon(Icons.camera_alt),
-                        label: const Text('Escanear QR Code'),
+                        label: Text(l10n.scanQRCode),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).colorScheme.onPrimary,
                           foregroundColor: Theme.of(context).colorScheme.primary,
@@ -223,7 +299,7 @@ class HomePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Área Administrativa',
+                        l10n.adminAccess,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
                           fontWeight: FontWeight.w600,
@@ -231,7 +307,7 @@ class HomePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Acesso para funcionários',
+                        l10n.adminAccessDescription,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
                         ),
@@ -246,7 +322,7 @@ class HomePage extends StatelessWidget {
                           );
                         },
                         child: Text(
-                          'Acessar Painel',
+                          l10n.adminAccess,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onPrimary,
                             fontWeight: FontWeight.w500,
@@ -266,11 +342,27 @@ class HomePage extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
                   ),
                 ),
+                      ],
+                    ),
+                  ),
+                
+                const SizedBox(height: 48),
+                
+                // Footer
+                Text(
+                  '🏖️ Praia • Sabor • Tradição',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
-    );
+      ],
+    ),
+   ),
+  );
   }
 }
