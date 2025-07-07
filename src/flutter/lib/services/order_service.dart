@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import '../../models/app_models.dart';
-import '../../supabase/supabase_config.dart';
+import '../models/app_models.dart';
+import '../supabase/supabase_config.dart';
 
 class OrderService extends ChangeNotifier {
   static final OrderService _instance = OrderService._internal();
