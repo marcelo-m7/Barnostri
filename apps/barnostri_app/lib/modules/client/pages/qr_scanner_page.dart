@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:provider/provider.dart';
-import '../../../core/tema/theme.dart';
-import '../../../core/servicos/order_service.dart';
+import '../../../core/theme/theme.dart';
+import '../../../core/services/order_service.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import 'menu_page.dart';
 

@@ -1,4 +1,4 @@
-import 'categoria.dart';
+import 'category.dart';
 
 class ItemCardapio {
   final String id;

@@ -1,5 +1,5 @@
-import 'mesa.dart';
-import 'item_pedido.dart';
+import 'table.dart';
+import 'order_item.dart';
 
 class Pedido {
   final String id;
