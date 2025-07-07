@@ -2,6 +2,12 @@ serviceAccountKey.json
 # Node.js
 node_modules/
 
+# Dart & Flutter
+.dart_tool/
+build/
+**/build/
+pubspec.lock
+
 # Optional: environment files
 .env
 .env.local
