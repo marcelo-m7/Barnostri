@@ -1,0 +1,11 @@
+name: shared_models
+description: Shared data models and services for the Barnostri apps
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  supabase_flutter: ^1.10.0
+
