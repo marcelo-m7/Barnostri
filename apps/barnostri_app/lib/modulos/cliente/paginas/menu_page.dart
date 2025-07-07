@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/app_models.dart';
-import '../services/menu_service.dart';
-import '../services/order_service.dart';
-import '../widgets/menu_item_card.dart';
-import '../theme.dart';
+import '../../../core/modelos/app_models.dart';
+import '../../../core/servicos/menu_service.dart';
+import '../../../core/servicos/order_service.dart';
+import '../../../widgets/menu_item_card.dart';
+import '../../../core/tema/theme.dart';
 import 'cart_page.dart';
 
 class MenuPage extends StatefulWidget {

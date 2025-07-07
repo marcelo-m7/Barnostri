@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../services/language_service.dart';
+import '../core/servicos/language_service.dart';
 import '../l10n/generated/app_localizations.dart';
-import '../theme.dart';
+import '../core/tema/theme.dart';
 
 class LanguageSelector extends StatelessWidget {
   final bool showAsBottomSheet;

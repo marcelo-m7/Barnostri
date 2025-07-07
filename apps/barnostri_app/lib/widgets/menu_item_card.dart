@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../models/app_models.dart';
-import '../theme.dart';
-import '../services/order_service.dart';
+import '../core/modelos/app_models.dart';
+import '../core/tema/theme.dart';
+import '../core/servicos/order_service.dart';
 
 
 class MenuItemCard extends StatefulWidget {

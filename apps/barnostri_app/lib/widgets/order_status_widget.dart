@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/app_models.dart';
-import '../services/order_service.dart';
-import '../theme.dart';
+import '../core/modelos/app_models.dart';
+import '../core/servicos/order_service.dart';
+import '../core/tema/theme.dart';
 
 class OrderStatusWidget extends StatelessWidget {
   final Pedido pedido;
