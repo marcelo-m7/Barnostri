@@ -1,0 +1,21 @@
+name: Flutter CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+        working-directory: apps/barnostri_app
+      - run: dart pub get
+        working-directory: packages/shared_models
+      - run: dart format --set-exit-if-changed .
+      - run: flutter analyze
