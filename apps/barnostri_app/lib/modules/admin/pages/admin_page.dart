@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../core/services/order_service.dart';
 import '../../core/services/menu_service.dart';
-import '../../core/services/supabase/supabase_config.dart';
 import '../../widgets/order_status_widget.dart';
 import '../../core/theme/theme.dart';
 
