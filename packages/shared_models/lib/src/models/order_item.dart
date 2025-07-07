@@ -1,4 +1,4 @@
-import 'item_cardapio.dart';
+import 'menu_item.dart';
 
 class ItemPedido {
   final String id;
