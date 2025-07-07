@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/modelos/app_models.dart';
+import 'package:shared_models/shared_models.dart';
 import '../../../core/servicos/menu_service.dart';
 import '../../../core/servicos/order_service.dart';
 import '../../../widgets/menu_item_card.dart';
