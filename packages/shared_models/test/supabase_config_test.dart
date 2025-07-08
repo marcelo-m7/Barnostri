@@ -42,6 +42,11 @@ void main() {
       expect(itens.length, greaterThanOrEqualTo(1));
     });
 
+    test('fetchMesas returns mock list', () async {
+      final mesas = await menuRepo.fetchMesas();
+      expect(mesas.length, greaterThanOrEqualTo(1));
+    });
+
     test('criarPedido returns mock id', () async {
       final id = await pedidoRepo.criarPedido(
         mesaId: '1',
@@ -63,6 +68,12 @@ void main() {
     test('fetchPedidos returns mock data', () async {
       final pedidos = await pedidoRepo.fetchPedidos();
       expect(pedidos.first['id'], 'mock-order-1');
+    });
+
+    test('watchPedidos emits list', () async {
+      final stream = pedidoRepo.watchPedidos();
+      final first = await stream.first;
+      expect(first, isA<List<Map<String, dynamic>>>());
     });
   });
 }
