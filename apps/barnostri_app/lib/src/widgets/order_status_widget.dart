@@ -5,7 +5,7 @@ import '../features/order/presentation/controllers/order_service.dart';
 import '../l10n/generated/app_localizations.dart';
 
 class OrderStatusWidget extends ConsumerWidget {
-  final Pedido pedido;
+  final Order pedido;
   final bool isAdminView;
 
   const OrderStatusWidget({
@@ -92,7 +92,7 @@ class OrderStatusWidget extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 8),
-          if (pedido.mesa != null)
+          if (pedido.table != null)
             Row(
               children: [
                 Icon(
@@ -104,7 +104,7 @@ class OrderStatusWidget extends ConsumerWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Mesa ${pedido.mesa!.numero}',
+                  'Mesa ${pedido.table!.number}',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(
                       context,
@@ -142,7 +142,7 @@ class OrderStatusWidget extends ConsumerWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                pedido.formaPagamento,
+                pedido.paymentMethod,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(
                     context,
@@ -339,7 +339,7 @@ class OrderStatusWidget extends ConsumerWidget {
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
-          ...pedido.itens
+          ...pedido.items
               .map((item) => _buildOrderItem(context, item))
               .toList(),
           const SizedBox(height: 16),
@@ -370,7 +370,7 @@ class OrderStatusWidget extends ConsumerWidget {
     );
   }
 
-  Widget _buildOrderItem(BuildContext context, ItemPedido item) {
+  Widget _buildOrderItem(BuildContext context, OrderItem item) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -384,8 +384,8 @@ class OrderStatusWidget extends ConsumerWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Center(
-              child: Text(
-                '${item.quantidade}x',
+                child: Text(
+                  '${item.quantity}x',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
@@ -399,15 +399,15 @@ class OrderStatusWidget extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.itemCardapio?.nome ?? 'Item',
+                  item.menuItem?.name ?? 'Item',
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
                 ),
-                if (item.observacao != null && item.observacao!.isNotEmpty) ...[
+                  if (item.note != null && item.note!.isNotEmpty) ...[
                   const SizedBox(height: 2),
                   Text(
-                    'Obs: ${item.observacao}',
+                    'Obs: ${item.note}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(
                         context,

@@ -77,9 +77,9 @@ class _MenuItemCardState extends State<MenuItemCard>
                     child: Container(
                       height: 140,
                       width: double.infinity,
-                      child: widget.item.imagemUrl != null
+                      child: widget.item.imageUrl != null
                           ? CachedNetworkImage(
-                              imageUrl: widget.item.imagemUrl!,
+                              imageUrl: widget.item.imageUrl!,
                               fit: BoxFit.cover,
                               placeholder: (context, url) => Container(
                                 color: Theme.of(context).colorScheme.surface,
@@ -112,7 +112,7 @@ class _MenuItemCardState extends State<MenuItemCard>
                           children: [
                             Expanded(
                               child: Text(
-                                widget.item.nome,
+                                widget.item.name,
                                 style: Theme.of(context).textTheme.titleMedium
                                     ?.copyWith(
                                       fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class _MenuItemCardState extends State<MenuItemCard>
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                formatCurrency(widget.item.preco),
+                                formatCurrency(widget.item.price),
                                 style: Theme.of(context).textTheme.labelMedium
                                     ?.copyWith(
                                       color: Theme.of(
@@ -149,11 +149,11 @@ class _MenuItemCardState extends State<MenuItemCard>
                         ),
 
                         // Description
-                        if (widget.item.descricao != null &&
-                            widget.item.descricao!.isNotEmpty) ...[
+                        if (widget.item.description != null &&
+                            widget.item.description!.isNotEmpty) ...[
                           const SizedBox(height: 8),
                           Text(
-                            widget.item.descricao!,
+                            widget.item.description!,
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(
@@ -173,7 +173,7 @@ class _MenuItemCardState extends State<MenuItemCard>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             // Category tag
-                            if (widget.item.categoria != null)
+                            if (widget.item.category != null)
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 8,
@@ -186,7 +186,7 @@ class _MenuItemCardState extends State<MenuItemCard>
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
-                                  widget.item.categoria!.nome,
+                                  widget.item.category!.name,
                                   style: Theme.of(context).textTheme.labelSmall
                                       ?.copyWith(
                                         color: Theme.of(
@@ -204,7 +204,7 @@ class _MenuItemCardState extends State<MenuItemCard>
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: widget.item.disponivel
+                                color: widget.item.available
                                     ? Colors.green.withOpacity(0.1)
                                     : Colors.red.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(12),
@@ -213,17 +213,17 @@ class _MenuItemCardState extends State<MenuItemCard>
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Icon(
-                                    widget.item.disponivel
+                                    widget.item.available
                                         ? Icons.check_circle
                                         : Icons.cancel,
                                     size: 12,
-                                    color: widget.item.disponivel
+                                    color: widget.item.available
                                         ? Colors.green
                                         : Colors.red,
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    widget.item.disponivel
+                                    widget.item.available
                                         ? AppLocalizations.of(
                                             context,
                                           ).available
@@ -234,7 +234,7 @@ class _MenuItemCardState extends State<MenuItemCard>
                                         .textTheme
                                         .labelSmall
                                         ?.copyWith(
-                                          color: widget.item.disponivel
+                                          color: widget.item.available
                                               ? Colors.green
                                               : Colors.red,
                                           fontWeight: FontWeight.w500,
@@ -259,7 +259,7 @@ class _MenuItemCardState extends State<MenuItemCard>
 
   Widget _buildPlaceholderImage() {
     // Get food-related image based on item name/category
-    String keyword = widget.item.nome.toLowerCase();
+    String keyword = widget.item.name.toLowerCase();
     String category = 'food';
 
     if (keyword.contains('bebida') ||
@@ -308,7 +308,7 @@ class _MenuItemCardState extends State<MenuItemCard>
               ),
             ),
           ),
-          if (!widget.item.disponivel)
+          if (!widget.item.available)
             Container(
               color: Colors.black.withOpacity(0.5),
               child: const Center(
