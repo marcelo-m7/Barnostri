@@ -22,6 +22,8 @@ class _MenuPageState extends ConsumerState<MenuPage>
   String _searchQuery = '';
   bool _isLoading = true;
 
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
+
   @override
   void initState() {
     super.initState();
@@ -385,16 +387,16 @@ class _MenuPageState extends ConsumerState<MenuPage>
   }
 }
 
-class _ItemDetailsSheet extends StatefulWidget {
+class _ItemDetailsSheet extends ConsumerStatefulWidget {
   final MenuItem item;
 
   const _ItemDetailsSheet({required this.item});
 
   @override
-  State<_ItemDetailsSheet> createState() => _ItemDetailsSheetState();
+  ConsumerState<_ItemDetailsSheet> createState() => _ItemDetailsSheetState();
 }
 
-class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
+class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
   int _quantity = 1;
   final TextEditingController _observationController = TextEditingController();
 

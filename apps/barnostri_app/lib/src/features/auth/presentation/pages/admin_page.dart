@@ -391,12 +391,13 @@ class _AdminPageState extends ConsumerState<AdminPage>
   }
 
   Widget _buildMenuItemsList(MenuService menuService) {
+    final menuState = ref.watch(menuServiceProvider);
     return Scaffold(
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: menuService.menuItems.length,
+        itemCount: menuState.menuItems.length,
         itemBuilder: (context, index) {
-          final item = menuService.menuItems[index];
+          final item = menuState.menuItems[index];
           return Card(
             margin: const EdgeInsets.only(bottom: 8),
             child: ListTile(
@@ -431,12 +432,13 @@ class _AdminPageState extends ConsumerState<AdminPage>
   }
 
   Widget _buildCategoriesList(MenuService menuService) {
+    final menuState = ref.watch(menuServiceProvider);
     return Scaffold(
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: menuService.categories.length,
+        itemCount: menuState.categories.length,
         itemBuilder: (context, index) {
-          final categoria = menuService.categories[index];
+          final categoria = menuState.categories[index];
           return Card(
             margin: const EdgeInsets.only(bottom: 8),
             child: ListTile(
@@ -473,6 +475,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
     return Builder(
       builder: (context) {
         final menuService = ref.watch(menuServiceProvider.notifier);
+        final menuState = ref.watch(menuServiceProvider);
         return FutureBuilder(
           future: menuService.loadTables(),
           builder: (context, snapshot) {
@@ -483,9 +486,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
             return Scaffold(
               body: ListView.builder(
                 padding: const EdgeInsets.all(16),
-                itemCount: menuService.tables.length,
+                itemCount: menuState.tables.length,
                 itemBuilder: (context, index) {
-                  final mesa = menuService.tables[index];
+                  final mesa = menuState.tables[index];
                   return Card(
                     margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
@@ -566,7 +569,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.category,
                 ),
-                items: menuService.categories
+                items: menuService.state.categories
                     .map(
                       (cat) => DropdownMenuItem(
                         value: cat.id,
