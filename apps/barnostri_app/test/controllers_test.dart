@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_models/shared_models.dart';
-import 'package:barnostri_app/src/core/services/menu_service.dart';
-import 'package:barnostri_app/src/core/services/order_service.dart';
+import 'package:barnostri_app/src/features/menu/controllers/menu_service.dart';
+import 'package:barnostri_app/src/features/order/controllers/order_service.dart';
 import 'package:barnostri_app/src/features/auth/controllers/auth_service.dart';
 
 void main() {

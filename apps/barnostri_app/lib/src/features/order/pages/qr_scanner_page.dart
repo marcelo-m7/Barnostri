@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/services/order_service.dart';
+import '../controllers/order_service.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 import '../../menu/pages/menu_page.dart';
 
