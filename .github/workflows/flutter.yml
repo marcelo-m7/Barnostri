@@ -19,3 +19,5 @@ jobs:
         working-directory: packages/shared_models
       - run: dart format --set-exit-if-changed .
       - run: flutter analyze
+      - run: flutter test
+        working-directory: packages/shared_models
