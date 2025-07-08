@@ -6,9 +6,9 @@ import 'package:barnostri_app/src/features/order/data/supabase_order_repository.
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final authRepo = SupabaseAuthRepository();
-  final menuRepo = SupabaseMenuRepository();
-  final pedidoRepo = SupabaseOrderRepository();
+  final authRepo = SupabaseAuthRepository(null);
+  final menuRepo = SupabaseMenuRepository(null);
+  final pedidoRepo = SupabaseOrderRepository(null);
 
   group('Supabase repositories mock helpers', () {
     test('signIn returns mock user', () async {

@@ -1,11 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_models/shared_models.dart';
+import '../../../core/services/supabase_config.dart';
 import 'menu_repository.dart';
 
 class SupabaseMenuRepository implements MenuRepository {
+  final SupabaseClient? _client;
+
+  SupabaseMenuRepository(this._client);
   @override
   Future<List<TableModel>> fetchTables() async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return [
         TableModel(
           id: '1',
@@ -26,7 +30,7 @@ class SupabaseMenuRepository implements MenuRepository {
       ];
     }
     try {
-      final response = await SupabaseConfig.client
+      final response = await _client!
           .from('tables')
           .select('*')
           .eq('active', true)
@@ -44,7 +48,7 @@ class SupabaseMenuRepository implements MenuRepository {
 
   @override
   Future<TableModel?> getTableByQrToken(String qrToken) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (qrToken == 'mesa_001_qr') {
         return TableModel(
           id: '1',
@@ -67,7 +71,7 @@ class SupabaseMenuRepository implements MenuRepository {
       return null;
     }
     try {
-      final response = await SupabaseConfig.client
+      final response = await _client!
           .from('tables')
           .select('*')
           .eq('qr_token', qrToken)
@@ -84,7 +88,7 @@ class SupabaseMenuRepository implements MenuRepository {
 
   @override
   Future<List<Category>> fetchCategories() async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return [
         Category(
           id: '1',
@@ -121,7 +125,7 @@ class SupabaseMenuRepository implements MenuRepository {
       ];
     }
     try {
-      final response = await SupabaseConfig.client
+      final response = await _client!
           .from('categories')
           .select('*')
           .eq('active', true)
@@ -139,7 +143,7 @@ class SupabaseMenuRepository implements MenuRepository {
 
   @override
   Future<List<MenuItem>> fetchMenuItems() async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return [
         MenuItem(
           id: '1',
@@ -188,7 +192,7 @@ class SupabaseMenuRepository implements MenuRepository {
       ];
     }
     try {
-      final response = await SupabaseConfig.client
+      final response = await _client!
           .from('menu_items')
           .select()
           .eq('available', true)
@@ -209,7 +213,7 @@ class SupabaseMenuRepository implements MenuRepository {
     required String nome,
     required int ordem,
   }) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return Category(
         id: 'mock-cat-${DateTime.now().millisecondsSinceEpoch}',
         name: name,
@@ -219,7 +223,7 @@ class SupabaseMenuRepository implements MenuRepository {
         updatedAt: DateTime.now(),
       );
     }
-    final response = await SupabaseConfig.client
+    final response = await _client!
         .from('categorias')
         .insert({'nome': nome, 'ordem': ordem, 'ativo': true})
         .select()
@@ -234,7 +238,7 @@ class SupabaseMenuRepository implements MenuRepository {
     int? sortOrder,
     bool? active,
   }) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (kDebugMode) {
         print('📝 Mock update categoria $id');
       }
@@ -244,7 +248,7 @@ class SupabaseMenuRepository implements MenuRepository {
     if (name != null) updateData['name'] = name;
     if (sortOrder != null) updateData['sort_order'] = sortOrder;
     if (active != null) updateData['active'] = active;
-    await SupabaseConfig.client
+    await _client!
         .from('categories')
         .update(updateData)
         .eq('id', id);
@@ -253,13 +257,13 @@ class SupabaseMenuRepository implements MenuRepository {
 
   @override
   Future<bool> deleteCategory(String id) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (kDebugMode) {
         print('🗑️ Mock delete categoria $id');
       }
       return true;
     }
-    await SupabaseConfig.client.from('categories').delete().eq('id', id);
+    await _client!.from('categories').delete().eq('id', id);
     return true;
   }
 
@@ -271,7 +275,7 @@ class SupabaseMenuRepository implements MenuRepository {
     required String categoryId,
     String? imageUrl,
   }) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return MenuItem(
         id: 'mock-item-${DateTime.now().millisecondsSinceEpoch}',
         name: name,
@@ -284,7 +288,7 @@ class SupabaseMenuRepository implements MenuRepository {
         updatedAt: DateTime.now(),
       );
     }
-    final response = await SupabaseConfig.client
+    final response = await _client!
         .from('menu_items')
         .insert({
           'name': name,
@@ -309,7 +313,7 @@ class SupabaseMenuRepository implements MenuRepository {
     bool? available,
     String? imageUrl,
   }) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (kDebugMode) {
         print('📝 Mock update item $id');
       }
@@ -322,7 +326,7 @@ class SupabaseMenuRepository implements MenuRepository {
     if (categoryId != null) updateData['category_id'] = categoryId;
     if (available != null) updateData['available'] = available;
     if (imageUrl != null) updateData['image_url'] = imageUrl;
-    await SupabaseConfig.client
+    await _client!
         .from('menu_items')
         .update(updateData)
         .eq('id', id);
@@ -331,13 +335,13 @@ class SupabaseMenuRepository implements MenuRepository {
 
   @override
   Future<bool> deleteMenuItem(String id) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (kDebugMode) {
         print('🗑️ Mock delete item $id');
       }
       return true;
     }
-    await SupabaseConfig.client.from('menu_items').delete().eq('id', id);
+    await _client!.from('menu_items').delete().eq('id', id);
     return true;
   }
 
@@ -346,7 +350,7 @@ class SupabaseMenuRepository implements MenuRepository {
     required String number,
     required String qrToken,
   }) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return TableModel(
         id: 'mock-table-${DateTime.now().millisecondsSinceEpoch}',
         number: number,
@@ -356,7 +360,7 @@ class SupabaseMenuRepository implements MenuRepository {
         updatedAt: DateTime.now(),
       );
     }
-    final response = await SupabaseConfig.client
+    final response = await _client!
         .from('tables')
         .insert({'number': number, 'qr_token': qrToken, 'active': true})
         .select()
@@ -371,7 +375,7 @@ class SupabaseMenuRepository implements MenuRepository {
     String? qrToken,
     bool? active,
   }) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (kDebugMode) {
         print('📝 Mock update mesa $id');
       }
@@ -381,19 +385,19 @@ class SupabaseMenuRepository implements MenuRepository {
     if (number != null) updateData['number'] = number;
     if (qrToken != null) updateData['qr_token'] = qrToken;
     if (active != null) updateData['active'] = active;
-    await SupabaseConfig.client.from('tables').update(updateData).eq('id', id);
+    await _client!.from('tables').update(updateData).eq('id', id);
     return true;
   }
 
   @override
   Future<bool> deleteTable(String id) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (kDebugMode) {
         print('🗑️ Mock delete mesa $id');
       }
       return true;
     }
-    await SupabaseConfig.client.from('tables').delete().eq('id', id);
+    await _client!.from('tables').delete().eq('id', id);
     return true;
   }
 }

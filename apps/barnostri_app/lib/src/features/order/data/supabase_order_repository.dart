@@ -1,8 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_models/shared_models.dart';
+import '../../../core/services/supabase_config.dart';
 import 'order_repository.dart';
 
 class SupabaseOrderRepository implements OrderRepository {
+  final SupabaseClient? _client;
+
+  SupabaseOrderRepository(this._client);
   @override
   Future<String?> createOrder({
     required String tableId,
@@ -10,14 +14,14 @@ class SupabaseOrderRepository implements OrderRepository {
     required double total,
     required String paymentMethod,
   }) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (kDebugMode) {
         print('📝 Mock order created: Table $tableId, Total: R\$ $total');
       }
       return 'mock-order-${DateTime.now().millisecondsSinceEpoch}';
     }
     try {
-      final pedidoResponse = await SupabaseConfig.client
+      final pedidoResponse = await _client!
           .from('orders')
           .insert({
             'table_id': tableId,
@@ -40,7 +44,7 @@ class SupabaseOrderRepository implements OrderRepository {
             },
           )
           .toList();
-      await SupabaseConfig.client.from('order_items').insert(itensData);
+      await _client!.from('order_items').insert(itensData);
       return orderId;
     } catch (e) {
       if (kDebugMode) {
@@ -52,14 +56,14 @@ class SupabaseOrderRepository implements OrderRepository {
 
   @override
   Future<bool> updateStatus(String orderId, String newStatus) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (kDebugMode) {
         print('📊 Mock status update: $orderId -> $newStatus');
       }
       return true;
     }
     try {
-      await SupabaseConfig.client
+      await _client!
           .from('orders')
           .update({'status': newStatus})
           .eq('id', orderId);
@@ -74,7 +78,7 @@ class SupabaseOrderRepository implements OrderRepository {
 
   @override
   Future<List<Order>> fetchOrders() async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return [
         Order(
           id: 'mock-order-1',
@@ -139,7 +143,7 @@ class SupabaseOrderRepository implements OrderRepository {
       ];
     }
     try {
-      final response = await SupabaseConfig.client
+      final response = await _client!
           .from('orders')
           .select('*, tables(*), order_items(*, menu_items(*))')
           .order('created_at', ascending: false);
@@ -156,7 +160,7 @@ class SupabaseOrderRepository implements OrderRepository {
 
   @override
   Stream<List<Order>> watchOrders() {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return Stream.periodic(
         const Duration(seconds: 5),
         (count) => [
@@ -173,7 +177,7 @@ class SupabaseOrderRepository implements OrderRepository {
         ],
       );
     }
-    return SupabaseConfig.client
+    return _client!
         .from('orders')
         .stream(primaryKey: ['id'])
         .order('created_at', ascending: false)
@@ -186,7 +190,7 @@ class SupabaseOrderRepository implements OrderRepository {
 
   @override
   Stream<Order> watchOrder(String orderId) {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return Stream.periodic(
         const Duration(seconds: 5),
         (count) => Order(
@@ -201,7 +205,7 @@ class SupabaseOrderRepository implements OrderRepository {
         ),
       );
     }
-    return SupabaseConfig.client
+    return _client!
         .from('orders')
         .stream(primaryKey: ['id'])
         .eq('id', orderId)

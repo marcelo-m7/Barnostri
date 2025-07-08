@@ -9,5 +9,4 @@ export 'src/models/payment.dart';
 export 'src/models/user_model.dart';
 export 'src/models/cart_item.dart';
 export 'src/models/enums.dart';
-export 'src/services/supabase_config.dart';
 export 'src/utils/formatting.dart';
