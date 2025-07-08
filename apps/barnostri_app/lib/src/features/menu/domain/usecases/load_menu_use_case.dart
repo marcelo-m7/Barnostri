@@ -1,5 +1,4 @@
 import 'package:shared_models/shared_models.dart';
-import '../../data/menu_repository.dart';
 
 /// Result containing menu related entities loaded from repository.
 class LoadMenuResult {

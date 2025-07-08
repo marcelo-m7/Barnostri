@@ -1,4 +1,4 @@
-import '../../data/auth_repository.dart';
+import 'package:shared_models/shared_models.dart';
 
 /// Handles user login via the [AuthRepository].
 class LoginUseCase {

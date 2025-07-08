@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_models/shared_models.dart';
-import 'package:barnostri_app/src/features/auth/data/supabase_auth_repository.dart';
-import 'package:barnostri_app/src/features/menu/data/supabase_menu_repository.dart';
-import 'package:barnostri_app/src/features/order/data/supabase_order_repository.dart';
+import 'package:barnostri_app/src/features/auth/data/repositories/supabase_auth_repository.dart';
+import 'package:barnostri_app/src/features/menu/data/repositories/supabase_menu_repository.dart';
+import 'package:barnostri_app/src/features/order/data/repositories/supabase_order_repository.dart';
 import 'package:barnostri_app/src/features/auth/domain/usecases/login_use_case.dart';
 import 'package:barnostri_app/src/features/menu/domain/usecases/load_menu_use_case.dart';
 import 'package:barnostri_app/src/features/order/domain/usecases/create_order_use_case.dart';
