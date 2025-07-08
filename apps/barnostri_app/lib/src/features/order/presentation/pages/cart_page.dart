@@ -448,7 +448,7 @@ class _CartPageState extends ConsumerState<CartPage> {
     return Builder(
       builder: (context) {
         final orderNotifier = ref.watch(orderServiceProvider.notifier);
-        return StreamBuilder<Pedido>(
+        return StreamBuilder<Order>(
           stream: orderNotifier.streamOrder(_currentOrderId!),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
