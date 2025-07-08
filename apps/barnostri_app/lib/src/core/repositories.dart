@@ -7,6 +7,6 @@ final authRepositoryProvider = Provider<AuthRepository>(
 final menuRepositoryProvider = Provider<MenuRepository>(
   (ref) => SupabaseMenuRepository(),
 );
-final pedidoRepositoryProvider = Provider<PedidoRepository>(
-  (ref) => SupabasePedidoRepository(),
+final orderRepositoryProvider = Provider<OrderRepository>(
+  (ref) => SupabaseOrderRepository(),
 );

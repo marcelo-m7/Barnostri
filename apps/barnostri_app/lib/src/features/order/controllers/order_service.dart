@@ -4,26 +4,26 @@ import '../../../core/repositories.dart';
 
 class OrderState {
   final List<CartItem> cartItems;
-  final Mesa? currentMesa;
+  final TableModel? currentTable;
   final bool isLoading;
   final String? error;
 
   const OrderState({
     this.cartItems = const [],
-    this.currentMesa,
+    this.currentTable,
     this.isLoading = false,
     this.error,
   });
 
   OrderState copyWith({
     List<CartItem>? cartItems,
-    Mesa? currentMesa,
+    TableModel? currentTable,
     bool? isLoading,
     String? error,
   }) {
     return OrderState(
       cartItems: cartItems ?? this.cartItems,
-      currentMesa: currentMesa ?? this.currentMesa,
+      currentTable: currentTable ?? this.currentTable,
       isLoading: isLoading ?? this.isLoading,
       error: error,
     );
@@ -36,9 +36,9 @@ class OrderState {
 }
 
 class OrderService extends StateNotifier<OrderState> {
-  final PedidoRepository _pedidoRepository;
+  final OrderRepository _orderRepository;
   final MenuRepository _menuRepository;
-  OrderService(this._pedidoRepository, this._menuRepository)
+  OrderService(this._orderRepository, this._menuRepository)
     : super(const OrderState());
 
   Future<T?> _guard<T>(Future<T> Function() action,
@@ -54,21 +54,21 @@ class OrderService extends StateNotifier<OrderState> {
     }
   }
 
-  void setMesa(Mesa mesa) {
-    state = state.copyWith(currentMesa: mesa);
+  void setTable(TableModel table) {
+    state = state.copyWith(currentTable: table);
   }
 
-  void addToCart(ItemCardapio item, {int quantidade = 1, String? observacao}) {
+  void addToCart(MenuItem item, {int quantity = 1, String? note}) {
     final items = [...state.cartItems];
     final existingIndex = items.indexWhere(
       (cartItem) =>
-          cartItem.item.id == item.id && cartItem.observacao == observacao,
+          cartItem.item.id == item.id && cartItem.note == note,
     );
     if (existingIndex != -1) {
-      items[existingIndex].quantidade += quantidade;
+      items[existingIndex].quantity += quantity;
     } else {
       items.add(
-        CartItem(item: item, quantidade: quantidade, observacao: observacao),
+        CartItem(item: item, quantity: quantity, note: note),
       );
     }
     state = state.copyWith(cartItems: items);
@@ -82,12 +82,12 @@ class OrderService extends StateNotifier<OrderState> {
     }
   }
 
-  void updateCartItem(int index, {int? quantidade, String? observacao}) {
+  void updateCartItem(int index, {int? quantity, String? note}) {
     final items = [...state.cartItems];
     if (index >= 0 && index < items.length) {
       final item = items[index];
-      if (quantidade != null) item.quantidade = quantidade;
-      if (observacao != null) item.observacao = observacao;
+      if (quantity != null) item.quantity = quantity;
+      if (note != null) item.note = note;
       items[index] = item;
       state = state.copyWith(cartItems: items);
     }
@@ -98,7 +98,7 @@ class OrderService extends StateNotifier<OrderState> {
   }
 
   Future<String?> createOrder({required PaymentMethod paymentMethod}) async {
-    if (state.currentMesa == null) {
+    if (state.currentTable == null) {
       state = state.copyWith(error: 'Nenhuma mesa selecionada');
       return null;
     }
@@ -108,15 +108,15 @@ class OrderService extends StateNotifier<OrderState> {
     }
     return await _guard<String?>(
       () async {
-        final pedidoId = await _pedidoRepository.criarPedido(
-          mesaId: state.currentMesa!.id,
-          itens: state.cartItems,
+        final orderId = await _orderRepository.createOrder(
+          tableId: state.currentTable!.id,
+          items: state.cartItems,
           total: state.cartTotal,
-          formaPagamento: paymentMethod.displayName,
+          paymentMethod: paymentMethod.displayName,
         );
-        if (pedidoId != null) {
+        if (orderId != null) {
           clearCart();
-          return pedidoId;
+          return orderId;
         } else {
           state = state.copyWith(error: 'Erro ao criar pedido');
           return null;
@@ -126,11 +126,11 @@ class OrderService extends StateNotifier<OrderState> {
     );
   }
 
-  Future<bool> updateOrderStatus(String pedidoId, OrderStatus status) async {
+  Future<bool> updateOrderStatus(String orderId, OrderStatus status) async {
     final success = await _guard<bool>(
       () async {
-        final result = await _pedidoRepository.atualizarStatus(
-          pedidoId,
+        final result = await _orderRepository.updateStatus(
+          orderId,
           status.displayName,
         );
         if (!result) {
@@ -143,32 +143,32 @@ class OrderService extends StateNotifier<OrderState> {
     return success ?? false;
   }
 
-  Future<List<Pedido>> getAllOrders() async {
-    final pedidos = await _guard<List<Pedido>>(
+  Future<List<Order>> getAllOrders() async {
+    final orders = await _guard<List<Order>>(
       () async {
-        final result = await _pedidoRepository.fetchPedidos();
+        final result = await _orderRepository.fetchOrders();
         return result;
       },
       onError: (e) => 'Erro ao carregar pedidos: $e',
     );
-    return pedidos ?? [];
+    return orders ?? [];
   }
 
-  Stream<List<Pedido>> streamOrders() {
-    return _pedidoRepository.watchPedidos();
+  Stream<List<Order>> streamOrders() {
+    return _orderRepository.watchOrders();
   }
 
-  Stream<Pedido> streamOrder(String pedidoId) {
-    return _pedidoRepository.watchPedido(pedidoId);
+  Stream<Order> streamOrder(String orderId) {
+    return _orderRepository.watchOrder(orderId);
   }
 
-  Future<Mesa?> getMesaByQrToken(String qrToken) async {
-    return await _guard<Mesa?>(
+  Future<TableModel?> getTableByQrToken(String qrToken) async {
+    return await _guard<TableModel?>(
       () async {
-        final mesa = await _menuRepository.getMesaByQrToken(qrToken);
-        if (mesa != null) {
-          setMesa(mesa);
-          return mesa;
+        final table = await _menuRepository.getTableByQrToken(qrToken);
+        if (table != null) {
+          setTable(table);
+          return table;
         } else {
           state = state.copyWith(error: 'Mesa não encontrada');
           return null;

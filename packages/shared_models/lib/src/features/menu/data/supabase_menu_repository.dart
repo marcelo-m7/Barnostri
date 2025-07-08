@@ -1,28 +1,28 @@
 import 'package:flutter/foundation.dart';
 import '../../models/category.dart';
 import '../../models/menu_item.dart';
-import '../../models/table.dart';
+import '../../models/table_model.dart';
 import '../../../services/supabase_config.dart';
 import 'menu_repository.dart';
 
 class SupabaseMenuRepository implements MenuRepository {
   @override
-  Future<List<Mesa>> fetchMesas() async {
+  Future<List<TableModel>> fetchTables() async {
     if (!SupabaseConfig.isConfigured) {
       return [
-        Mesa(
+        TableModel(
           id: '1',
-          numero: '1',
+          number: '1',
           qrToken: 'mesa_001_qr',
-          ativo: true,
+          active: true,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
-        Mesa(
+        TableModel(
           id: '2',
-          numero: '2',
+          number: '2',
           qrToken: 'mesa_002_qr',
-          ativo: true,
+          active: true,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
@@ -30,12 +30,12 @@ class SupabaseMenuRepository implements MenuRepository {
     }
     try {
       final response = await SupabaseConfig.client
-          .from('mesas')
+          .from('tables')
           .select('*')
-          .eq('ativo', true)
-          .order('numero');
+          .eq('active', true)
+          .order('number');
       return (response as List<dynamic>)
-          .map((e) => Mesa.fromJson(e as Map<String, dynamic>))
+          .map((e) => TableModel.fromJson(e as Map<String, dynamic>))
           .toList();
     } catch (e) {
       if (kDebugMode) {
@@ -46,23 +46,23 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<Mesa?> getMesaByQrToken(String qrToken) async {
+  Future<TableModel?> getTableByQrToken(String qrToken) async {
     if (!SupabaseConfig.isConfigured) {
       if (qrToken == 'mesa_001_qr') {
-        return Mesa(
+        return TableModel(
           id: '1',
-          numero: '1',
+          number: '1',
           qrToken: 'mesa_001_qr',
-          ativo: true,
+          active: true,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );
       } else if (qrToken == 'mesa_002_qr') {
-        return Mesa(
+        return TableModel(
           id: '2',
-          numero: '2',
+          number: '2',
           qrToken: 'mesa_002_qr',
-          ativo: true,
+          active: true,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );
@@ -71,12 +71,12 @@ class SupabaseMenuRepository implements MenuRepository {
     }
     try {
       final response = await SupabaseConfig.client
-          .from('mesas')
+          .from('tables')
           .select('*')
           .eq('qr_token', qrToken)
-          .eq('ativo', true)
+          .eq('active', true)
           .single();
-      return Mesa.fromJson(response as Map<String, dynamic>);
+      return TableModel.fromJson(response as Map<String, dynamic>);
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao buscar mesa por QR: $e');
@@ -86,38 +86,38 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<List<Categoria>> fetchCategorias() async {
+  Future<List<Category>> fetchCategories() async {
     if (!SupabaseConfig.isConfigured) {
       return [
-        Categoria(
+        Category(
           id: '1',
-          nome: 'Entradas',
-          ordem: 1,
-          ativo: true,
+          name: 'Entradas',
+          sortOrder: 1,
+          active: true,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
-        Categoria(
+        Category(
           id: '2',
-          nome: 'Bebidas',
-          ordem: 2,
-          ativo: true,
+          name: 'Bebidas',
+          sortOrder: 2,
+          active: true,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
-        Categoria(
+        Category(
           id: '3',
-          nome: 'Pratos Principais',
-          ordem: 3,
-          ativo: true,
+          name: 'Pratos Principais',
+          sortOrder: 3,
+          active: true,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
-        Categoria(
+        Category(
           id: '4',
-          nome: 'Sobremesas',
-          ordem: 4,
-          ativo: true,
+          name: 'Sobremesas',
+          sortOrder: 4,
+          active: true,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
@@ -125,12 +125,12 @@ class SupabaseMenuRepository implements MenuRepository {
     }
     try {
       final response = await SupabaseConfig.client
-          .from('categorias')
+          .from('categories')
           .select('*')
-          .eq('ativo', true)
-          .order('ordem');
+          .eq('active', true)
+          .order('sort_order');
       return (response as List<dynamic>)
-          .map((e) => Categoria.fromJson(e as Map<String, dynamic>))
+          .map((e) => Category.fromJson(e as Map<String, dynamic>))
           .toList();
     } catch (e) {
       if (kDebugMode) {
@@ -141,50 +141,50 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<List<ItemCardapio>> fetchItensCardapio() async {
+  Future<List<MenuItem>> fetchMenuItems() async {
     if (!SupabaseConfig.isConfigured) {
       return [
-        ItemCardapio(
+        MenuItem(
           id: '1',
-          nome: 'Pastéis de Camarão',
-          descricao: 'Deliciosos pastéis recheados com camarão fresco',
-          preco: 18.90,
-          categoriaId: '1',
-          disponivel: true,
-          imagemUrl: null,
+          name: 'Pastéis de Camarão',
+          description: 'Deliciosos pastéis recheados com camarão fresco',
+          price: 18.90,
+          categoryId: '1',
+          available: true,
+          imageUrl: null,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
-        ItemCardapio(
+        MenuItem(
           id: '2',
-          nome: 'Caipirinha',
-          descricao: 'Caipirinha tradicional com cachaça e limão',
-          preco: 12.00,
-          categoriaId: '2',
-          disponivel: true,
-          imagemUrl: null,
+          name: 'Caipirinha',
+          description: 'Caipirinha tradicional com cachaça e limão',
+          price: 12.00,
+          categoryId: '2',
+          available: true,
+          imageUrl: null,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
-        ItemCardapio(
+        MenuItem(
           id: '3',
-          nome: 'Moqueca de Peixe',
-          descricao: 'Moqueca tradicional com peixe fresco e dendê',
-          preco: 45.90,
-          categoriaId: '3',
-          disponivel: true,
-          imagemUrl: null,
+          name: 'Moqueca de Peixe',
+          description: 'Moqueca tradicional com peixe fresco e dendê',
+          price: 45.90,
+          categoryId: '3',
+          available: true,
+          imageUrl: null,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
-        ItemCardapio(
+        MenuItem(
           id: '4',
-          nome: 'Pudim de Leite',
-          descricao: 'Pudim caseiro com calda de caramelo',
-          preco: 12.90,
-          categoriaId: '4',
-          disponivel: true,
-          imagemUrl: null,
+          name: 'Pudim de Leite',
+          description: 'Pudim caseiro com calda de caramelo',
+          price: 12.90,
+          categoryId: '4',
+          available: true,
+          imageUrl: null,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
@@ -192,12 +192,12 @@ class SupabaseMenuRepository implements MenuRepository {
     }
     try {
       final response = await SupabaseConfig.client
-          .from('itens_cardapio')
+          .from('menu_items')
           .select()
-          .eq('disponivel', true)
-          .order('nome');
+          .eq('available', true)
+          .order('name');
       return (response as List<dynamic>)
-          .map((e) => ItemCardapio.fromJson(e as Map<String, dynamic>))
+          .map((e) => MenuItem.fromJson(e as Map<String, dynamic>))
           .toList();
     } catch (e) {
       if (kDebugMode) {
@@ -208,16 +208,16 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<Categoria> addCategoria({
+  Future<Category> addCategory({
     required String nome,
     required int ordem,
   }) async {
     if (!SupabaseConfig.isConfigured) {
-      return Categoria(
+      return Category(
         id: 'mock-cat-${DateTime.now().millisecondsSinceEpoch}',
-        nome: nome,
-        ordem: ordem,
-        ativo: true,
+        name: name,
+        sortOrder: sortOrder,
+        active: true,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -231,11 +231,11 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<bool> updateCategoria({
+  Future<bool> updateCategory({
     required String id,
-    String? nome,
-    int? ordem,
-    bool? ativo,
+    String? name,
+    int? sortOrder,
+    bool? active,
   }) async {
     if (!SupabaseConfig.isConfigured) {
       if (kDebugMode) {
@@ -244,73 +244,73 @@ class SupabaseMenuRepository implements MenuRepository {
       return true;
     }
     final updateData = <String, dynamic>{};
-    if (nome != null) updateData['nome'] = nome;
-    if (ordem != null) updateData['ordem'] = ordem;
-    if (ativo != null) updateData['ativo'] = ativo;
+    if (name != null) updateData['name'] = name;
+    if (sortOrder != null) updateData['sort_order'] = sortOrder;
+    if (active != null) updateData['active'] = active;
     await SupabaseConfig.client
-        .from('categorias')
+        .from('categories')
         .update(updateData)
         .eq('id', id);
     return true;
   }
 
   @override
-  Future<bool> deleteCategoria(String id) async {
+  Future<bool> deleteCategory(String id) async {
     if (!SupabaseConfig.isConfigured) {
       if (kDebugMode) {
         print('🗑️ Mock delete categoria $id');
       }
       return true;
     }
-    await SupabaseConfig.client.from('categorias').delete().eq('id', id);
+    await SupabaseConfig.client.from('categories').delete().eq('id', id);
     return true;
   }
 
   @override
-  Future<ItemCardapio> addItemCardapio({
-    required String nome,
-    String? descricao,
-    required double preco,
-    required String categoriaId,
-    String? imagemUrl,
+  Future<MenuItem> addMenuItem({
+    required String name,
+    String? description,
+    required double price,
+    required String categoryId,
+    String? imageUrl,
   }) async {
     if (!SupabaseConfig.isConfigured) {
-      return ItemCardapio(
+      return MenuItem(
         id: 'mock-item-${DateTime.now().millisecondsSinceEpoch}',
-        nome: nome,
-        descricao: descricao,
-        preco: preco,
-        categoriaId: categoriaId,
-        disponivel: true,
-        imagemUrl: imagemUrl,
+        name: name,
+        description: description,
+        price: price,
+        categoryId: categoryId,
+        available: true,
+        imageUrl: imageUrl,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
     }
     final response = await SupabaseConfig.client
-        .from('itens_cardapio')
+        .from('menu_items')
         .insert({
-          'nome': nome,
-          'descricao': descricao,
-          'preco': preco,
-          'categoria_id': categoriaId,
-          'disponivel': true,
-          'imagem_url': imagemUrl,
+          'name': name,
+          'description': description,
+          'price': price,
+          'category_id': categoryId,
+          'available': true,
+          'image_url': imageUrl,
         })
-        .select('*, categorias(*)')
+        .select('*, categories(*)')
         .single();
-    return ItemCardapio.fromJson(response as Map<String, dynamic>);
+    return MenuItem.fromJson(response as Map<String, dynamic>);
   }
 
   @override
-  Future<bool> updateItemCardapio({
+  Future<bool> updateMenuItem({
     required String id,
-    String? nome,
-    String? descricao,
-    double? preco,
-    String? categoriaId,
-    bool? disponivel,
-    String? imagemUrl,
+    String? name,
+    String? description,
+    double? price,
+    String? categoryId,
+    bool? available,
+    String? imageUrl,
   }) async {
     if (!SupabaseConfig.isConfigured) {
       if (kDebugMode) {
@@ -319,60 +319,60 @@ class SupabaseMenuRepository implements MenuRepository {
       return true;
     }
     final updateData = <String, dynamic>{};
-    if (nome != null) updateData['nome'] = nome;
-    if (descricao != null) updateData['descricao'] = descricao;
-    if (preco != null) updateData['preco'] = preco;
-    if (categoriaId != null) updateData['categoria_id'] = categoriaId;
-    if (disponivel != null) updateData['disponivel'] = disponivel;
-    if (imagemUrl != null) updateData['imagem_url'] = imagemUrl;
+    if (name != null) updateData['name'] = name;
+    if (description != null) updateData['description'] = description;
+    if (price != null) updateData['price'] = price;
+    if (categoryId != null) updateData['category_id'] = categoryId;
+    if (available != null) updateData['available'] = available;
+    if (imageUrl != null) updateData['image_url'] = imageUrl;
     await SupabaseConfig.client
-        .from('itens_cardapio')
+        .from('menu_items')
         .update(updateData)
         .eq('id', id);
     return true;
   }
 
   @override
-  Future<bool> deleteItemCardapio(String id) async {
+  Future<bool> deleteMenuItem(String id) async {
     if (!SupabaseConfig.isConfigured) {
       if (kDebugMode) {
         print('🗑️ Mock delete item $id');
       }
       return true;
     }
-    await SupabaseConfig.client.from('itens_cardapio').delete().eq('id', id);
+    await SupabaseConfig.client.from('menu_items').delete().eq('id', id);
     return true;
   }
 
   @override
-  Future<Mesa> addMesa({
-    required String numero,
+  Future<TableModel> addTable({
+    required String number,
     required String qrToken,
   }) async {
     if (!SupabaseConfig.isConfigured) {
-      return Mesa(
+      return TableModel(
         id: 'mock-table-${DateTime.now().millisecondsSinceEpoch}',
-        numero: numero,
+        number: number,
         qrToken: qrToken,
-        ativo: true,
+        active: true,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
     }
     final response = await SupabaseConfig.client
-        .from('mesas')
-        .insert({'numero': numero, 'qr_token': qrToken, 'ativo': true})
+        .from('tables')
+        .insert({'number': number, 'qr_token': qrToken, 'active': true})
         .select()
         .single();
-    return Mesa.fromJson(response as Map<String, dynamic>);
+    return TableModel.fromJson(response as Map<String, dynamic>);
   }
 
   @override
-  Future<bool> updateMesa({
+  Future<bool> updateTable({
     required String id,
-    String? numero,
+    String? number,
     String? qrToken,
-    bool? ativo,
+    bool? active,
   }) async {
     if (!SupabaseConfig.isConfigured) {
       if (kDebugMode) {
@@ -381,22 +381,22 @@ class SupabaseMenuRepository implements MenuRepository {
       return true;
     }
     final updateData = <String, dynamic>{};
-    if (numero != null) updateData['numero'] = numero;
+    if (number != null) updateData['number'] = number;
     if (qrToken != null) updateData['qr_token'] = qrToken;
-    if (ativo != null) updateData['ativo'] = ativo;
-    await SupabaseConfig.client.from('mesas').update(updateData).eq('id', id);
+    if (active != null) updateData['active'] = active;
+    await SupabaseConfig.client.from('tables').update(updateData).eq('id', id);
     return true;
   }
 
   @override
-  Future<bool> deleteMesa(String id) async {
+  Future<bool> deleteTable(String id) async {
     if (!SupabaseConfig.isConfigured) {
       if (kDebugMode) {
         print('🗑️ Mock delete mesa $id');
       }
       return true;
     }
-    await SupabaseConfig.client.from('mesas').delete().eq('id', id);
+    await SupabaseConfig.client.from('tables').delete().eq('id', id);
     return true;
   }
 }

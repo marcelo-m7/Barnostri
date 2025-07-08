@@ -1,26 +1,26 @@
-class Mesa {
+class TableModel {
   final String id;
-  final String numero;
+  final String number;
   final String qrToken;
-  final bool ativo;
+  final bool active;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Mesa({
+  TableModel({
     required this.id,
-    required this.numero,
+    required this.number,
     required this.qrToken,
-    required this.ativo,
+    required this.active,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory Mesa.fromJson(Map<String, dynamic> json) {
-    return Mesa(
+  factory TableModel.fromJson(Map<String, dynamic> json) {
+    return TableModel(
       id: json['id'],
-      numero: json['numero'],
+      number: json['number'],
       qrToken: json['qr_token'],
-      ativo: json['ativo'],
+      active: json['active'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
     );
@@ -29,9 +29,9 @@ class Mesa {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'numero': numero,
+      'number': number,
       'qr_token': qrToken,
-      'ativo': ativo,
+      'active': active,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };

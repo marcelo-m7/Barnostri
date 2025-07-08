@@ -4,7 +4,7 @@ import 'package:shared_models/shared_models.dart';
 import '../../l10n/generated/app_localizations.dart';
 
 class MenuItemCard extends StatefulWidget {
-  final ItemCardapio item;
+  final MenuItem item;
   final VoidCallback onTap;
 
   const MenuItemCard({super.key, required this.item, required this.onTap});

@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_models/shared_models.dart';
 
 void main() {
-  group('Categoria', () {
+  group('Category', () {
     const json = {
       'id': '1',
       'nome': 'Entradas',
@@ -13,15 +13,22 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final categoria = Categoria.fromJson(json);
+      final categoria = Category.fromJson(json);
       expect(categoria.id, '1');
-      expect(categoria.nome, 'Entradas');
-      expect(categoria.ativo, true);
-      expect(categoria.toJson(), json);
+      expect(categoria.name, 'Entradas');
+      expect(categoria.active, true);
+      expect(categoria.toJson(), {
+        'id': '1',
+        'name': 'Entradas',
+        'sort_order': 1,
+        'active': true,
+        'created_at': '2024-01-01T00:00:00.000Z',
+        'updated_at': '2024-01-02T00:00:00.000Z',
+      });
     });
   });
 
-  group('ItemCardapio', () {
+  group('MenuItem', () {
     const json = {
       'id': '3',
       'nome': 'Moqueca',
@@ -35,14 +42,24 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final item = ItemCardapio.fromJson(json);
-      expect(item.nome, 'Moqueca');
-      expect(item.disponivel, isTrue);
-      expect(item.toJson(), json);
+      final item = MenuItem.fromJson(json);
+      expect(item.name, 'Moqueca');
+      expect(item.available, isTrue);
+      expect(item.toJson(), {
+        'id': '3',
+        'name': 'Moqueca',
+        'description': 'Peixe fresco',
+        'price': 45.9,
+        'category_id': '2',
+        'available': true,
+        'image_url': null,
+        'created_at': '2024-01-01T00:00:00.000Z',
+        'updated_at': '2024-01-02T00:00:00.000Z',
+      });
     });
   });
 
-  group('Mesa', () {
+  group('TableModel', () {
     const json = {
       'id': 't1',
       'numero': '1',
@@ -53,13 +70,20 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final mesa = Mesa.fromJson(json);
-      expect(mesa.numero, '1');
-      expect(mesa.toJson(), json);
+      final mesa = TableModel.fromJson(json);
+      expect(mesa.number, '1');
+      expect(mesa.toJson(), {
+        'id': 't1',
+        'number': '1',
+        'qr_token': 'token1',
+        'active': true,
+        'created_at': '2024-01-01T00:00:00.000Z',
+        'updated_at': '2024-01-02T00:00:00.000Z',
+      });
     });
   });
 
-  group('Usuario', () {
+  group('UserModel', () {
     const json = {
       'id': 'u1',
       'nome': 'Admin',
@@ -70,13 +94,20 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final usuario = Usuario.fromJson(json);
+      final usuario = UserModel.fromJson(json);
       expect(usuario.isAdmin, isTrue);
-      expect(usuario.toJson(), json);
+      expect(usuario.toJson(), {
+        'id': 'u1',
+        'name': 'Admin',
+        'email': 'a@a.com',
+        'role': 'admin',
+        'created_at': '2024-01-01T00:00:00.000Z',
+        'updated_at': '2024-01-02T00:00:00.000Z',
+      });
     });
   });
 
-  group('ItemPedido', () {
+  group('OrderItem', () {
     const json = {
       'id': 'ip1',
       'pedido_id': 'p1',
@@ -88,13 +119,21 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final item = ItemPedido.fromJson(json);
-      expect(item.quantidade, 2);
-      expect(item.toJson(), json);
+      final item = OrderItem.fromJson(json);
+      expect(item.quantity, 2);
+      expect(item.toJson(), {
+        'id': 'ip1',
+        'order_id': 'p1',
+        'menu_item_id': 'i1',
+        'quantity': 2,
+        'note': 'Sem pimenta',
+        'unit_price': 10.0,
+        'created_at': '2024-01-01T00:00:00.000Z',
+      });
     });
   });
 
-  group('Pedido', () {
+  group('Order', () {
     final json = {
       'id': 'p1',
       'mesa_id': 't1',
@@ -126,23 +165,23 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final pedido = Pedido.fromJson(json);
-      expect(pedido.mesaId, 't1');
-      expect(pedido.itens.length, 1);
+      final pedido = Order.fromJson(json);
+      expect(pedido.tableId, 't1');
+      expect(pedido.items.length, 1);
       expect(pedido.toJson(), {
         'id': 'p1',
-        'mesa_id': 't1',
+        'table_id': 't1',
         'status': 'Recebido',
         'total': 20.0,
-        'forma_pagamento': 'Pix',
-        'pago': false,
+        'payment_method': 'Pix',
+        'paid': false,
         'created_at': '2024-01-01T00:00:00.000Z',
         'updated_at': '2024-01-02T00:00:00.000Z',
       });
     });
   });
 
-  group('Pagamento', () {
+  group('Payment', () {
     const json = {
       'id': 'pay1',
       'pedido_id': 'p1',
@@ -155,32 +194,41 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final pagamento = Pagamento.fromJson(json);
-      expect(pagamento.metodo, 'Pix');
-      expect(pagamento.toJson(), json);
+      final pagamento = Payment.fromJson(json);
+      expect(pagamento.method, 'Pix');
+      expect(pagamento.toJson(), {
+        'id': 'pay1',
+        'order_id': 'p1',
+        'method': 'Pix',
+        'amount': 20.0,
+        'status': 'pendente',
+        'transaction_id': null,
+        'created_at': '2024-01-01T00:00:00.000Z',
+        'updated_at': '2024-01-02T00:00:00.000Z',
+      });
     });
   });
 
   group('CartItem', () {
     test('toJson', () {
-      final item = ItemCardapio(
+      final item = MenuItem(
         id: 'i1',
-        nome: 'Item',
-        descricao: null,
-        preco: 5.0,
+        name: 'Item',
+        description: null,
+        price: 5.0,
         categoriaId: 'c1',
-        disponivel: true,
-        imagemUrl: null,
+        available: true,
+        imageUrl: null,
         createdAt: DateTime.parse('2024-01-01T00:00:00.000Z'),
         updatedAt: DateTime.parse('2024-01-02T00:00:00.000Z'),
       );
-      final cartItem = CartItem(item: item, quantidade: 2, observacao: 'obs');
+      final cartItem = CartItem(item: item, quantity: 2, note: 'obs');
       expect(cartItem.toJson(), {
         'id': 'i1',
-        'nome': 'Item',
-        'preco': 5.0,
-        'quantidade': 2,
-        'observacao': 'obs',
+        'name': 'Item',
+        'price': 5.0,
+        'quantity': 2,
+        'note': 'obs',
       });
     });
   });

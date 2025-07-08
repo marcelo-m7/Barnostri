@@ -32,7 +32,7 @@ barnostri/
 - Environment variables are stored in `supabase/supabase-config.json` (one per environment).
 
 ## Packages
-- `packages/shared_models` exposes models such as `Mesa`, `Pedido`, `ItemCardapio` and services like `PedidoService`.
+- `packages/shared_models` exposes models such as `TableModel`, `Order`, `MenuItem` and services like `OrderService`.
 - Both the customer and admin apps import this package to avoid duplication.
 
 ## Next Steps

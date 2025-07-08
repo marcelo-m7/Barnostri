@@ -1,32 +1,32 @@
-class Pagamento {
+class Payment {
   final String id;
-  final String pedidoId;
-  final String metodo;
-  final double valor;
+  final String orderId;
+  final String method;
+  final double amount;
   final String status;
-  final String? transacaoId;
+  final String? transactionId;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Pagamento({
+  Payment({
     required this.id,
-    required this.pedidoId,
-    required this.metodo,
-    required this.valor,
+    required this.orderId,
+    required this.method,
+    required this.amount,
     required this.status,
-    this.transacaoId,
+    this.transactionId,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory Pagamento.fromJson(Map<String, dynamic> json) {
-    return Pagamento(
+  factory Payment.fromJson(Map<String, dynamic> json) {
+    return Payment(
       id: json['id'],
-      pedidoId: json['pedido_id'],
-      metodo: json['metodo'],
-      valor: (json['valor'] as num).toDouble(),
+      orderId: json['order_id'],
+      method: json['method'],
+      amount: (json['amount'] as num).toDouble(),
       status: json['status'],
-      transacaoId: json['transacao_id'],
+      transactionId: json['transaction_id'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
     );
@@ -35,11 +35,11 @@ class Pagamento {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'pedido_id': pedidoId,
-      'metodo': metodo,
-      'valor': valor,
+      'order_id': orderId,
+      'method': method,
+      'amount': amount,
       'status': status,
-      'transacao_id': transacaoId,
+      'transaction_id': transactionId,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };

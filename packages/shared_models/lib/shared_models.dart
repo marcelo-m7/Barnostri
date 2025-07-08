@@ -1,12 +1,12 @@
 library shared_models;
 
-export 'src/models/table.dart';
+export 'src/models/table_model.dart';
 export 'src/models/category.dart';
 export 'src/models/menu_item.dart';
 export 'src/models/order.dart';
 export 'src/models/order_item.dart';
 export 'src/models/payment.dart';
-export 'src/models/user.dart';
+export 'src/models/user_model.dart';
 export 'src/models/cart_item.dart';
 export 'src/models/enums.dart';
 export 'src/services/supabase_config.dart';
@@ -14,6 +14,6 @@ export 'src/features/auth/data/auth_repository.dart';
 export 'src/features/auth/data/supabase_auth_repository.dart';
 export 'src/features/menu/data/menu_repository.dart';
 export 'src/features/menu/data/supabase_menu_repository.dart';
-export 'src/features/order/data/pedido_repository.dart';
-export 'src/features/order/data/supabase_pedido_repository.dart';
+export 'src/features/order/data/order_repository.dart';
+export 'src/features/order/data/supabase_order_repository.dart';
 export 'src/utils/formatting.dart';

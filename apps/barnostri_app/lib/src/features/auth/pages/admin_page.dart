@@ -588,11 +588,11 @@ class _AdminPageState extends ConsumerState<AdminPage>
           ElevatedButton(
             onPressed: () async {
               if (selectedCategoryId != null) {
-                await menuService.addItemCardapio(
-                  nome: nomeController.text,
-                  descricao: descricaoController.text,
-                  preco: double.tryParse(precoController.text) ?? 0.0,
-                  categoriaId: selectedCategoryId!,
+                await menuService.addMenuItem(
+                  name: nomeController.text,
+                  description: descricaoController.text,
+                  price: double.tryParse(precoController.text) ?? 0.0,
+                  categoryId: selectedCategoryId!,
                 );
                 Navigator.pop(context);
               }
@@ -682,8 +682,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
           ),
           ElevatedButton(
             onPressed: () async {
-              await menuService.addMesa(
-                numero: numeroController.text,
+              await menuService.addTable(
+                number: numeroController.text,
                 qrToken: qrTokenController.text,
               );
 

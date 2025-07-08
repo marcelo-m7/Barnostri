@@ -121,9 +121,9 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                               fontWeight: FontWeight.bold,
                                             ),
                                       ),
-                                      if (orderState.currentMesa != null)
+                                      if (orderState.currentTable != null)
                                         Text(
-                                          'Mesa ${orderState.currentMesa!.numero}',
+                                          'Mesa ${orderState.currentTable!.number}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge
@@ -363,7 +363,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
     );
   }
 
-  void _showItemDetails(ItemCardapio item) {
+  void _showItemDetails(MenuItem item) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -381,7 +381,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
 }
 
 class _ItemDetailsSheet extends StatefulWidget {
-  final ItemCardapio item;
+  final MenuItem item;
 
   const _ItemDetailsSheet({required this.item});
 
