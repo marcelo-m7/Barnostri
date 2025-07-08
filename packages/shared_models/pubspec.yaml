@@ -10,10 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   collection: ^1.17.0
-  supabase_flutter: ^1.10.0
+  supabase_flutter: ^2.9.1
 
 dev_dependencies:
-  flutter_lints: ^3.0.1
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
 
