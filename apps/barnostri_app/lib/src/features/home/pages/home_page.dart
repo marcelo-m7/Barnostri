@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/services/demo_mode_provider.dart';
+import '../../../core/app_providers.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../widgets/language_selector.dart';
 
