@@ -558,7 +558,7 @@ class OrderStatusWidget extends ConsumerWidget {
   ) async {
     final orderService = ref.read(orderServiceProvider.notifier);
     final success = await orderService.updateOrderStatus(pedido.id, newStatus);
-
+    if (!context.mounted) return;
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
