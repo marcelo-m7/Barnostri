@@ -253,7 +253,7 @@ class OrderStatusWidget extends ConsumerWidget {
                         ),
                   ),
                   Text(
-                    _getStatusDescription(status),
+                    _getStatusDescription(context, status),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: isActive
                               ? Theme.of(
@@ -522,7 +522,7 @@ class OrderStatusWidget extends ConsumerWidget {
     }
   }
 
-  String _getStatusDescription(OrderStatus status) {
+  String _getStatusDescription(BuildContext context, OrderStatus status) {
     switch (status) {
       case OrderStatus.received:
         return AppLocalizations.of(context)!.statusReceivedDescription;

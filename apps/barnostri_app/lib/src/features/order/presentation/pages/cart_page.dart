@@ -17,6 +17,8 @@ class _CartPageState extends ConsumerState<CartPage> {
   bool _isProcessingPayment = false;
   String? _currentOrderId;
 
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
