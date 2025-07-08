@@ -5,9 +5,9 @@ void main() {
   group('Category', () {
     const json = {
       'id': '1',
-      'nome': 'Entradas',
-      'ordem': 1,
-      'ativo': true,
+      'name': 'Entradas',
+      'sort_order': 1,
+      'active': true,
       'created_at': '2024-01-01T00:00:00.000Z',
       'updated_at': '2024-01-02T00:00:00.000Z',
     };
@@ -31,12 +31,12 @@ void main() {
   group('MenuItem', () {
     const json = {
       'id': '3',
-      'nome': 'Moqueca',
-      'descricao': 'Peixe fresco',
-      'preco': 45.9,
-      'categoria_id': '2',
-      'disponivel': true,
-      'imagem_url': null,
+      'name': 'Moqueca',
+      'description': 'Peixe fresco',
+      'price': 45.9,
+      'category_id': '2',
+      'available': true,
+      'image_url': null,
       'created_at': '2024-01-01T00:00:00.000Z',
       'updated_at': '2024-01-02T00:00:00.000Z',
     };
@@ -62,9 +62,9 @@ void main() {
   group('TableModel', () {
     const json = {
       'id': 't1',
-      'numero': '1',
+      'number': '1',
       'qr_token': 'token1',
-      'ativo': true,
+      'active': true,
       'created_at': '2024-01-01T00:00:00.000Z',
       'updated_at': '2024-01-02T00:00:00.000Z',
     };
@@ -86,9 +86,9 @@ void main() {
   group('UserModel', () {
     const json = {
       'id': 'u1',
-      'nome': 'Admin',
+      'name': 'Admin',
       'email': 'a@a.com',
-      'tipo': 'admin',
+      'role': 'admin',
       'created_at': '2024-01-01T00:00:00.000Z',
       'updated_at': '2024-01-02T00:00:00.000Z',
     };
@@ -110,11 +110,11 @@ void main() {
   group('OrderItem', () {
     const json = {
       'id': 'ip1',
-      'pedido_id': 'p1',
-      'item_cardapio_id': 'i1',
-      'quantidade': 2,
-      'observacao': 'Sem pimenta',
-      'preco_unitario': 10.0,
+      'order_id': 'p1',
+      'menu_item_id': 'i1',
+      'quantity': 2,
+      'note': 'Sem pimenta',
+      'unit_price': 10.0,
       'created_at': '2024-01-01T00:00:00.000Z',
     };
 
@@ -136,29 +136,29 @@ void main() {
   group('Order', () {
     final json = {
       'id': 'p1',
-      'mesa_id': 't1',
+      'table_id': 't1',
       'status': 'Recebido',
       'total': 20.0,
-      'forma_pagamento': 'Pix',
-      'pago': false,
+      'payment_method': 'Pix',
+      'paid': false,
       'created_at': '2024-01-01T00:00:00.000Z',
       'updated_at': '2024-01-02T00:00:00.000Z',
-      'mesas': {
+      'tables': {
         'id': 't1',
-        'numero': '1',
+        'number': '1',
         'qr_token': 'token1',
-        'ativo': true,
+        'active': true,
         'created_at': '2024-01-01T00:00:00.000Z',
         'updated_at': '2024-01-02T00:00:00.000Z',
       },
-      'itens_pedido': [
+      'order_items': [
         {
           'id': 'ip1',
-          'pedido_id': 'p1',
-          'item_cardapio_id': 'i1',
-          'quantidade': 1,
-          'observacao': '',
-          'preco_unitario': 10.0,
+          'order_id': 'p1',
+          'menu_item_id': 'i1',
+          'quantity': 1,
+          'note': '',
+          'unit_price': 10.0,
           'created_at': '2024-01-01T00:00:00.000Z',
         },
       ],
@@ -184,11 +184,11 @@ void main() {
   group('Payment', () {
     const json = {
       'id': 'pay1',
-      'pedido_id': 'p1',
-      'metodo': 'Pix',
-      'valor': 20.0,
+      'order_id': 'p1',
+      'method': 'Pix',
+      'amount': 20.0,
       'status': 'pendente',
-      'transacao_id': null,
+      'transaction_id': null,
       'created_at': '2024-01-01T00:00:00.000Z',
       'updated_at': '2024-01-02T00:00:00.000Z',
     };
@@ -216,7 +216,7 @@ void main() {
         name: 'Item',
         description: null,
         price: 5.0,
-        categoriaId: 'c1',
+        categoryId: 'c1',
         available: true,
         imageUrl: null,
         createdAt: DateTime.parse('2024-01-01T00:00:00.000Z'),
