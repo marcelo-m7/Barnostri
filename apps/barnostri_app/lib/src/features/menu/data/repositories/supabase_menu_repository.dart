@@ -87,10 +87,10 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<List<Category>> fetchCategories() async {
+  Future<List<CategoryModel>> fetchCategories() async {
     if (_client == null) {
       return [
-        Category(
+        CategoryModel(
           id: '1',
           name: 'Entradas',
           sortOrder: 1,
@@ -98,7 +98,7 @@ class SupabaseMenuRepository implements MenuRepository {
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
-        Category(
+        CategoryModel(
           id: '2',
           name: 'Bebidas',
           sortOrder: 2,
@@ -106,7 +106,7 @@ class SupabaseMenuRepository implements MenuRepository {
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
-        Category(
+        CategoryModel(
           id: '3',
           name: 'Pratos Principais',
           sortOrder: 3,
@@ -114,7 +114,7 @@ class SupabaseMenuRepository implements MenuRepository {
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),
-        Category(
+        CategoryModel(
           id: '4',
           name: 'Sobremesas',
           sortOrder: 4,
@@ -131,7 +131,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .eq('active', true)
           .order('sort_order');
       return (response as List<dynamic>)
-          .map((e) => Category.fromJson(e as Map<String, dynamic>))
+          .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
           .toList();
     } catch (e) {
       if (kDebugMode) {
@@ -209,12 +209,12 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<Category> addCategory({
+  Future<CategoryModel> addCategory({
     required String name,
     required int sortOrder,
   }) async {
     if (_client == null) {
-      return Category(
+      return CategoryModel(
         id: 'mock-cat-${DateTime.now().millisecondsSinceEpoch}',
         name: name,
         sortOrder: sortOrder,
@@ -228,7 +228,7 @@ class SupabaseMenuRepository implements MenuRepository {
         .insert({'name': name, 'sort_order': sortOrder, 'active': true})
         .select()
         .single();
-    return Category.fromJson(response as Map<String, dynamic>);
+    return CategoryModel.fromJson(response as Map<String, dynamic>);
   }
 
   @override

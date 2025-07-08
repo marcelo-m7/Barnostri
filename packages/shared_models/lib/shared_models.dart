@@ -1,7 +1,7 @@
 library;
 
 export 'src/models/table_model.dart';
-export 'src/models/category.dart';
+export 'src/models/category_model.dart';
 export 'src/models/menu_item.dart';
 export 'src/models/order.dart';
 export 'src/models/order_item.dart';

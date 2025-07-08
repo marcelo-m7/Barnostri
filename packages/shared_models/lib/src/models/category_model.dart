@@ -1,4 +1,4 @@
-class Category {
+class CategoryModel {
   final String id;
   final String name;
   final int sortOrder;
@@ -6,7 +6,7 @@ class Category {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Category({
+  CategoryModel({
     required this.id,
     required this.name,
     required this.sortOrder,
@@ -15,8 +15,8 @@ class Category {
     required this.updatedAt,
   });
 
-  factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(
       id: json['id'],
       name: json['name'],
       sortOrder: json['sort_order'],

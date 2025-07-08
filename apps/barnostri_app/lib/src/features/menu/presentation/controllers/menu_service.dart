@@ -4,7 +4,7 @@ import 'package:barnostri_app/src/core/repositories.dart';
 import 'package:barnostri_app/src/features/menu/domain/usecases/load_menu_use_case.dart';
 
 class MenuState {
-  final List<Category> categories;
+  final List<CategoryModel> categories;
   final List<MenuItem> menuItems;
   final List<TableModel> tables;
   final bool isLoading;
@@ -19,7 +19,7 @@ class MenuState {
   });
 
   MenuState copyWith({
-    List<Category>? categories,
+    List<CategoryModel>? categories,
     List<MenuItem>? menuItems,
     List<TableModel>? tables,
     bool? isLoading,
@@ -39,16 +39,19 @@ class MenuService extends StateNotifier<MenuState> {
   final MenuRepository _menuRepository;
   final LoadMenuUseCase _loadMenuUseCase;
   MenuService(this._menuRepository, this._loadMenuUseCase)
-      : super(const MenuState());
+    : super(const MenuState());
 
-  Future<T?> _guard<T>(Future<T> Function() action,
-      {String Function(Object)? onError}) async {
+  Future<T?> _guard<T>(
+    Future<T> Function() action, {
+    String Function(Object)? onError,
+  }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       return await action();
     } catch (e) {
-      state =
-          state.copyWith(error: onError != null ? onError(e) : e.toString());
+      state = state.copyWith(
+        error: onError != null ? onError(e) : e.toString(),
+      );
       return null;
     } finally {
       state = state.copyWith(isLoading: false);
@@ -56,33 +59,24 @@ class MenuService extends StateNotifier<MenuState> {
   }
 
   Future<void> loadCategories() async {
-    await _guard<void>(
-      () async {
-        final categories = await _menuRepository.fetchCategories();
-        state = state.copyWith(categories: categories);
-      },
-      onError: (e) => 'Erro ao carregar categorias: $e',
-    );
+    await _guard<void>(() async {
+      final categories = await _menuRepository.fetchCategories();
+      state = state.copyWith(categories: categories);
+    }, onError: (e) => 'Erro ao carregar categorias: $e');
   }
 
   Future<void> loadMenuItems() async {
-    await _guard<void>(
-      () async {
-        final items = await _menuRepository.fetchMenuItems();
-        state = state.copyWith(menuItems: items);
-      },
-      onError: (e) => 'Erro ao carregar itens do cardápio: $e',
-    );
+    await _guard<void>(() async {
+      final items = await _menuRepository.fetchMenuItems();
+      state = state.copyWith(menuItems: items);
+    }, onError: (e) => 'Erro ao carregar itens do cardápio: $e');
   }
 
   Future<void> loadTables() async {
-    await _guard<void>(
-      () async {
-        final tables = await _menuRepository.fetchTables();
-        state = state.copyWith(tables: tables);
-      },
-      onError: (e) => 'Erro ao carregar mesas: $e',
-    );
+    await _guard<void>(() async {
+      final tables = await _menuRepository.fetchTables();
+      state = state.copyWith(tables: tables);
+    }, onError: (e) => 'Erro ao carregar mesas: $e');
   }
 
   Future<void> loadAll() async {
@@ -111,7 +105,7 @@ class MenuService extends StateNotifier<MenuState> {
     }).toList();
   }
 
-  Category? getCategoryById(String id) {
+  CategoryModel? getCategoryById(String id) {
     try {
       return state.categories.firstWhere((cat) => cat.id == id);
     } catch (_) {
@@ -135,19 +129,20 @@ class MenuService extends StateNotifier<MenuState> {
     }
   }
 
-  Future<bool> addCategory(
-      {required String name, required int sortOrder}) async {
-    final result = await _guard<bool>(
-      () async {
-        final newCat =
-            await _menuRepository.addCategory(name: name, sortOrder: sortOrder);
-        final list = [...state.categories, newCat]
-          ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
-        state = state.copyWith(categories: list);
-        return true;
-      },
-      onError: (e) => 'Erro ao adicionar categoria: $e',
-    );
+  Future<bool> addCategory({
+    required String name,
+    required int sortOrder,
+  }) async {
+    final result = await _guard<bool>(() async {
+      final newCat = await _menuRepository.addCategory(
+        name: name,
+        sortOrder: sortOrder,
+      );
+      final list = [...state.categories, newCat]
+        ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+      state = state.copyWith(categories: list);
+      return true;
+    }, onError: (e) => 'Erro ao adicionar categoria: $e');
     return result ?? false;
   }
 
@@ -157,21 +152,18 @@ class MenuService extends StateNotifier<MenuState> {
     int? sortOrder,
     bool? active,
   }) async {
-    final ok = await _guard<bool>(
-      () async {
-        final result = await _menuRepository.updateCategory(
-          id: id,
-          name: name,
-          sortOrder: sortOrder,
-          active: active,
-        );
-        if (result) {
-          await loadCategories();
-        }
-        return result;
-      },
-      onError: (e) => 'Erro ao atualizar categoria: $e',
-    );
+    final ok = await _guard<bool>(() async {
+      final result = await _menuRepository.updateCategory(
+        id: id,
+        name: name,
+        sortOrder: sortOrder,
+        active: active,
+      );
+      if (result) {
+        await loadCategories();
+      }
+      return result;
+    }, onError: (e) => 'Erro ao atualizar categoria: $e');
     return ok ?? false;
   }
 
@@ -182,22 +174,19 @@ class MenuService extends StateNotifier<MenuState> {
     required String categoryId,
     String? imageUrl,
   }) async {
-    final result = await _guard<bool>(
-      () async {
-        final newItem = await _menuRepository.addMenuItem(
-          name: name,
-          description: description,
-          price: price,
-          categoryId: categoryId,
-          imageUrl: imageUrl,
-        );
-        final list = [...state.menuItems, newItem]
-          ..sort((a, b) => a.name.compareTo(b.name));
-        state = state.copyWith(menuItems: list);
-        return true;
-      },
-      onError: (e) => 'Erro ao adicionar item: $e',
-    );
+    final result = await _guard<bool>(() async {
+      final newItem = await _menuRepository.addMenuItem(
+        name: name,
+        description: description,
+        price: price,
+        categoryId: categoryId,
+        imageUrl: imageUrl,
+      );
+      final list = [...state.menuItems, newItem]
+        ..sort((a, b) => a.name.compareTo(b.name));
+      state = state.copyWith(menuItems: list);
+      return true;
+    }, onError: (e) => 'Erro ao adicionar item: $e');
     return result ?? false;
   }
 
@@ -210,24 +199,21 @@ class MenuService extends StateNotifier<MenuState> {
     bool? available,
     String? imageUrl,
   }) async {
-    final ok = await _guard<bool>(
-      () async {
-        final result = await _menuRepository.updateMenuItem(
-          id: id,
-          name: name,
-          description: description,
-          price: price,
-          categoryId: categoryId,
-          available: available,
-          imageUrl: imageUrl,
-        );
-        if (result) {
-          await loadMenuItems();
-        }
-        return result;
-      },
-      onError: (e) => 'Erro ao atualizar item: $e',
-    );
+    final ok = await _guard<bool>(() async {
+      final result = await _menuRepository.updateMenuItem(
+        id: id,
+        name: name,
+        description: description,
+        price: price,
+        categoryId: categoryId,
+        available: available,
+        imageUrl: imageUrl,
+      );
+      if (result) {
+        await loadMenuItems();
+      }
+      return result;
+    }, onError: (e) => 'Erro ao atualizar item: $e');
     return ok ?? false;
   }
 
@@ -238,18 +224,14 @@ class MenuService extends StateNotifier<MenuState> {
   }
 
   Future<bool> deleteMenuItem(String id) async {
-    final ok = await _guard<bool>(
-      () async {
-        final success = await _menuRepository.deleteMenuItem(id);
-        if (success) {
-          final list = [...state.menuItems]
-            ..removeWhere((item) => item.id == id);
-          state = state.copyWith(menuItems: list);
-        }
-        return success;
-      },
-      onError: (e) => 'Erro ao deletar item: $e',
-    );
+    final ok = await _guard<bool>(() async {
+      final success = await _menuRepository.deleteMenuItem(id);
+      if (success) {
+        final list = [...state.menuItems]..removeWhere((item) => item.id == id);
+        state = state.copyWith(menuItems: list);
+      }
+      return success;
+    }, onError: (e) => 'Erro ao deletar item: $e');
     return ok ?? false;
   }
 
@@ -257,19 +239,16 @@ class MenuService extends StateNotifier<MenuState> {
     required String number,
     required String qrToken,
   }) async {
-    final result = await _guard<bool>(
-      () async {
-        final newTable = await _menuRepository.addTable(
-          number: number,
-          qrToken: qrToken,
-        );
-        final list = [...state.tables, newTable]
-          ..sort((a, b) => a.number.compareTo(b.number));
-        state = state.copyWith(tables: list);
-        return true;
-      },
-      onError: (e) => 'Erro ao adicionar mesa: $e',
-    );
+    final result = await _guard<bool>(() async {
+      final newTable = await _menuRepository.addTable(
+        number: number,
+        qrToken: qrToken,
+      );
+      final list = [...state.tables, newTable]
+        ..sort((a, b) => a.number.compareTo(b.number));
+      state = state.copyWith(tables: list);
+      return true;
+    }, onError: (e) => 'Erro ao adicionar mesa: $e');
     return result ?? false;
   }
 
@@ -278,12 +257,10 @@ class MenuService extends StateNotifier<MenuState> {
   }
 }
 
-final menuServiceProvider = StateNotifierProvider<MenuService, MenuState>(
-  (
-    ref,
-  ) {
-    final menuRepo = ref.watch(menuRepositoryProvider);
-    final loadMenu = LoadMenuUseCase(menuRepo);
-    return MenuService(menuRepo, loadMenu);
-  },
-);
+final menuServiceProvider = StateNotifierProvider<MenuService, MenuState>((
+  ref,
+) {
+  final menuRepo = ref.watch(menuRepositoryProvider);
+  final loadMenu = LoadMenuUseCase(menuRepo);
+  return MenuService(menuRepo, loadMenu);
+});
