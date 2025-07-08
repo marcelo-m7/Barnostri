@@ -3,7 +3,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/services/order_service.dart';
-import '../../../l10n/generated/app_localizations.dart';
+import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 import 'menu_page.dart';
 
 class QrScannerPage extends ConsumerStatefulWidget {
@@ -245,6 +245,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
   }
 
   void _showManualInputDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final textController = TextEditingController();
 
     showDialog(

@@ -119,6 +119,14 @@
   "tableCode": "Code de la Table",
   "tableCodePrompt": "Entrez le code qui se trouve sur la table:",
   "tableCodeHint": "Ex: table_001_qr",
+  "qrCameraInstructions": "Pointez la caméra vers le QR code",
+  "@qrCameraInstructions": {
+    "description": "Instructions pour scanner le QR code"
+  },
+  "qrCodeLocation": "Vous le trouverez sur votre table",
+  "@qrCodeLocation": {
+    "description": "Explique où se trouve le QR code"
+  },
   "insertCodeManually": "Saisir le code manuellement",
   "orderItems": "Articles de la Commande",
   "totalItems": "Total d'Articles:",

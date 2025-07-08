@@ -393,6 +393,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get tableCodeHint => 'Ex: mesa_001_qr';
 
   @override
+  String get qrCameraInstructions => 'Aponte a câmera para o QR code';
+
+  @override
+  String get qrCodeLocation => 'Ele está localizado na sua mesa';
+
+  @override
   String get insertCodeManually => 'Inserir código manualmente';
 
   @override
