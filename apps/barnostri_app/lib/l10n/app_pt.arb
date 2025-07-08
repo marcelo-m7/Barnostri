@@ -119,6 +119,14 @@
   "tableCode": "Código da Mesa",
   "tableCodePrompt": "Digite o código que está na mesa:",
   "tableCodeHint": "Ex: mesa_001_qr",
+  "qrCameraInstructions": "Aponte a câmera para o QR code",
+  "@qrCameraInstructions": {
+    "description": "Instruções para escanear o QR code"
+  },
+  "qrCodeLocation": "Ele está localizado na sua mesa",
+  "@qrCodeLocation": {
+    "description": "Explica onde o QR code está localizado"
+  },
   "insertCodeManually": "Inserir código manualmente",
   "orderItems": "Itens do Pedido",
   "totalItems": "Total de Itens:",

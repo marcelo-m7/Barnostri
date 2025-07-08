@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/services/language_service.dart';
-import '../l10n/generated/app_localizations.dart';
+import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 import '../core/theme/theme.dart';
 
 class LanguageSelector extends ConsumerWidget {
@@ -17,18 +17,19 @@ class LanguageSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final languageService = ref.watch(languageServiceProvider.notifier);
-    final currentLocale = ref.watch(languageServiceProvider);
     final l10n = AppLocalizations.of(context)!;
 
     if (showAsBottomSheet) {
-      return _buildBottomSheet(context, languageService, l10n);
+      return _buildBottomSheet(context, ref, languageService, l10n);
     }
 
-    return _buildDropdown(context, languageService, l10n);
+    return _buildDropdown(context, ref, languageService, l10n);
   }
 
-  Widget _buildDropdown(BuildContext context, LanguageService languageService,
+  Widget _buildDropdown(
+      BuildContext context, WidgetRef ref, LanguageService languageService,
       AppLocalizations l10n) {
+    final currentLocale = ref.watch(languageServiceProvider);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -80,7 +81,7 @@ class LanguageSelector extends ConsumerWidget {
     );
   }
 
-  Widget _buildBottomSheet(BuildContext context,
+  Widget _buildBottomSheet(BuildContext context, WidgetRef ref,
       LanguageService languageService, AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(24),
