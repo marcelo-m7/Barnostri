@@ -10,10 +10,9 @@ import 'src/core/services/language_service.dart';
 import 'src/features/order/pages/qr_scanner_page.dart';
 import 'src/features/order/pages/cart_page.dart';
 import 'src/features/auth/pages/admin_page.dart';
+import 'src/features/auth/controllers/auth_service.dart';
 import 'src/widgets/language_selector.dart';
 import 'l10n/generated/app_localizations.dart';
-
-final AuthRepository _authRepo = SupabaseAuthRepository();
 
 final _router = GoRouter(
   routes: [
@@ -27,8 +26,9 @@ final _router = GoRouter(
       path: '/admin',
       builder: (context, state) => const AdminPage(),
       redirect: (context, state) {
-        final user = _authRepo.getCurrentUser();
-        if (user == null) {
+        final container = ProviderScope.containerOf(context, listen: false);
+        final isAuth = container.read(authServiceProvider).isAuthenticated;
+        if (!isAuth) {
           return '/';
         }
         return null;

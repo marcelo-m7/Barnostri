@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../../core/services/order_service.dart';
 import '../../../core/repositories.dart';
+import '../controllers/auth_service.dart';
 import '../../../core/services/menu_service.dart';
 import '../../../widgets/order_status_widget.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -17,34 +18,21 @@ class AdminPage extends ConsumerStatefulWidget {
 class _AdminPageState extends ConsumerState<AdminPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  bool _isAuthenticated = false;
-  bool _isLoading = true;
-  final AuthRepository _authRepo = SupabaseAuthRepository();
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _checkAuthentication();
-  }
-
-  void _checkAuthentication() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    final user = ref.read(authRepositoryProvider).getCurrentUser();
-
-    setState(() {
-      _isAuthenticated = user != null;
-      _isLoading = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
+    final authState = ref.watch(authServiceProvider);
+    if (authState.isLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    if (!_isAuthenticated) {
+    if (!authState.isAuthenticated) {
       return _buildLoginScreen();
     }
 
@@ -54,7 +42,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
   Widget _buildLoginScreen() {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
-    bool isLogging = false;
+    final authState = ref.watch(authServiceProvider);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -151,70 +139,54 @@ class _AdminPageState extends ConsumerState<AdminPage>
               const SizedBox(height: 32),
 
               // Login button
-              StatefulBuilder(
-                builder: (context, setState) {
-                  return SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: isLogging
-                          ? null
-                          : () async {
-                              setState(() => isLogging = true);
-
-                              try {
-                                await ref
-                                    .read(authRepositoryProvider)
-                                    .signIn(
-                                      email: emailController.text.trim(),
-                                      password: passwordController.text.trim(),
-                                    );
-
-                                this.setState(() {
-                                  _isAuthenticated = true;
-                                });
-                              } catch (e) {
-                              } catch (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Erro no login: $e'),
-                                    backgroundColor: Theme.of(
-                                      context,
-                                    ).colorScheme.error,
-                                  ),
-                                );
-                              } finally {
-                                setState(() => isLogging = false);
-                              }
-                            },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Theme.of(
-                          context,
-                        ).colorScheme.onPrimary,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      child: isLogging
-                          ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: authState.isLoading
+                      ? null
+                      : () async {
+                          await ref
+                              .read(authServiceProvider.notifier)
+                              .login(
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                              );
+                          final error = ref.read(authServiceProvider).error;
+                          if (error != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Erro no login: $error'),
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.error,
                               ),
-                            )
-                          : Text(
-                              'Entrar',
-                              style: Theme.of(context).textTheme.labelLarge
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ),
+                            );
+                          }
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                  );
-                },
+                  ),
+                  child: authState.isLoading
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text(
+                          'Entrar',
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                ),
               ),
-
               const SizedBox(height: 24),
 
               // Demo credentials
@@ -268,10 +240,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
         actions: [
           IconButton(
             onPressed: () async {
-              await ref.read(authRepositoryProvider).signOut();
-              setState(() {
-                _isAuthenticated = false;
-              });
+              await ref.read(authServiceProvider.notifier).logout();
             },
             icon: const Icon(Icons.logout),
           ),
