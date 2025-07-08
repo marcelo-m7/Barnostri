@@ -16,3 +16,4 @@ export 'src/features/menu/data/menu_repository.dart';
 export 'src/features/menu/data/supabase_menu_repository.dart';
 export 'src/features/order/data/pedido_repository.dart';
 export 'src/features/order/data/supabase_pedido_repository.dart';
+export 'src/utils/formatting.dart';

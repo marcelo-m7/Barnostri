@@ -272,7 +272,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                   ),
                 ),
                 Text(
-                  OrderService.formatPrice(orderState.cartTotal),
+                  formatCurrency(orderState.cartTotal),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -461,7 +461,7 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                       ),
                       const SizedBox(width: 16),
                       Text(
-                        OrderService().formatPrice(widget.item.preco),
+                        formatCurrency(widget.item.preco),
                         style: Theme.of(context).textTheme.headlineSmall
                             ?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
@@ -533,7 +533,9 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                     controller: _observationController,
                     maxLines: 3,
                     decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.observationExample,
+                      hintText: AppLocalizations.of(
+                        context,
+                      )!.observationExample,
                       filled: true,
                       fillColor: Theme.of(context).colorScheme.surface,
                       border: OutlineInputBorder(
@@ -571,8 +573,9 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    AppLocalizations.of(context)!
-                                        .addedToCartMessage(widget.item.nome),
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.addedToCartMessage(widget.item.nome),
                                   ),
                                   backgroundColor: Theme.of(
                                     context,
@@ -594,7 +597,7 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                       ),
                       child: Text(
                         widget.item.disponivel
-                            ? '${AppLocalizations.of(context)!.addToCart} - ${OrderService().formatPrice(widget.item.preco * _quantity)}'
+                            ? '${AppLocalizations.of(context)!.addToCart} - ${formatCurrency(widget.item.preco * _quantity)}'
                             : AppLocalizations.of(context)!.itemUnavailable,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.bold,

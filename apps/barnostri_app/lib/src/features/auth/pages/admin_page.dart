@@ -411,7 +411,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 ),
               ),
               title: Text(item.nome),
-              subtitle: Text(OrderService().formatPrice(item.preco)),
+              subtitle: Text(formatCurrency(item.preco)),
               trailing: Switch(
                 value: item.disponivel,
                 onChanged: (value) {
@@ -542,22 +542,30 @@ class _AdminPageState extends ConsumerState<AdminPage>
             children: [
               TextField(
                 controller: nomeController,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.name),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.name,
+                ),
               ),
               TextField(
                 controller: descricaoController,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.description),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.description,
+                ),
                 maxLines: 3,
               ),
               TextField(
                 controller: precoController,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.price),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.price,
+                ),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: selectedCategoryId,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.category),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.category,
+                ),
                 items: menuService.categorias
                     .map(
                       (cat) => DropdownMenuItem(
@@ -609,11 +617,15 @@ class _AdminPageState extends ConsumerState<AdminPage>
           children: [
             TextField(
               controller: nomeController,
-              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.name),
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.name,
+              ),
             ),
             TextField(
               controller: ordemController,
-              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.orderField),
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.orderField,
+              ),
               keyboardType: TextInputType.number,
             ),
           ],
@@ -651,11 +663,15 @@ class _AdminPageState extends ConsumerState<AdminPage>
           children: [
             TextField(
               controller: numeroController,
-              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.tableNumberLabel),
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.tableNumberLabel,
+              ),
             ),
             TextField(
               controller: qrTokenController,
-              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.qrToken),
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.qrToken,
+              ),
             ),
           ],
         ),

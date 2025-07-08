@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_models/shared_models.dart';
-import '../core/services/order_service.dart';
 import '../../l10n/generated/app_localizations.dart';
 
 class MenuItemCard extends StatefulWidget {
@@ -136,7 +135,7 @@ class _MenuItemCardState extends State<MenuItemCard>
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                OrderService.formatPrice(widget.item.preco),
+                                formatCurrency(widget.item.preco),
                                 style: Theme.of(context).textTheme.labelMedium
                                     ?.copyWith(
                                       color: Theme.of(
@@ -225,8 +224,12 @@ class _MenuItemCardState extends State<MenuItemCard>
                                   const SizedBox(width: 4),
                                   Text(
                                     widget.item.disponivel
-                                        ? AppLocalizations.of(context)!.available
-                                        : AppLocalizations.of(context)!.unavailable,
+                                        ? AppLocalizations.of(
+                                            context,
+                                          )!.available
+                                        : AppLocalizations.of(
+                                            context,
+                                          )!.unavailable,
                                     style: Theme.of(context)
                                         .textTheme
                                         .labelSmall

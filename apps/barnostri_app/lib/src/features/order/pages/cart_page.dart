@@ -226,7 +226,7 @@ class _CartPageState extends ConsumerState<CartPage> {
               ),
               const SizedBox(width: 16),
               Text(
-                OrderService.formatPrice(cartItem.subtotal),
+                formatCurrency(cartItem.subtotal),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
@@ -379,7 +379,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                OrderService.formatPrice(orderState.cartTotal),
+                formatCurrency(orderState.cartTotal),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
@@ -433,7 +433,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                     ),
                   )
                 : Text(
-                    '${l10n.checkout} - ${OrderService.formatPrice(orderState.cartTotal)}',
+                    '${l10n.checkout} - ${formatCurrency(orderState.cartTotal)}',
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -548,9 +548,7 @@ class _CartPageState extends ConsumerState<CartPage> {
             Text(AppLocalizations.of(context)!.orderPlaced),
           ],
         ),
-        content: Text(
-          AppLocalizations.of(context)!.orderConfirmedKitchen,
-        ),
+        content: Text(AppLocalizations.of(context)!.orderConfirmedKitchen),
         actions: [
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),

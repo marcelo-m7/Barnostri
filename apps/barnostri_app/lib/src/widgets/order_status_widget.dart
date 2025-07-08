@@ -357,7 +357,7 @@ class OrderStatusWidget extends ConsumerWidget {
                 ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                OrderService.formatPrice(pedido.total),
+                formatCurrency(pedido.total),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
@@ -421,7 +421,7 @@ class OrderStatusWidget extends ConsumerWidget {
           ),
           const SizedBox(width: 12),
           Text(
-            OrderService.formatPrice(item.subtotal),
+            formatCurrency(item.subtotal),
             style: Theme.of(
               context,
             ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -462,8 +462,11 @@ class OrderStatusWidget extends ConsumerWidget {
                     onPressed: () =>
                         _updateOrderStatus(context, ref, nextStatus),
                     icon: const Icon(Icons.arrow_forward),
-                    label:
-                        Text(AppLocalizations.of(context)!.markAsStatus(nextStatus.displayName)),
+                    label: Text(
+                      AppLocalizations.of(
+                        context,
+                      )!.markAsStatus(nextStatus.displayName),
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -556,8 +559,9 @@ class OrderStatusWidget extends ConsumerWidget {
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content:
-              Text(AppLocalizations.of(context)!.statusUpdated(newStatus.displayName)),
+          content: Text(
+            AppLocalizations.of(context)!.statusUpdated(newStatus.displayName),
+          ),
           backgroundColor: Theme.of(context).colorScheme.primary,
         ),
       );
@@ -565,9 +569,9 @@ class OrderStatusWidget extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            AppLocalizations.of(context)!.statusUpdateErrorDetailed(
-              orderService.state.error ?? '',
-            ),
+            AppLocalizations.of(
+              context,
+            )!.statusUpdateErrorDetailed(orderService.state.error ?? ''),
           ),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),

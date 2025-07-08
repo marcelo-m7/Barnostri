@@ -277,10 +277,6 @@ class MenuService extends StateNotifier<MenuState> {
     }
   }
 
-  static String formatPrice(double price) {
-    return 'R\$ ${price.toStringAsFixed(2).replaceAll('.', ',')}';
-  }
-
   void clearError() {
     state = state.copyWith(error: null);
   }
