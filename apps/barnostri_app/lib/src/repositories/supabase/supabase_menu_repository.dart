@@ -200,4 +200,99 @@ class SupabaseMenuRepository implements MenuRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<Map<String, dynamic>> addCategoria({
+    required String nome,
+    required int ordem,
+  }) async {
+    final response = await SupabaseConfig.client
+        .from('categorias')
+        .insert({'nome': nome, 'ordem': ordem, 'ativo': true})
+        .select()
+        .single();
+    return response;
+  }
+
+  @override
+  Future<void> updateCategoria(
+    String id, {
+    String? nome,
+    int? ordem,
+    bool? ativo,
+  }) async {
+    final updateData = <String, dynamic>{};
+    if (nome != null) updateData['nome'] = nome;
+    if (ordem != null) updateData['ordem'] = ordem;
+    if (ativo != null) updateData['ativo'] = ativo;
+    await SupabaseConfig.client
+        .from('categorias')
+        .update(updateData)
+        .eq('id', id);
+  }
+
+  @override
+  Future<Map<String, dynamic>> addItemCardapio({
+    required String nome,
+    String? descricao,
+    required double preco,
+    required String categoriaId,
+    String? imagemUrl,
+  }) async {
+    final response = await SupabaseConfig.client
+        .from('itens_cardapio')
+        .insert({
+          'nome': nome,
+          'descricao': descricao,
+          'preco': preco,
+          'categoria_id': categoriaId,
+          'disponivel': true,
+          'imagem_url': imagemUrl,
+        })
+        .select('*, categorias(*)')
+        .single();
+    return response;
+  }
+
+  @override
+  Future<void> updateItemCardapio(
+    String id, {
+    String? nome,
+    String? descricao,
+    double? preco,
+    String? categoriaId,
+    bool? disponivel,
+    String? imagemUrl,
+  }) async {
+    final updateData = <String, dynamic>{};
+    if (nome != null) updateData['nome'] = nome;
+    if (descricao != null) updateData['descricao'] = descricao;
+    if (preco != null) updateData['preco'] = preco;
+    if (categoriaId != null) updateData['categoria_id'] = categoriaId;
+    if (disponivel != null) updateData['disponivel'] = disponivel;
+    if (imagemUrl != null) updateData['imagem_url'] = imagemUrl;
+    await SupabaseConfig.client
+        .from('itens_cardapio')
+        .update(updateData)
+        .eq('id', id);
+  }
+
+  @override
+  Future<bool> deleteItemCardapio(String id) async {
+    await SupabaseConfig.client.from('itens_cardapio').delete().eq('id', id);
+    return true;
+  }
+
+  @override
+  Future<Map<String, dynamic>> addMesa({
+    required String numero,
+    required String qrToken,
+  }) async {
+    final response = await SupabaseConfig.client
+        .from('mesas')
+        .insert({'numero': numero, 'qr_token': qrToken, 'ativo': true})
+        .select()
+        .single();
+    return response;
+  }
 }

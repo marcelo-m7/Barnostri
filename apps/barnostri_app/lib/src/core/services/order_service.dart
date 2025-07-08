@@ -2,8 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../repositories/order_repository.dart';
 import '../../repositories/menu_repository.dart';
-import '../../repositories/supabase/supabase_order_repository.dart';
-import '../../repositories/supabase/supabase_menu_repository.dart';
+import 'repository_providers.dart';
 
 class OrderState {
   final List<CartItem> cartItems;
@@ -39,10 +38,10 @@ class OrderState {
 }
 
 class OrderService extends StateNotifier<OrderState> {
-  final OrderRepository _repo = SupabaseOrderRepository();
-  final MenuRepository _menuRepo = SupabaseMenuRepository();
+  final OrderRepository _repo;
+  final MenuRepository _menuRepo;
 
-  OrderService() : super(const OrderState());
+  OrderService(this._repo, this._menuRepo) : super(const OrderState());
 
   void setMesa(Mesa mesa) {
     state = state.copyWith(currentMesa: mesa);
@@ -226,6 +225,10 @@ class OrderService extends StateNotifier<OrderState> {
   }
 }
 
-final orderServiceProvider = StateNotifierProvider<OrderService, OrderState>(
-  (ref) => OrderService(),
-);
+final orderServiceProvider = StateNotifierProvider<OrderService, OrderState>((
+  ref,
+) {
+  final repo = ref.watch(orderRepositoryProvider);
+  final menuRepo = ref.watch(menuRepositoryProvider);
+  return OrderService(repo, menuRepo);
+});
