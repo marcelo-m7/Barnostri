@@ -12,9 +12,7 @@ class SupabaseConfig {
 
   static Future<void> initialize({String env = 'dev'}) async {
     try {
-      final configJson = await rootBundle.loadString(
-        'supabase/supabase-config.json',
-      );
+      final configJson = await rootBundle.loadString('supabase/supabase-config.json');
       final data = jsonDecode(configJson) as Map<String, dynamic>;
       final envConfig = data[env] as Map<String, dynamic>;
       final supabaseUrl = envConfig['SUPABASE_URL'] as String;
@@ -30,4 +28,20 @@ class SupabaseConfig {
       }
     }
   }
+
+  static User? getCurrentUser() {
+    if (!_isConfigured) {
+      return null;
+    }
+    return _client.auth.currentUser;
+  }
+
+  static Stream<AuthState> get authStateChanges {
+    if (!_isConfigured) {
+      // Return mock auth state stream for demo
+      return Stream.value(AuthState(AuthChangeEvent.signedOut, null));
+    }
+    return _client.auth.onAuthStateChange;
+  }
+
 }
