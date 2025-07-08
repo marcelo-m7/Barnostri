@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
-import '../../../repositories/auth_repository.dart';
-import '../../../repositories/supabase/supabase_auth_repository.dart';
 import '../../../core/services/order_service.dart';
 import '../../../core/repositories.dart';
 import '../../../core/services/menu_service.dart';
@@ -16,7 +14,8 @@ class AdminPage extends ConsumerStatefulWidget {
   ConsumerState<AdminPage> createState() => _AdminPageState();
 }
 
-class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProviderStateMixin {
+class _AdminPageState extends ConsumerState<AdminPage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isAuthenticated = false;
   bool _isLoading = true;
@@ -72,23 +71,31 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                   color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Icon(Icons.admin_panel_settings, size: 64, color: Theme.of(context).colorScheme.onPrimary),
+                child: Icon(
+                  Icons.admin_panel_settings,
+                  size: 64,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
 
               const SizedBox(height: 32),
 
               Text(
                 'Barnostri Admin',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
 
               const SizedBox(height: 8),
 
               Text(
                 'Acesso restrito para funcionários',
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withOpacity(0.7),
+                ),
               ),
 
               const SizedBox(height: 48),
@@ -99,12 +106,19 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  prefixIcon: Icon(Icons.email, color: Theme.of(context).colorScheme.primary),
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   filled: true,
                   fillColor: Theme.of(context).colorScheme.surface,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: Theme.of(context).colorScheme.outline.withOpacity(0.3)),
+                    borderSide: BorderSide(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.outline.withOpacity(0.3),
+                    ),
                   ),
                 ),
               ),
@@ -117,12 +131,19 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Senha',
-                  prefixIcon: Icon(Icons.lock, color: Theme.of(context).colorScheme.primary),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   filled: true,
                   fillColor: Theme.of(context).colorScheme.surface,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: Theme.of(context).colorScheme.outline.withOpacity(0.3)),
+                    borderSide: BorderSide(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.outline.withOpacity(0.3),
+                    ),
                   ),
                 ),
               ),
@@ -156,8 +177,9 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text('Erro no login: $e'),
-                                    backgroundColor: Theme.of(context).colorScheme.error,
-
+                                    backgroundColor: Theme.of(
+                                      context,
+                                    ).colorScheme.error,
                                   ),
                                 );
                               } finally {
@@ -166,19 +188,27 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                             },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                        foregroundColor: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
                       ),
                       child: isLogging
                           ? const SizedBox(
                               width: 20,
                               height: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
                             )
                           : Text(
                               'Entrar',
-                              style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
+                              style: Theme.of(context).textTheme.labelLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                     ),
                   );
@@ -191,23 +221,31 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.secondary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
                   children: [
                     Text(
                       'Credenciais de demonstração:',
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'Email: admin@barnostri.com',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
                     ),
                     Text(
                       'Senha: admin123',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
                     ),
                   ],
                 ),
@@ -241,7 +279,9 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
         bottom: TabBar(
           controller: _tabController,
           labelColor: Theme.of(context).colorScheme.onPrimary,
-          unselectedLabelColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
+          unselectedLabelColor: Theme.of(
+            context,
+          ).colorScheme.onPrimary.withOpacity(0.7),
           indicatorColor: Theme.of(context).colorScheme.onPrimary,
           tabs: [
             Tab(text: l10n.orders, icon: const Icon(Icons.restaurant_menu)),
@@ -250,7 +290,10 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
           ],
         ),
       ),
-      body: TabBarView(controller: _tabController, children: [_buildOrdersTab(), _buildMenuTab(), _buildTablesTab()]),
+      body: TabBarView(
+        controller: _tabController,
+        children: [_buildOrdersTab(), _buildMenuTab(), _buildTablesTab()],
+      ),
     );
   }
 
@@ -271,16 +314,25 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.error_outline, size: 64, color: Theme.of(context).colorScheme.error),
+                    Icon(
+                      Icons.error_outline,
+                      size: 64,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                     const SizedBox(height: 16),
-                    Text(l10n.errorLoadingOrders, style: Theme.of(context).textTheme.headlineSmall),
+                    Text(
+                      l10n.errorLoadingOrders,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
                   ],
                 ),
               );
             }
 
             final pedidos = snapshot.data ?? [];
-            final activePedidos = pedidos.where((p) => p.status != 'Entregue' && p.status != 'Cancelado').toList();
+            final activePedidos = pedidos
+                .where((p) => p.status != 'Entregue' && p.status != 'Cancelado')
+                .toList();
 
             if (activePedidos.isEmpty) {
               return Center(
@@ -290,16 +342,23 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                     Icon(
                       Icons.inbox_outlined,
                       size: 64,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.3),
                     ),
                     const SizedBox(height: 16),
-                    Text(l10n.noActiveOrders, style: Theme.of(context).textTheme.headlineSmall),
+                    Text(
+                      l10n.noActiveOrders,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
                     const SizedBox(height: 8),
                     Text(
                       l10n.newOrdersAppearHere,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.7),
+                      ),
                     ),
                   ],
                 ),
@@ -346,7 +405,12 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                     ],
                   ),
                   Expanded(
-                    child: TabBarView(children: [_buildMenuItemsList(menuService), _buildCategoriesList(menuService)]),
+                    child: TabBarView(
+                      children: [
+                        _buildMenuItemsList(menuService),
+                        _buildCategoriesList(menuService),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -368,7 +432,9 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
             margin: const EdgeInsets.only(bottom: 8),
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: item.disponivel ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+                backgroundColor: item.disponivel
+                    ? Colors.green.withOpacity(0.1)
+                    : Colors.red.withOpacity(0.1),
 
                 child: Icon(
                   item.disponivel ? Icons.check : Icons.close,
@@ -407,11 +473,15 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
             margin: const EdgeInsets.only(bottom: 8),
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                backgroundColor: Theme.of(
+                  context,
+                ).colorScheme.secondary.withOpacity(0.1),
                 child: Text(categoria.ordem.toString()),
               ),
               title: Text(categoria.nome),
-              subtitle: Text('${menuService.getItensByCategoria(categoria.id).length} itens'),
+              subtitle: Text(
+                '${menuService.getItensByCategoria(categoria.id).length} itens',
+              ),
               trailing: Icon(
                 categoria.ativo ? Icons.visibility : Icons.visibility_off,
                 color: categoria.ativo
@@ -453,12 +523,15 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundColor: mesa.ativo
-                            ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+                            ? Theme.of(
+                                context,
+                              ).colorScheme.primary.withOpacity(0.1)
                             : Colors.grey.withOpacity(0.1),
                         child: Icon(
                           Icons.table_restaurant,
-                          color: mesa.ativo ? Theme.of(context).colorScheme.primary : Colors.grey,
-
+                          color: mesa.ativo
+                              ? Theme.of(context).colorScheme.primary
+                              : Colors.grey,
                         ),
                       ),
                       title: Text('Mesa ${mesa.numero}'),
@@ -517,7 +590,12 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                 value: selectedCategoryId,
                 decoration: const InputDecoration(labelText: 'Categoria'),
                 items: menuService.categorias
-                    .map((cat) => DropdownMenuItem(value: cat.id, child: Text(cat.nome)))
+                    .map(
+                      (cat) => DropdownMenuItem(
+                        value: cat.id,
+                        child: Text(cat.nome),
+                      ),
+                    )
                     .toList(),
                 onChanged: (value) => selectedCategoryId = value,
               ),
@@ -525,7 +603,10 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
 
           ElevatedButton(
             onPressed: () async {
@@ -569,10 +650,16 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
           ElevatedButton(
             onPressed: () async {
-              await menuService.addCategoria(nome: nomeController.text, ordem: int.tryParse(ordemController.text) ?? 0);
+              await menuService.addCategoria(
+                nome: nomeController.text,
+                ordem: int.tryParse(ordemController.text) ?? 0,
+              );
               Navigator.pop(context);
             },
             child: const Text('Adicionar'),
@@ -604,10 +691,16 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
           ElevatedButton(
             onPressed: () async {
-              await menuService.addMesa(numero: numeroController.text, qrToken: qrTokenController.text);
+              await menuService.addMesa(
+                numero: numeroController.text,
+                qrToken: qrTokenController.text,
+              );
 
               Navigator.pop(context);
             },
