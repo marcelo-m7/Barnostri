@@ -271,7 +271,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
       builder: (context) {
         final orderService = ref.watch(orderServiceProvider.notifier);
         final l10n = AppLocalizations.of(context)!;
-        return StreamBuilder<List<Pedido>>(
+        return StreamBuilder<List<Order>>(
           stream: orderService.streamOrders(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
