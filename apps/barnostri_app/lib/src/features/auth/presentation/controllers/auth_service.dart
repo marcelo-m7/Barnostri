@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_models/shared_models.dart';
-import '../domain/usecases/login_use_case.dart';
+import '../../data/auth_repository.dart';
+import '../../domain/usecases/login_use_case.dart';
 
 class AuthState {
   final bool isAuthenticated;

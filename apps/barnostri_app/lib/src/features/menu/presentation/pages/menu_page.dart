@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../controllers/menu_service.dart';
-import '../../order/controllers/order_service.dart';
+import '../../order/presentation/controllers/order_service.dart';
 import '../../../widgets/menu_item_card.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../order/pages/cart_page.dart';
+import '../../order/presentation/pages/cart_page.dart';
 import 'package:go_router/go_router.dart';
 
 class MenuPage extends ConsumerStatefulWidget {

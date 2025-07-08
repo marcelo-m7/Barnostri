@@ -1,4 +1,5 @@
 import 'package:shared_models/shared_models.dart';
+import '../../data/order_repository.dart';
 
 /// Handles creating a new order using the [OrderRepository].
 class CreateOrderUseCase {

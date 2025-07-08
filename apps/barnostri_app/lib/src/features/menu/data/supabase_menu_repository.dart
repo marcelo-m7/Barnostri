@@ -1,8 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../../models/category.dart';
-import '../../models/menu_item.dart';
-import '../../models/table_model.dart';
-import '../../../services/supabase_config.dart';
+import 'package:shared_models/shared_models.dart';
 import 'menu_repository.dart';
 
 class SupabaseMenuRepository implements MenuRepository {

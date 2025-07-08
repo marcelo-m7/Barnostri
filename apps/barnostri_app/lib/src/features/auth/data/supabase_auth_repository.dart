@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../services/supabase_config.dart';
+import 'package:shared_models/shared_models.dart';
 import 'auth_repository.dart';
 
 class SupabaseAuthRepository implements AuthRepository {

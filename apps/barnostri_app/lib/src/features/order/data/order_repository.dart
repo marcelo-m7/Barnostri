@@ -1,5 +1,4 @@
-import '../../models/order.dart';
-import '../../models/cart_item.dart';
+import 'package:shared_models/shared_models.dart';
 
 abstract class OrderRepository {
   Future<String?> createOrder({

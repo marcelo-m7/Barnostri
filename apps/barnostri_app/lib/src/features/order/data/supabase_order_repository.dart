@@ -1,10 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../../models/order.dart';
-import '../../models/order_item.dart';
-import '../../models/menu_item.dart';
-import '../../models/table_model.dart';
-import '../../models/cart_item.dart';
-import '../../../services/supabase_config.dart';
+import 'package:shared_models/shared_models.dart';
 import 'order_repository.dart';
 
 class SupabaseOrderRepository implements OrderRepository {
