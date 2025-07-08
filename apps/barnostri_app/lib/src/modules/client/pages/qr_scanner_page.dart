@@ -49,6 +49,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
       body: Builder(
         builder: (context) {
           final orderNotifier = ref.watch(orderServiceProvider.notifier);
+          final orderState = ref.watch(orderServiceProvider);
           return Column(
             children: [
               Expanded(
@@ -121,7 +122,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      if (isProcessing || orderService.isLoading)
+                      if (isProcessing || orderState.isLoading)
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
@@ -150,7 +151,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                             ],
                           ),
                         ),
-                      if (orderService.error != null)
+                      if (orderState.error != null)
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
@@ -167,7 +168,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Text(
-                                  orderService.error!,
+                                  orderState.error!,
                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: Theme.of(context).colorScheme.error,
                                     fontWeight: FontWeight.w500,
