@@ -207,8 +207,15 @@
   "@tableNumberLabel": {
     "description": "Rótulo para campo Número da Mesa"
   },
+  "tableNotFound": "Mesa não encontrada",
+  "@tableNotFound": {
+    "description": "Mensagem de erro quando a mesa não é encontrada"
+  },
+  "noTableSelected": "Nenhuma mesa selecionada",
+  "@noTableSelected": {
+    "description": "Mensagem de erro quando nenhuma mesa está selecionada"
+  },
   "orderField": "Ordem",
   "@orderField": {
     "description": "Campo de ordem numérica"
-  }
-}
+  }}

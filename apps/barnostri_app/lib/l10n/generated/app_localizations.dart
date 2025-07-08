@@ -64,7 +64,7 @@ import 'app_localizations_pt.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -87,17 +87,17 @@ abstract class AppLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('fr'),
-    Locale('pt'),
+    Locale('pt')
   ];
 
   /// The title of the application
@@ -853,7 +853,7 @@ abstract class AppLocalizations {
   /// Explains where the QR code is located
   ///
   /// In en, this message translates to:
-  /// **"You'll find it on your table"**
+  /// **'You\'ll find it on your table'**
   String get qrCodeLocation;
 
   /// Button to manually enter a table code
@@ -902,7 +902,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{item} added to cart!'**
-  String addedToCartMessage(String item);
+  String addedToCartMessage(Object item);
 
   /// Section title for admin actions
   ///
@@ -914,7 +914,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Mark as {status}'**
-  String markAsStatus(String status);
+  String markAsStatus(Object status);
 
   /// Description for received status
   ///
@@ -950,13 +950,13 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Status updated to {status}'**
-  String statusUpdated(String status);
+  String statusUpdated(Object status);
 
   /// Message shown when updating status fails
   ///
   /// In en, this message translates to:
   /// **'Error updating status: {error}'**
-  String statusUpdateErrorDetailed(String error);
+  String statusUpdateErrorDetailed(Object error);
 
   /// Order confirmation dialog description
   ///
@@ -975,6 +975,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Table Number'**
   String get tableNumberLabel;
+
+  /// Error message when table is not found
+  ///
+  /// In en, this message translates to:
+  /// **'Table not found'**
+  String get tableNotFound;
+
+  /// Error message when no table is selected
+  ///
+  /// In en, this message translates to:
+  /// **'No table selected'**
+  String get noTableSelected;
 
   /// Label for numeric ordering field
   ///
@@ -1012,9 +1024,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
-  );
+      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

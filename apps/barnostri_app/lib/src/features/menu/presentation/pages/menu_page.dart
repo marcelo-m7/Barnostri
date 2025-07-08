@@ -123,7 +123,8 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                       ),
                                       if (orderState.currentTable != null)
                                         Text(
-                                          'Mesa ${orderState.currentTable!.number}',
+                                          l10n.tableNumber(
+                                              orderState.currentTable!.number),
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge

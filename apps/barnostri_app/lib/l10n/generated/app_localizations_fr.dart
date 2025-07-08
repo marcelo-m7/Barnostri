@@ -420,7 +420,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get itemUnavailable => 'Article Indisponible';
 
   @override
-  String addedToCartMessage(String item) {
+  String addedToCartMessage(Object item) {
     return '$item ajouté au panier !';
   }
 
@@ -428,7 +428,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminActions => 'Actions Administrateur';
 
   @override
-  String markAsStatus(String status) {
+  String markAsStatus(Object status) {
     return 'Marquer comme $status';
   }
 
@@ -448,12 +448,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get statusCancelledDescription => 'Commande annulée';
 
   @override
-  String statusUpdated(String status) {
+  String statusUpdated(Object status) {
     return 'Statut mis à jour en $status';
   }
 
   @override
-  String statusUpdateErrorDetailed(String error) {
+  String statusUpdateErrorDetailed(Object error) {
     return 'Erreur lors de la mise à jour du statut : $error';
   }
 
@@ -466,6 +466,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tableNumberLabel => 'Numéro de Table';
+
+  @override
+  String get tableNotFound => 'Table introuvable';
+
+  @override
+  String get noTableSelected => 'Aucune table sélectionnée';
 
   @override
   String get orderField => 'Ordre';

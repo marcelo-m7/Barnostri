@@ -207,8 +207,15 @@
   "@tableNumberLabel": {
     "description": "Label for table number field"
   },
+  "tableNotFound": "Table introuvable",
+  "@tableNotFound": {
+    "description": "Message d'erreur lorsque la table est introuvable"
+  },
+  "noTableSelected": "Aucune table sélectionnée",
+  "@noTableSelected": {
+    "description": "Message d'erreur lorsqu'aucune table n'est sélectionnée"
+  },
   "orderField": "Ordre",
   "@orderField": {
     "description": "Label for numeric ordering field"
-  }
-}
+  }}

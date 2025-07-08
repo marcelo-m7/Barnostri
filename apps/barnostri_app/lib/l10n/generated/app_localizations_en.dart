@@ -395,7 +395,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qrCameraInstructions => 'Point the camera at the QR code';
 
   @override
-  String get qrCodeLocation => "You'll find it on your table";
+  String get qrCodeLocation => 'You\'ll find it on your table';
 
   @override
   String get insertCodeManually => 'Insert code manually';
@@ -419,7 +419,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemUnavailable => 'Item Unavailable';
 
   @override
-  String addedToCartMessage(String item) {
+  String addedToCartMessage(Object item) {
     return '$item added to cart!';
   }
 
@@ -427,7 +427,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminActions => 'Admin Actions';
 
   @override
-  String markAsStatus(String status) {
+  String markAsStatus(Object status) {
     return 'Mark as $status';
   }
 
@@ -447,12 +447,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusCancelledDescription => 'Order cancelled';
 
   @override
-  String statusUpdated(String status) {
+  String statusUpdated(Object status) {
     return 'Status updated to $status';
   }
 
   @override
-  String statusUpdateErrorDetailed(String error) {
+  String statusUpdateErrorDetailed(Object error) {
     return 'Error updating status: $error';
   }
 
@@ -465,6 +465,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tableNumberLabel => 'Table Number';
+
+  @override
+  String get tableNotFound => 'Table not found';
+
+  @override
+  String get noTableSelected => 'No table selected';
 
   @override
   String get orderField => 'Order';
