@@ -30,8 +30,9 @@ class ItemPedido {
       observacao: json['observacao'],
       precoUnitario: (json['preco_unitario'] as num).toDouble(),
       createdAt: DateTime.parse(json['created_at']),
-      itemCardapio:
-          json['itens_cardapio'] != null ? ItemCardapio.fromJson(json['itens_cardapio']) : null,
+      itemCardapio: json['itens_cardapio'] != null
+          ? ItemCardapio.fromJson(json['itens_cardapio'])
+          : null,
     );
   }
 

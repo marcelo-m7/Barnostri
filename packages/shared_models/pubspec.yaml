@@ -12,3 +12,6 @@ dependencies:
   collection: ^1.17.0
   supabase_flutter: ^1.10.0
 
+dev_dependencies:
+  flutter_lints: ^3.0.1
+

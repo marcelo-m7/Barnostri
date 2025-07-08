@@ -4,13 +4,12 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseConfig {
-  
   static late final SupabaseClient _client;
   static bool _isConfigured = false;
-  
+
   static SupabaseClient get client => _client;
   static bool get isConfigured => _isConfigured;
-  
+
   static Future<void> initialize({String env = 'dev'}) async {
     try {
       final configJson =
@@ -30,7 +29,7 @@ class SupabaseConfig {
       }
     }
   }
-  
+
   // Authentication helpers
   static Future<AuthResponse> signInWithEmail({
     required String email,
@@ -41,7 +40,7 @@ class SupabaseConfig {
       if (kDebugMode) {
         print('🔒 Mock authentication: $email');
       }
-      
+
       // Simulate demo login
       if (email == 'admin@barnostri.com' && password == 'admin123') {
         // Return a mock successful response
@@ -74,7 +73,7 @@ class SupabaseConfig {
         throw AuthException('Invalid credentials');
       }
     }
-    
+
     try {
       final response = await _client.auth.signInWithPassword(
         email: email,
@@ -88,7 +87,7 @@ class SupabaseConfig {
       rethrow;
     }
   }
-  
+
   static Future<void> signOut() async {
     if (!_isConfigured) {
       if (kDebugMode) {
@@ -96,7 +95,7 @@ class SupabaseConfig {
       }
       return;
     }
-    
+
     try {
       await _client.auth.signOut();
     } catch (e) {
@@ -106,14 +105,14 @@ class SupabaseConfig {
       rethrow;
     }
   }
-  
+
   static User? getCurrentUser() {
     if (!_isConfigured) {
       return null;
     }
     return _client.auth.currentUser;
   }
-  
+
   static Stream<AuthState> get authStateChanges {
     if (!_isConfigured) {
       // Return mock auth state stream for demo
@@ -121,7 +120,7 @@ class SupabaseConfig {
     }
     return _client.auth.onAuthStateChange;
   }
-  
+
   // Database helpers
   static Future<List<Map<String, dynamic>>> getMesas() async {
     if (!_isConfigured) {
@@ -159,7 +158,7 @@ class SupabaseConfig {
       rethrow;
     }
   }
-  
+
   static Future<Map<String, dynamic>?> getMesaByQrToken(String qrToken) async {
     if (!_isConfigured) {
       // Return mock data for demo
@@ -184,7 +183,7 @@ class SupabaseConfig {
       }
       return null;
     }
-    
+
     try {
       final response = await _client
           .from('mesas')
@@ -200,7 +199,7 @@ class SupabaseConfig {
       return null;
     }
   }
-  
+
   static Future<List<Map<String, dynamic>>> getCategorias() async {
     if (!_isConfigured) {
       // Return mock data for demo
@@ -239,7 +238,7 @@ class SupabaseConfig {
         },
       ];
     }
-    
+
     try {
       final response = await _client
           .from('categorias')
@@ -254,7 +253,7 @@ class SupabaseConfig {
       return [];
     }
   }
-  
+
   static Future<List<Map<String, dynamic>>> getItensCardapio() async {
     if (!_isConfigured) {
       // Return mock data for demo
@@ -305,7 +304,7 @@ class SupabaseConfig {
         },
       ];
     }
-    
+
     try {
       final response = await _client
           .from('itens_cardapio')
@@ -320,7 +319,7 @@ class SupabaseConfig {
       rethrow;
     }
   }
-  
+
   static Future<String?> criarPedido({
     required String mesaId,
     required List<Map<String, dynamic>> itens,
@@ -334,7 +333,7 @@ class SupabaseConfig {
       }
       return 'mock-order-${DateTime.now().millisecondsSinceEpoch}';
     }
-    
+
     try {
       // Criar pedido
       final pedidoResponse = await _client
@@ -348,22 +347,22 @@ class SupabaseConfig {
           })
           .select()
           .single();
-      
+
       final pedidoId = pedidoResponse['id'];
-      
+
       // Criar itens do pedido
-      final itensData = itens.map((item) => {
-        'pedido_id': pedidoId,
-        'item_cardapio_id': item['id'],
-        'quantidade': item['quantidade'],
-        'observacao': item['observacao'] ?? '',
-        'preco_unitario': item['preco'],
-      }).toList();
-      
-      await _client
-          .from('itens_pedido')
-          .insert(itensData);
-      
+      final itensData = itens
+          .map((item) => {
+                'pedido_id': pedidoId,
+                'item_cardapio_id': item['id'],
+                'quantidade': item['quantidade'],
+                'observacao': item['observacao'] ?? '',
+                'preco_unitario': item['preco'],
+              })
+          .toList();
+
+      await _client.from('itens_pedido').insert(itensData);
+
       return pedidoId;
     } catch (e) {
       if (kDebugMode) {
@@ -372,8 +371,9 @@ class SupabaseConfig {
       return null;
     }
   }
-  
-  static Future<bool> atualizarStatusPedido(String pedidoId, String novoStatus) async {
+
+  static Future<bool> atualizarStatusPedido(
+      String pedidoId, String novoStatus) async {
     if (!_isConfigured) {
       // Mock status update for demo
       if (kDebugMode) {
@@ -381,12 +381,11 @@ class SupabaseConfig {
       }
       return true;
     }
-    
+
     try {
       await _client
           .from('pedidos')
-          .update({'status': novoStatus})
-          .eq('id', pedidoId);
+          .update({'status': novoStatus}).eq('id', pedidoId);
       return true;
     } catch (e) {
       if (kDebugMode) {
@@ -395,7 +394,7 @@ class SupabaseConfig {
       return false;
     }
   }
-  
+
   static Future<List<Map<String, dynamic>>> getPedidos() async {
     if (!_isConfigured) {
       // Return mock orders for demo
@@ -407,8 +406,12 @@ class SupabaseConfig {
           'total': 67.80,
           'forma_pagamento': 'Pix',
           'pago': false,
-          'created_at': DateTime.now().subtract(const Duration(minutes: 10)).toIso8601String(),
-          'updated_at': DateTime.now().subtract(const Duration(minutes: 5)).toIso8601String(),
+          'created_at': DateTime.now()
+              .subtract(const Duration(minutes: 10))
+              .toIso8601String(),
+          'updated_at': DateTime.now()
+              .subtract(const Duration(minutes: 5))
+              .toIso8601String(),
           'mesas': {
             'id': '1',
             'numero': '1',
@@ -448,7 +451,7 @@ class SupabaseConfig {
         }
       ];
     }
-    
+
     try {
       final response = await _client
           .from('pedidos')
@@ -462,45 +465,52 @@ class SupabaseConfig {
       return [];
     }
   }
-  
+
   static Stream<List<Map<String, dynamic>>> streamPedidos() {
     if (!_isConfigured) {
       // Return mock stream for demo
-      return Stream.periodic(const Duration(seconds: 5), (count) => [
-        {
-          'id': 'mock-order-1',
-          'mesa_id': '1',
-          'status': 'Em preparo',
-          'total': 67.80,
-          'forma_pagamento': 'Pix',
-          'pago': false,
-          'created_at': DateTime.now().subtract(const Duration(minutes: 10)).toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        }
-      ]);
+      return Stream.periodic(
+          const Duration(seconds: 5),
+          (count) => [
+                {
+                  'id': 'mock-order-1',
+                  'mesa_id': '1',
+                  'status': 'Em preparo',
+                  'total': 67.80,
+                  'forma_pagamento': 'Pix',
+                  'pago': false,
+                  'created_at': DateTime.now()
+                      .subtract(const Duration(minutes: 10))
+                      .toIso8601String(),
+                  'updated_at': DateTime.now().toIso8601String(),
+                }
+              ]);
     }
-    
+
     return _client
         .from('pedidos')
-        .stream(primaryKey: ['id'])
-        .order('created_at', ascending: false);
+        .stream(primaryKey: ['id']).order('created_at', ascending: false);
   }
-  
+
   static Stream<Map<String, dynamic>> streamPedido(String pedidoId) {
     if (!_isConfigured) {
       // Return mock stream for demo
-      return Stream.periodic(const Duration(seconds: 5), (count) => {
-        'id': pedidoId,
-        'mesa_id': '1',
-        'status': 'Em preparo',
-        'total': 67.80,
-        'forma_pagamento': 'Pix',
-        'pago': false,
-        'created_at': DateTime.now().subtract(const Duration(minutes: 10)).toIso8601String(),
-        'updated_at': DateTime.now().toIso8601String(),
-      });
+      return Stream.periodic(
+          const Duration(seconds: 5),
+          (count) => {
+                'id': pedidoId,
+                'mesa_id': '1',
+                'status': 'Em preparo',
+                'total': 67.80,
+                'forma_pagamento': 'Pix',
+                'pago': false,
+                'created_at': DateTime.now()
+                    .subtract(const Duration(minutes: 10))
+                    .toIso8601String(),
+                'updated_at': DateTime.now().toIso8601String(),
+              });
     }
-    
+
     return _client
         .from('pedidos')
         .stream(primaryKey: ['id'])
