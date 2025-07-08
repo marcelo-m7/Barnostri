@@ -226,10 +226,10 @@ class _MenuItemCardState extends State<MenuItemCard>
                                     widget.item.disponivel
                                         ? AppLocalizations.of(
                                             context,
-                                          )!.available
+                                          ).available
                                         : AppLocalizations.of(
                                             context,
-                                          )!.unavailable,
+                                          ).unavailable,
                                     style: Theme.of(context)
                                         .textTheme
                                         .labelSmall
