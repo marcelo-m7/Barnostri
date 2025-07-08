@@ -149,6 +149,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                               );
+                          if (!context.mounted) return;
                           final error = ref.read(authServiceProvider).error;
                           if (error != null) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -596,6 +597,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                   price: double.tryParse(precoController.text) ?? 0.0,
                   categoryId: selectedCategoryId!,
                 );
+                if (!context.mounted) return;
                 Navigator.pop(context);
               }
             },
@@ -643,6 +645,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 name: nomeController.text,
                 sortOrder: int.tryParse(ordemController.text) ?? 0,
               );
+              if (!context.mounted) return;
               Navigator.pop(context);
             },
             child: Text(AppLocalizations.of(context)!.add),
@@ -689,6 +692,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 qrToken: qrTokenController.text,
               );
 
+              if (!context.mounted) return;
               Navigator.pop(context);
             },
             child: Text(AppLocalizations.of(context)!.add),
