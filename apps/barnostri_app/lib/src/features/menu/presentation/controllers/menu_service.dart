@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../../core/repositories.dart';
-import '../../data/menu_repository.dart';
 import '../../domain/usecases/load_menu_use_case.dart';
 
 class MenuState {
