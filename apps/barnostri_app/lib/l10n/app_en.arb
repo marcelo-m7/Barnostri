@@ -526,5 +526,81 @@
   "totalItems": "Total Items:",
   "@totalItems": {
     "description": "Label for total items in cart"
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Generic add button"
+  },
+  "observationOptional": "Observations (optional)",
+  "@observationOptional": {
+    "description": "Label for optional observations field"
+  },
+  "observationExample": "E.g. No onions, well done...",
+  "@observationExample": {
+    "description": "Hint example for observations field"
+  },
+  "itemUnavailable": "Item Unavailable",
+  "@itemUnavailable": {
+    "description": "Displayed when an item is unavailable"
+  },
+  "addedToCartMessage": "{item} added to cart!",
+  "@addedToCartMessage": {
+    "description": "Snack bar message when item is added to cart",
+    "placeholders": {"item": {}}
+  },
+  "adminActions": "Admin Actions",
+  "@adminActions": {
+    "description": "Section title for admin actions"
+  },
+  "markAsStatus": "Mark as {status}",
+  "@markAsStatus": {
+    "description": "Button to mark order as a status",
+    "placeholders": {"status": {}}
+  },
+  "statusReceivedDescription": "Order received by the kitchen",
+  "@statusReceivedDescription": {
+    "description": "Description for received status"
+  },
+  "statusInPrepDescription": "Preparing your dishes",
+  "@statusInPrepDescription": {
+    "description": "Description for in preparation status"
+  },
+  "statusReadyDescription": "Order ready for pickup",
+  "@statusReadyDescription": {
+    "description": "Description for ready status"
+  },
+  "statusDeliveredDescription": "Order delivered",
+  "@statusDeliveredDescription": {
+    "description": "Description for delivered status"
+  },
+  "statusCancelledDescription": "Order cancelled",
+  "@statusCancelledDescription": {
+    "description": "Description for cancelled status"
+  },
+  "statusUpdated": "Status updated to {status}",
+  "@statusUpdated": {
+    "description": "Message when order status is updated",
+    "placeholders": {"status": {}}
+  },
+  "statusUpdateErrorDetailed": "Error updating status: {error}",
+  "@statusUpdateErrorDetailed": {
+    "description": "Message shown when updating status fails",
+    "placeholders": {"error": {}}
+  },
+  "orderConfirmedKitchen": "Your order has been confirmed and sent to the kitchen. You can track its status below.",
+  "@orderConfirmedKitchen": {
+    "description": "Order confirmation dialog description"
+  },
+  "qrToken": "QR Token",
+  "@qrToken": {
+    "description": "Label for QR token field"
+  },
+  "tableNumberLabel": "Table Number",
+  "@tableNumberLabel": {
+    "description": "Label for table number field"
+  },
+  "orderField": "Order",
+  "@orderField": {
+    "description": "Label for numeric ordering field"
   }
 }

@@ -134,5 +134,81 @@
   "settings": "Paramètres",
   "portuguese": "Portugais",
   "english": "Anglais",
-  "french": "Français"
+  "french": "Français",
+  "add": "Ajouter",
+  "@add": {
+    "description": "Generic add button"
+  },
+  "observationOptional": "Observations (optionnel)",
+  "@observationOptional": {
+    "description": "Label for optional observations field"
+  },
+  "observationExample": "Ex : Sans oignons, bien cuit...",
+  "@observationExample": {
+    "description": "Hint example for observations field"
+  },
+  "itemUnavailable": "Article Indisponible",
+  "@itemUnavailable": {
+    "description": "Displayed when an item is unavailable"
+  },
+  "addedToCartMessage": "{item} ajouté au panier !",
+  "@addedToCartMessage": {
+    "description": "Snack bar message when item is added to cart",
+    "placeholders": {"item": {}}
+  },
+  "adminActions": "Actions Administrateur",
+  "@adminActions": {
+    "description": "Section title for admin actions"
+  },
+  "markAsStatus": "Marquer comme {status}",
+  "@markAsStatus": {
+    "description": "Button to mark order as a status",
+    "placeholders": {"status": {}}
+  },
+  "statusReceivedDescription": "Commande reçue par la cuisine",
+  "@statusReceivedDescription": {
+    "description": "Description for received status"
+  },
+  "statusInPrepDescription": "Préparation de vos plats",
+  "@statusInPrepDescription": {
+    "description": "Description for in preparation status"
+  },
+  "statusReadyDescription": "Commande prête à être récupérée",
+  "@statusReadyDescription": {
+    "description": "Description for ready status"
+  },
+  "statusDeliveredDescription": "Commande livrée",
+  "@statusDeliveredDescription": {
+    "description": "Description for delivered status"
+  },
+  "statusCancelledDescription": "Commande annulée",
+  "@statusCancelledDescription": {
+    "description": "Description for cancelled status"
+  },
+  "statusUpdated": "Statut mis à jour en {status}",
+  "@statusUpdated": {
+    "description": "Message when order status is updated",
+    "placeholders": {"status": {}}
+  },
+  "statusUpdateErrorDetailed": "Erreur lors de la mise à jour du statut : {error}",
+  "@statusUpdateErrorDetailed": {
+    "description": "Message shown when updating status fails",
+    "placeholders": {"error": {}}
+  },
+  "orderConfirmedKitchen": "Votre commande a été confirmée et envoyée à la cuisine. Vous pouvez suivre son statut ci-dessous.",
+  "@orderConfirmedKitchen": {
+    "description": "Order confirmation dialog description"
+  },
+  "qrToken": "Jeton QR",
+  "@qrToken": {
+    "description": "Label for QR token field"
+  },
+  "tableNumberLabel": "Numéro de Table",
+  "@tableNumberLabel": {
+    "description": "Label for table number field"
+  },
+  "orderField": "Ordre",
+  "@orderField": {
+    "description": "Label for numeric ordering field"
+  }
 }

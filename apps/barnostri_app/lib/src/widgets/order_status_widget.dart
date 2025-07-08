@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../core/services/order_service.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class OrderStatusWidget extends ConsumerWidget {
   final Pedido pedido;
@@ -176,7 +177,7 @@ class OrderStatusWidget extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Status do Pedido',
+            AppLocalizations.of(context)!.orderStatus,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -332,7 +333,7 @@ class OrderStatusWidget extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Itens do Pedido',
+            AppLocalizations.of(context)!.orderItems,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -447,7 +448,7 @@ class OrderStatusWidget extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Ações do Administrador',
+            AppLocalizations.of(context)!.adminActions,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -461,7 +462,8 @@ class OrderStatusWidget extends ConsumerWidget {
                     onPressed: () =>
                         _updateOrderStatus(context, ref, nextStatus),
                     icon: const Icon(Icons.arrow_forward),
-                    label: Text('Marcar como ${nextStatus.displayName}'),
+                    label:
+                        Text(AppLocalizations.of(context)!.markAsStatus(nextStatus.displayName)),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -480,7 +482,7 @@ class OrderStatusWidget extends ConsumerWidget {
                     onPressed: () =>
                         _updateOrderStatus(context, ref, OrderStatus.cancelado),
                     icon: const Icon(Icons.cancel),
-                    label: const Text('Cancelar'),
+                    label: Text(AppLocalizations.of(context)!.cancel),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Theme.of(context).colorScheme.error,
                       side: BorderSide(
@@ -517,15 +519,15 @@ class OrderStatusWidget extends ConsumerWidget {
   String _getStatusDescription(OrderStatus status) {
     switch (status) {
       case OrderStatus.recebido:
-        return 'Pedido recebido pela cozinha';
+        return AppLocalizations.of(context)!.statusReceivedDescription;
       case OrderStatus.emPreparo:
-        return 'Preparando seus pratos';
+        return AppLocalizations.of(context)!.statusInPrepDescription;
       case OrderStatus.pronto:
-        return 'Pedido pronto para retirada';
+        return AppLocalizations.of(context)!.statusReadyDescription;
       case OrderStatus.entregue:
-        return 'Pedido entregue';
+        return AppLocalizations.of(context)!.statusDeliveredDescription;
       case OrderStatus.cancelado:
-        return 'Pedido cancelado';
+        return AppLocalizations.of(context)!.statusCancelledDescription;
     }
   }
 
@@ -554,7 +556,8 @@ class OrderStatusWidget extends ConsumerWidget {
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Status atualizado para ${newStatus.displayName}'),
+          content:
+              Text(AppLocalizations.of(context)!.statusUpdated(newStatus.displayName)),
           backgroundColor: Theme.of(context).colorScheme.primary,
         ),
       );
@@ -562,7 +565,9 @@ class OrderStatusWidget extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Erro ao atualizar status: ${orderService.state.error}',
+            AppLocalizations.of(context)!.statusUpdateErrorDetailed(
+              orderService.state.error ?? '',
+            ),
           ),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),

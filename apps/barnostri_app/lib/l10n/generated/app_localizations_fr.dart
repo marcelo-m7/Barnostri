@@ -406,4 +406,67 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get totalItems => 'Total d\'Articles:';
+
+  @override
+  String get add => 'Ajouter';
+
+  @override
+  String get observationOptional => 'Observations (optionnel)';
+
+  @override
+  String get observationExample => 'Ex : Sans oignons, bien cuit...';
+
+  @override
+  String get itemUnavailable => 'Article Indisponible';
+
+  @override
+  String addedToCartMessage(String item) {
+    return '$item ajouté au panier !';
+  }
+
+  @override
+  String get adminActions => 'Actions Administrateur';
+
+  @override
+  String markAsStatus(String status) {
+    return 'Marquer comme $status';
+  }
+
+  @override
+  String get statusReceivedDescription => 'Commande reçue par la cuisine';
+
+  @override
+  String get statusInPrepDescription => 'Préparation de vos plats';
+
+  @override
+  String get statusReadyDescription => 'Commande prête à être récupérée';
+
+  @override
+  String get statusDeliveredDescription => 'Commande livrée';
+
+  @override
+  String get statusCancelledDescription => 'Commande annulée';
+
+  @override
+  String statusUpdated(String status) {
+    return 'Statut mis à jour en $status';
+  }
+
+  @override
+  String statusUpdateErrorDetailed(String error) {
+    return 'Erreur lors de la mise à jour du statut : $error';
+  }
+
+  @override
+  String get orderConfirmedKitchen =>
+      'Votre commande a été confirmée et envoyée à la cuisine. Vous pouvez suivre son statut ci-dessous.';
+
+  @override
+  String get qrToken => 'Jeton QR';
+
+  @override
+  String get tableNumberLabel => 'Numéro de Table';
+
+  @override
+  String get orderField => 'Ordre';
 }

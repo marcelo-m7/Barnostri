@@ -134,5 +134,81 @@
   "settings": "Configurações",
   "portuguese": "Português",
   "english": "Inglês",
-  "french": "Francês"
+  "french": "Francês",
+  "add": "Adicionar",
+  "@add": {
+    "description": "Botão genérico para adicionar"
+  },
+  "observationOptional": "Observações (opcional)",
+  "@observationOptional": {
+    "description": "Rótulo para campo de observações opcionais"
+  },
+  "observationExample": "Ex: Sem cebola, bem passado...",
+  "@observationExample": {
+    "description": "Exemplo de dica para campo de observações"
+  },
+  "itemUnavailable": "Item Indisponível",
+  "@itemUnavailable": {
+    "description": "Exibido quando o item está indisponível"
+  },
+  "addedToCartMessage": "{item} adicionado ao carrinho!",
+  "@addedToCartMessage": {
+    "description": "Mensagem de item adicionado ao carrinho",
+    "placeholders": {"item": {}}
+  },
+  "adminActions": "Ações do Administrador",
+  "@adminActions": {
+    "description": "Título da seção de ações administrativas"
+  },
+  "markAsStatus": "Marcar como {status}",
+  "@markAsStatus": {
+    "description": "Botão para marcar pedido com um status",
+    "placeholders": {"status": {}}
+  },
+  "statusReceivedDescription": "Pedido recebido pela cozinha",
+  "@statusReceivedDescription": {
+    "description": "Descrição do status recebido"
+  },
+  "statusInPrepDescription": "Preparando seus pratos",
+  "@statusInPrepDescription": {
+    "description": "Descrição do status em preparo"
+  },
+  "statusReadyDescription": "Pedido pronto para retirada",
+  "@statusReadyDescription": {
+    "description": "Descrição do status pronto"
+  },
+  "statusDeliveredDescription": "Pedido entregue",
+  "@statusDeliveredDescription": {
+    "description": "Descrição do status entregue"
+  },
+  "statusCancelledDescription": "Pedido cancelado",
+  "@statusCancelledDescription": {
+    "description": "Descrição do status cancelado"
+  },
+  "statusUpdated": "Status atualizado para {status}",
+  "@statusUpdated": {
+    "description": "Mensagem quando status do pedido é atualizado",
+    "placeholders": {"status": {}}
+  },
+  "statusUpdateErrorDetailed": "Erro ao atualizar status: {error}",
+  "@statusUpdateErrorDetailed": {
+    "description": "Mensagem ao falhar atualizar status",
+    "placeholders": {"error": {}}
+  },
+  "orderConfirmedKitchen": "Seu pedido foi confirmado e enviado para a cozinha. Você pode acompanhar o status abaixo.",
+  "@orderConfirmedKitchen": {
+    "description": "Descrição de confirmação de pedido"
+  },
+  "qrToken": "Token QR",
+  "@qrToken": {
+    "description": "Rótulo para campo Token QR"
+  },
+  "tableNumberLabel": "Número da Mesa",
+  "@tableNumberLabel": {
+    "description": "Rótulo para campo Número da Mesa"
+  },
+  "orderField": "Ordem",
+  "@orderField": {
+    "description": "Campo de ordem numérica"
+  }
 }

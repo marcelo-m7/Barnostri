@@ -405,4 +405,67 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get totalItems => 'Total Items:';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get observationOptional => 'Observations (optional)';
+
+  @override
+  String get observationExample => 'E.g. No onions, well done...';
+
+  @override
+  String get itemUnavailable => 'Item Unavailable';
+
+  @override
+  String addedToCartMessage(String item) {
+    return '$item added to cart!';
+  }
+
+  @override
+  String get adminActions => 'Admin Actions';
+
+  @override
+  String markAsStatus(String status) {
+    return 'Mark as $status';
+  }
+
+  @override
+  String get statusReceivedDescription => 'Order received by the kitchen';
+
+  @override
+  String get statusInPrepDescription => 'Preparing your dishes';
+
+  @override
+  String get statusReadyDescription => 'Order ready for pickup';
+
+  @override
+  String get statusDeliveredDescription => 'Order delivered';
+
+  @override
+  String get statusCancelledDescription => 'Order cancelled';
+
+  @override
+  String statusUpdated(String status) {
+    return 'Status updated to $status';
+  }
+
+  @override
+  String statusUpdateErrorDetailed(String error) {
+    return 'Error updating status: $error';
+  }
+
+  @override
+  String get orderConfirmedKitchen =>
+      'Your order has been confirmed and sent to the kitchen. You can track its status below.';
+
+  @override
+  String get qrToken => 'QR Token';
+
+  @override
+  String get tableNumberLabel => 'Table Number';
+
+  @override
+  String get orderField => 'Order';
 }
