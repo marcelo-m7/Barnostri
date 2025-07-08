@@ -503,7 +503,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
                               : Colors.grey,
                         ),
                       ),
-                      title: Text('Mesa ${mesa.number}'),
+                      title:
+                          Text(AppLocalizations.of(context)!.tableNumber(mesa.number)),
                       subtitle: Text('QR: ${mesa.qrToken}'),
                       trailing: Icon(
                         mesa.active ? Icons.check_circle : Icons.cancel,

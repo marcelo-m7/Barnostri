@@ -599,8 +599,15 @@
   "@tableNumberLabel": {
     "description": "Label for table number field"
   },
+  "tableNotFound": "Table not found",
+  "@tableNotFound": {
+    "description": "Error message when table is not found"
+  },
+  "noTableSelected": "No table selected",
+  "@noTableSelected": {
+    "description": "Error message when no table is selected"
+  },
   "orderField": "Order",
   "@orderField": {
     "description": "Label for numeric ordering field"
-  }
-}
+  }}

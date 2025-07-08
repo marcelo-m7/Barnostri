@@ -104,7 +104,8 @@ class OrderStatusWidget extends ConsumerWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Mesa ${pedido.table!.number}',
+                  AppLocalizations.of(context)!
+                      .tableNumber(pedido.table!.number),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(
                       context,

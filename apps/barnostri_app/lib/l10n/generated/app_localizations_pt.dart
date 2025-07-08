@@ -420,7 +420,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get itemUnavailable => 'Item Indisponível';
 
   @override
-  String addedToCartMessage(String item) {
+  String addedToCartMessage(Object item) {
     return '$item adicionado ao carrinho!';
   }
 
@@ -428,7 +428,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get adminActions => 'Ações do Administrador';
 
   @override
-  String markAsStatus(String status) {
+  String markAsStatus(Object status) {
     return 'Marcar como $status';
   }
 
@@ -448,12 +448,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get statusCancelledDescription => 'Pedido cancelado';
 
   @override
-  String statusUpdated(String status) {
+  String statusUpdated(Object status) {
     return 'Status atualizado para $status';
   }
 
   @override
-  String statusUpdateErrorDetailed(String error) {
+  String statusUpdateErrorDetailed(Object error) {
     return 'Erro ao atualizar status: $error';
   }
 
@@ -466,6 +466,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tableNumberLabel => 'Número da Mesa';
+
+  @override
+  String get tableNotFound => 'Mesa não encontrada';
+
+  @override
+  String get noTableSelected => 'Nenhuma mesa selecionada';
 
   @override
   String get orderField => 'Ordem';
