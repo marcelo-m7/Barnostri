@@ -12,7 +12,9 @@ class SupabaseConfig {
 
   static Future<void> initialize({String env = 'dev'}) async {
     try {
-      final configJson = await rootBundle.loadString('supabase/supabase-config.json');
+      final configJson = await rootBundle.loadString(
+        'supabase/supabase-config.json',
+      );
       final data = jsonDecode(configJson) as Map<String, dynamic>;
       final envConfig = data[env] as Map<String, dynamic>;
       final supabaseUrl = envConfig['SUPABASE_URL'] as String;
@@ -43,5 +45,4 @@ class SupabaseConfig {
     }
     return _client.auth.onAuthStateChange;
   }
-
 }

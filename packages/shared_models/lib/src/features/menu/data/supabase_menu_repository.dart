@@ -26,7 +26,11 @@ class SupabaseMenuRepository implements MenuRepository {
       ];
     }
     try {
-      final response = await SupabaseConfig.client.from('mesas').select('*').eq('ativo', true).order('numero');
+      final response = await SupabaseConfig.client
+          .from('mesas')
+          .select('*')
+          .eq('ativo', true)
+          .order('numero');
       return response;
     } catch (e) {
       if (kDebugMode) {
@@ -115,7 +119,11 @@ class SupabaseMenuRepository implements MenuRepository {
       ];
     }
     try {
-      final response = await SupabaseConfig.client.from('categorias').select('*').eq('ativo', true).order('ordem');
+      final response = await SupabaseConfig.client
+          .from('categorias')
+          .select('*')
+          .eq('ativo', true)
+          .order('ordem');
       return response;
     } catch (e) {
       if (kDebugMode) {
@@ -176,7 +184,11 @@ class SupabaseMenuRepository implements MenuRepository {
       ];
     }
     try {
-      final response = await SupabaseConfig.client.from('itens_cardapio').select().eq('disponivel', true).order('nome');
+      final response = await SupabaseConfig.client
+          .from('itens_cardapio')
+          .select()
+          .eq('disponivel', true)
+          .order('nome');
       return response;
     } catch (e) {
       if (kDebugMode) {

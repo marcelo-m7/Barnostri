@@ -59,7 +59,10 @@ class SupabasePedidoRepository implements PedidoRepository {
       return true;
     }
     try {
-      await SupabaseConfig.client.from('pedidos').update({'status': novoStatus}).eq('id', pedidoId);
+      await SupabaseConfig.client
+          .from('pedidos')
+          .update({'status': novoStatus})
+          .eq('id', pedidoId);
       return true;
     } catch (e) {
       if (kDebugMode) {
@@ -80,9 +83,18 @@ class SupabasePedidoRepository implements PedidoRepository {
           'total': 67.80,
           'forma_pagamento': 'Pix',
           'pago': false,
-          'created_at': DateTime.now().subtract(const Duration(minutes: 10)).toIso8601String(),
-          'updated_at': DateTime.now().subtract(const Duration(minutes: 5)).toIso8601String(),
-          'mesas': {'id': '1', 'numero': '1', 'qr_token': 'mesa_001_qr', 'ativo': true},
+          'created_at': DateTime.now()
+              .subtract(const Duration(minutes: 10))
+              .toIso8601String(),
+          'updated_at': DateTime.now()
+              .subtract(const Duration(minutes: 5))
+              .toIso8601String(),
+          'mesas': {
+            'id': '1',
+            'numero': '1',
+            'qr_token': 'mesa_001_qr',
+            'ativo': true,
+          },
           'itens_pedido': [
             {
               'id': 'item-1',
@@ -143,13 +155,18 @@ class SupabasePedidoRepository implements PedidoRepository {
             'total': 67.80,
             'forma_pagamento': 'Pix',
             'pago': false,
-            'created_at': DateTime.now().subtract(const Duration(minutes: 10)).toIso8601String(),
+            'created_at': DateTime.now()
+                .subtract(const Duration(minutes: 10))
+                .toIso8601String(),
             'updated_at': DateTime.now().toIso8601String(),
           },
         ],
       );
     }
-    return SupabaseConfig.client.from('pedidos').stream(primaryKey: ['id']).order('created_at', ascending: false);
+    return SupabaseConfig.client
+        .from('pedidos')
+        .stream(primaryKey: ['id'])
+        .order('created_at', ascending: false);
   }
 
   @override
@@ -164,7 +181,9 @@ class SupabasePedidoRepository implements PedidoRepository {
           'total': 67.80,
           'forma_pagamento': 'Pix',
           'pago': false,
-          'created_at': DateTime.now().subtract(const Duration(minutes: 10)).toIso8601String(),
+          'created_at': DateTime.now()
+              .subtract(const Duration(minutes: 10))
+              .toIso8601String(),
           'updated_at': DateTime.now().toIso8601String(),
         },
       );

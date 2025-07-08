@@ -121,12 +121,11 @@ class _CartPageState extends ConsumerState<CartPage> {
                       const SizedBox(width: 12),
                       Text(
                         l10n.tableNumber(orderState.currentMesa!.numero),
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                       ),
                     ],
                   ),
@@ -245,13 +244,12 @@ class _CartPageState extends ConsumerState<CartPage> {
               Row(
                 children: [
                   IconButton.filled(
-                    onPressed:
-                        cartItem.quantidade > 1
-                            ? () => orderNotifier.updateCartItem(
-                              index,
-                              quantidade: cartItem.quantidade - 1,
-                            )
-                            : null,
+                    onPressed: cartItem.quantidade > 1
+                        ? () => orderNotifier.updateCartItem(
+                            index,
+                            quantidade: cartItem.quantidade - 1,
+                          )
+                        : null,
                     icon: const Icon(Icons.remove),
                     style: IconButton.styleFrom(
                       backgroundColor: Theme.of(
@@ -270,11 +268,10 @@ class _CartPageState extends ConsumerState<CartPage> {
                   ),
                   const SizedBox(width: 12),
                   IconButton.filled(
-                    onPressed:
-                        () => orderNotifier.updateCartItem(
-                          index,
-                          quantidade: cartItem.quantidade + 1,
-                        ),
+                    onPressed: () => orderNotifier.updateCartItem(
+                      index,
+                      quantidade: cartItem.quantidade + 1,
+                    ),
                     icon: const Icon(Icons.add),
                     style: IconButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -337,10 +334,9 @@ class _CartPageState extends ConsumerState<CartPage> {
         activeColor: Theme.of(context).colorScheme.primary,
         contentPadding: const EdgeInsets.symmetric(horizontal: 8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        tileColor:
-            _selectedPaymentMethod == method
-                ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-                : null,
+        tileColor: _selectedPaymentMethod == method
+            ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+            : null,
       ),
     );
   }
@@ -396,7 +392,10 @@ class _CartPageState extends ConsumerState<CartPage> {
     );
   }
 
-  Widget _buildCheckoutButton(OrderService orderNotifier, OrderState orderState) {
+  Widget _buildCheckoutButton(
+    OrderService orderNotifier,
+    OrderState orderState,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -413,10 +412,9 @@ class _CartPageState extends ConsumerState<CartPage> {
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed:
-                _isProcessingPayment
-                    ? null
-                    : () => _processCheckout(orderNotifier),
+            onPressed: _isProcessingPayment
+                ? null
+                : () => _processCheckout(orderNotifier),
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -425,22 +423,21 @@ class _CartPageState extends ConsumerState<CartPage> {
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
-            child:
-                _isProcessingPayment
-                    ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
-                    )
-                    : Text(
-                      '${l10n.checkout} - ${OrderService.formatPrice(orderState.cartTotal)}',
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+            child: _isProcessingPayment
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
                     ),
+                  )
+                : Text(
+                    '${l10n.checkout} - ${OrderService.formatPrice(orderState.cartTotal)}',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
           ),
         ),
       ),
@@ -525,7 +522,9 @@ class _CartPageState extends ConsumerState<CartPage> {
 
         _showSuccessDialog();
       } else {
-        _showErrorDialog(orderNotifier.state.error ?? 'Erro ao processar pedido');
+        _showErrorDialog(
+          orderNotifier.state.error ?? 'Erro ao processar pedido',
+        );
       }
     } catch (e) {
       _showErrorDialog('Erro inesperado: $e');
@@ -540,62 +539,56 @@ class _CartPageState extends ConsumerState<CartPage> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder:
-          (context) => AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: [
+            Icon(Icons.check_circle, color: Colors.green, size: 32),
+            const SizedBox(width: 12),
+            const Text('Pedido Realizado!'),
+          ],
+        ),
+        content: const Text(
+          'Seu pedido foi confirmado e enviado para a cozinha. Você pode acompanhar o status abaixo.',
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
             ),
-            title: Row(
-              children: [
-                Icon(Icons.check_circle, color: Colors.green, size: 32),
-                const SizedBox(width: 12),
-                const Text('Pedido Realizado!'),
-              ],
-            ),
-            content: const Text(
-              'Seu pedido foi confirmado e enviado para a cozinha. Você pode acompanhar o status abaixo.',
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                ),
-                child: const Text('OK'),
-              ),
-            ],
+            child: const Text('OK'),
           ),
+        ],
+      ),
     );
   }
 
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: [
+            Icon(
+              Icons.error_outline,
+              color: Theme.of(context).colorScheme.error,
+              size: 32,
             ),
-            title: Row(
-              children: [
-                Icon(
-                  Icons.error_outline,
-                  color: Theme.of(context).colorScheme.error,
-                  size: 32,
-                ),
-                const SizedBox(width: 12),
-                const Text('Erro'),
-              ],
-            ),
-            content: Text(message),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('OK'),
-              ),
-            ],
+            const SizedBox(width: 12),
+            const Text('Erro'),
+          ],
+        ),
+        content: Text(message),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
           ),
+        ],
+      ),
     );
   }
 
