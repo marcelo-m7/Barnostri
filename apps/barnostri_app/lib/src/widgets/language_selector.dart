@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
-import 'package:barnostri_app/l10n/generated/app_localizations.dart';
+import 'package:barnostri_app/src/core/services/language_service.dart';
 
 class LanguageSelector extends ConsumerWidget {
   final bool showAsBottomSheet;
@@ -231,13 +231,17 @@ class LanguageSelector extends ConsumerWidget {
     BuildContext context, {
     VoidCallback? onLanguageChanged,
   }) {
+    final container = ProviderScope.containerOf(context);
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => LanguageSelector(
-        showAsBottomSheet: true,
-        onLanguageChanged: onLanguageChanged,
+      builder: (_) => UncontrolledProviderScope(
+        container: container,
+        child: LanguageSelector(
+          showAsBottomSheet: true,
+          onLanguageChanged: onLanguageChanged,
+        ),
       ),
     );
   }
