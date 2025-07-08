@@ -1,35 +1,35 @@
 enum OrderStatus {
-  recebido('Recebido'),
-  emPreparo('Em preparo'),
-  pronto('Pronto'),
-  entregue('Entregue'),
-  cancelado('Cancelado');
+  received('Received'),
+  preparing('Preparing'),
+  ready('Ready'),
+  delivered('Delivered'),
+  canceled('Canceled');
 
   const OrderStatus(this.displayName);
   final String displayName;
 
   static OrderStatus fromString(String status) {
     switch (status) {
-      case 'Recebido':
-        return OrderStatus.recebido;
-      case 'Em preparo':
-        return OrderStatus.emPreparo;
-      case 'Pronto':
-        return OrderStatus.pronto;
-      case 'Entregue':
-        return OrderStatus.entregue;
-      case 'Cancelado':
-        return OrderStatus.cancelado;
+      case 'Received':
+        return OrderStatus.received;
+      case 'Preparing':
+        return OrderStatus.preparing;
+      case 'Ready':
+        return OrderStatus.ready;
+      case 'Delivered':
+        return OrderStatus.delivered;
+      case 'Canceled':
+        return OrderStatus.canceled;
       default:
-        return OrderStatus.recebido;
+        return OrderStatus.received;
     }
   }
 }
 
 enum PaymentMethod {
   pix('Pix'),
-  cartao('Cartão'),
-  dinheiro('Dinheiro');
+  card('Card'),
+  cash('Cash');
 
   const PaymentMethod(this.displayName);
   final String displayName;
@@ -38,10 +38,10 @@ enum PaymentMethod {
     switch (method) {
       case 'Pix':
         return PaymentMethod.pix;
-      case 'Cartão':
-        return PaymentMethod.cartao;
-      case 'Dinheiro':
-        return PaymentMethod.dinheiro;
+      case 'Card':
+        return PaymentMethod.card;
+      case 'Cash':
+        return PaymentMethod.cash;
       default:
         return PaymentMethod.pix;
     }

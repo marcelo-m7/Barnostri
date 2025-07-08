@@ -594,9 +594,9 @@ class _CartPageState extends ConsumerState<CartPage> {
     switch (method) {
       case PaymentMethod.pix:
         return Icons.pix;
-      case PaymentMethod.cartao:
+      case PaymentMethod.card:
         return Icons.credit_card;
-      case PaymentMethod.dinheiro:
+      case PaymentMethod.cash:
         return Icons.attach_money;
     }
   }

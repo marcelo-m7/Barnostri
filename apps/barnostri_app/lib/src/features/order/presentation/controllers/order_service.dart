@@ -207,15 +207,15 @@ class OrderService extends StateNotifier<OrderState> {
 
   static String getOrderStatusColor(OrderStatus status) {
     switch (status) {
-      case OrderStatus.recebido:
+      case OrderStatus.received:
         return 'blue';
-      case OrderStatus.emPreparo:
+      case OrderStatus.preparing:
         return 'orange';
-      case OrderStatus.pronto:
+      case OrderStatus.ready:
         return 'green';
-      case OrderStatus.entregue:
+      case OrderStatus.delivered:
         return 'grey';
-      case OrderStatus.cancelado:
+      case OrderStatus.canceled:
         return 'red';
     }
   }
