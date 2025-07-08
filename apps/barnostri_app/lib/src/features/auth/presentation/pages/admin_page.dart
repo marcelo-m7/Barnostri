@@ -637,9 +637,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
           ),
           ElevatedButton(
             onPressed: () async {
-              await menuService.addCategoria(
-                nome: nomeController.text,
-                ordem: int.tryParse(ordemController.text) ?? 0,
+              await menuService.addCategory(
+                name: nomeController.text,
+                sortOrder: int.tryParse(ordemController.text) ?? 0,
               );
               Navigator.pop(context);
             },
