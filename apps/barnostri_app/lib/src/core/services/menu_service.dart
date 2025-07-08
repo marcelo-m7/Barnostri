@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
+import "../repositories.dart";
 
 class MenuState {
   final List<Categoria> categorias;
@@ -34,15 +35,14 @@ class MenuState {
 }
 
 class MenuService extends StateNotifier<MenuState> {
-  MenuService() : super(const MenuState());
+  final MenuRepository _menuRepository;
+  MenuService(this._menuRepository) : super(const MenuState());
 
   Future<void> loadCategorias() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await SupabaseConfig.getCategorias();
-      state = state.copyWith(
-        categorias: data.map((json) => Categoria.fromJson(json)).toList(),
-      );
+      final data = await _menuRepository.fetchCategorias();
+      state = state.copyWith(categorias: data.map((json) => Categoria.fromJson(json)).toList());
     } catch (e) {
       state = state.copyWith(error: 'Erro ao carregar categorias: $e');
     } finally {
@@ -53,10 +53,8 @@ class MenuService extends StateNotifier<MenuState> {
   Future<void> loadItensCardapio() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await SupabaseConfig.getItensCardapio();
-      state = state.copyWith(
-        itensCardapio: data.map((json) => ItemCardapio.fromJson(json)).toList(),
-      );
+      final data = await _menuRepository.fetchItensCardapio();
+      state = state.copyWith(itensCardapio: data.map((json) => ItemCardapio.fromJson(json)).toList());
     } catch (e) {
       state = state.copyWith(error: 'Erro ao carregar itens do cardápio: $e');
     } finally {
@@ -67,10 +65,8 @@ class MenuService extends StateNotifier<MenuState> {
   Future<void> loadMesas() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await SupabaseConfig.getMesas();
-      state = state.copyWith(
-        mesas: data.map((json) => Mesa.fromJson(json)).toList(),
-      );
+      final data = await _menuRepository.fetchMesas();
+      state = state.copyWith(mesas: data.map((json) => Mesa.fromJson(json)).toList());
     } catch (e) {
       state = state.copyWith(error: 'Erro ao carregar mesas: $e');
     } finally {
@@ -79,17 +75,11 @@ class MenuService extends StateNotifier<MenuState> {
   }
 
   Future<void> loadAll() async {
-    await Future.wait([
-      loadCategorias(),
-      loadItensCardapio(),
-      loadMesas(),
-    ]);
+    await Future.wait([loadCategorias(), loadItensCardapio(), loadMesas()]);
   }
 
   List<ItemCardapio> getItensByCategoria(String categoriaId) {
-    return state.itensCardapio
-        .where((item) => item.categoriaId == categoriaId)
-        .toList();
+    return state.itensCardapio.where((item) => item.categoriaId == categoriaId).toList();
   }
 
   List<ItemCardapio> searchItens(String query) {
@@ -145,12 +135,7 @@ class MenuService extends StateNotifier<MenuState> {
     }
   }
 
-  Future<bool> updateCategoria({
-    required String id,
-    String? nome,
-    int? ordem,
-    bool? ativo,
-  }) async {
+  Future<bool> updateCategoria({required String id, String? nome, int? ordem, bool? ativo}) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final updateData = <String, dynamic>{};
@@ -190,8 +175,7 @@ class MenuService extends StateNotifier<MenuState> {
           .select('*, categorias(*)')
           .single();
       final novoItem = ItemCardapio.fromJson(response);
-      final list = [...state.itensCardapio, novoItem]
-        ..sort((a, b) => a.nome.compareTo(b.nome));
+      final list = [...state.itensCardapio, novoItem]..sort((a, b) => a.nome.compareTo(b.nome));
       state = state.copyWith(itensCardapio: list);
       return true;
     } catch (e) {
@@ -220,10 +204,7 @@ class MenuService extends StateNotifier<MenuState> {
       if (categoriaId != null) updateData['categoria_id'] = categoriaId;
       if (disponivel != null) updateData['disponivel'] = disponivel;
       if (imagemUrl != null) updateData['imagem_url'] = imagemUrl;
-      await SupabaseConfig.client
-          .from('itens_cardapio')
-          .update(updateData)
-          .eq('id', id);
+      await SupabaseConfig.client.from('itens_cardapio').update(updateData).eq('id', id);
       await loadItensCardapio();
       return true;
     } catch (e) {
@@ -264,8 +245,7 @@ class MenuService extends StateNotifier<MenuState> {
           .select()
           .single();
       final novaMesa = Mesa.fromJson(response);
-      final list = [...state.mesas, novaMesa]
-        ..sort((a, b) => a.numero.compareTo(b.numero));
+      final list = [...state.mesas, novaMesa]..sort((a, b) => a.numero.compareTo(b.numero));
       state = state.copyWith(mesas: list);
       return true;
     } catch (e) {
@@ -285,5 +265,7 @@ class MenuService extends StateNotifier<MenuState> {
   }
 }
 
-final menuServiceProvider =
-    StateNotifierProvider<MenuService, MenuState>((ref) => MenuService());
+final menuServiceProvider = StateNotifierProvider<MenuService, MenuState>((ref) {
+  final menuRepo = ref.watch(menuRepositoryProvider);
+  return MenuService(menuRepo);
+});

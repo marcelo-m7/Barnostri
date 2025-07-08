@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../core/services/order_service.dart';
+import "../../core/repositories.dart";
 import '../../core/services/menu_service.dart';
 import '../../widgets/order_status_widget.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -13,8 +14,7 @@ class AdminPage extends ConsumerStatefulWidget {
   ConsumerState<AdminPage> createState() => _AdminPageState();
 }
 
-class _AdminPageState extends ConsumerState<AdminPage>
-    with SingleTickerProviderStateMixin {
+class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isAuthenticated = false;
   bool _isLoading = true;
@@ -28,7 +28,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
 
   void _checkAuthentication() async {
     await Future.delayed(const Duration(milliseconds: 500));
-    final user = SupabaseConfig.getCurrentUser();
+    final user = ref.read(authRepositoryProvider).getCurrentUser();
     setState(() {
       _isAuthenticated = user != null;
       _isLoading = false;
@@ -68,31 +68,23 @@ class _AdminPageState extends ConsumerState<AdminPage>
                   color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Icon(
-                  Icons.admin_panel_settings,
-                  size: 64,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+                child: Icon(Icons.admin_panel_settings, size: 64, color: Theme.of(context).colorScheme.onPrimary),
               ),
 
               const SizedBox(height: 32),
 
               Text(
                 'Barnostri Admin',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
 
               const SizedBox(height: 8),
 
               Text(
                 'Acesso restrito para funcionários',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withOpacity(0.7),
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
               ),
 
               const SizedBox(height: 48),
@@ -103,19 +95,12 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  prefixIcon: Icon(
-                    Icons.email,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  prefixIcon: Icon(Icons.email, color: Theme.of(context).colorScheme.primary),
                   filled: true,
                   fillColor: Theme.of(context).colorScheme.surface,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.outline.withOpacity(0.3),
-                    ),
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.outline.withOpacity(0.3)),
                   ),
                 ),
               ),
@@ -128,19 +113,12 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Senha',
-                  prefixIcon: Icon(
-                    Icons.lock,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  prefixIcon: Icon(Icons.lock, color: Theme.of(context).colorScheme.primary),
                   filled: true,
                   fillColor: Theme.of(context).colorScheme.surface,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.outline.withOpacity(0.3),
-                    ),
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.outline.withOpacity(0.3)),
                   ),
                 ),
               ),
@@ -153,57 +131,50 @@ class _AdminPageState extends ConsumerState<AdminPage>
                   return SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed:
-                          isLogging
-                              ? null
-                              : () async {
-                                setState(() => isLogging = true);
+                      onPressed: isLogging
+                          ? null
+                          : () async {
+                              setState(() => isLogging = true);
 
-                                try {
-                                  await SupabaseConfig.signInWithEmail(
-                                    email: emailController.text.trim(),
-                                    password: passwordController.text.trim(),
-                                  );
+                              try {
+                                await ref
+                                    .read(authRepositoryProvider)
+                                    .signIn(
+                                      email: emailController.text.trim(),
+                                      password: passwordController.text.trim(),
+                                    );
 
-                                  this.setState(() {
-                                    _isAuthenticated = true;
-                                  });
-                                } catch (e) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Erro no login: $e'),
-                                      backgroundColor:
-                                          Theme.of(context).colorScheme.error,
-                                    ),
-                                  );
-                                } finally {
-                                  setState(() => isLogging = false);
-                                }
-                              },
+                                this.setState(() {
+                                  _isAuthenticated = true;
+                                });
+                              } catch (e) {
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Erro no login: $e'),
+                                    backgroundColor: Theme.of(context).colorScheme.error,
+                                  ),
+                                );
+                              } finally {
+                                setState(() => isLogging = false);
+                              }
+                            },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor:
-                            Theme.of(context).colorScheme.onPrimary,
+                        foregroundColor: Theme.of(context).colorScheme.onPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                       ),
-                      child:
-                          isLogging
-                              ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                              : Text(
-                                'Entrar',
-                                style: Theme.of(context).textTheme.labelLarge
-                                    ?.copyWith(fontWeight: FontWeight.bold),
-                              ),
+                      child: isLogging
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                            )
+                          : Text(
+                              'Entrar',
+                              style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
+                            ),
                     ),
                   );
                 },
@@ -215,31 +186,23 @@ class _AdminPageState extends ConsumerState<AdminPage>
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.secondary.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
                   children: [
                     Text(
                       'Credenciais de demonstração:',
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'Email: admin@barnostri.com',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
                     ),
                     Text(
                       'Senha: admin123',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
                     ),
                   ],
                 ),
@@ -262,7 +225,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
         actions: [
           IconButton(
             onPressed: () async {
-              await SupabaseConfig.signOut();
+              await ref.read(authRepositoryProvider).signOut();
               setState(() {
                 _isAuthenticated = false;
               });
@@ -273,9 +236,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
         bottom: TabBar(
           controller: _tabController,
           labelColor: Theme.of(context).colorScheme.onPrimary,
-          unselectedLabelColor: Theme.of(
-            context,
-          ).colorScheme.onPrimary.withOpacity(0.7),
+          unselectedLabelColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
           indicatorColor: Theme.of(context).colorScheme.onPrimary,
           tabs: [
             Tab(text: l10n.orders, icon: const Icon(Icons.restaurant_menu)),
@@ -284,10 +245,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [_buildOrdersTab(), _buildMenuTab(), _buildTablesTab()],
-      ),
+      body: TabBarView(controller: _tabController, children: [_buildOrdersTab(), _buildMenuTab(), _buildTablesTab()]),
     );
   }
 
@@ -308,28 +266,16 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.error_outline,
-                      size: 64,
-                      color: Theme.of(context).colorScheme.error,
-                    ),
+                    Icon(Icons.error_outline, size: 64, color: Theme.of(context).colorScheme.error),
                     const SizedBox(height: 16),
-                    Text(
-                      l10n.errorLoadingOrders,
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
+                    Text(l10n.errorLoadingOrders, style: Theme.of(context).textTheme.headlineSmall),
                   ],
                 ),
               );
             }
 
             final pedidos = snapshot.data ?? [];
-            final activePedidos =
-                pedidos
-                    .where(
-                      (p) => p.status != 'Entregue' && p.status != 'Cancelado',
-                    )
-                    .toList();
+            final activePedidos = pedidos.where((p) => p.status != 'Entregue' && p.status != 'Cancelado').toList();
 
             if (activePedidos.isEmpty) {
               return Center(
@@ -339,23 +285,16 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     Icon(
                       Icons.inbox_outlined,
                       size: 64,
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withOpacity(0.3),
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      l10n.noActiveOrders,
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
+                    Text(l10n.noActiveOrders, style: Theme.of(context).textTheme.headlineSmall),
                     const SizedBox(height: 8),
                     Text(
                       l10n.newOrdersAppearHere,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withOpacity(0.7),
-                      ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
                     ),
                   ],
                 ),
@@ -396,15 +335,13 @@ class _AdminPageState extends ConsumerState<AdminPage>
               child: Column(
                 children: [
                   TabBar(
-                    tabs: [Tab(text: l10n.items), Tab(text: l10n.categories)],
+                    tabs: [
+                      Tab(text: l10n.items),
+                      Tab(text: l10n.categories),
+                    ],
                   ),
                   Expanded(
-                    child: TabBarView(
-                      children: [
-                        _buildMenuItemsList(menuService),
-                        _buildCategoriesList(menuService),
-                      ],
-                    ),
+                    child: TabBarView(children: [_buildMenuItemsList(menuService), _buildCategoriesList(menuService)]),
                   ),
                 ],
               ),
@@ -426,10 +363,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
             margin: const EdgeInsets.only(bottom: 8),
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor:
-                    item.disponivel
-                        ? Colors.green.withOpacity(0.1)
-                        : Colors.red.withOpacity(0.1),
+                backgroundColor: item.disponivel ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
                 child: Icon(
                   item.disponivel ? Icons.check : Icons.close,
                   color: item.disponivel ? Colors.green : Colors.red,
@@ -467,23 +401,16 @@ class _AdminPageState extends ConsumerState<AdminPage>
             margin: const EdgeInsets.only(bottom: 8),
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: Theme.of(
-                  context,
-                ).colorScheme.secondary.withOpacity(0.1),
+                backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                 child: Text(categoria.ordem.toString()),
               ),
               title: Text(categoria.nome),
-              subtitle: Text(
-                '${menuService.getItensByCategoria(categoria.id).length} itens',
-              ),
+              subtitle: Text('${menuService.getItensByCategoria(categoria.id).length} itens'),
               trailing: Icon(
                 categoria.ativo ? Icons.visibility : Icons.visibility_off,
-                color:
-                    categoria.ativo
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withOpacity(0.5),
+                color: categoria.ativo
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               ),
             ),
           );
@@ -519,18 +446,12 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
                       leading: CircleAvatar(
-                        backgroundColor:
-                            mesa.ativo
-                                ? Theme.of(
-                                  context,
-                                ).colorScheme.primary.withOpacity(0.1)
-                                : Colors.grey.withOpacity(0.1),
+                        backgroundColor: mesa.ativo
+                            ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+                            : Colors.grey.withOpacity(0.1),
                         child: Icon(
                           Icons.table_restaurant,
-                          color:
-                              mesa.ativo
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Colors.grey,
+                          color: mesa.ativo ? Theme.of(context).colorScheme.primary : Colors.grey,
                         ),
                       ),
                       title: Text('Mesa ${mesa.numero}'),
@@ -564,66 +485,56 @@ class _AdminPageState extends ConsumerState<AdminPage>
 
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Adicionar Item'),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: nomeController,
-                    decoration: const InputDecoration(labelText: 'Nome'),
-                  ),
-                  TextField(
-                    controller: descricaoController,
-                    decoration: const InputDecoration(labelText: 'Descrição'),
-                    maxLines: 3,
-                  ),
-                  TextField(
-                    controller: precoController,
-                    decoration: const InputDecoration(labelText: 'Preço'),
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: 16),
-                  DropdownButtonFormField<String>(
-                    value: selectedCategoryId,
-                    decoration: const InputDecoration(labelText: 'Categoria'),
-                    items:
-                        menuService.categorias
-                            .map(
-                              (cat) => DropdownMenuItem(
-                                value: cat.id,
-                                child: Text(cat.nome),
-                              ),
-                            )
-                            .toList(),
-                    onChanged: (value) => selectedCategoryId = value,
-                  ),
-                ],
+      builder: (context) => AlertDialog(
+        title: const Text('Adicionar Item'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nomeController,
+                decoration: const InputDecoration(labelText: 'Nome'),
               ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancelar'),
+              TextField(
+                controller: descricaoController,
+                decoration: const InputDecoration(labelText: 'Descrição'),
+                maxLines: 3,
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (selectedCategoryId != null) {
-                    await menuService.addItemCardapio(
-                      nome: nomeController.text,
-                      descricao: descricaoController.text,
-                      preco: double.tryParse(precoController.text) ?? 0.0,
-                      categoriaId: selectedCategoryId!,
-                    );
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text('Adicionar'),
+              TextField(
+                controller: precoController,
+                decoration: const InputDecoration(labelText: 'Preço'),
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                value: selectedCategoryId,
+                decoration: const InputDecoration(labelText: 'Categoria'),
+                items: menuService.categorias
+                    .map((cat) => DropdownMenuItem(value: cat.id, child: Text(cat.nome)))
+                    .toList(),
+                onChanged: (value) => selectedCategoryId = value,
               ),
             ],
           ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
+          ElevatedButton(
+            onPressed: () async {
+              if (selectedCategoryId != null) {
+                await menuService.addItemCardapio(
+                  nome: nomeController.text,
+                  descricao: descricaoController.text,
+                  preco: double.tryParse(precoController.text) ?? 0.0,
+                  categoriaId: selectedCategoryId!,
+                );
+                Navigator.pop(context);
+              }
+            },
+            child: const Text('Adicionar'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -633,40 +544,33 @@ class _AdminPageState extends ConsumerState<AdminPage>
 
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Adicionar Categoria'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: nomeController,
-                  decoration: const InputDecoration(labelText: 'Nome'),
-                ),
-                TextField(
-                  controller: ordemController,
-                  decoration: const InputDecoration(labelText: 'Ordem'),
-                  keyboardType: TextInputType.number,
-                ),
-              ],
+      builder: (context) => AlertDialog(
+        title: const Text('Adicionar Categoria'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nomeController,
+              decoration: const InputDecoration(labelText: 'Nome'),
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancelar'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  await menuService.addCategoria(
-                    nome: nomeController.text,
-                    ordem: int.tryParse(ordemController.text) ?? 0,
-                  );
-                  Navigator.pop(context);
-                },
-                child: const Text('Adicionar'),
-              ),
-            ],
+            TextField(
+              controller: ordemController,
+              decoration: const InputDecoration(labelText: 'Ordem'),
+              keyboardType: TextInputType.number,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
+          ElevatedButton(
+            onPressed: () async {
+              await menuService.addCategoria(nome: nomeController.text, ordem: int.tryParse(ordemController.text) ?? 0);
+              Navigator.pop(context);
+            },
+            child: const Text('Adicionar'),
           ),
+        ],
+      ),
     );
   }
 
@@ -676,41 +580,32 @@ class _AdminPageState extends ConsumerState<AdminPage>
 
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Adicionar Mesa'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: numeroController,
-                  decoration: const InputDecoration(
-                    labelText: 'Número da Mesa',
-                  ),
-                ),
-                TextField(
-                  controller: qrTokenController,
-                  decoration: const InputDecoration(labelText: 'Token QR'),
-                ),
-              ],
+      builder: (context) => AlertDialog(
+        title: const Text('Adicionar Mesa'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: numeroController,
+              decoration: const InputDecoration(labelText: 'Número da Mesa'),
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancelar'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  await menuService.addMesa(
-                    numero: numeroController.text,
-                    qrToken: qrTokenController.text,
-                  );
-                  Navigator.pop(context);
-                },
-                child: const Text('Adicionar'),
-              ),
-            ],
+            TextField(
+              controller: qrTokenController,
+              decoration: const InputDecoration(labelText: 'Token QR'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
+          ElevatedButton(
+            onPressed: () async {
+              await menuService.addMesa(numero: numeroController.text, qrToken: qrTokenController.text);
+              Navigator.pop(context);
+            },
+            child: const Text('Adicionar'),
           ),
+        ],
+      ),
     );
   }
 

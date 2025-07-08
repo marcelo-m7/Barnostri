@@ -4,47 +4,47 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  final authRepo = SupabaseAuthRepository();
+  final menuRepo = SupabaseMenuRepository();
+  final pedidoRepo = SupabasePedidoRepository();
 
-  group('SupabaseConfig mock helpers', () {
-    test('signInWithEmail returns mock user', () async {
-      final res = await SupabaseConfig.signInWithEmail(
+  group('Supabase repositories mock helpers', () {
+    test('signIn returns mock user', () async {
+      final res = await authRepo.signIn(
         email: 'admin@barnostri.com',
         password: 'admin123',
       );
       expect(res.user?.id, 'demo-admin-id');
     });
 
-    test('signInWithEmail invalid throws', () async {
+    test('signIn invalid throws', () async {
       expect(
-        () => SupabaseConfig.signInWithEmail(
-          email: 'wrong',
-          password: 'bad',
-        ),
+        () => authRepo.signIn(email: 'wrong', password: 'bad'),
         throwsA(isA<AuthException>()),
       );
     });
 
     test('getCurrentUser returns null when not configured', () {
-      expect(SupabaseConfig.getCurrentUser(), isNull);
+      expect(authRepo.getCurrentUser(), isNull);
     });
 
     test('getMesaByQrToken returns mock mesa', () async {
-      final mesa = await SupabaseConfig.getMesaByQrToken('mesa_001_qr');
+      final mesa = await menuRepo.getMesaByQrToken('mesa_001_qr');
       expect(mesa?['numero'], '1');
     });
 
-    test('getCategorias returns mock list', () async {
-      final categorias = await SupabaseConfig.getCategorias();
+    test('fetchCategorias returns mock list', () async {
+      final categorias = await menuRepo.fetchCategorias();
       expect(categorias.length, greaterThanOrEqualTo(1));
     });
 
-    test('getItensCardapio returns mock list', () async {
-      final itens = await SupabaseConfig.getItensCardapio();
+    test('fetchItensCardapio returns mock list', () async {
+      final itens = await menuRepo.fetchItensCardapio();
       expect(itens.length, greaterThanOrEqualTo(1));
     });
 
     test('criarPedido returns mock id', () async {
-      final id = await SupabaseConfig.criarPedido(
+      final id = await pedidoRepo.criarPedido(
         mesaId: '1',
         itens: const [
           {'id': 'i1', 'quantidade': 1, 'preco': 10.0}
@@ -56,13 +56,13 @@ void main() {
       expect(id!.startsWith('mock-order-'), isTrue);
     });
 
-    test('atualizarStatusPedido returns true', () async {
-      final ok = await SupabaseConfig.atualizarStatusPedido('1', 'Pronto');
+    test('atualizarStatus retorna true', () async {
+      final ok = await pedidoRepo.atualizarStatus('1', 'Pronto');
       expect(ok, isTrue);
     });
 
-    test('getPedidos returns mock data', () async {
-      final pedidos = await SupabaseConfig.getPedidos();
+    test('fetchPedidos returns mock data', () async {
+      final pedidos = await pedidoRepo.fetchPedidos();
       expect(pedidos.first['id'], 'mock-order-1');
     });
   });

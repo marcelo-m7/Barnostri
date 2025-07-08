@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
+import "../repositories.dart";
 
 class OrderState {
   final List<CartItem> cartItems;
@@ -7,19 +8,9 @@ class OrderState {
   final bool isLoading;
   final String? error;
 
-  const OrderState({
-    this.cartItems = const [],
-    this.currentMesa,
-    this.isLoading = false,
-    this.error,
-  });
+  const OrderState({this.cartItems = const [], this.currentMesa, this.isLoading = false, this.error});
 
-  OrderState copyWith({
-    List<CartItem>? cartItems,
-    Mesa? currentMesa,
-    bool? isLoading,
-    String? error,
-  }) {
+  OrderState copyWith({List<CartItem>? cartItems, Mesa? currentMesa, bool? isLoading, String? error}) {
     return OrderState(
       cartItems: cartItems ?? this.cartItems,
       currentMesa: currentMesa ?? this.currentMesa,
@@ -28,14 +19,14 @@ class OrderState {
     );
   }
 
-  double get cartTotal =>
-      cartItems.fold(0.0, (total, item) => total + item.subtotal);
-  int get cartItemCount =>
-      cartItems.fold(0, (count, item) => count + item.quantidade);
+  double get cartTotal => cartItems.fold(0.0, (total, item) => total + item.subtotal);
+  int get cartItemCount => cartItems.fold(0, (count, item) => count + item.quantidade);
 }
 
 class OrderService extends StateNotifier<OrderState> {
-  OrderService() : super(const OrderState());
+  final PedidoRepository _pedidoRepository;
+  final MenuRepository _menuRepository;
+  OrderService(this._pedidoRepository, this._menuRepository) : super(const OrderState());
 
   void setMesa(Mesa mesa) {
     state = state.copyWith(currentMesa: mesa);
@@ -43,16 +34,13 @@ class OrderService extends StateNotifier<OrderState> {
 
   void addToCart(ItemCardapio item, {int quantidade = 1, String? observacao}) {
     final items = [...state.cartItems];
-    final existingIndex = items.indexWhere((cartItem) =>
-        cartItem.item.id == item.id && cartItem.observacao == observacao);
+    final existingIndex = items.indexWhere(
+      (cartItem) => cartItem.item.id == item.id && cartItem.observacao == observacao,
+    );
     if (existingIndex != -1) {
       items[existingIndex].quantidade += quantidade;
     } else {
-      items.add(CartItem(
-        item: item,
-        quantidade: quantidade,
-        observacao: observacao,
-      ));
+      items.add(CartItem(item: item, quantidade: quantidade, observacao: observacao));
     }
     state = state.copyWith(cartItems: items);
   }
@@ -92,7 +80,7 @@ class OrderService extends StateNotifier<OrderState> {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final itens = state.cartItems.map((cartItem) => cartItem.toJson()).toList();
-      final pedidoId = await SupabaseConfig.criarPedido(
+      final pedidoId = await _pedidoRepository.criarPedido(
         mesaId: state.currentMesa!.id,
         itens: itens,
         total: state.cartTotal,
@@ -116,10 +104,7 @@ class OrderService extends StateNotifier<OrderState> {
   Future<bool> updateOrderStatus(String pedidoId, OrderStatus status) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final success = await SupabaseConfig.atualizarStatusPedido(
-        pedidoId,
-        status.displayName,
-      );
+      final success = await _pedidoRepository.atualizarStatus(pedidoId, status.displayName);
       if (!success) {
         state = state.copyWith(error: 'Erro ao atualizar status do pedido');
       }
@@ -135,7 +120,7 @@ class OrderService extends StateNotifier<OrderState> {
   Future<List<Pedido>> getAllOrders() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await SupabaseConfig.getPedidos();
+      final data = await _pedidoRepository.fetchPedidos();
       return data.map((json) => Pedido.fromJson(json)).toList();
     } catch (e) {
       state = state.copyWith(error: 'Erro ao carregar pedidos: $e');
@@ -146,19 +131,17 @@ class OrderService extends StateNotifier<OrderState> {
   }
 
   Stream<List<Pedido>> streamOrders() {
-    return SupabaseConfig.streamPedidos()
-        .map((data) => data.map((json) => Pedido.fromJson(json)).toList());
+    return _pedidoRepository.watchPedidos().map((data) => data.map((json) => Pedido.fromJson(json)).toList());
   }
 
   Stream<Pedido> streamOrder(String pedidoId) {
-    return SupabaseConfig.streamPedido(pedidoId)
-        .map((data) => Pedido.fromJson(data));
+    return _pedidoRepository.watchPedido(pedidoId).map((data) => Pedido.fromJson(data));
   }
 
   Future<Mesa?> getMesaByQrToken(String qrToken) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await SupabaseConfig.getMesaByQrToken(qrToken);
+      final data = await _menuRepository.getMesaByQrToken(qrToken);
       if (data != null) {
         final mesa = Mesa.fromJson(data);
         setMesa(mesa);
@@ -175,10 +158,7 @@ class OrderService extends StateNotifier<OrderState> {
     }
   }
 
-  Future<bool> processPayment({
-    required PaymentMethod method,
-    required double amount,
-  }) async {
+  Future<bool> processPayment({required PaymentMethod method, required double amount}) async {
     state = state.copyWith(isLoading: true);
     await Future.delayed(const Duration(seconds: 2));
     final success = true;
@@ -217,5 +197,8 @@ class OrderService extends StateNotifier<OrderState> {
   }
 }
 
-final orderServiceProvider =
-    StateNotifierProvider<OrderService, OrderState>((ref) => OrderService());
+final orderServiceProvider = StateNotifierProvider<OrderService, OrderState>((ref) {
+  final pedidoRepo = ref.watch(pedidoRepositoryProvider);
+  final menuRepo = ref.watch(menuRepositoryProvider);
+  return OrderService(pedidoRepo, menuRepo);
+});
