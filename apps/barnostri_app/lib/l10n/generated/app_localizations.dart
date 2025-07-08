@@ -873,6 +873,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total Items:'**
   String get totalItems;
+
+  /// Generic add button
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// Label for optional observations field
+  ///
+  /// In en, this message translates to:
+  /// **'Observations (optional)'**
+  String get observationOptional;
+
+  /// Hint example for observations field
+  ///
+  /// In en, this message translates to:
+  /// **'E.g. No onions, well done...'**
+  String get observationExample;
+
+  /// Displayed when an item is unavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Item Unavailable'**
+  String get itemUnavailable;
+
+  /// Snack bar message when item is added to cart
+  ///
+  /// In en, this message translates to:
+  /// **'{item} added to cart!'**
+  String addedToCartMessage(String item);
+
+  /// Section title for admin actions
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Actions'**
+  String get adminActions;
+
+  /// Button to mark order as a status
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as {status}'**
+  String markAsStatus(String status);
+
+  /// Description for received status
+  ///
+  /// In en, this message translates to:
+  /// **'Order received by the kitchen'**
+  String get statusReceivedDescription;
+
+  /// Description for in preparation status
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing your dishes'**
+  String get statusInPrepDescription;
+
+  /// Description for ready status
+  ///
+  /// In en, this message translates to:
+  /// **'Order ready for pickup'**
+  String get statusReadyDescription;
+
+  /// Description for delivered status
+  ///
+  /// In en, this message translates to:
+  /// **'Order delivered'**
+  String get statusDeliveredDescription;
+
+  /// Description for cancelled status
+  ///
+  /// In en, this message translates to:
+  /// **'Order cancelled'**
+  String get statusCancelledDescription;
+
+  /// Message when order status is updated
+  ///
+  /// In en, this message translates to:
+  /// **'Status updated to {status}'**
+  String statusUpdated(String status);
+
+  /// Message shown when updating status fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating status: {error}'**
+  String statusUpdateErrorDetailed(String error);
+
+  /// Order confirmation dialog description
+  ///
+  /// In en, this message translates to:
+  /// **'Your order has been confirmed and sent to the kitchen. You can track its status below.'**
+  String get orderConfirmedKitchen;
+
+  /// Label for QR token field
+  ///
+  /// In en, this message translates to:
+  /// **'QR Token'**
+  String get qrToken;
+
+  /// Label for table number field
+  ///
+  /// In en, this message translates to:
+  /// **'Table Number'**
+  String get tableNumberLabel;
+
+  /// Label for numeric ordering field
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get orderField;
 }
 
 class _AppLocalizationsDelegate

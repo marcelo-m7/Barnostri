@@ -523,7 +523,7 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
 
                   // Observation field
                   Text(
-                    'Observações (opcional)',
+                    AppLocalizations.of(context)!.observationOptional,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -533,7 +533,7 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                     controller: _observationController,
                     maxLines: 3,
                     decoration: InputDecoration(
-                      hintText: 'Ex: Sem cebola, bem passado...',
+                      hintText: AppLocalizations.of(context)!.observationExample,
                       filled: true,
                       fillColor: Theme.of(context).colorScheme.surface,
                       border: OutlineInputBorder(
@@ -571,7 +571,8 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    '${widget.item.nome} adicionado ao carrinho!',
+                                    AppLocalizations.of(context)!
+                                        .addedToCartMessage(widget.item.nome),
                                   ),
                                   backgroundColor: Theme.of(
                                     context,
@@ -593,8 +594,8 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                       ),
                       child: Text(
                         widget.item.disponivel
-                            ? 'Adicionar ao Carrinho - ${OrderService().formatPrice(widget.item.preco * _quantity)}'
-                            : 'Item Indisponível',
+                            ? '${AppLocalizations.of(context)!.addToCart} - ${OrderService().formatPrice(widget.item.preco * _quantity)}'
+                            : AppLocalizations.of(context)!.itemUnavailable,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

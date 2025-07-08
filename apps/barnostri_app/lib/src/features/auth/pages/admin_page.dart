@@ -535,29 +535,29 @@ class _AdminPageState extends ConsumerState<AdminPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Adicionar Item'),
+        title: Text(AppLocalizations.of(context)!.addItem),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nomeController,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.name),
               ),
               TextField(
                 controller: descricaoController,
-                decoration: const InputDecoration(labelText: 'Descrição'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.description),
                 maxLines: 3,
               ),
               TextField(
                 controller: precoController,
-                decoration: const InputDecoration(labelText: 'Preço'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.price),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: selectedCategoryId,
-                decoration: const InputDecoration(labelText: 'Categoria'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.category),
                 items: menuService.categorias
                     .map(
                       (cat) => DropdownMenuItem(
@@ -574,7 +574,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
 
           ElevatedButton(
@@ -589,7 +589,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 Navigator.pop(context);
               }
             },
-            child: const Text('Adicionar'),
+            child: Text(AppLocalizations.of(context)!.add),
           ),
         ],
       ),
@@ -603,17 +603,17 @@ class _AdminPageState extends ConsumerState<AdminPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Adicionar Categoria'),
+        title: Text(AppLocalizations.of(context)!.addCategory),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nomeController,
-              decoration: const InputDecoration(labelText: 'Nome'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.name),
             ),
             TextField(
               controller: ordemController,
-              decoration: const InputDecoration(labelText: 'Ordem'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.orderField),
               keyboardType: TextInputType.number,
             ),
           ],
@@ -621,7 +621,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -631,7 +631,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
               );
               Navigator.pop(context);
             },
-            child: const Text('Adicionar'),
+            child: Text(AppLocalizations.of(context)!.add),
           ),
         ],
       ),
@@ -645,24 +645,24 @@ class _AdminPageState extends ConsumerState<AdminPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Adicionar Mesa'),
+        title: Text(AppLocalizations.of(context)!.addTable),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: numeroController,
-              decoration: const InputDecoration(labelText: 'Número da Mesa'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.tableNumberLabel),
             ),
             TextField(
               controller: qrTokenController,
-              decoration: const InputDecoration(labelText: 'Token QR'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.qrToken),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -673,7 +673,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
 
               Navigator.pop(context);
             },
-            child: const Text('Adicionar'),
+            child: Text(AppLocalizations.of(context)!.add),
           ),
         ],
       ),

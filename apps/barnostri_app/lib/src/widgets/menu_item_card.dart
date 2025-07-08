@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_models/shared_models.dart';
 import '../core/services/order_service.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class MenuItemCard extends StatefulWidget {
   final ItemCardapio item;
@@ -224,8 +225,8 @@ class _MenuItemCardState extends State<MenuItemCard>
                                   const SizedBox(width: 4),
                                   Text(
                                     widget.item.disponivel
-                                        ? 'Disponível'
-                                        : 'Indisponível',
+                                        ? AppLocalizations.of(context)!.available
+                                        : AppLocalizations.of(context)!.unavailable,
                                     style: Theme.of(context)
                                         .textTheme
                                         .labelSmall

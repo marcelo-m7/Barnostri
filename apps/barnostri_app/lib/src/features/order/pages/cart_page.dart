@@ -474,7 +474,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                           _currentOrderId = null;
                         });
                       },
-                      child: const Text('Voltar'),
+                      child: Text(AppLocalizations.of(context)!.back),
                     ),
                   ],
                 ),
@@ -545,11 +545,11 @@ class _CartPageState extends ConsumerState<CartPage> {
           children: [
             Icon(Icons.check_circle, color: Colors.green, size: 32),
             const SizedBox(width: 12),
-            const Text('Pedido Realizado!'),
+            Text(AppLocalizations.of(context)!.orderPlaced),
           ],
         ),
-        content: const Text(
-          'Seu pedido foi confirmado e enviado para a cozinha. Você pode acompanhar o status abaixo.',
+        content: Text(
+          AppLocalizations.of(context)!.orderConfirmedKitchen,
         ),
         actions: [
           ElevatedButton(
@@ -558,7 +558,7 @@ class _CartPageState extends ConsumerState<CartPage> {
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
             ),
-            child: const Text('OK'),
+            child: Text(AppLocalizations.of(context)!.ok),
           ),
         ],
       ),
@@ -578,14 +578,14 @@ class _CartPageState extends ConsumerState<CartPage> {
               size: 32,
             ),
             const SizedBox(width: 12),
-            const Text('Erro'),
+            Text(AppLocalizations.of(context)!.error),
           ],
         ),
         content: Text(message),
         actions: [
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
+            child: Text(AppLocalizations.of(context)!.ok),
           ),
         ],
       ),
