@@ -39,7 +39,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
 
       // Initialize tab controller after loading categories
       _tabController = TabController(
-        length: menuService.categorias.length,
+        length: menuService.categories.length,
         vsync: this,
       );
     }
@@ -206,7 +206,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
               ),
 
               // Tab Bar
-              if (_searchQuery.isEmpty && menuState.categorias.isNotEmpty)
+              if (_searchQuery.isEmpty && menuState.categories.isNotEmpty)
                 SliverToBoxAdapter(
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -225,8 +225,8 @@ class _MenuPageState extends ConsumerState<MenuPage>
                       unselectedLabelStyle: Theme.of(
                         context,
                       ).textTheme.labelLarge,
-                      tabs: menuState.categorias
-                          .map((categoria) => Tab(text: categoria.nome))
+                      tabs: menuState.categories
+                          .map((categoria) => Tab(text: categoria.name))
                           .toList(),
                     ),
                   ),
@@ -235,7 +235,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
               // Content
               if (_searchQuery.isNotEmpty)
                 _buildSearchResults(menuService, menuState)
-              else if (menuState.categorias.isNotEmpty)
+              else if (menuState.categories.isNotEmpty)
                 _buildCategorizedMenu(menuService, menuState)
               else
                 SliverToBoxAdapter(
@@ -287,7 +287,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
   }
 
   Widget _buildSearchResults(MenuService menuService, MenuState menuState) {
-    final filteredItems = menuService.searchItens(_searchQuery);
+    final filteredItems = menuService.searchItems(_searchQuery);
 
     return SliverPadding(
       padding: const EdgeInsets.all(16),
@@ -309,8 +309,8 @@ class _MenuPageState extends ConsumerState<MenuPage>
     return SliverFillRemaining(
       child: TabBarView(
         controller: _tabController,
-        children: menuState.categorias.map((categoria) {
-          final items = menuService.getItensByCategoria(categoria.id);
+        children: menuState.categories.map((categoria) {
+          final items = menuService.getItemsByCategory(categoria.id);
           final l10n = AppLocalizations.of(context)!;
 
           return Padding(
@@ -329,7 +329,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          l10n.emptyCategoryItems(categoria.nome),
+                          l10n.emptyCategoryItems(categoria.name),
                           style: Theme.of(context).textTheme.bodyLarge
                               ?.copyWith(
                                 color: Theme.of(
@@ -440,14 +440,14 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.item.nome,
+                              widget.item.name,
                               style: Theme.of(context).textTheme.headlineSmall
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
-                            if (widget.item.descricao != null) ...[
+                            if (widget.item.description != null) ...[
                               const SizedBox(height: 8),
                               Text(
-                                widget.item.descricao!,
+                                widget.item.description!,
                                 style: Theme.of(context).textTheme.bodyMedium
                                     ?.copyWith(
                                       color: Theme.of(
@@ -461,7 +461,7 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                       ),
                       const SizedBox(width: 16),
                       Text(
-                        formatCurrency(widget.item.preco),
+                        formatCurrency(widget.item.price),
                         style: Theme.of(context).textTheme.headlineSmall
                             ?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
@@ -555,16 +555,15 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: widget.item.disponivel
+                      onPressed: widget.item.available
                           ? () {
                               final orderService = ref.read(
                                 orderServiceProvider.notifier,
                               );
                               orderService.addToCart(
                                 widget.item,
-                                quantidade: _quantity,
-                                observacao:
-                                    _observationController.text.trim().isEmpty
+                                quantity: _quantity,
+                                note: _observationController.text.trim().isEmpty
                                     ? null
                                     : _observationController.text.trim(),
                               );
@@ -575,7 +574,7 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                                   content: Text(
                                     AppLocalizations.of(
                                       context,
-                                    )!.addedToCartMessage(widget.item.nome),
+                                    )!.addedToCartMessage(widget.item.name),
                                   ),
                                   backgroundColor: Theme.of(
                                     context,
@@ -596,8 +595,8 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                         ),
                       ),
                       child: Text(
-                        widget.item.disponivel
-                            ? '${AppLocalizations.of(context)!.addToCart} - ${formatCurrency(widget.item.preco * _quantity)}'
+                        widget.item.available
+                            ? '${AppLocalizations.of(context)!.addToCart} - ${formatCurrency(widget.item.price * _quantity)}'
                             : AppLocalizations.of(context)!.itemUnavailable,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.bold,

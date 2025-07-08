@@ -394,28 +394,28 @@ class _AdminPageState extends ConsumerState<AdminPage>
     return Scaffold(
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: menuService.itensCardapio.length,
+        itemCount: menuService.menuItems.length,
         itemBuilder: (context, index) {
-          final item = menuService.itensCardapio[index];
+          final item = menuService.menuItems[index];
           return Card(
             margin: const EdgeInsets.only(bottom: 8),
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: item.disponivel
+                backgroundColor: item.available
                     ? Colors.green.withOpacity(0.1)
                     : Colors.red.withOpacity(0.1),
 
                 child: Icon(
-                  item.disponivel ? Icons.check : Icons.close,
-                  color: item.disponivel ? Colors.green : Colors.red,
+                  item.available ? Icons.check : Icons.close,
+                  color: item.available ? Colors.green : Colors.red,
                 ),
               ),
-              title: Text(item.nome),
-              subtitle: Text(formatCurrency(item.preco)),
+              title: Text(item.name),
+              subtitle: Text(formatCurrency(item.price)),
               trailing: Switch(
-                value: item.disponivel,
+                value: item.available,
                 onChanged: (value) {
-                  menuService.toggleItemDisponibilidade(item.id);
+                  menuService.toggleItemAvailability(item.id);
                 },
               ),
             ),
@@ -435,9 +435,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
     return Scaffold(
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: menuService.categorias.length,
+        itemCount: menuService.categories.length,
         itemBuilder: (context, index) {
-          final categoria = menuService.categorias[index];
+          final categoria = menuService.categories[index];
           return Card(
             margin: const EdgeInsets.only(bottom: 8),
             child: ListTile(
@@ -445,15 +445,15 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 backgroundColor: Theme.of(
                   context,
                 ).colorScheme.secondary.withOpacity(0.1),
-                child: Text(categoria.ordem.toString()),
+                child: Text(categoria.sortOrder.toString()),
               ),
-              title: Text(categoria.nome),
+              title: Text(categoria.name),
               subtitle: Text(
-                '${menuService.getItensByCategoria(categoria.id).length} itens',
+                '${menuService.getItemsByCategory(categoria.id).length} itens',
               ),
               trailing: Icon(
-                categoria.ativo ? Icons.visibility : Icons.visibility_off,
-                color: categoria.ativo
+                categoria.active ? Icons.visibility : Icons.visibility_off,
+                color: categoria.active
                     ? Theme.of(context).colorScheme.primary
                     : Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               ),
@@ -475,7 +475,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
       builder: (context) {
         final menuService = ref.watch(menuServiceProvider.notifier);
         return FutureBuilder(
-          future: menuService.loadMesas(),
+          future: menuService.loadTables(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -484,30 +484,30 @@ class _AdminPageState extends ConsumerState<AdminPage>
             return Scaffold(
               body: ListView.builder(
                 padding: const EdgeInsets.all(16),
-                itemCount: menuService.mesas.length,
+                itemCount: menuService.tables.length,
                 itemBuilder: (context, index) {
-                  final mesa = menuService.mesas[index];
+                  final mesa = menuService.tables[index];
                   return Card(
                     margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
                       leading: CircleAvatar(
-                        backgroundColor: mesa.ativo
+                        backgroundColor: mesa.active
                             ? Theme.of(
                                 context,
                               ).colorScheme.primary.withOpacity(0.1)
                             : Colors.grey.withOpacity(0.1),
                         child: Icon(
                           Icons.table_restaurant,
-                          color: mesa.ativo
+                          color: mesa.active
                               ? Theme.of(context).colorScheme.primary
                               : Colors.grey,
                         ),
                       ),
-                      title: Text('Mesa ${mesa.numero}'),
+                      title: Text('Mesa ${mesa.number}'),
                       subtitle: Text('QR: ${mesa.qrToken}'),
                       trailing: Icon(
-                        mesa.ativo ? Icons.check_circle : Icons.cancel,
-                        color: mesa.ativo ? Colors.green : Colors.red,
+                        mesa.active ? Icons.check_circle : Icons.cancel,
+                        color: mesa.active ? Colors.green : Colors.red,
                       ),
                     ),
                   );
@@ -566,11 +566,11 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.category,
                 ),
-                items: menuService.categorias
+                items: menuService.categories
                     .map(
                       (cat) => DropdownMenuItem(
                         value: cat.id,
-                        child: Text(cat.nome),
+                        child: Text(cat.name),
                       ),
                     )
                     .toList(),

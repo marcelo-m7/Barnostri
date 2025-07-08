@@ -203,16 +203,16 @@ class _CartPageState extends ConsumerState<CartPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      cartItem.item.nome,
+                      cartItem.item.name,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    if (cartItem.observacao != null &&
-                        cartItem.observacao!.isNotEmpty) ...[
+                    if (cartItem.note != null &&
+                        cartItem.note!.isNotEmpty) ...[
                       const SizedBox(height: 4),
                       Text(
-                        'Obs: ${cartItem.observacao}',
+                        'Obs: ${cartItem.note}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: Theme.of(
                             context,
@@ -244,10 +244,10 @@ class _CartPageState extends ConsumerState<CartPage> {
               Row(
                 children: [
                   IconButton.filled(
-                    onPressed: cartItem.quantidade > 1
+                    onPressed: cartItem.quantity > 1
                         ? () => orderNotifier.updateCartItem(
                             index,
-                            quantidade: cartItem.quantidade - 1,
+                            quantity: cartItem.quantity - 1,
                           )
                         : null,
                     icon: const Icon(Icons.remove),
@@ -261,7 +261,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    cartItem.quantidade.toString(),
+                    cartItem.quantity.toString(),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -270,7 +270,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                   IconButton.filled(
                     onPressed: () => orderNotifier.updateCartItem(
                       index,
-                      quantidade: cartItem.quantidade + 1,
+                      quantity: cartItem.quantity + 1,
                     ),
                     icon: const Icon(Icons.add),
                     style: IconButton.styleFrom(

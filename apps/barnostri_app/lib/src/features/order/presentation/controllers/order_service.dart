@@ -34,7 +34,7 @@ class OrderState {
   double get cartTotal =>
       cartItems.fold(0.0, (total, item) => total + item.subtotal);
   int get cartItemCount =>
-      cartItems.fold(0, (count, item) => count + item.quantidade);
+      cartItems.fold(0, (count, item) => count + item.quantity);
 }
 
 class OrderService extends StateNotifier<OrderState> {
