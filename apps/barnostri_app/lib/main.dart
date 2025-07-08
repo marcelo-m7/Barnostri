@@ -1,15 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'src/core/theme/theme.dart';
 import 'package:shared_models/shared_models.dart';
 import 'src/core/services/order_service.dart';
 import 'src/core/services/menu_service.dart';
 import 'src/core/services/language_service.dart';
 import 'src/modules/client/pages/qr_scanner_page.dart';
+import 'src/modules/client/pages/cart_page.dart';
 import 'src/modules/admin/pages/admin_page.dart';
 import 'src/widgets/language_selector.dart';
 import 'l10n/generated/app_localizations.dart';
+
+final _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: '/scanner',
+      builder: (context, state) => const QrScannerPage(),
+    ),
+    GoRoute(
+      path: '/cart',
+      builder: (context, state) => const CartPage(),
+    ),
+    GoRoute(
+      path: '/admin',
+      builder: (context, state) => const AdminPage(),
+      redirect: (context, state) {
+        final user = SupabaseConfig.getCurrentUser();
+        if (user == null) {
+          return '/';
+        }
+        return null;
+      },
+    ),
+  ],
+);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,12 +66,12 @@ class BarnostriApp extends ConsumerWidget {
     final languageNotifier = ref.watch(languageServiceProvider.notifier);
     final locale = ref.watch(languageServiceProvider);
 
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Barnostri',
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
-      home: const HomePage(),
+      routerConfig: _router,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -243,11 +273,7 @@ class HomePage extends StatelessWidget {
                       const SizedBox(height: 24),
                       ElevatedButton.icon(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const QrScannerPage(),
-                            ),
-                          );
+                          context.push('/scanner');
                         },
                         icon: const Icon(Icons.camera_alt),
                         label: Text(l10n.scanQRCode),
@@ -306,11 +332,7 @@ class HomePage extends StatelessWidget {
                       const SizedBox(height: 16),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const AdminPage(),
-                            ),
-                          );
+                          context.push('/admin');
                         },
                         child: Text(
                           l10n.adminAccess,

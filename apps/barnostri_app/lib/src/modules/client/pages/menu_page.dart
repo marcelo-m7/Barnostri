@@ -7,6 +7,7 @@ import '../../../widgets/menu_item_card.dart';
 import '../../../core/theme/theme.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import 'cart_page.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
   const MenuPage({super.key});
@@ -237,11 +238,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
           
           return FloatingActionButton.extended(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const CartPage(),
-                ),
-              );
+              context.push('/cart');
             },
             backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Theme.of(context).colorScheme.onPrimary,
