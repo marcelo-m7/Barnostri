@@ -8,7 +8,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final authRepo = SupabaseAuthRepository(null);
   final menuRepo = SupabaseMenuRepository(null);
-  final pedidoRepo = SupabaseOrderRepository(null);
+  final orderRepo = SupabaseOrderRepository(null);
 
   group('Supabase repositories mock helpers', () {
     test('signIn returns mock user', () async {
@@ -30,39 +30,39 @@ void main() {
       expect(authRepo.getCurrentUser(), isNull);
     });
 
-    test('getMesaByQrToken returns mock mesa', () async {
-      final mesa = await menuRepo.getTableByQrToken('mesa_001_qr');
-      expect(mesa?.number, '1');
+    test('getTableByQrToken returns mock table', () async {
+      final table = await menuRepo.getTableByQrToken('mesa_001_qr');
+      expect(table?.number, '1');
     });
 
-    test('fetchCategorias returns mock list', () async {
-      final categorias = await menuRepo.fetchCategories();
-      expect(categorias.length, greaterThanOrEqualTo(1));
+    test('fetchCategories returns mock list', () async {
+      final categories = await menuRepo.fetchCategories();
+      expect(categories.length, greaterThanOrEqualTo(1));
     });
 
-    test('fetchItensCardapio returns mock list', () async {
-      final itens = await menuRepo.fetchMenuItems();
-      expect(itens.length, greaterThanOrEqualTo(1));
+    test('fetchMenuItems returns mock list', () async {
+      final items = await menuRepo.fetchMenuItems();
+      expect(items.length, greaterThanOrEqualTo(1));
     });
 
-    test('fetchMesas returns mock list', () async {
-      final mesas = await menuRepo.fetchTables();
-      expect(mesas.length, greaterThanOrEqualTo(1));
+    test('fetchTables returns mock list', () async {
+      final tables = await menuRepo.fetchTables();
+      expect(tables.length, greaterThanOrEqualTo(1));
     });
 
-    test('criarPedido returns mock id', () async {
+    test('createOrder returns mock id', () async {
       final item = MenuItem(
         id: 'i1',
         name: 'Item',
         description: null,
         price: 10.0,
-        categoriaId: 'c1',
+        categoryId: 'c1',
         available: true,
         imageUrl: null,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
-      final id = await pedidoRepo.createOrder(
+      final id = await orderRepo.createOrder(
         tableId: '1',
         items: [CartItem(item: item, quantity: 1)],
         total: 10.0,
@@ -72,18 +72,18 @@ void main() {
       expect(id!.startsWith('mock-order-'), isTrue);
     });
 
-    test('atualizarStatus retorna true', () async {
-      final ok = await pedidoRepo.updateStatus('1', 'Pronto');
+    test('updateStatus returns true', () async {
+      final ok = await orderRepo.updateStatus('1', 'Pronto');
       expect(ok, isTrue);
     });
 
-    test('fetchPedidos returns mock data', () async {
-      final pedidos = await pedidoRepo.fetchOrders();
-      expect(pedidos.first.id, 'mock-order-1');
+    test('fetchOrders returns mock data', () async {
+      final orders = await orderRepo.fetchOrders();
+      expect(orders.first.id, 'mock-order-1');
     });
 
-    test('watchPedidos emits list', () async {
-      final stream = pedidoRepo.watchOrders();
+    test('watchOrders emits list', () async {
+      final stream = orderRepo.watchOrders();
       final first = await stream.first;
       expect(first, isA<List<Order>>());
     });

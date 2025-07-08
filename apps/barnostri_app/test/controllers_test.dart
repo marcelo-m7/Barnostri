@@ -40,21 +40,21 @@ void main() {
 
   group('OrderService', () {
     test('add to cart and create order', () async {
-      final pedidoRepo = SupabaseOrderRepository(null);
+      final orderRepo = SupabaseOrderRepository(null);
       final menuRepo = SupabaseMenuRepository(null);
-      final create = CreateOrderUseCase(pedidoRepo);
-      final update = UpdateOrderStatusUseCase(pedidoRepo);
-      final service = OrderService(pedidoRepo, menuRepo, create, update);
+      final create = CreateOrderUseCase(orderRepo);
+      final update = UpdateOrderStatusUseCase(orderRepo);
+      final service = OrderService(orderRepo, menuRepo, create, update);
 
-      final mesa = TableModel(
+      final table = TableModel(
         id: '1',
         number: '1',
         qrToken: 'mesa_001_qr',
         active: true,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
       );
-      service.setTable(mesa);
+      service.setTable(table);
       final item = MenuItem(
         id: 'i1',
         name: 'Item',

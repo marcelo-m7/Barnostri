@@ -15,7 +15,8 @@ void main() {
     test('successful login returns user id', () async {
       final repo = SupabaseAuthRepository(null);
       final usecase = LoginUseCase(repo);
-      final res = await usecase(email: 'admin@barnostri.com', password: 'admin123');
+      final res =
+          await usecase(email: 'admin@barnostri.com', password: 'admin123');
       expect(res.user?.id, 'demo-admin-id');
     });
   });
@@ -33,9 +34,9 @@ void main() {
 
   group('Order use cases', () {
     test('create order and update status', () async {
-      final pedidoRepo = SupabaseOrderRepository(null);
-      final create = CreateOrderUseCase(pedidoRepo);
-      final update = UpdateOrderStatusUseCase(pedidoRepo);
+      final orderRepo = SupabaseOrderRepository(null);
+      final create = CreateOrderUseCase(orderRepo);
+      final update = UpdateOrderStatusUseCase(orderRepo);
 
       final item = MenuItem(
         id: 'i1',

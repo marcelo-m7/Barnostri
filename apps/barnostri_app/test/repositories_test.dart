@@ -8,7 +8,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final auth = SupabaseAuthRepository(null);
   final menu = SupabaseMenuRepository(null);
-  final pedidos = SupabaseOrderRepository(null);
+  final orders = SupabaseOrderRepository(null);
 
   group('AuthRepository', () {
     test('valid login returns user', () async {
@@ -34,8 +34,8 @@ void main() {
     });
 
     test('fetchMenuItems returns list', () async {
-      final itens = await menu.fetchMenuItems();
-      expect(itens, isNotEmpty);
+      final items = await menu.fetchMenuItems();
+      expect(items, isNotEmpty);
     });
   });
 
@@ -52,14 +52,14 @@ void main() {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
-      final id = await pedidos.createOrder(
+      final id = await orders.createOrder(
         tableId: '1',
         items: [CartItem(item: item, quantity: 1)],
         total: 10.0,
         paymentMethod: 'Pix',
       );
       expect(id, isNotNull);
-      final ok = await pedidos.updateStatus(id!, 'Pronto');
+      final ok = await orders.updateStatus(id!, 'Pronto');
       expect(ok, isTrue);
     });
   });
