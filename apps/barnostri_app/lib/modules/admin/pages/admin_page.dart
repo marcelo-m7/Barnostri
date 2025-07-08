@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../core/services/order_service.dart';
 import '../../core/services/menu_service.dart';
 import '../../widgets/order_status_widget.dart';
 import '../../core/theme/theme.dart';
 
-class AdminPage extends StatefulWidget {
+class AdminPage extends ConsumerStatefulWidget {
   const AdminPage({super.key});
 
   @override
-  State<AdminPage> createState() => _AdminPageState();
+  ConsumerState<AdminPage> createState() => _AdminPageState();
 }
 
-class _AdminPageState extends State<AdminPage>
+class _AdminPageState extends ConsumerState<AdminPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isAuthenticated = false;
@@ -291,8 +291,9 @@ class _AdminPageState extends State<AdminPage>
   }
 
   Widget _buildOrdersTab() {
-    return Consumer<OrderService>(
-      builder: (context, orderService, child) {
+    return Builder(
+      builder: (context) {
+        final orderService = ref.watch(orderServiceProvider.notifier);
         return StreamBuilder<List<Pedido>>(
           stream: orderService.streamOrders(),
           builder: (context, snapshot) {
@@ -377,8 +378,9 @@ class _AdminPageState extends State<AdminPage>
   }
 
   Widget _buildMenuTab() {
-    return Consumer<MenuService>(
-      builder: (context, menuService, child) {
+    return Builder(
+      builder: (context) {
+        final menuService = ref.watch(menuServiceProvider.notifier);
         return FutureBuilder(
           future: menuService.loadAll(),
           builder: (context, snapshot) {
@@ -494,8 +496,9 @@ class _AdminPageState extends State<AdminPage>
   }
 
   Widget _buildTablesTab() {
-    return Consumer<MenuService>(
-      builder: (context, menuService, child) {
+    return Builder(
+      builder: (context) {
+        final menuService = ref.watch(menuServiceProvider.notifier);
         return FutureBuilder(
           future: menuService.loadMesas(),
           builder: (context, snapshot) {

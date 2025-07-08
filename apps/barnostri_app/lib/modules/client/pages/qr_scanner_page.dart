@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/services/order_service.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import 'menu_page.dart';
 
-class QrScannerPage extends StatefulWidget {
+class QrScannerPage extends ConsumerStatefulWidget {
   const QrScannerPage({super.key});
 
   @override
-  State<QrScannerPage> createState() => _QrScannerPageState();
+  ConsumerState<QrScannerPage> createState() => _QrScannerPageState();
 }
 
-class _QrScannerPageState extends State<QrScannerPage> {
+class _QrScannerPageState extends ConsumerState<QrScannerPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   bool isProcessing = false;
@@ -46,8 +46,9 @@ class _QrScannerPageState extends State<QrScannerPage> {
           color: Theme.of(context).colorScheme.onSurface,
         ),
       ),
-      body: Consumer<OrderService>(
-        builder: (context, orderService, child) {
+      body: Builder(
+        builder: (context) {
+          final orderNotifier = ref.watch(orderServiceProvider.notifier);
           return Column(
             children: [
               Expanded(
@@ -221,7 +222,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
 
     controller?.pauseCamera();
 
-    final orderService = Provider.of<OrderService>(context, listen: false);
+    final orderService = ref.read(orderServiceProvider.notifier);
     final mesa = await orderService.getMesaByQrToken(code);
 
     if (mesa != null) {
