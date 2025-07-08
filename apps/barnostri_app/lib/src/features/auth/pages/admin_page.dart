@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
-import '../../../core/services/order_service.dart';
+import '../../order/controllers/order_service.dart';
 import '../../../core/repositories.dart';
 import '../controllers/auth_service.dart';
-import '../../../core/services/menu_service.dart';
+import '../../menu/controllers/menu_service.dart';
 import '../../../widgets/order_status_widget.dart';
 import '../../../l10n/generated/app_localizations.dart';
 

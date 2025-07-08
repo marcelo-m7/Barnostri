@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
-import "../repositories.dart";
+import '../../../core/repositories.dart';
 
 class OrderState {
   final List<CartItem> cartItems;
