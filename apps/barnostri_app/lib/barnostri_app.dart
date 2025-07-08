@@ -1,8 +1,8 @@
 library barnostri_app;
 
 export 'src/core/services/language_service.dart';
-export 'src/core/services/menu_service.dart';
-export 'src/core/services/order_service.dart';
+export 'src/features/menu/controllers/menu_service.dart';
+export 'src/features/order/controllers/order_service.dart';
 export 'src/core/theme/theme.dart';
 export 'src/features/auth/pages/admin_page.dart';
 export 'src/features/order/pages/cart_page.dart';
