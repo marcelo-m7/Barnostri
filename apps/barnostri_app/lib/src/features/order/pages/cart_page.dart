@@ -103,7 +103,7 @@ class _CartPageState extends ConsumerState<CartPage> {
             padding: const EdgeInsets.all(16),
             children: [
               // Mesa info
-              if (orderState.currentMesa != null)
+              if (orderState.currentTable != null)
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -120,7 +120,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        l10n.tableNumber(orderState.currentMesa!.numero),
+                        l10n.tableNumber(orderState.currentTable!.number),
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.bold,

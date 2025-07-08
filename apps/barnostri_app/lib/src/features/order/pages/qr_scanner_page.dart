@@ -243,7 +243,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
     controller?.pauseCamera();
 
     final orderService = ref.read(orderServiceProvider.notifier);
-    final mesa = await orderService.getMesaByQrToken(code);
+    final mesa = await orderService.getTableByQrToken(code);
 
     if (mesa != null) {
       if (mounted) {

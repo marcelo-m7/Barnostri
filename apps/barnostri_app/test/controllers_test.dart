@@ -21,39 +21,39 @@ void main() {
     test('loadAll fills data', () async {
       final service = MenuService(SupabaseMenuRepository());
       await service.loadAll();
-      expect(service.state.categorias, isNotEmpty);
-      expect(service.state.itensCardapio, isNotEmpty);
-      expect(service.state.mesas, isNotEmpty);
+      expect(service.state.categories, isNotEmpty);
+      expect(service.state.menuItems, isNotEmpty);
+      expect(service.state.tables, isNotEmpty);
     });
   });
 
   group('OrderService', () {
     test('add to cart and create order', () async {
-      final pedidoRepo = SupabasePedidoRepository();
+      final pedidoRepo = SupabaseOrderRepository();
       final menuRepo = SupabaseMenuRepository();
       final service = OrderService(pedidoRepo, menuRepo);
 
-      final mesa = Mesa(
+      final mesa = TableModel(
         id: '1',
-        numero: '1',
+        number: '1',
         qrToken: 'mesa_001_qr',
-        ativo: true,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
+        active: true,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
       );
-      service.setMesa(mesa);
-      final item = ItemCardapio(
+      service.setTable(mesa);
+      final item = MenuItem(
         id: 'i1',
-        nome: 'Item',
-        descricao: null,
-        preco: 5.0,
-        categoriaId: 'c1',
-        disponivel: true,
-        imagemUrl: null,
+        name: 'Item',
+        description: null,
+        price: 5.0,
+        categoryId: 'c1',
+        available: true,
+        imageUrl: null,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
-      service.addToCart(item, quantidade: 1);
+      service.addToCart(item, quantity: 1);
       expect(service.state.cartItems.length, 1);
       final id = await service.createOrder(paymentMethod: PaymentMethod.pix);
       expect(id, isNotNull);

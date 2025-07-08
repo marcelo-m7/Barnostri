@@ -1,26 +1,26 @@
-class Usuario {
+class UserModel {
   final String id;
-  final String nome;
+  final String name;
   final String email;
-  final String tipo;
+  final String role;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Usuario({
+  UserModel({
     required this.id,
-    required this.nome,
+    required this.name,
     required this.email,
-    required this.tipo,
+    required this.role,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory Usuario.fromJson(Map<String, dynamic> json) {
-    return Usuario(
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
       id: json['id'],
-      nome: json['nome'],
+      name: json['name'],
       email: json['email'],
-      tipo: json['tipo'],
+      role: json['role'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
     );
@@ -29,13 +29,13 @@ class Usuario {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'nome': nome,
+      'name': name,
       'email': email,
-      'tipo': tipo,
+      'role': role,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };
   }
 
-  bool get isAdmin => tipo == 'admin';
+  bool get isAdmin => role == 'admin';
 }

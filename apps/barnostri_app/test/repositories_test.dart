@@ -5,7 +5,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final auth = SupabaseAuthRepository();
   final menu = SupabaseMenuRepository();
-  final pedidos = SupabasePedidoRepository();
+  final pedidos = SupabaseOrderRepository();
 
   group('AuthRepository', () {
     test('valid login returns user', () async {
@@ -25,38 +25,38 @@ void main() {
   });
 
   group('MenuRepository', () {
-    test('fetchCategorias returns list', () async {
-      final cats = await menu.fetchCategorias();
+    test('fetchCategories returns list', () async {
+      final cats = await menu.fetchCategories();
       expect(cats, isNotEmpty);
     });
 
-    test('fetchItensCardapio returns list', () async {
-      final itens = await menu.fetchItensCardapio();
+    test('fetchMenuItems returns list', () async {
+      final itens = await menu.fetchMenuItems();
       expect(itens, isNotEmpty);
     });
   });
 
-  group('PedidoRepository', () {
+  group('OrderRepository', () {
     test('create and update order', () async {
-      final item = ItemCardapio(
+      final item = MenuItem(
         id: 'i1',
-        nome: 'Item',
-        descricao: null,
-        preco: 10.0,
-        categoriaId: 'c1',
-        disponivel: true,
-        imagemUrl: null,
+        name: 'Item',
+        description: null,
+        price: 10.0,
+        categoryId: 'c1',
+        available: true,
+        imageUrl: null,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
-      final id = await pedidos.criarPedido(
-        mesaId: '1',
-        itens: [CartItem(item: item, quantidade: 1)],
+      final id = await pedidos.createOrder(
+        tableId: '1',
+        items: [CartItem(item: item, quantity: 1)],
         total: 10.0,
-        formaPagamento: 'Pix',
+        paymentMethod: 'Pix',
       );
       expect(id, isNotNull);
-      final ok = await pedidos.atualizarStatus(id!, 'Pronto');
+      final ok = await pedidos.updateStatus(id!, 'Pronto');
       expect(ok, isTrue);
     });
   });

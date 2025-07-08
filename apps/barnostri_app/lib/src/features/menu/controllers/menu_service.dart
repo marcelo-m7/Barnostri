@@ -3,31 +3,31 @@ import 'package:shared_models/shared_models.dart';
 import '../../../core/repositories.dart';
 
 class MenuState {
-  final List<Categoria> categorias;
-  final List<ItemCardapio> itensCardapio;
-  final List<Mesa> mesas;
+  final List<Category> categories;
+  final List<MenuItem> menuItems;
+  final List<TableModel> tables;
   final bool isLoading;
   final String? error;
 
   const MenuState({
-    this.categorias = const [],
-    this.itensCardapio = const [],
-    this.mesas = const [],
+    this.categories = const [],
+    this.menuItems = const [],
+    this.tables = const [],
     this.isLoading = false,
     this.error,
   });
 
   MenuState copyWith({
-    List<Categoria>? categorias,
-    List<ItemCardapio>? itensCardapio,
-    List<Mesa>? mesas,
+    List<Category>? categories,
+    List<MenuItem>? menuItems,
+    List<TableModel>? tables,
     bool? isLoading,
     String? error,
   }) {
     return MenuState(
-      categorias: categorias ?? this.categorias,
-      itensCardapio: itensCardapio ?? this.itensCardapio,
-      mesas: mesas ?? this.mesas,
+      categories: categories ?? this.categories,
+      menuItems: menuItems ?? this.menuItems,
+      tables: tables ?? this.tables,
       isLoading: isLoading ?? this.isLoading,
       error: error,
     );
@@ -51,86 +51,86 @@ class MenuService extends StateNotifier<MenuState> {
     }
   }
 
-  Future<void> loadCategorias() async {
+  Future<void> loadCategories() async {
     await _guard<void>(
       () async {
-        final categorias = await _menuRepository.fetchCategorias();
-        state = state.copyWith(categorias: categorias);
+        final categories = await _menuRepository.fetchCategories();
+        state = state.copyWith(categories: categories);
       },
       onError: (e) => 'Erro ao carregar categorias: $e',
     );
   }
 
-  Future<void> loadItensCardapio() async {
+  Future<void> loadMenuItems() async {
     await _guard<void>(
       () async {
-        final itens = await _menuRepository.fetchItensCardapio();
-        state = state.copyWith(itensCardapio: itens);
+        final items = await _menuRepository.fetchMenuItems();
+        state = state.copyWith(menuItems: items);
       },
       onError: (e) => 'Erro ao carregar itens do cardápio: $e',
     );
   }
 
-  Future<void> loadMesas() async {
+  Future<void> loadTables() async {
     await _guard<void>(
       () async {
-        final mesas = await _menuRepository.fetchMesas();
-        state = state.copyWith(mesas: mesas);
+        final tables = await _menuRepository.fetchTables();
+        state = state.copyWith(tables: tables);
       },
       onError: (e) => 'Erro ao carregar mesas: $e',
     );
   }
 
   Future<void> loadAll() async {
-    await Future.wait([loadCategorias(), loadItensCardapio(), loadMesas()]);
+    await Future.wait([loadCategories(), loadMenuItems(), loadTables()]);
   }
 
-  List<ItemCardapio> getItensByCategoria(String categoriaId) {
-    return state.itensCardapio
-        .where((item) => item.categoriaId == categoriaId)
+  List<MenuItem> getItemsByCategory(String categoryId) {
+    return state.menuItems
+        .where((item) => item.categoryId == categoryId)
         .toList();
   }
 
-  List<ItemCardapio> searchItens(String query) {
-    if (query.isEmpty) return state.itensCardapio;
+  List<MenuItem> searchItems(String query) {
+    if (query.isEmpty) return state.menuItems;
     final lowerQuery = query.toLowerCase();
-    return state.itensCardapio.where((item) {
-      return item.nome.toLowerCase().contains(lowerQuery) ||
-          (item.descricao?.toLowerCase().contains(lowerQuery) ?? false);
+    return state.menuItems.where((item) {
+      return item.name.toLowerCase().contains(lowerQuery) ||
+          (item.description?.toLowerCase().contains(lowerQuery) ?? false);
     }).toList();
   }
 
-  Categoria? getCategoriaById(String id) {
+  Category? getCategoryById(String id) {
     try {
-      return state.categorias.firstWhere((cat) => cat.id == id);
+      return state.categories.firstWhere((cat) => cat.id == id);
     } catch (_) {
       return null;
     }
   }
 
-  ItemCardapio? getItemById(String id) {
+  MenuItem? getItemById(String id) {
     try {
-      return state.itensCardapio.firstWhere((item) => item.id == id);
+      return state.menuItems.firstWhere((item) => item.id == id);
     } catch (_) {
       return null;
     }
   }
 
-  Mesa? getMesaById(String id) {
+  TableModel? getTableById(String id) {
     try {
-      return state.mesas.firstWhere((mesa) => mesa.id == id);
+      return state.tables.firstWhere((table) => table.id == id);
     } catch (_) {
       return null;
     }
   }
 
-  Future<bool> addCategoria({required String nome, required int ordem}) async {
+  Future<bool> addCategory({required String name, required int sortOrder}) async {
     final result = await _guard<bool>(
       () async {
-        final nova = await _menuRepository.addCategoria(nome: nome, ordem: ordem);
-        final list = [...state.categorias, nova]
-          ..sort((a, b) => a.ordem.compareTo(b.ordem));
-        state = state.copyWith(categorias: list);
+        final newCat = await _menuRepository.addCategory(name: name, sortOrder: sortOrder);
+        final list = [...state.categories, newCat]
+          ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+        state = state.copyWith(categories: list);
         return true;
       },
       onError: (e) => 'Erro ao adicionar categoria: $e',
@@ -138,22 +138,22 @@ class MenuService extends StateNotifier<MenuState> {
     return result ?? false;
   }
 
-  Future<bool> updateCategoria({
+  Future<bool> updateCategory({
     required String id,
-    String? nome,
-    int? ordem,
-    bool? ativo,
+    String? name,
+    int? sortOrder,
+    bool? active,
   }) async {
     final ok = await _guard<bool>(
       () async {
-        final result = await _menuRepository.updateCategoria(
+        final result = await _menuRepository.updateCategory(
           id: id,
-          nome: nome,
-          ordem: ordem,
-          ativo: ativo,
+          name: name,
+          sortOrder: sortOrder,
+          active: active,
         );
         if (result) {
-          await loadCategorias();
+          await loadCategories();
         }
         return result;
       },
@@ -162,25 +162,25 @@ class MenuService extends StateNotifier<MenuState> {
     return ok ?? false;
   }
 
-  Future<bool> addItemCardapio({
-    required String nome,
-    String? descricao,
-    required double preco,
-    required String categoriaId,
-    String? imagemUrl,
+  Future<bool> addMenuItem({
+    required String name,
+    String? description,
+    required double price,
+    required String categoryId,
+    String? imageUrl,
   }) async {
     final result = await _guard<bool>(
       () async {
-        final novoItem = await _menuRepository.addItemCardapio(
-          nome: nome,
-          descricao: descricao,
-          preco: preco,
-          categoriaId: categoriaId,
-          imagemUrl: imagemUrl,
+        final newItem = await _menuRepository.addMenuItem(
+          name: name,
+          description: description,
+          price: price,
+          categoryId: categoryId,
+          imageUrl: imageUrl,
         );
-        final list = [...state.itensCardapio, novoItem]
-          ..sort((a, b) => a.nome.compareTo(b.nome));
-        state = state.copyWith(itensCardapio: list);
+        final list = [...state.menuItems, newItem]
+          ..sort((a, b) => a.name.compareTo(b.name));
+        state = state.copyWith(menuItems: list);
         return true;
       },
       onError: (e) => 'Erro ao adicionar item: $e',
@@ -188,28 +188,28 @@ class MenuService extends StateNotifier<MenuState> {
     return result ?? false;
   }
 
-  Future<bool> updateItemCardapio({
+  Future<bool> updateMenuItem({
     required String id,
-    String? nome,
-    String? descricao,
-    double? preco,
-    String? categoriaId,
-    bool? disponivel,
-    String? imagemUrl,
+    String? name,
+    String? description,
+    double? price,
+    String? categoryId,
+    bool? available,
+    String? imageUrl,
   }) async {
     final ok = await _guard<bool>(
       () async {
-        final result = await _menuRepository.updateItemCardapio(
+        final result = await _menuRepository.updateMenuItem(
           id: id,
-          nome: nome,
-          descricao: descricao,
-          preco: preco,
-          categoriaId: categoriaId,
-          disponivel: disponivel,
-          imagemUrl: imagemUrl,
+          name: name,
+          description: description,
+          price: price,
+          categoryId: categoryId,
+          available: available,
+          imageUrl: imageUrl,
         );
         if (result) {
-          await loadItensCardapio();
+          await loadMenuItems();
         }
         return result;
       },
@@ -218,20 +218,20 @@ class MenuService extends StateNotifier<MenuState> {
     return ok ?? false;
   }
 
-  Future<bool> toggleItemDisponibilidade(String id) async {
+  Future<bool> toggleItemAvailability(String id) async {
     final item = getItemById(id);
     if (item == null) return false;
-    return await updateItemCardapio(id: id, disponivel: !item.disponivel);
+    return await updateMenuItem(id: id, available: !item.available);
   }
 
-  Future<bool> deleteItemCardapio(String id) async {
+  Future<bool> deleteMenuItem(String id) async {
     final ok = await _guard<bool>(
       () async {
-        final success = await _menuRepository.deleteItemCardapio(id);
+        final success = await _menuRepository.deleteMenuItem(id);
         if (success) {
-          final list = [...state.itensCardapio]
+          final list = [...state.menuItems]
             ..removeWhere((item) => item.id == id);
-          state = state.copyWith(itensCardapio: list);
+          state = state.copyWith(menuItems: list);
         }
         return success;
       },
@@ -240,19 +240,19 @@ class MenuService extends StateNotifier<MenuState> {
     return ok ?? false;
   }
 
-  Future<bool> addMesa({
-    required String numero,
+  Future<bool> addTable({
+    required String number,
     required String qrToken,
   }) async {
     final result = await _guard<bool>(
       () async {
-        final novaMesa = await _menuRepository.addMesa(
-          numero: numero,
+        final newTable = await _menuRepository.addTable(
+          number: number,
           qrToken: qrToken,
         );
-        final list = [...state.mesas, novaMesa]
-          ..sort((a, b) => a.numero.compareTo(b.numero));
-        state = state.copyWith(mesas: list);
+        final list = [...state.tables, newTable]
+          ..sort((a, b) => a.number.compareTo(b.number));
+        state = state.copyWith(tables: list);
         return true;
       },
       onError: (e) => 'Erro ao adicionar mesa: $e',

@@ -1,37 +1,37 @@
 import 'menu_item.dart';
 
-class ItemPedido {
+class OrderItem {
   final String id;
-  final String pedidoId;
-  final String itemCardapioId;
-  final int quantidade;
-  final String? observacao;
-  final double precoUnitario;
+  final String orderId;
+  final String menuItemId;
+  final int quantity;
+  final String? note;
+  final double unitPrice;
   final DateTime createdAt;
-  final ItemCardapio? itemCardapio;
+  final MenuItem? menuItem;
 
-  ItemPedido({
+  OrderItem({
     required this.id,
-    required this.pedidoId,
-    required this.itemCardapioId,
-    required this.quantidade,
-    this.observacao,
-    required this.precoUnitario,
+    required this.orderId,
+    required this.menuItemId,
+    required this.quantity,
+    this.note,
+    required this.unitPrice,
     required this.createdAt,
-    this.itemCardapio,
+    this.menuItem,
   });
 
-  factory ItemPedido.fromJson(Map<String, dynamic> json) {
-    return ItemPedido(
+  factory OrderItem.fromJson(Map<String, dynamic> json) {
+    return OrderItem(
       id: json['id'],
-      pedidoId: json['pedido_id'],
-      itemCardapioId: json['item_cardapio_id'],
-      quantidade: json['quantidade'],
-      observacao: json['observacao'],
-      precoUnitario: (json['preco_unitario'] as num).toDouble(),
+      orderId: json['order_id'],
+      menuItemId: json['menu_item_id'],
+      quantity: json['quantity'],
+      note: json['note'],
+      unitPrice: (json['unit_price'] as num).toDouble(),
       createdAt: DateTime.parse(json['created_at']),
-      itemCardapio: json['itens_cardapio'] != null
-          ? ItemCardapio.fromJson(json['itens_cardapio'])
+      menuItem: json['menu_items'] != null
+          ? MenuItem.fromJson(json['menu_items'])
           : null,
     );
   }
@@ -39,14 +39,14 @@ class ItemPedido {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'pedido_id': pedidoId,
-      'item_cardapio_id': itemCardapioId,
-      'quantidade': quantidade,
-      'observacao': observacao,
-      'preco_unitario': precoUnitario,
+      'order_id': orderId,
+      'menu_item_id': menuItemId,
+      'quantity': quantity,
+      'note': note,
+      'unit_price': unitPrice,
       'created_at': createdAt.toIso8601String(),
     };
   }
 
-  double get subtotal => precoUnitario * quantidade;
+  double get subtotal => unitPrice * quantity;
 }

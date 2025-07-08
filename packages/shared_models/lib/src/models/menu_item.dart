@@ -1,43 +1,43 @@
 import 'category.dart';
 
-class ItemCardapio {
+class MenuItem {
   final String id;
-  final String nome;
-  final String? descricao;
-  final double preco;
-  final String categoriaId;
-  final bool disponivel;
-  final String? imagemUrl;
+  final String name;
+  final String? description;
+  final double price;
+  final String categoryId;
+  final bool available;
+  final String? imageUrl;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final Categoria? categoria;
+  final Category? category;
 
-  ItemCardapio({
+  MenuItem({
     required this.id,
-    required this.nome,
-    this.descricao,
-    required this.preco,
-    required this.categoriaId,
-    required this.disponivel,
-    this.imagemUrl,
+    required this.name,
+    this.description,
+    required this.price,
+    required this.categoryId,
+    required this.available,
+    this.imageUrl,
     required this.createdAt,
     required this.updatedAt,
-    this.categoria,
+    this.category,
   });
 
-  factory ItemCardapio.fromJson(Map<String, dynamic> json) {
-    return ItemCardapio(
+  factory MenuItem.fromJson(Map<String, dynamic> json) {
+    return MenuItem(
       id: json['id'],
-      nome: json['nome'],
-      descricao: json['descricao'],
-      preco: (json['preco'] as num).toDouble(),
-      categoriaId: json['categoria_id'],
-      disponivel: json['disponivel'],
-      imagemUrl: json['imagem_url'],
+      name: json['name'],
+      description: json['description'],
+      price: (json['price'] as num).toDouble(),
+      categoryId: json['category_id'],
+      available: json['available'],
+      imageUrl: json['image_url'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
-      categoria: json['categorias'] != null
-          ? Categoria.fromJson(json['categorias'])
+      category: json['categories'] != null
+          ? Category.fromJson(json['categories'])
           : null,
     );
   }
@@ -45,12 +45,12 @@ class ItemCardapio {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'nome': nome,
-      'descricao': descricao,
-      'preco': preco,
-      'categoria_id': categoriaId,
-      'disponivel': disponivel,
-      'imagem_url': imagemUrl,
+      'name': name,
+      'description': description,
+      'price': price,
+      'category_id': categoryId,
+      'available': available,
+      'image_url': imageUrl,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };

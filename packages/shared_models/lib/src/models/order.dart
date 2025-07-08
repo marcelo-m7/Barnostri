@@ -1,45 +1,45 @@
-import 'table.dart';
+import 'table_model.dart';
 import 'order_item.dart';
 
-class Pedido {
+class Order {
   final String id;
-  final String mesaId;
+  final String tableId;
   final String status;
   final double total;
-  final String formaPagamento;
-  final bool pago;
+  final String paymentMethod;
+  final bool paid;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final Mesa? mesa;
-  final List<ItemPedido> itens;
+  final TableModel? table;
+  final List<OrderItem> items;
 
-  Pedido({
+  Order({
     required this.id,
-    required this.mesaId,
+    required this.tableId,
     required this.status,
     required this.total,
-    required this.formaPagamento,
-    required this.pago,
+    required this.paymentMethod,
+    required this.paid,
     required this.createdAt,
     required this.updatedAt,
-    this.mesa,
-    this.itens = const [],
+    this.table,
+    this.items = const [],
   });
 
-  factory Pedido.fromJson(Map<String, dynamic> json) {
-    return Pedido(
+  factory Order.fromJson(Map<String, dynamic> json) {
+    return Order(
       id: json['id'],
-      mesaId: json['mesa_id'],
+      tableId: json['table_id'],
       status: json['status'],
       total: (json['total'] as num).toDouble(),
-      formaPagamento: json['forma_pagamento'],
-      pago: json['pago'],
+      paymentMethod: json['payment_method'],
+      paid: json['paid'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
-      mesa: json['mesas'] != null ? Mesa.fromJson(json['mesas']) : null,
-      itens: json['itens_pedido'] != null
-          ? (json['itens_pedido'] as List)
-                .map((item) => ItemPedido.fromJson(item))
+      table: json['tables'] != null ? TableModel.fromJson(json['tables']) : null,
+      items: json['order_items'] != null
+          ? (json['order_items'] as List)
+                .map((item) => OrderItem.fromJson(item))
                 .toList()
           : [],
     );
@@ -48,11 +48,11 @@ class Pedido {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'mesa_id': mesaId,
+      'table_id': tableId,
       'status': status,
       'total': total,
-      'forma_pagamento': formaPagamento,
-      'pago': pago,
+      'payment_method': paymentMethod,
+      'paid': paid,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };

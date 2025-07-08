@@ -1,53 +1,53 @@
 import '../../models/category.dart';
 import '../../models/menu_item.dart';
-import '../../models/table.dart';
+import '../../models/table_model.dart';
 
 /// Data access layer for menu related entities.
 abstract class MenuRepository {
-  Future<List<Mesa>> fetchMesas();
-  Future<Mesa?> getMesaByQrToken(String qrToken);
-  Future<List<Categoria>> fetchCategorias();
-  Future<List<ItemCardapio>> fetchItensCardapio();
+  Future<List<TableModel>> fetchTables();
+  Future<TableModel?> getTableByQrToken(String qrToken);
+  Future<List<Category>> fetchCategories();
+  Future<List<MenuItem>> fetchMenuItems();
 
-  Future<Categoria> addCategoria({required String nome, required int ordem});
+  Future<Category> addCategory({required String name, required int sortOrder});
 
-  Future<bool> updateCategoria({
+  Future<bool> updateCategory({
     required String id,
-    String? nome,
-    int? ordem,
-    bool? ativo,
+    String? name,
+    int? sortOrder,
+    bool? active,
   });
 
-  Future<bool> deleteCategoria(String id);
+  Future<bool> deleteCategory(String id);
 
-  Future<ItemCardapio> addItemCardapio({
-    required String nome,
-    String? descricao,
-    required double preco,
-    required String categoriaId,
-    String? imagemUrl,
+  Future<MenuItem> addMenuItem({
+    required String name,
+    String? description,
+    required double price,
+    required String categoryId,
+    String? imageUrl,
   });
 
-  Future<bool> updateItemCardapio({
+  Future<bool> updateMenuItem({
     required String id,
-    String? nome,
-    String? descricao,
-    double? preco,
-    String? categoriaId,
-    bool? disponivel,
-    String? imagemUrl,
+    String? name,
+    String? description,
+    double? price,
+    String? categoryId,
+    bool? available,
+    String? imageUrl,
   });
 
-  Future<bool> deleteItemCardapio(String id);
+  Future<bool> deleteMenuItem(String id);
 
-  Future<Mesa> addMesa({required String numero, required String qrToken});
+  Future<TableModel> addTable({required String number, required String qrToken});
 
-  Future<bool> updateMesa({
+  Future<bool> updateTable({
     required String id,
-    String? numero,
+    String? number,
     String? qrToken,
-    bool? ativo,
+    bool? active,
   });
 
-  Future<bool> deleteMesa(String id);
+  Future<bool> deleteTable(String id);
 }

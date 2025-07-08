@@ -6,12 +6,12 @@ This package contains common data models and services used by the Barnostri Flut
 
 The `lib/src/models` directory defines the data structures that mirror the Supabase tables:
 
-- `Mesa` – represents a restaurant table identified by a QR code token.
-- `Categoria` – menu category used to group `ItemCardapio` entries.
-- `ItemCardapio` – individual menu item belonging to a category.
-- `Pedido` and `ItemPedido` – an order placed for a table and its items.
-- `Pagamento` – payment information for an order.
-- `Usuario` – user record with an `isAdmin` helper.
+- `TableModel` – represents a restaurant table identified by a QR code token.
+- `Category` – menu category used to group `MenuItem` entries.
+- `MenuItem` – individual menu item belonging to a category.
+- `Order` and `OrderItem` – an order placed for a table and its items.
+- `Payment` – payment information for an order.
+- `UserModel` – user record with an `isAdmin` helper.
 - `CartItem` – local cart item used before sending an order.
 - Enums `OrderStatus` and `PaymentMethod` describe possible statuses and payment methods.
 
