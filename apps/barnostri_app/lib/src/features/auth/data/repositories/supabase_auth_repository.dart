@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_models/shared_models.dart';
-import '../../../../core/services/supabase_config.dart';
+import 'package:barnostri_app/src/core/services/supabase_config.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
   final SupabaseClient? _client;

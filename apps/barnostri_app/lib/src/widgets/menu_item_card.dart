@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_models/shared_models.dart';
-import '../../l10n/generated/app_localizations.dart';
+import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 
 class MenuItemCard extends StatefulWidget {
   final MenuItem item;
@@ -113,7 +113,9 @@ class _MenuItemCardState extends State<MenuItemCard>
                             Expanded(
                               child: Text(
                                 widget.item.name,
-                                style: Theme.of(context).textTheme.titleMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
                                     ?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: Theme.of(
@@ -136,7 +138,9 @@ class _MenuItemCardState extends State<MenuItemCard>
                               ),
                               child: Text(
                                 formatCurrency(widget.item.price),
-                                style: Theme.of(context).textTheme.labelMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium
                                     ?.copyWith(
                                       color: Theme.of(
                                         context,
@@ -154,7 +158,9 @@ class _MenuItemCardState extends State<MenuItemCard>
                           const SizedBox(height: 8),
                           Text(
                             widget.item.description!,
-                            style: Theme.of(context).textTheme.bodyMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(
                                     context,
@@ -187,7 +193,9 @@ class _MenuItemCardState extends State<MenuItemCard>
                                 ),
                                 child: Text(
                                   widget.item.category!.name,
-                                  style: Theme.of(context).textTheme.labelSmall
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall
                                       ?.copyWith(
                                         color: Theme.of(
                                           context,

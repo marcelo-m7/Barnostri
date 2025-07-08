@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_models/shared_models.dart';
-import '../../../../core/services/supabase_config.dart';
+import 'package:barnostri_app/src/core/services/supabase_config.dart';
 
 class SupabaseOrderRepository implements OrderRepository {
   final SupabaseClient? _client;
@@ -65,8 +65,7 @@ class SupabaseOrderRepository implements OrderRepository {
     try {
       await _client!
           .from('orders')
-          .update({'status': newStatus})
-          .eq('id', orderId);
+          .update({'status': newStatus}).eq('id', orderId);
       return true;
     } catch (e) {
       if (kDebugMode) {

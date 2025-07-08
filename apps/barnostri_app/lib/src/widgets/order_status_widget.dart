@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
-import '../features/order/presentation/controllers/order_service.dart';
-import '../l10n/generated/app_localizations.dart';
+import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
+import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 
 class OrderStatusWidget extends ConsumerWidget {
   final Order pedido;
@@ -68,9 +68,9 @@ class OrderStatusWidget extends ConsumerWidget {
               Text(
                 'Pedido #${pedido.id.substring(0, 8)}',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -84,9 +84,9 @@ class OrderStatusWidget extends ConsumerWidget {
                 child: Text(
                   pedido.status,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
               ),
             ],
@@ -107,10 +107,10 @@ class OrderStatusWidget extends ConsumerWidget {
                   AppLocalizations.of(context)!
                       .tableNumber(pedido.table!.number),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onPrimary.withOpacity(0.8),
-                  ),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary.withOpacity(0.8),
+                      ),
                 ),
               ],
             ),
@@ -126,10 +126,10 @@ class OrderStatusWidget extends ConsumerWidget {
               Text(
                 OrderService.formatDateTime(pedido.createdAt),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onPrimary.withOpacity(0.8),
-                ),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onPrimary.withOpacity(0.8),
+                    ),
               ),
             ],
           ),
@@ -145,10 +145,10 @@ class OrderStatusWidget extends ConsumerWidget {
               Text(
                 pedido.paymentMethod,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onPrimary.withOpacity(0.8),
-                ),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onPrimary.withOpacity(0.8),
+                    ),
               ),
             ],
           ),
@@ -243,25 +243,26 @@ class OrderStatusWidget extends ConsumerWidget {
                   Text(
                     status.displayName,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: isCurrent ? FontWeight.bold : FontWeight.w500,
-                      color: isActive
-                          ? Theme.of(context).colorScheme.onSurface
-                          : Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withOpacity(0.5),
-                    ),
+                          fontWeight:
+                              isCurrent ? FontWeight.bold : FontWeight.w500,
+                          color: isActive
+                              ? Theme.of(context).colorScheme.onSurface
+                              : Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withOpacity(0.5),
+                        ),
                   ),
                   Text(
                     _getStatusDescription(status),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: isActive
-                          ? Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withOpacity(0.7)
-                          : Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withOpacity(0.4),
-                    ),
+                          color: isActive
+                              ? Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withOpacity(0.7)
+                              : Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withOpacity(0.4),
+                        ),
                   ),
                 ],
               ),
@@ -290,9 +291,9 @@ class OrderStatusWidget extends ConsumerWidget {
                     Text(
                       'Atual',
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ],
                 ),
@@ -360,9 +361,9 @@ class OrderStatusWidget extends ConsumerWidget {
               Text(
                 formatCurrency(pedido.total),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
               ),
             ],
           ),
@@ -385,12 +386,12 @@ class OrderStatusWidget extends ConsumerWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Center(
-                child: Text(
-                  '${item.quantity}x',
+              child: Text(
+                '${item.quantity}x',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
               ),
             ),
           ),
@@ -405,16 +406,16 @@ class OrderStatusWidget extends ConsumerWidget {
                     context,
                   ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
                 ),
-                  if (item.note != null && item.note!.isNotEmpty) ...[
+                if (item.note != null && item.note!.isNotEmpty) ...[
                   const SizedBox(height: 2),
                   Text(
                     'Obs: ${item.note}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withOpacity(0.7),
-                      fontStyle: FontStyle.italic,
-                    ),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.7),
+                          fontStyle: FontStyle.italic,
+                        ),
                   ),
                 ],
               ],
@@ -466,7 +467,8 @@ class OrderStatusWidget extends ConsumerWidget {
                     label: Text(
                       AppLocalizations.of(
                         context,
-                      )!.markAsStatus(nextStatus.displayName),
+                      )!
+                          .markAsStatus(nextStatus.displayName),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -572,7 +574,8 @@ class OrderStatusWidget extends ConsumerWidget {
           content: Text(
             AppLocalizations.of(
               context,
-            )!.statusUpdateErrorDetailed(orderService.state.error ?? ''),
+            )!
+                .statusUpdateErrorDetailed(orderService.state.error ?? ''),
           ),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
-import '../../../core/repositories.dart';
-import '../../domain/usecases/load_menu_use_case.dart';
+import 'package:barnostri_app/src/core/repositories.dart';
+import 'package:barnostri_app/src/features/menu/domain/usecases/load_menu_use_case.dart';
 
 class MenuState {
   final List<Category> categories;
@@ -38,7 +38,8 @@ class MenuState {
 class MenuService extends StateNotifier<MenuState> {
   final MenuRepository _menuRepository;
   final LoadMenuUseCase _loadMenuUseCase;
-  MenuService(this._menuRepository, this._loadMenuUseCase) : super(const MenuState());
+  MenuService(this._menuRepository, this._loadMenuUseCase)
+      : super(const MenuState());
 
   Future<T?> _guard<T>(Future<T> Function() action,
       {String Function(Object)? onError}) async {
@@ -46,7 +47,8 @@ class MenuService extends StateNotifier<MenuState> {
     try {
       return await action();
     } catch (e) {
-      state = state.copyWith(error: onError != null ? onError(e) : e.toString());
+      state =
+          state.copyWith(error: onError != null ? onError(e) : e.toString());
       return null;
     } finally {
       state = state.copyWith(isLoading: false);
@@ -133,10 +135,12 @@ class MenuService extends StateNotifier<MenuState> {
     }
   }
 
-  Future<bool> addCategory({required String name, required int sortOrder}) async {
+  Future<bool> addCategory(
+      {required String name, required int sortOrder}) async {
     final result = await _guard<bool>(
       () async {
-        final newCat = await _menuRepository.addCategory(name: name, sortOrder: sortOrder);
+        final newCat =
+            await _menuRepository.addCategory(name: name, sortOrder: sortOrder);
         final list = [...state.categories, newCat]
           ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
         state = state.copyWith(categories: list);

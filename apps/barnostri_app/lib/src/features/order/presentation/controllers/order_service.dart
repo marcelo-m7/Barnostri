@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
-import '../../../core/repositories.dart';
-import '../../domain/usecases/create_order_use_case.dart';
-import '../../domain/usecases/update_order_status_use_case.dart';
+import 'package:barnostri_app/src/core/repositories.dart';
+import 'package:barnostri_app/src/features/order/domain/usecases/create_order_use_case.dart';
+import 'package:barnostri_app/src/features/order/domain/usecases/update_order_status_use_case.dart';
 
 class OrderState {
   final List<CartItem> cartItems;
@@ -55,7 +55,8 @@ class OrderService extends StateNotifier<OrderState> {
     try {
       return await action();
     } catch (e) {
-      state = state.copyWith(error: onError != null ? onError(e) : e.toString());
+      state =
+          state.copyWith(error: onError != null ? onError(e) : e.toString());
       return null;
     } finally {
       state = state.copyWith(isLoading: false);
@@ -69,8 +70,7 @@ class OrderService extends StateNotifier<OrderState> {
   void addToCart(MenuItem item, {int quantity = 1, String? note}) {
     final items = [...state.cartItems];
     final existingIndex = items.indexWhere(
-      (cartItem) =>
-          cartItem.item.id == item.id && cartItem.note == note,
+      (cartItem) => cartItem.item.id == item.id && cartItem.note == note,
     );
     if (existingIndex != -1) {
       items[existingIndex].quantity += quantity;
