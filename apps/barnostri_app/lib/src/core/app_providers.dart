@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'services/supabase_config.dart';
+import 'package:barnostri_app/src/core/services/supabase_config.dart';
 
 /// Global providers used across the application.
 

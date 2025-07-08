@@ -3,12 +3,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'src/core/theme/theme.dart';
-import 'src/core/services/supabase_config.dart';
-import 'src/core/services/language_service.dart';
+import 'package:barnostri_app/src/core/services/supabase_config.dart';
+import 'package:barnostri_app/src/core/services/language_service.dart';
 import 'src/features/order/presentation/pages/qr_scanner_page.dart';
 import 'src/features/order/presentation/pages/cart_page.dart';
 import 'src/features/auth/presentation/pages/admin_page.dart';
-import 'src/features/auth/presentation/controllers/auth_service.dart';
+import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'src/features/home/presentation/pages/home_page.dart';
 
