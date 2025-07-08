@@ -95,12 +95,9 @@ class OrderService extends StateNotifier<OrderState> {
     }
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final itens = state.cartItems
-          .map((cartItem) => cartItem.toJson())
-          .toList();
       final pedidoId = await _pedidoRepository.criarPedido(
         mesaId: state.currentMesa!.id,
-        itens: itens,
+        itens: state.cartItems,
         total: state.cartTotal,
         formaPagamento: paymentMethod.displayName,
       );
