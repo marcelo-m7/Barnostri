@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../core/services/order_service.dart';
 import '../core/theme/theme.dart';
 
-class OrderStatusWidget extends StatelessWidget {
+class OrderStatusWidget extends ConsumerWidget {
   final Pedido pedido;
   final bool isAdminView;
 
@@ -14,7 +15,7 @@ class OrderStatusWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentStatus = OrderStatus.fromString(pedido.status);
 
     return Padding(
@@ -37,7 +38,7 @@ class OrderStatusWidget extends StatelessWidget {
 
           if (isAdminView) ...[
             const SizedBox(height: 24),
-            _buildAdminActions(context, currentStatus),
+            _buildAdminActions(context, ref, currentStatus),
           ],
         ],
       ),
@@ -67,13 +68,15 @@ class OrderStatusWidget extends StatelessWidget {
               Text(
                 'Pedido #${pedido.id.substring(0, 8)}',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(16),
@@ -81,9 +84,9 @@ class OrderStatusWidget extends StatelessWidget {
                 child: Text(
                   pedido.status,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -94,19 +97,19 @@ class OrderStatusWidget extends StatelessWidget {
               children: [
                 Icon(
                   Icons.table_restaurant,
-                  color:
-                      Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onPrimary.withOpacity(0.8),
                   size: 20,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   'Mesa ${pedido.mesa!.numero}',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onPrimary
-                            .withOpacity(0.8),
-                      ),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onPrimary.withOpacity(0.8),
+                  ),
                 ),
               ],
             ),
@@ -122,11 +125,10 @@ class OrderStatusWidget extends StatelessWidget {
               Text(
                 OrderService().formatDateTime(pedido.createdAt),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onPrimary
-                          .withOpacity(0.8),
-                    ),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onPrimary.withOpacity(0.8),
+                ),
               ),
             ],
           ),
@@ -142,11 +144,10 @@ class OrderStatusWidget extends StatelessWidget {
               Text(
                 pedido.formaPagamento,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onPrimary
-                          .withOpacity(0.8),
-                    ),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onPrimary.withOpacity(0.8),
+                ),
               ),
             ],
           ),
@@ -177,9 +178,9 @@ class OrderStatusWidget extends StatelessWidget {
         children: [
           Text(
             'Status do Pedido',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           ...statuses.asMap().entries.map((entry) {
@@ -241,29 +242,25 @@ class OrderStatusWidget extends StatelessWidget {
                   Text(
                     status.displayName,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight:
-                              isCurrent ? FontWeight.bold : FontWeight.w500,
-                          color: isActive
-                              ? Theme.of(context).colorScheme.onSurface
-                              : Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(0.5),
-                        ),
+                      fontWeight: isCurrent ? FontWeight.bold : FontWeight.w500,
+                      color: isActive
+                          ? Theme.of(context).colorScheme.onSurface
+                          : Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.5),
+                    ),
                   ),
                   Text(
                     _getStatusDescription(status),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: isActive
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(0.7)
-                              : Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(0.4),
-                        ),
+                      color: isActive
+                          ? Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.7)
+                          : Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.4),
+                    ),
                   ),
                 ],
               ),
@@ -292,9 +289,9 @@ class OrderStatusWidget extends StatelessWidget {
                     Text(
                       'Atual',
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -337,9 +334,9 @@ class OrderStatusWidget extends StatelessWidget {
         children: [
           Text(
             'Itens do Pedido',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           ...pedido.itens
@@ -355,16 +352,16 @@ class OrderStatusWidget extends StatelessWidget {
             children: [
               Text(
                 'Total:',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
                 OrderService.formatPrice(pedido.total),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ],
           ),
@@ -390,9 +387,9 @@ class OrderStatusWidget extends StatelessWidget {
               child: Text(
                 '${item.quantidade}x',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
           ),
@@ -403,21 +400,20 @@ class OrderStatusWidget extends StatelessWidget {
               children: [
                 Text(
                   item.itemCardapio?.nome ?? 'Item',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
                 ),
                 if (item.observacao != null && item.observacao!.isNotEmpty) ...[
                   const SizedBox(height: 2),
                   Text(
                     'Obs: ${item.observacao}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(0.7),
-                          fontStyle: FontStyle.italic,
-                        ),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.7),
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ],
               ],
@@ -426,16 +422,20 @@ class OrderStatusWidget extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             OrderService.formatPrice(item.subtotal),
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildAdminActions(BuildContext context, OrderStatus currentStatus) {
+  Widget _buildAdminActions(
+    BuildContext context,
+    WidgetRef ref,
+    OrderStatus currentStatus,
+  ) {
     final nextStatus = _getNextStatus(currentStatus);
 
     return Container(
@@ -449,9 +449,9 @@ class OrderStatusWidget extends StatelessWidget {
         children: [
           Text(
             'Ações do Administrador',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           Row(
@@ -459,7 +459,8 @@ class OrderStatusWidget extends StatelessWidget {
               if (nextStatus != null)
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () => _updateOrderStatus(context, nextStatus),
+                    onPressed: () =>
+                        _updateOrderStatus(context, ref, nextStatus),
                     icon: const Icon(Icons.arrow_forward),
                     label: Text('Marcar como ${nextStatus.displayName}'),
                     style: ElevatedButton.styleFrom(
@@ -478,13 +479,14 @@ class OrderStatusWidget extends StatelessWidget {
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: () =>
-                        _updateOrderStatus(context, OrderStatus.cancelado),
+                        _updateOrderStatus(context, ref, OrderStatus.cancelado),
                     icon: const Icon(Icons.cancel),
                     label: const Text('Cancelar'),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Theme.of(context).colorScheme.error,
                       side: BorderSide(
-                          color: Theme.of(context).colorScheme.error),
+                        color: Theme.of(context).colorScheme.error,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -543,8 +545,11 @@ class OrderStatusWidget extends StatelessWidget {
   }
 
   Future<void> _updateOrderStatus(
-      BuildContext context, OrderStatus newStatus) async {
-    final orderService = OrderService();
+    BuildContext context,
+    WidgetRef ref,
+    OrderStatus newStatus,
+  ) async {
+    final orderService = ref.read(orderServiceProvider.notifier);
     final success = await orderService.updateOrderStatus(pedido.id, newStatus);
 
     if (success) {
@@ -557,8 +562,9 @@ class OrderStatusWidget extends StatelessWidget {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content:
-              Text('Erro ao atualizar status: ${orderService.state.error}'),
+          content: Text(
+            'Erro ao atualizar status: ${orderService.state.error}',
+          ),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
