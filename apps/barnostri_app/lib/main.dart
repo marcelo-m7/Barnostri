@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'core/theme/theme.dart';
+import 'src/core/theme/theme.dart';
 import 'package:shared_models/shared_models.dart';
-import 'core/services/order_service.dart';
-import 'core/services/menu_service.dart';
-import 'core/services/language_service.dart';
-import 'modules/client/pages/qr_scanner_page.dart';
-import 'modules/admin/pages/admin_page.dart';
-import 'widgets/language_selector.dart';
+import 'src/core/services/order_service.dart';
+import 'src/core/services/menu_service.dart';
+import 'src/core/services/language_service.dart';
+import 'src/modules/client/pages/qr_scanner_page.dart';
+import 'src/modules/admin/pages/admin_page.dart';
+import 'src/widgets/language_selector.dart';
 import 'l10n/generated/app_localizations.dart';
 
 void main() async {
