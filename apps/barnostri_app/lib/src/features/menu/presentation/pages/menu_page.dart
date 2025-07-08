@@ -233,7 +233,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                         context,
                       ).textTheme.labelLarge,
                       tabs: menuState.categories
-                          .map((categoria) => Tab(text: categoria.name))
+                          .map((category) => Tab(text: category.name))
                           .toList(),
                     ),
                   ),
@@ -316,8 +316,8 @@ class _MenuPageState extends ConsumerState<MenuPage>
     return SliverFillRemaining(
       child: TabBarView(
         controller: _tabController,
-        children: menuState.categories.map((categoria) {
-          final items = menuService.getItemsByCategory(categoria.id);
+        children: menuState.categories.map((category) {
+          final items = menuService.getItemsByCategory(category.id);
           final l10n = AppLocalizations.of(context)!;
 
           return Padding(
@@ -336,7 +336,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          l10n.emptyCategoryItems(categoria.name),
+                          l10n.emptyCategoryItems(category.name),
                           style:
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: Theme.of(

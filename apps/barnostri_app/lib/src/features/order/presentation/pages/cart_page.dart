@@ -487,8 +487,8 @@ class _CartPageState extends ConsumerState<CartPage> {
               return const Center(child: CircularProgressIndicator());
             }
 
-            final pedido = snapshot.data!;
-            return OrderStatusWidget(pedido: pedido);
+            final order = snapshot.data!;
+            return OrderStatusWidget(order: order);
           },
         );
       },
