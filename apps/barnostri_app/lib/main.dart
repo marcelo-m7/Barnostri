@@ -12,8 +12,6 @@ import 'src/features/order/pages/cart_page.dart';
 import 'src/features/auth/pages/admin_page.dart';
 import 'src/widgets/language_selector.dart';
 import 'l10n/generated/app_localizations.dart';
-import 'src/repositories/auth_repository.dart';
-import 'src/repositories/supabase/supabase_auth_repository.dart';
 
 final AuthRepository _authRepo = SupabaseAuthRepository();
 
