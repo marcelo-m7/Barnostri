@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../core/services/order_service.dart';
-import '../core/theme/theme.dart';
 
 class OrderStatusWidget extends ConsumerWidget {
   final Pedido pedido;
