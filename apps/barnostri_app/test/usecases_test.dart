@@ -58,7 +58,7 @@ void main() {
       );
       expect(id, isNotNull);
 
-      final ok = await update(id!, OrderStatus.pronto);
+      final ok = await update(id!, OrderStatus.ready);
       expect(ok, isTrue);
     });
   });

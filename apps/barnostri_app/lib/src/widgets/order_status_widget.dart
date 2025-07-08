@@ -158,10 +158,10 @@ class OrderStatusWidget extends ConsumerWidget {
 
   Widget _buildStatusTimeline(BuildContext context, OrderStatus currentStatus) {
     final statuses = [
-      OrderStatus.recebido,
-      OrderStatus.emPreparo,
-      OrderStatus.pronto,
-      OrderStatus.entregue,
+      OrderStatus.received,
+      OrderStatus.preparing,
+      OrderStatus.ready,
+      OrderStatus.delivered,
     ];
 
     return Container(
@@ -476,14 +476,14 @@ class OrderStatusWidget extends ConsumerWidget {
                     ),
                   ),
                 ),
-              if (nextStatus != null && currentStatus != OrderStatus.cancelado)
+              if (nextStatus != null && currentStatus != OrderStatus.canceled)
                 const SizedBox(width: 12),
-              if (currentStatus != OrderStatus.cancelado &&
-                  currentStatus != OrderStatus.entregue)
+              if (currentStatus != OrderStatus.canceled &&
+                  currentStatus != OrderStatus.delivered)
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: () =>
-                        _updateOrderStatus(context, ref, OrderStatus.cancelado),
+                        _updateOrderStatus(context, ref, OrderStatus.canceled),
                     icon: const Icon(Icons.cancel),
                     label: Text(AppLocalizations.of(context)!.cancel),
                     style: OutlinedButton.styleFrom(
@@ -506,44 +506,44 @@ class OrderStatusWidget extends ConsumerWidget {
 
   IconData _getStatusIcon(OrderStatus status) {
     switch (status) {
-      case OrderStatus.recebido:
+      case OrderStatus.received:
         return Icons.receipt;
-      case OrderStatus.emPreparo:
+      case OrderStatus.preparing:
         return Icons.restaurant;
-      case OrderStatus.pronto:
+      case OrderStatus.ready:
         return Icons.check_circle;
-      case OrderStatus.entregue:
+      case OrderStatus.delivered:
         return Icons.delivery_dining;
-      case OrderStatus.cancelado:
+      case OrderStatus.canceled:
         return Icons.cancel;
     }
   }
 
   String _getStatusDescription(OrderStatus status) {
     switch (status) {
-      case OrderStatus.recebido:
+      case OrderStatus.received:
         return AppLocalizations.of(context)!.statusReceivedDescription;
-      case OrderStatus.emPreparo:
+      case OrderStatus.preparing:
         return AppLocalizations.of(context)!.statusInPrepDescription;
-      case OrderStatus.pronto:
+      case OrderStatus.ready:
         return AppLocalizations.of(context)!.statusReadyDescription;
-      case OrderStatus.entregue:
+      case OrderStatus.delivered:
         return AppLocalizations.of(context)!.statusDeliveredDescription;
-      case OrderStatus.cancelado:
+      case OrderStatus.canceled:
         return AppLocalizations.of(context)!.statusCancelledDescription;
     }
   }
 
   OrderStatus? _getNextStatus(OrderStatus currentStatus) {
     switch (currentStatus) {
-      case OrderStatus.recebido:
-        return OrderStatus.emPreparo;
-      case OrderStatus.emPreparo:
-        return OrderStatus.pronto;
-      case OrderStatus.pronto:
-        return OrderStatus.entregue;
-      case OrderStatus.entregue:
-      case OrderStatus.cancelado:
+      case OrderStatus.received:
+        return OrderStatus.preparing;
+      case OrderStatus.preparing:
+        return OrderStatus.ready;
+      case OrderStatus.ready:
+        return OrderStatus.delivered;
+      case OrderStatus.delivered:
+      case OrderStatus.canceled:
         return null;
     }
   }
