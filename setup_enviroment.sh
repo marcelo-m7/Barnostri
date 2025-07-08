@@ -34,7 +34,7 @@ flutter analyze packages/shared_models || true
 flutter analyze apps/barnostri_app || true
 
 echo "🧪 Testa"
-flutter test packages/shared_models || true
-flutter test apps/barnostri_app || true
+(cd packages/shared_models && flutter test) || true
+(cd apps/barnostri_app && flutter test) || true
 
 echo "✅ PRONTO"
