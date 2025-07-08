@@ -122,7 +122,7 @@ class OrderStatusWidget extends ConsumerWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                OrderService().formatDateTime(pedido.createdAt),
+                OrderService.formatDateTime(pedido.createdAt),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(
                     context,

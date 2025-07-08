@@ -507,6 +507,14 @@
   "@tableCodeHint": {
     "description": "Hint for the table code input"
   },
+  "qrCameraInstructions": "Point the camera at the QR code",
+  "@qrCameraInstructions": {
+    "description": "Instructions to scan the QR code"
+  },
+  "qrCodeLocation": "You'll find it on your table",
+  "@qrCodeLocation": {
+    "description": "Explains where the QR code is located"
+  },
   "insertCodeManually": "Insert code manually",
   "@insertCodeManually": {
     "description": "Button to manually enter a table code"

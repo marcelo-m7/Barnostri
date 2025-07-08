@@ -144,7 +144,7 @@ class _MenuItemCardState extends State<MenuItemCard>
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                OrderService().formatPrice(widget.item.preco),
+                                OrderService.formatPrice(widget.item.preco),
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium
