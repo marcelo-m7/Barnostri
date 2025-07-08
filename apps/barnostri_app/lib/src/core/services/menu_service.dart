@@ -126,11 +126,10 @@ class MenuService extends StateNotifier<MenuState> {
   Future<bool> addCategoria({required String nome, required int ordem}) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final response = await SupabaseConfig.client
-          .from('categorias')
-          .insert({'nome': nome, 'ordem': ordem, 'ativo': true})
-          .select()
-          .single();
+      final response = await _menuRepository.addCategoria(
+        nome: nome,
+        ordem: ordem,
+      );
       final nova = Categoria.fromJson(response);
       final list = [...state.categorias, nova]
         ..sort((a, b) => a.ordem.compareTo(b.ordem));
@@ -152,16 +151,16 @@ class MenuService extends StateNotifier<MenuState> {
   }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final updateData = <String, dynamic>{};
-      if (nome != null) updateData['nome'] = nome;
-      if (ordem != null) updateData['ordem'] = ordem;
-      if (ativo != null) updateData['ativo'] = ativo;
-      await SupabaseConfig.client
-          .from('categorias')
-          .update(updateData)
-          .eq('id', id);
-      await loadCategorias();
-      return true;
+      final ok = await _menuRepository.updateCategoria(
+        id: id,
+        nome: nome,
+        ordem: ordem,
+        ativo: ativo,
+      );
+      if (ok) {
+        await loadCategorias();
+      }
+      return ok;
     } catch (e) {
       state = state.copyWith(error: 'Erro ao atualizar categoria: $e');
       return false;
@@ -179,18 +178,13 @@ class MenuService extends StateNotifier<MenuState> {
   }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final response = await SupabaseConfig.client
-          .from('itens_cardapio')
-          .insert({
-            'nome': nome,
-            'descricao': descricao,
-            'preco': preco,
-            'categoria_id': categoriaId,
-            'disponivel': true,
-            'imagem_url': imagemUrl,
-          })
-          .select('*, categorias(*)')
-          .single();
+      final response = await _menuRepository.addItemCardapio(
+        nome: nome,
+        descricao: descricao,
+        preco: preco,
+        categoriaId: categoriaId,
+        imagemUrl: imagemUrl,
+      );
       final novoItem = ItemCardapio.fromJson(response);
       final list = [...state.itensCardapio, novoItem]
         ..sort((a, b) => a.nome.compareTo(b.nome));
@@ -215,19 +209,19 @@ class MenuService extends StateNotifier<MenuState> {
   }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final updateData = <String, dynamic>{};
-      if (nome != null) updateData['nome'] = nome;
-      if (descricao != null) updateData['descricao'] = descricao;
-      if (preco != null) updateData['preco'] = preco;
-      if (categoriaId != null) updateData['categoria_id'] = categoriaId;
-      if (disponivel != null) updateData['disponivel'] = disponivel;
-      if (imagemUrl != null) updateData['imagem_url'] = imagemUrl;
-      await SupabaseConfig.client
-          .from('itens_cardapio')
-          .update(updateData)
-          .eq('id', id);
-      await loadItensCardapio();
-      return true;
+      final ok = await _menuRepository.updateItemCardapio(
+        id: id,
+        nome: nome,
+        descricao: descricao,
+        preco: preco,
+        categoriaId: categoriaId,
+        disponivel: disponivel,
+        imagemUrl: imagemUrl,
+      );
+      if (ok) {
+        await loadItensCardapio();
+      }
+      return ok;
     } catch (e) {
       state = state.copyWith(error: 'Erro ao atualizar item: $e');
       return false;
@@ -245,11 +239,13 @@ class MenuService extends StateNotifier<MenuState> {
   Future<bool> deleteItemCardapio(String id) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      await SupabaseConfig.client.from('itens_cardapio').delete().eq('id', id);
-      final list = [...state.itensCardapio]
-        ..removeWhere((item) => item.id == id);
-      state = state.copyWith(itensCardapio: list);
-      return true;
+      final ok = await _menuRepository.deleteItemCardapio(id);
+      if (ok) {
+        final list = [...state.itensCardapio]
+          ..removeWhere((item) => item.id == id);
+        state = state.copyWith(itensCardapio: list);
+      }
+      return ok;
     } catch (e) {
       state = state.copyWith(error: 'Erro ao deletar item: $e');
       return false;
@@ -264,11 +260,10 @@ class MenuService extends StateNotifier<MenuState> {
   }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final response = await SupabaseConfig.client
-          .from('mesas')
-          .insert({'numero': numero, 'qr_token': qrToken, 'ativo': true})
-          .select()
-          .single();
+      final response = await _menuRepository.addMesa(
+        numero: numero,
+        qrToken: qrToken,
+      );
       final novaMesa = Mesa.fromJson(response);
       final list = [...state.mesas, novaMesa]
         ..sort((a, b) => a.numero.compareTo(b.numero));

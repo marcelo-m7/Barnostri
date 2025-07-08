@@ -197,4 +197,197 @@ class SupabaseMenuRepository implements MenuRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<Map<String, dynamic>> addCategoria({
+    required String nome,
+    required int ordem,
+  }) async {
+    if (!SupabaseConfig.isConfigured) {
+      return {
+        'id': 'mock-cat-${DateTime.now().millisecondsSinceEpoch}',
+        'nome': nome,
+        'ordem': ordem,
+        'ativo': true,
+        'created_at': DateTime.now().toIso8601String(),
+        'updated_at': DateTime.now().toIso8601String(),
+      };
+    }
+    final response = await SupabaseConfig.client
+        .from('categorias')
+        .insert({'nome': nome, 'ordem': ordem, 'ativo': true})
+        .select()
+        .single();
+    return response;
+  }
+
+  @override
+  Future<bool> updateCategoria({
+    required String id,
+    String? nome,
+    int? ordem,
+    bool? ativo,
+  }) async {
+    if (!SupabaseConfig.isConfigured) {
+      if (kDebugMode) {
+        print('📝 Mock update categoria $id');
+      }
+      return true;
+    }
+    final updateData = <String, dynamic>{};
+    if (nome != null) updateData['nome'] = nome;
+    if (ordem != null) updateData['ordem'] = ordem;
+    if (ativo != null) updateData['ativo'] = ativo;
+    await SupabaseConfig.client
+        .from('categorias')
+        .update(updateData)
+        .eq('id', id);
+    return true;
+  }
+
+  @override
+  Future<bool> deleteCategoria(String id) async {
+    if (!SupabaseConfig.isConfigured) {
+      if (kDebugMode) {
+        print('🗑️ Mock delete categoria $id');
+      }
+      return true;
+    }
+    await SupabaseConfig.client.from('categorias').delete().eq('id', id);
+    return true;
+  }
+
+  @override
+  Future<Map<String, dynamic>> addItemCardapio({
+    required String nome,
+    String? descricao,
+    required double preco,
+    required String categoriaId,
+    String? imagemUrl,
+  }) async {
+    if (!SupabaseConfig.isConfigured) {
+      return {
+        'id': 'mock-item-${DateTime.now().millisecondsSinceEpoch}',
+        'nome': nome,
+        'descricao': descricao,
+        'preco': preco,
+        'categoria_id': categoriaId,
+        'disponivel': true,
+        'imagem_url': imagemUrl,
+        'created_at': DateTime.now().toIso8601String(),
+        'updated_at': DateTime.now().toIso8601String(),
+      };
+    }
+    final response = await SupabaseConfig.client
+        .from('itens_cardapio')
+        .insert({
+          'nome': nome,
+          'descricao': descricao,
+          'preco': preco,
+          'categoria_id': categoriaId,
+          'disponivel': true,
+          'imagem_url': imagemUrl,
+        })
+        .select('*, categorias(*)')
+        .single();
+    return response;
+  }
+
+  @override
+  Future<bool> updateItemCardapio({
+    required String id,
+    String? nome,
+    String? descricao,
+    double? preco,
+    String? categoriaId,
+    bool? disponivel,
+    String? imagemUrl,
+  }) async {
+    if (!SupabaseConfig.isConfigured) {
+      if (kDebugMode) {
+        print('📝 Mock update item $id');
+      }
+      return true;
+    }
+    final updateData = <String, dynamic>{};
+    if (nome != null) updateData['nome'] = nome;
+    if (descricao != null) updateData['descricao'] = descricao;
+    if (preco != null) updateData['preco'] = preco;
+    if (categoriaId != null) updateData['categoria_id'] = categoriaId;
+    if (disponivel != null) updateData['disponivel'] = disponivel;
+    if (imagemUrl != null) updateData['imagem_url'] = imagemUrl;
+    await SupabaseConfig.client
+        .from('itens_cardapio')
+        .update(updateData)
+        .eq('id', id);
+    return true;
+  }
+
+  @override
+  Future<bool> deleteItemCardapio(String id) async {
+    if (!SupabaseConfig.isConfigured) {
+      if (kDebugMode) {
+        print('🗑️ Mock delete item $id');
+      }
+      return true;
+    }
+    await SupabaseConfig.client.from('itens_cardapio').delete().eq('id', id);
+    return true;
+  }
+
+  @override
+  Future<Map<String, dynamic>> addMesa({
+    required String numero,
+    required String qrToken,
+  }) async {
+    if (!SupabaseConfig.isConfigured) {
+      return {
+        'id': 'mock-table-${DateTime.now().millisecondsSinceEpoch}',
+        'numero': numero,
+        'qr_token': qrToken,
+        'ativo': true,
+        'created_at': DateTime.now().toIso8601String(),
+        'updated_at': DateTime.now().toIso8601String(),
+      };
+    }
+    final response = await SupabaseConfig.client
+        .from('mesas')
+        .insert({'numero': numero, 'qr_token': qrToken, 'ativo': true})
+        .select()
+        .single();
+    return response;
+  }
+
+  @override
+  Future<bool> updateMesa({
+    required String id,
+    String? numero,
+    String? qrToken,
+    bool? ativo,
+  }) async {
+    if (!SupabaseConfig.isConfigured) {
+      if (kDebugMode) {
+        print('📝 Mock update mesa $id');
+      }
+      return true;
+    }
+    final updateData = <String, dynamic>{};
+    if (numero != null) updateData['numero'] = numero;
+    if (qrToken != null) updateData['qr_token'] = qrToken;
+    if (ativo != null) updateData['ativo'] = ativo;
+    await SupabaseConfig.client.from('mesas').update(updateData).eq('id', id);
+    return true;
+  }
+
+  @override
+  Future<bool> deleteMesa(String id) async {
+    if (!SupabaseConfig.isConfigured) {
+      if (kDebugMode) {
+        print('🗑️ Mock delete mesa $id');
+      }
+      return true;
+    }
+    await SupabaseConfig.client.from('mesas').delete().eq('id', id);
+    return true;
+  }
 }
