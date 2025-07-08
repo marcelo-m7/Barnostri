@@ -3,13 +3,19 @@ import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/menu/controllers/menu_service.dart';
 import 'package:barnostri_app/src/features/order/controllers/order_service.dart';
 import 'package:barnostri_app/src/features/auth/controllers/auth_service.dart';
+import 'package:barnostri_app/src/features/auth/domain/usecases/login_use_case.dart';
+import 'package:barnostri_app/src/features/menu/domain/usecases/load_menu_use_case.dart';
+import 'package:barnostri_app/src/features/order/domain/usecases/create_order_use_case.dart';
+import 'package:barnostri_app/src/features/order/domain/usecases/update_order_status_use_case.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('AuthService', () {
     test('login and logout flow', () async {
-      final service = AuthService(SupabaseAuthRepository());
+      final repo = SupabaseAuthRepository();
+      final loginUseCase = LoginUseCase(repo);
+      final service = AuthService(repo, loginUseCase);
       await service.login(email: 'admin@barnostri.com', password: 'admin123');
       expect(service.state.isAuthenticated, isTrue);
       await service.logout();
@@ -19,7 +25,9 @@ void main() {
 
   group('MenuService', () {
     test('loadAll fills data', () async {
-      final service = MenuService(SupabaseMenuRepository());
+      final repo = SupabaseMenuRepository();
+      final loadUseCase = LoadMenuUseCase(repo);
+      final service = MenuService(repo, loadUseCase);
       await service.loadAll();
       expect(service.state.categories, isNotEmpty);
       expect(service.state.menuItems, isNotEmpty);
@@ -31,7 +39,9 @@ void main() {
     test('add to cart and create order', () async {
       final pedidoRepo = SupabaseOrderRepository();
       final menuRepo = SupabaseMenuRepository();
-      final service = OrderService(pedidoRepo, menuRepo);
+      final create = CreateOrderUseCase(pedidoRepo);
+      final update = UpdateOrderStatusUseCase(pedidoRepo);
+      final service = OrderService(pedidoRepo, menuRepo, create, update);
 
       final mesa = TableModel(
         id: '1',
