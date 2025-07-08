@@ -7,7 +7,7 @@ import '../core/theme/theme.dart';
 class LanguageSelector extends ConsumerWidget {
   final bool showAsBottomSheet;
   final VoidCallback? onLanguageChanged;
-  
+
   const LanguageSelector({
     super.key,
     this.showAsBottomSheet = false,
@@ -19,15 +19,16 @@ class LanguageSelector extends ConsumerWidget {
     final languageService = ref.watch(languageServiceProvider.notifier);
     final currentLocale = ref.watch(languageServiceProvider);
     final l10n = AppLocalizations.of(context)!;
-    
+
     if (showAsBottomSheet) {
       return _buildBottomSheet(context, languageService, l10n);
     }
-    
+
     return _buildDropdown(context, languageService, l10n);
   }
-  
-  Widget _buildDropdown(BuildContext context, LanguageService languageService, AppLocalizations l10n) {
+
+  Widget _buildDropdown(BuildContext context, LanguageService languageService,
+      AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -45,8 +46,8 @@ class LanguageSelector extends ConsumerWidget {
             color: Theme.of(context).colorScheme.onSurface,
           ),
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
           items: LanguageService.supportedLocales.map((locale) {
             return DropdownMenuItem<Locale>(
               value: locale,
@@ -61,8 +62,8 @@ class LanguageSelector extends ConsumerWidget {
                   Text(
                     languageService.getLanguageDisplayName(locale),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                   ),
                 ],
               ),
@@ -78,8 +79,9 @@ class LanguageSelector extends ConsumerWidget {
       ),
     );
   }
-  
-  Widget _buildBottomSheet(BuildContext context, LanguageService languageService, AppLocalizations l10n) {
+
+  Widget _buildBottomSheet(BuildContext context,
+      LanguageService languageService, AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -96,9 +98,9 @@ class LanguageSelector extends ConsumerWidget {
               Text(
                 l10n.language,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  fontWeight: FontWeight.w600,
-                ),
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
               IconButton(
                 onPressed: () => Navigator.pop(context),
@@ -112,13 +114,13 @@ class LanguageSelector extends ConsumerWidget {
           const SizedBox(height: 24),
           ...LanguageService.supportedLocales.map((locale) {
             final isSelected = locale == ref.watch(languageServiceProvider);
-            
+
             return Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: Material(
-                color: isSelected 
-                  ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-                  : Colors.transparent,
+                color: isSelected
+                    ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(16),
@@ -136,13 +138,16 @@ class LanguageSelector extends ConsumerWidget {
                           height: 48,
                           decoration: BoxDecoration(
                             color: isSelected
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.surface,
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: isSelected
-                                ? Theme.of(context).colorScheme.primary
-                                : Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .outline
+                                      .withOpacity(0.3),
                             ),
                           ),
                           child: Center(
@@ -159,17 +164,30 @@ class LanguageSelector extends ConsumerWidget {
                             children: [
                               Text(
                                 languageService.getLanguageDisplayName(locale),
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSurface,
-                                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface,
+                                      fontWeight: isSelected
+                                          ? FontWeight.w600
+                                          : FontWeight.w500,
+                                    ),
                               ),
                               const SizedBox(height: 4),
                               Text(
                                 _getLanguageSubtitle(locale, l10n),
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withOpacity(0.7),
+                                    ),
                               ),
                             ],
                           ),
@@ -194,7 +212,7 @@ class LanguageSelector extends ConsumerWidget {
       ),
     );
   }
-  
+
   String _getLanguageSubtitle(Locale locale, AppLocalizations l10n) {
     switch (locale.languageCode) {
       case 'pt':
@@ -207,8 +225,9 @@ class LanguageSelector extends ConsumerWidget {
         return locale.languageCode.toUpperCase();
     }
   }
-  
-  static void showLanguageSelector(BuildContext context, {VoidCallback? onLanguageChanged}) {
+
+  static void showLanguageSelector(BuildContext context,
+      {VoidCallback? onLanguageChanged}) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -223,7 +242,7 @@ class LanguageSelector extends ConsumerWidget {
 
 class LanguageSelectorButton extends ConsumerWidget {
   final VoidCallback? onLanguageChanged;
-  
+
   const LanguageSelectorButton({
     super.key,
     this.onLanguageChanged,
@@ -234,7 +253,7 @@ class LanguageSelectorButton extends ConsumerWidget {
     final languageService = ref.watch(languageServiceProvider.notifier);
     final locale = ref.watch(languageServiceProvider);
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
@@ -267,8 +286,8 @@ class LanguageSelectorButton extends ConsumerWidget {
                 Text(
                   languageService.getLanguageDisplayName(currentLocale),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                 ),
                 const SizedBox(width: 8),
                 Icon(

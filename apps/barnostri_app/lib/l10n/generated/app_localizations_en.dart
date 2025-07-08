@@ -1,4 +1,8 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
 
 /// The translations for English (`en`).
 class AppLocalizationsEn extends AppLocalizations {
@@ -14,7 +18,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanQRCode => 'Scan QR Code';
 
   @override
-  String get scanQRCodeDescription => 'Scan the QR code on your table to start ordering';
+  String get scanQRCodeDescription =>
+      'Scan the QR code on your table to start ordering';
 
   @override
   String get adminAccess => 'Admin Access';
@@ -71,7 +76,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emptyCart => 'Your cart is empty';
 
   @override
-  String get emptyCartDescription => 'Add items from the menu to start your order';
+  String get emptyCartDescription =>
+      'Add items from the menu to start your order';
 
   @override
   String get startOrdering => 'Start Ordering';
@@ -98,7 +104,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get orderPlaced => 'Order Placed!';
 
   @override
-  String get orderPlacedDescription => 'Your order has been successfully placed and is being prepared';
+  String get orderPlacedDescription =>
+      'Your order has been successfully placed and is being prepared';
 
   @override
   String get orderNumber => 'Order Number';
@@ -249,7 +256,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanQRTitle => 'Scan QR Code';
 
   @override
-  String get scanQRInstructions => 'Position the QR code within the frame to scan';
+  String get scanQRInstructions =>
+      'Position the QR code within the frame to scan';
 
   @override
   String get manualEntry => 'Manual Entry';
@@ -343,4 +351,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get french => 'French';
+
+  @override
+  String get demoModeCredentials =>
+      'Demo mode - Configure Supabase credentials for full features';
+
+  @override
+  String get footerTagline => '🏖️ Beach • Flavor • Tradition';
+
+  @override
+  String get homeSlogan => 'Unique flavors of the Carioca beach 🏖️';
+
+  @override
+  String get searchMenuPlaceholder => 'Search for food and drinks...';
+
+  @override
+  String emptyCategoryItems(String categoryName) {
+    return 'No items available\nin the $categoryName category';
+  }
+
+  @override
+  String get errorLoadingOrders => 'Error loading orders';
+
+  @override
+  String get noActiveOrders => 'No active orders';
+
+  @override
+  String get newOrdersAppearHere => 'New orders will appear here';
+
+  @override
+  String get adminPanel => 'Admin Panel';
+
+  @override
+  String get tableCode => 'Table Code';
+
+  @override
+  String get tableCodePrompt => 'Enter the code on the table:';
+
+  @override
+  String get tableCodeHint => 'Ex: table_001_qr';
+
+  @override
+  String get insertCodeManually => 'Insert code manually';
+
+  @override
+  String get orderItems => 'Order Items';
+
+  @override
+  String get totalItems => 'Total Items:';
 }

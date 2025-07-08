@@ -1,4 +1,8 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
 
 /// The translations for French (`fr`).
 class AppLocalizationsFr extends AppLocalizations {
@@ -14,7 +18,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scanQRCode => 'Scanner le QR Code';
 
   @override
-  String get scanQRCodeDescription => 'Scannez le QR code de votre table pour commencer à commander';
+  String get scanQRCodeDescription =>
+      'Scannez le QR code de votre table pour commencer à commander';
 
   @override
   String get adminAccess => 'Accès Administrateur';
@@ -71,7 +76,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get emptyCart => 'Votre panier est vide';
 
   @override
-  String get emptyCartDescription => 'Ajoutez des articles du menu pour commencer votre commande';
+  String get emptyCartDescription =>
+      'Ajoutez des articles du menu pour commencer votre commande';
 
   @override
   String get startOrdering => 'Commencer la Commande';
@@ -98,7 +104,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get orderPlaced => 'Commande Passée!';
 
   @override
-  String get orderPlacedDescription => 'Votre commande a été passée avec succès et est en cours de préparation';
+  String get orderPlacedDescription =>
+      'Votre commande a été passée avec succès et est en cours de préparation';
 
   @override
   String get orderNumber => 'Numéro de Commande';
@@ -249,7 +256,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scanQRTitle => 'Scanner le QR Code';
 
   @override
-  String get scanQRInstructions => 'Positionnez le QR code dans le cadre pour scanner';
+  String get scanQRInstructions =>
+      'Positionnez le QR code dans le cadre pour scanner';
 
   @override
   String get manualEntry => 'Saisie Manuelle';
@@ -303,7 +311,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get orderUpdated => 'Statut de la commande mis à jour avec succès';
 
   @override
-  String get orderUpdateError => 'Échec de la mise à jour du statut de la commande';
+  String get orderUpdateError =>
+      'Échec de la mise à jour du statut de la commande';
 
   @override
   String get confirmDelete => 'Êtes-vous sûr de vouloir supprimer cet article?';
@@ -343,4 +352,52 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get french => 'Français';
+
+  @override
+  String get demoModeCredentials =>
+      'Mode démo - Configurez les identifiants Supabase pour accéder à toutes les fonctionnalités';
+
+  @override
+  String get footerTagline => '🏖️ Plage • Saveur • Tradition';
+
+  @override
+  String get homeSlogan => 'Saveurs uniques de la plage carioca 🏖️';
+
+  @override
+  String get searchMenuPlaceholder => 'Rechercher des plats et boissons...';
+
+  @override
+  String emptyCategoryItems(String categoryName) {
+    return 'Aucun article disponible\ndans la catégorie $categoryName';
+  }
+
+  @override
+  String get errorLoadingOrders => 'Erreur lors du chargement des commandes';
+
+  @override
+  String get noActiveOrders => 'Aucune commande active';
+
+  @override
+  String get newOrdersAppearHere => 'Les nouvelles commandes apparaîtront ici';
+
+  @override
+  String get adminPanel => 'Panneau Administratif';
+
+  @override
+  String get tableCode => 'Code de la Table';
+
+  @override
+  String get tableCodePrompt => 'Entrez le code qui se trouve sur la table:';
+
+  @override
+  String get tableCodeHint => 'Ex: table_001_qr';
+
+  @override
+  String get insertCodeManually => 'Saisir le code manuellement';
+
+  @override
+  String get orderItems => 'Articles de la Commande';
+
+  @override
+  String get totalItems => 'Total d\'Articles:';
 }
