@@ -1,18 +1,28 @@
 # Barnostri Architecture Plan
 
-This project uses a Flutter + Supabase monorepo. The proposed structure keeps the mobile app and the backend resources in the same repository and isolates shared code in reusable packages.
+This project uses a Flutter + Supabase monorepo. The mobile app and backend resources live together and shared code sits inside packages.
 
 ```
 barnostri/
 ├── apps/
 │   └── barnostri_app/
 │       ├── lib/
-│       ├── android/ios/web/
+│       │   └── src/
+│       │       ├── core/
+│       │       └── features/
+│       │           └── <feature>/
+│       │               ├── presentation/
+│       │               ├── domain/
+│       │               └── data/
+│       ├── android/
+│       ├── ios/
+│       ├── web/
 │       └── pubspec.yaml
 ├── packages/
 │   └── shared_models/
 │       ├── lib/src/models/
-│       └── lib/src/services/
+│       ├── lib/src/repositories/
+│       └── lib/src/utils/
 ├── supabase/
 │   ├── migrations/
 │   ├── seed/
@@ -21,9 +31,9 @@ barnostri/
 ```
 
 ## Flutter App
-- Organize code under `lib/src/` by feature.
+- Organize each feature into `presentation`, `domain` and `data` layers.
 - Use Riverpod for state management and GoRouter for navigation.
-- Models and Supabase services come from `packages/shared_models`.
+- Import models and repositories from `packages/shared_models`.
 
 ## Supabase
 - All SQL migrations live under `supabase/migrations/` and are versioned with the Supabase CLI.
@@ -32,7 +42,7 @@ barnostri/
 - Environment variables are stored in `supabase/supabase-config.json` (one per environment).
 
 ## Packages
-- `packages/shared_models` exposes models such as `TableModel`, `Order`, `MenuItem` and services like `OrderService`.
+- `packages/shared_models` exposes models and repository helpers shared by the apps.
 - Both the customer and admin apps import this package to avoid duplication.
 
 ## Next Steps

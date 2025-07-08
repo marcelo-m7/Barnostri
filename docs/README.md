@@ -1,6 +1,6 @@
 # Barnostri Monorepo
 
-Este repositório contém o aplicativo Flutter e todos os recursos do Supabase em um único monorepo.
+Este repositório reúne o aplicativo Flutter e os recursos do Supabase em um único monorepo.
 
 ```
 apps/
@@ -9,20 +9,43 @@ apps/
       src/
         core/
         features/
+          <feature>/
+            presentation/
+            domain/
+            data/
     pubspec.yaml
 packages/
   shared_models/
     lib/src/models/
-    lib/src/services/
+    lib/src/repositories/
+    lib/src/utils/
 supabase/
   migrations/
   seed/
   functions/
   supabase-config.json
 ```
+
 ### Diretórios
 
-- **apps/barnostri_app**: código Flutter organizado por features.
-- **packages/shared_models**: modelos e utilidades compartilhadas.
+- **apps/barnostri_app**: código Flutter organizado por features com camadas `presentation`, `domain` e `data`.
+- **packages/shared_models**: modelos e repositórios compartilhados.
 - **supabase/**: scripts SQL e configurações do banco.
-Consulte `docs/ARCHITECTURE_PLAN.md` para o plano detalhado de arquitetura e as tarefas em `docs/tasks/` para acompanhar o progresso.
+
+Consulte `docs/ARCHITECTURE_PLAN.md` para detalhes da arquitetura e as tarefas em `docs/tasks/` para acompanhar o progresso.
+
+### Criando uma nova feature
+
+1. Dentro de `apps/barnostri_app/lib/src/features` crie uma pasta com o nome da feature.
+2. Adicione os subdiretórios `presentation`, `domain` e `data`.
+3. Coloque widgets na camada **presentation**, casos de uso e entidades em **domain** e implementações de repositório em **data**.
+
+Exemplo básico:
+
+```
+lib/src/features/profile/
+  presentation/profile_page.dart
+  domain/profile.dart
+  domain/load_profile_use_case.dart
+  data/profile_repository_impl.dart
+```

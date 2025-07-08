@@ -5,3 +5,4 @@
 - [x] Rename `supabase/sql` to `supabase/migrations` and create `supabase/seed` and `supabase/functions` directories.
 - [x] Add `supabase/supabase-config.json` with environment placeholders.
 - [x] Update documentation to reflect the new structure.
+- [x] Document the `presentation/domain/data` layout in the docs.
