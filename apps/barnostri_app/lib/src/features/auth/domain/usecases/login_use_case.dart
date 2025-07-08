@@ -1,4 +1,5 @@
 import 'package:shared_models/shared_models.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Handles user login via the [AuthRepository].
 class LoginUseCase {
