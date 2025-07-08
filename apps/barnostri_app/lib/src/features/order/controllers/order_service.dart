@@ -41,6 +41,19 @@ class OrderService extends StateNotifier<OrderState> {
   OrderService(this._pedidoRepository, this._menuRepository)
     : super(const OrderState());
 
+  Future<T?> _guard<T>(Future<T> Function() action,
+      {String Function(Object)? onError}) async {
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      return await action();
+    } catch (e) {
+      state = state.copyWith(error: onError != null ? onError(e) : e.toString());
+      return null;
+    } finally {
+      state = state.copyWith(isLoading: false);
+    }
+  }
+
   void setMesa(Mesa mesa) {
     state = state.copyWith(currentMesa: mesa);
   }
@@ -93,59 +106,52 @@ class OrderService extends StateNotifier<OrderState> {
       state = state.copyWith(error: 'Carrinho está vazio');
       return null;
     }
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      final pedidoId = await _pedidoRepository.criarPedido(
-        mesaId: state.currentMesa!.id,
-        itens: state.cartItems,
-        total: state.cartTotal,
-        formaPagamento: paymentMethod.displayName,
-      );
-      if (pedidoId != null) {
-        clearCart();
-        return pedidoId;
-      } else {
-        state = state.copyWith(error: 'Erro ao criar pedido');
-        return null;
-      }
-    } catch (e) {
-      state = state.copyWith(error: 'Erro ao processar pedido: $e');
-      return null;
-    } finally {
-      state = state.copyWith(isLoading: false);
-    }
+    return await _guard<String?>(
+      () async {
+        final pedidoId = await _pedidoRepository.criarPedido(
+          mesaId: state.currentMesa!.id,
+          itens: state.cartItems,
+          total: state.cartTotal,
+          formaPagamento: paymentMethod.displayName,
+        );
+        if (pedidoId != null) {
+          clearCart();
+          return pedidoId;
+        } else {
+          state = state.copyWith(error: 'Erro ao criar pedido');
+          return null;
+        }
+      },
+      onError: (e) => 'Erro ao processar pedido: $e',
+    );
   }
 
   Future<bool> updateOrderStatus(String pedidoId, OrderStatus status) async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      final success = await _pedidoRepository.atualizarStatus(
-        pedidoId,
-        status.displayName,
-      );
-      if (!success) {
-        state = state.copyWith(error: 'Erro ao atualizar status do pedido');
-      }
-      return success;
-    } catch (e) {
-      state = state.copyWith(error: 'Erro ao atualizar status: $e');
-      return false;
-    } finally {
-      state = state.copyWith(isLoading: false);
-    }
+    final success = await _guard<bool>(
+      () async {
+        final result = await _pedidoRepository.atualizarStatus(
+          pedidoId,
+          status.displayName,
+        );
+        if (!result) {
+          state = state.copyWith(error: 'Erro ao atualizar status do pedido');
+        }
+        return result;
+      },
+      onError: (e) => 'Erro ao atualizar status: $e',
+    );
+    return success ?? false;
   }
 
   Future<List<Pedido>> getAllOrders() async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      final pedidos = await _pedidoRepository.fetchPedidos();
-      return pedidos;
-    } catch (e) {
-      state = state.copyWith(error: 'Erro ao carregar pedidos: $e');
-      return [];
-    } finally {
-      state = state.copyWith(isLoading: false);
-    }
+    final pedidos = await _guard<List<Pedido>>(
+      () async {
+        final result = await _pedidoRepository.fetchPedidos();
+        return result;
+      },
+      onError: (e) => 'Erro ao carregar pedidos: $e',
+    );
+    return pedidos ?? [];
   }
 
   Stream<List<Pedido>> streamOrders() {
@@ -157,22 +163,19 @@ class OrderService extends StateNotifier<OrderState> {
   }
 
   Future<Mesa?> getMesaByQrToken(String qrToken) async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      final mesa = await _menuRepository.getMesaByQrToken(qrToken);
-      if (mesa != null) {
-        setMesa(mesa);
-        return mesa;
-      } else {
-        state = state.copyWith(error: 'Mesa não encontrada');
-        return null;
-      }
-    } catch (e) {
-      state = state.copyWith(error: 'Erro ao buscar mesa: $e');
-      return null;
-    } finally {
-      state = state.copyWith(isLoading: false);
-    }
+    return await _guard<Mesa?>(
+      () async {
+        final mesa = await _menuRepository.getMesaByQrToken(qrToken);
+        if (mesa != null) {
+          setMesa(mesa);
+          return mesa;
+        } else {
+          state = state.copyWith(error: 'Mesa não encontrada');
+          return null;
+        }
+      },
+      onError: (e) => 'Erro ao buscar mesa: $e',
+    );
   }
 
   Future<bool> processPayment({

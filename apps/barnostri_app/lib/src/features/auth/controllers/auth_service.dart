@@ -33,28 +33,30 @@ class AuthService extends StateNotifier<AuthState> {
     });
   }
 
-  Future<void> login({required String email, required String password}) async {
+  Future<T?> _guard<T>(Future<T> Function() action) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      await _authRepository.signIn(email: email, password: password);
-      state = state.copyWith(isAuthenticated: true);
+      return await action();
     } catch (e) {
       state = state.copyWith(error: e.toString());
+      return null;
     } finally {
       state = state.copyWith(isLoading: false);
     }
   }
 
+  Future<void> login({required String email, required String password}) async {
+    await _guard<void>(() async {
+      await _authRepository.signIn(email: email, password: password);
+      state = state.copyWith(isAuthenticated: true);
+    });
+  }
+
   Future<void> logout() async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
+    await _guard<void>(() async {
       await _authRepository.signOut();
       state = state.copyWith(isAuthenticated: false);
-    } catch (e) {
-      state = state.copyWith(error: e.toString());
-    } finally {
-      state = state.copyWith(isLoading: false);
-    }
+    });
   }
 }
 
