@@ -299,12 +299,12 @@ class _AdminPageState extends ConsumerState<AdminPage>
               );
             }
 
-            final pedidos = snapshot.data ?? [];
-            final activePedidos = pedidos
+            final orders = snapshot.data ?? [];
+            final activeOrders = orders
                 .where((p) => p.status != 'Entregue' && p.status != 'Cancelado')
                 .toList();
 
-            if (activePedidos.isEmpty) {
+            if (activeOrders.isEmpty) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -337,12 +337,12 @@ class _AdminPageState extends ConsumerState<AdminPage>
 
             return ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: activePedidos.length,
+              itemCount: activeOrders.length,
               itemBuilder: (context, index) {
-                final pedido = activePedidos[index];
+                final order = activeOrders[index];
                 return Container(
                   margin: const EdgeInsets.only(bottom: 16),
-                  child: OrderStatusWidget(pedido: pedido, isAdminView: true),
+                  child: OrderStatusWidget(order: order, isAdminView: true),
                 );
               },
             );
@@ -439,7 +439,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
         padding: const EdgeInsets.all(16),
         itemCount: menuState.categories.length,
         itemBuilder: (context, index) {
-          final categoria = menuState.categories[index];
+          final category = menuState.categories[index];
           return Card(
             margin: const EdgeInsets.only(bottom: 8),
             child: ListTile(
@@ -447,15 +447,15 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 backgroundColor: Theme.of(
                   context,
                 ).colorScheme.secondary.withOpacity(0.1),
-                child: Text(categoria.sortOrder.toString()),
+                child: Text(category.sortOrder.toString()),
               ),
-              title: Text(categoria.name),
+              title: Text(category.name),
               subtitle: Text(
-                '${menuService.getItemsByCategory(categoria.id).length} itens',
+                '${menuService.getItemsByCategory(category.id).length} itens',
               ),
               trailing: Icon(
-                categoria.active ? Icons.visibility : Icons.visibility_off,
-                color: categoria.active
+                category.active ? Icons.visibility : Icons.visibility_off,
+                color: category.active
                     ? Theme.of(context).colorScheme.primary
                     : Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               ),
@@ -489,29 +489,30 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 padding: const EdgeInsets.all(16),
                 itemCount: menuState.tables.length,
                 itemBuilder: (context, index) {
-                  final mesa = menuState.tables[index];
+                  final table = menuState.tables[index];
                   return Card(
                     margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
                       leading: CircleAvatar(
-                        backgroundColor: mesa.active
+                        backgroundColor: table.active
                             ? Theme.of(
                                 context,
                               ).colorScheme.primary.withOpacity(0.1)
                             : Colors.grey.withOpacity(0.1),
                         child: Icon(
                           Icons.table_restaurant,
-                          color: mesa.active
+                          color: table.active
                               ? Theme.of(context).colorScheme.primary
                               : Colors.grey,
                         ),
                       ),
-                      title: Text(AppLocalizations.of(context)!
-                          .tableNumber(mesa.number)),
-                      subtitle: Text('QR: ${mesa.qrToken}'),
+                      title: Text(
+                        AppLocalizations.of(context)!.tableNumber(table.number),
+                      ),
+                      subtitle: Text('QR: ${table.qrToken}'),
                       trailing: Icon(
-                        mesa.active ? Icons.check_circle : Icons.cancel,
-                        color: mesa.active ? Colors.green : Colors.red,
+                        table.active ? Icons.check_circle : Icons.cancel,
+                        color: table.active ? Colors.green : Colors.red,
                       ),
                     ),
                   );

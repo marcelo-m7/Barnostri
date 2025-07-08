@@ -21,7 +21,7 @@ class SupabaseOrderRepository implements OrderRepository {
       return 'mock-order-${DateTime.now().millisecondsSinceEpoch}';
     }
     try {
-      final pedidoResponse = await _client!
+      final orderResponse = await _client!
           .from('orders')
           .insert({
             'table_id': tableId,
@@ -32,7 +32,7 @@ class SupabaseOrderRepository implements OrderRepository {
           })
           .select()
           .single();
-      final orderId = pedidoResponse['id'];
+      final orderId = orderResponse['id'];
       final itensData = items
           .map(
             (item) => {
@@ -65,7 +65,8 @@ class SupabaseOrderRepository implements OrderRepository {
     try {
       await _client!
           .from('orders')
-          .update({'status': newStatus}).eq('id', orderId);
+          .update({'status': newStatus})
+          .eq('id', orderId);
       return true;
     } catch (e) {
       if (kDebugMode) {
