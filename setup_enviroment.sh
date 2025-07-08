@@ -26,8 +26,8 @@ flutter pub get -C packages/shared_models
 flutter pub get -C apps/barnostri_app
 
 echo "🎨 Formata tudo"
-flutter format --set-exit-if-changed packages/shared_models
-flutter format --set-exit-if-changed apps/barnostri_app
+dart format --set-exit-if-changed packages/shared_models
+dart format --set-exit-if-changed apps/barnostri_app
 
 echo "🔍 Analisa"
 flutter analyze packages/shared_models
