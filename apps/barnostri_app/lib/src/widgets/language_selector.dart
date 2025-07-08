@@ -279,12 +279,12 @@ class LanguageSelectorButton extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  languageService.getCountryFlag(currentLocale),
+                  languageService.getCountryFlag(locale),
                   style: const TextStyle(fontSize: 20),
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  languageService.getLanguageDisplayName(currentLocale),
+                  languageService.getLanguageDisplayName(locale),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
