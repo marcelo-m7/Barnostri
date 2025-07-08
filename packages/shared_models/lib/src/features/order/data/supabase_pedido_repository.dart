@@ -1,4 +1,8 @@
 import 'package:flutter/foundation.dart';
+import '../../models/order.dart';
+import '../../models/order_item.dart';
+import '../../models/menu_item.dart';
+import '../../models/table.dart';
 import '../../../services/supabase_config.dart';
 import 'pedido_repository.dart';
 
@@ -73,59 +77,69 @@ class SupabasePedidoRepository implements PedidoRepository {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> fetchPedidos() async {
+  Future<List<Pedido>> fetchPedidos() async {
     if (!SupabaseConfig.isConfigured) {
       return [
-        {
-          'id': 'mock-order-1',
-          'mesa_id': '1',
-          'status': 'Em preparo',
-          'total': 67.80,
-          'forma_pagamento': 'Pix',
-          'pago': false,
-          'created_at': DateTime.now()
-              .subtract(const Duration(minutes: 10))
-              .toIso8601String(),
-          'updated_at': DateTime.now()
-              .subtract(const Duration(minutes: 5))
-              .toIso8601String(),
-          'mesas': {
-            'id': '1',
-            'numero': '1',
-            'qr_token': 'mesa_001_qr',
-            'ativo': true,
-          },
-          'itens_pedido': [
-            {
-              'id': 'item-1',
-              'pedido_id': 'mock-order-1',
-              'item_cardapio_id': '3',
-              'quantidade': 1,
-              'observacao': 'Menos pimenta',
-              'preco_unitario': 45.90,
-              'itens_cardapio': {
-                'id': '3',
-                'nome': 'Moqueca de Peixe',
-                'descricao': 'Moqueca tradicional com peixe fresco e dendê',
-                'preco': 45.90,
-              },
-            },
-            {
-              'id': 'item-2',
-              'pedido_id': 'mock-order-1',
-              'item_cardapio_id': '2',
-              'quantidade': 2,
-              'observacao': '',
-              'preco_unitario': 12.00,
-              'itens_cardapio': {
-                'id': '2',
-                'nome': 'Caipirinha',
-                'descricao': 'Caipirinha tradicional com cachaça e limão',
-                'preco': 12.00,
-              },
-            },
+        Pedido(
+          id: 'mock-order-1',
+          mesaId: '1',
+          status: 'Em preparo',
+          total: 67.80,
+          formaPagamento: 'Pix',
+          pago: false,
+          createdAt: DateTime.now().subtract(const Duration(minutes: 10)),
+          updatedAt: DateTime.now().subtract(const Duration(minutes: 5)),
+          mesa: Mesa(
+            id: '1',
+            numero: '1',
+            qrToken: 'mesa_001_qr',
+            ativo: true,
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
+          ),
+          itens: [
+            ItemPedido(
+              id: 'item-1',
+              pedidoId: 'mock-order-1',
+              itemCardapioId: '3',
+              quantidade: 1,
+              observacao: 'Menos pimenta',
+              precoUnitario: 45.90,
+              createdAt: DateTime.now(),
+              itemCardapio: ItemCardapio(
+                id: '3',
+                nome: 'Moqueca de Peixe',
+                descricao: 'Moqueca tradicional com peixe fresco e dendê',
+                preco: 45.90,
+                categoriaId: '',
+                disponivel: true,
+                imagemUrl: null,
+                createdAt: DateTime.now(),
+                updatedAt: DateTime.now(),
+              ),
+            ),
+            ItemPedido(
+              id: 'item-2',
+              pedidoId: 'mock-order-1',
+              itemCardapioId: '2',
+              quantidade: 2,
+              observacao: '',
+              precoUnitario: 12.00,
+              createdAt: DateTime.now(),
+              itemCardapio: ItemCardapio(
+                id: '2',
+                nome: 'Caipirinha',
+                descricao: 'Caipirinha tradicional com cachaça e limão',
+                preco: 12.00,
+                categoriaId: '',
+                disponivel: true,
+                imagemUrl: null,
+                createdAt: DateTime.now(),
+                updatedAt: DateTime.now(),
+              ),
+            ),
           ],
-        },
+        ),
       ];
     }
     try {
@@ -133,7 +147,9 @@ class SupabasePedidoRepository implements PedidoRepository {
           .from('pedidos')
           .select('*, mesas(*), itens_pedido(*, itens_cardapio(*))')
           .order('created_at', ascending: false);
-      return response;
+      return (response as List<dynamic>)
+          .map((e) => Pedido.fromJson(e as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao buscar pedidos: $e');
@@ -143,55 +159,56 @@ class SupabasePedidoRepository implements PedidoRepository {
   }
 
   @override
-  Stream<List<Map<String, dynamic>>> watchPedidos() {
+  Stream<List<Pedido>> watchPedidos() {
     if (!SupabaseConfig.isConfigured) {
       return Stream.periodic(
         const Duration(seconds: 5),
         (count) => [
-          {
-            'id': 'mock-order-1',
-            'mesa_id': '1',
-            'status': 'Em preparo',
-            'total': 67.80,
-            'forma_pagamento': 'Pix',
-            'pago': false,
-            'created_at': DateTime.now()
-                .subtract(const Duration(minutes: 10))
-                .toIso8601String(),
-            'updated_at': DateTime.now().toIso8601String(),
-          },
+          Pedido(
+            id: 'mock-order-1',
+            mesaId: '1',
+            status: 'Em preparo',
+            total: 67.80,
+            formaPagamento: 'Pix',
+            pago: false,
+            createdAt: DateTime.now().subtract(const Duration(minutes: 10)),
+            updatedAt: DateTime.now(),
+          ),
         ],
       );
     }
     return SupabaseConfig.client
         .from('pedidos')
         .stream(primaryKey: ['id'])
-        .order('created_at', ascending: false);
+        .order('created_at', ascending: false)
+        .map(
+          (list) => list
+              .map((e) => Pedido.fromJson(e as Map<String, dynamic>))
+              .toList(),
+        );
   }
 
   @override
-  Stream<Map<String, dynamic>> watchPedido(String pedidoId) {
+  Stream<Pedido> watchPedido(String pedidoId) {
     if (!SupabaseConfig.isConfigured) {
       return Stream.periodic(
         const Duration(seconds: 5),
-        (count) => {
-          'id': pedidoId,
-          'mesa_id': '1',
-          'status': 'Em preparo',
-          'total': 67.80,
-          'forma_pagamento': 'Pix',
-          'pago': false,
-          'created_at': DateTime.now()
-              .subtract(const Duration(minutes: 10))
-              .toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
+        (count) => Pedido(
+          id: pedidoId,
+          mesaId: '1',
+          status: 'Em preparo',
+          total: 67.80,
+          formaPagamento: 'Pix',
+          pago: false,
+          createdAt: DateTime.now().subtract(const Duration(minutes: 10)),
+          updatedAt: DateTime.now(),
+        ),
       );
     }
     return SupabaseConfig.client
         .from('pedidos')
         .stream(primaryKey: ['id'])
         .eq('id', pedidoId)
-        .map((data) => data.first);
+        .map((data) => Pedido.fromJson(data.first as Map<String, dynamic>));
   }
 }

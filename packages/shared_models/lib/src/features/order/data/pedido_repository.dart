@@ -1,3 +1,5 @@
+import '../../models/order.dart';
+
 abstract class PedidoRepository {
   Future<String?> criarPedido({
     required String mesaId,
@@ -8,9 +10,9 @@ abstract class PedidoRepository {
 
   Future<bool> atualizarStatus(String pedidoId, String novoStatus);
 
-  Future<List<Map<String, dynamic>>> fetchPedidos();
+  Future<List<Pedido>> fetchPedidos();
 
-  Stream<List<Map<String, dynamic>>> watchPedidos();
+  Stream<List<Pedido>> watchPedidos();
 
-  Stream<Map<String, dynamic>> watchPedido(String pedidoId);
+  Stream<Pedido> watchPedido(String pedidoId);
 }

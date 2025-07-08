@@ -1,13 +1,15 @@
-abstract class MenuRepository {
-  Future<List<Map<String, dynamic>>> fetchMesas();
-  Future<Map<String, dynamic>?> getMesaByQrToken(String qrToken);
-  Future<List<Map<String, dynamic>>> fetchCategorias();
-  Future<List<Map<String, dynamic>>> fetchItensCardapio();
+import '../../models/category.dart';
+import '../../models/menu_item.dart';
+import '../../models/table.dart';
 
-  Future<Map<String, dynamic>> addCategoria({
-    required String nome,
-    required int ordem,
-  });
+/// Data access layer for menu related entities.
+abstract class MenuRepository {
+  Future<List<Mesa>> fetchMesas();
+  Future<Mesa?> getMesaByQrToken(String qrToken);
+  Future<List<Categoria>> fetchCategorias();
+  Future<List<ItemCardapio>> fetchItensCardapio();
+
+  Future<Categoria> addCategoria({required String nome, required int ordem});
 
   Future<bool> updateCategoria({
     required String id,
@@ -18,7 +20,7 @@ abstract class MenuRepository {
 
   Future<bool> deleteCategoria(String id);
 
-  Future<Map<String, dynamic>> addItemCardapio({
+  Future<ItemCardapio> addItemCardapio({
     required String nome,
     String? descricao,
     required double preco,
@@ -38,10 +40,7 @@ abstract class MenuRepository {
 
   Future<bool> deleteItemCardapio(String id);
 
-  Future<Map<String, dynamic>> addMesa({
-    required String numero,
-    required String qrToken,
-  });
+  Future<Mesa> addMesa({required String numero, required String qrToken});
 
   Future<bool> updateMesa({
     required String id,

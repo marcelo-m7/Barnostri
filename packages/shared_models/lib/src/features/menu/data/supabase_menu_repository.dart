@@ -1,28 +1,31 @@
 import 'package:flutter/foundation.dart';
+import '../../models/category.dart';
+import '../../models/menu_item.dart';
+import '../../models/table.dart';
 import '../../../services/supabase_config.dart';
 import 'menu_repository.dart';
 
 class SupabaseMenuRepository implements MenuRepository {
   @override
-  Future<List<Map<String, dynamic>>> fetchMesas() async {
+  Future<List<Mesa>> fetchMesas() async {
     if (!SupabaseConfig.isConfigured) {
       return [
-        {
-          'id': '1',
-          'numero': '1',
-          'qr_token': 'mesa_001_qr',
-          'ativo': true,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
-        {
-          'id': '2',
-          'numero': '2',
-          'qr_token': 'mesa_002_qr',
-          'ativo': true,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
+        Mesa(
+          id: '1',
+          numero: '1',
+          qrToken: 'mesa_001_qr',
+          ativo: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+        Mesa(
+          id: '2',
+          numero: '2',
+          qrToken: 'mesa_002_qr',
+          ativo: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
       ];
     }
     try {
@@ -31,7 +34,9 @@ class SupabaseMenuRepository implements MenuRepository {
           .select('*')
           .eq('ativo', true)
           .order('numero');
-      return response;
+      return (response as List<dynamic>)
+          .map((e) => Mesa.fromJson(e as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao buscar mesas: $e');
@@ -41,26 +46,26 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<Map<String, dynamic>?> getMesaByQrToken(String qrToken) async {
+  Future<Mesa?> getMesaByQrToken(String qrToken) async {
     if (!SupabaseConfig.isConfigured) {
       if (qrToken == 'mesa_001_qr') {
-        return {
-          'id': '1',
-          'numero': '1',
-          'qr_token': 'mesa_001_qr',
-          'ativo': true,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        };
+        return Mesa(
+          id: '1',
+          numero: '1',
+          qrToken: 'mesa_001_qr',
+          ativo: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
       } else if (qrToken == 'mesa_002_qr') {
-        return {
-          'id': '2',
-          'numero': '2',
-          'qr_token': 'mesa_002_qr',
-          'ativo': true,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        };
+        return Mesa(
+          id: '2',
+          numero: '2',
+          qrToken: 'mesa_002_qr',
+          ativo: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
       }
       return null;
     }
@@ -71,7 +76,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .eq('qr_token', qrToken)
           .eq('ativo', true)
           .single();
-      return response;
+      return Mesa.fromJson(response as Map<String, dynamic>);
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao buscar mesa por QR: $e');
@@ -81,41 +86,41 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> fetchCategorias() async {
+  Future<List<Categoria>> fetchCategorias() async {
     if (!SupabaseConfig.isConfigured) {
       return [
-        {
-          'id': '1',
-          'nome': 'Entradas',
-          'ordem': 1,
-          'ativo': true,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
-        {
-          'id': '2',
-          'nome': 'Bebidas',
-          'ordem': 2,
-          'ativo': true,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
-        {
-          'id': '3',
-          'nome': 'Pratos Principais',
-          'ordem': 3,
-          'ativo': true,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
-        {
-          'id': '4',
-          'nome': 'Sobremesas',
-          'ordem': 4,
-          'ativo': true,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
+        Categoria(
+          id: '1',
+          nome: 'Entradas',
+          ordem: 1,
+          ativo: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+        Categoria(
+          id: '2',
+          nome: 'Bebidas',
+          ordem: 2,
+          ativo: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+        Categoria(
+          id: '3',
+          nome: 'Pratos Principais',
+          ordem: 3,
+          ativo: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+        Categoria(
+          id: '4',
+          nome: 'Sobremesas',
+          ordem: 4,
+          ativo: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
       ];
     }
     try {
@@ -124,7 +129,9 @@ class SupabaseMenuRepository implements MenuRepository {
           .select('*')
           .eq('ativo', true)
           .order('ordem');
-      return response;
+      return (response as List<dynamic>)
+          .map((e) => Categoria.fromJson(e as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao buscar categorias: $e');
@@ -134,53 +141,53 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> fetchItensCardapio() async {
+  Future<List<ItemCardapio>> fetchItensCardapio() async {
     if (!SupabaseConfig.isConfigured) {
       return [
-        {
-          'id': '1',
-          'nome': 'Pastéis de Camarão',
-          'descricao': 'Deliciosos pastéis recheados com camarão fresco',
-          'preco': 18.90,
-          'categoria_id': '1',
-          'disponivel': true,
-          'imagem_url': null,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
-        {
-          'id': '2',
-          'nome': 'Caipirinha',
-          'descricao': 'Caipirinha tradicional com cachaça e limão',
-          'preco': 12.00,
-          'categoria_id': '2',
-          'disponivel': true,
-          'imagem_url': null,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
-        {
-          'id': '3',
-          'nome': 'Moqueca de Peixe',
-          'descricao': 'Moqueca tradicional com peixe fresco e dendê',
-          'preco': 45.90,
-          'categoria_id': '3',
-          'disponivel': true,
-          'imagem_url': null,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
-        {
-          'id': '4',
-          'nome': 'Pudim de Leite',
-          'descricao': 'Pudim caseiro com calda de caramelo',
-          'preco': 12.90,
-          'categoria_id': '4',
-          'disponivel': true,
-          'imagem_url': null,
-          'created_at': DateTime.now().toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
-        },
+        ItemCardapio(
+          id: '1',
+          nome: 'Pastéis de Camarão',
+          descricao: 'Deliciosos pastéis recheados com camarão fresco',
+          preco: 18.90,
+          categoriaId: '1',
+          disponivel: true,
+          imagemUrl: null,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+        ItemCardapio(
+          id: '2',
+          nome: 'Caipirinha',
+          descricao: 'Caipirinha tradicional com cachaça e limão',
+          preco: 12.00,
+          categoriaId: '2',
+          disponivel: true,
+          imagemUrl: null,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+        ItemCardapio(
+          id: '3',
+          nome: 'Moqueca de Peixe',
+          descricao: 'Moqueca tradicional com peixe fresco e dendê',
+          preco: 45.90,
+          categoriaId: '3',
+          disponivel: true,
+          imagemUrl: null,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
+        ItemCardapio(
+          id: '4',
+          nome: 'Pudim de Leite',
+          descricao: 'Pudim caseiro com calda de caramelo',
+          preco: 12.90,
+          categoriaId: '4',
+          disponivel: true,
+          imagemUrl: null,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
       ];
     }
     try {
@@ -189,7 +196,9 @@ class SupabaseMenuRepository implements MenuRepository {
           .select()
           .eq('disponivel', true)
           .order('nome');
-      return response;
+      return (response as List<dynamic>)
+          .map((e) => ItemCardapio.fromJson(e as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao buscar itens do cardápio: $e');
@@ -199,26 +208,26 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> addCategoria({
+  Future<Categoria> addCategoria({
     required String nome,
     required int ordem,
   }) async {
     if (!SupabaseConfig.isConfigured) {
-      return {
-        'id': 'mock-cat-${DateTime.now().millisecondsSinceEpoch}',
-        'nome': nome,
-        'ordem': ordem,
-        'ativo': true,
-        'created_at': DateTime.now().toIso8601String(),
-        'updated_at': DateTime.now().toIso8601String(),
-      };
+      return Categoria(
+        id: 'mock-cat-${DateTime.now().millisecondsSinceEpoch}',
+        nome: nome,
+        ordem: ordem,
+        ativo: true,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
     }
     final response = await SupabaseConfig.client
         .from('categorias')
         .insert({'nome': nome, 'ordem': ordem, 'ativo': true})
         .select()
         .single();
-    return response;
+    return Categoria.fromJson(response as Map<String, dynamic>);
   }
 
   @override
@@ -258,7 +267,7 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> addItemCardapio({
+  Future<ItemCardapio> addItemCardapio({
     required String nome,
     String? descricao,
     required double preco,
@@ -266,17 +275,17 @@ class SupabaseMenuRepository implements MenuRepository {
     String? imagemUrl,
   }) async {
     if (!SupabaseConfig.isConfigured) {
-      return {
-        'id': 'mock-item-${DateTime.now().millisecondsSinceEpoch}',
-        'nome': nome,
-        'descricao': descricao,
-        'preco': preco,
-        'categoria_id': categoriaId,
-        'disponivel': true,
-        'imagem_url': imagemUrl,
-        'created_at': DateTime.now().toIso8601String(),
-        'updated_at': DateTime.now().toIso8601String(),
-      };
+      return ItemCardapio(
+        id: 'mock-item-${DateTime.now().millisecondsSinceEpoch}',
+        nome: nome,
+        descricao: descricao,
+        preco: preco,
+        categoriaId: categoriaId,
+        disponivel: true,
+        imagemUrl: imagemUrl,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
     }
     final response = await SupabaseConfig.client
         .from('itens_cardapio')
@@ -290,7 +299,7 @@ class SupabaseMenuRepository implements MenuRepository {
         })
         .select('*, categorias(*)')
         .single();
-    return response;
+    return ItemCardapio.fromJson(response as Map<String, dynamic>);
   }
 
   @override
@@ -336,26 +345,26 @@ class SupabaseMenuRepository implements MenuRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> addMesa({
+  Future<Mesa> addMesa({
     required String numero,
     required String qrToken,
   }) async {
     if (!SupabaseConfig.isConfigured) {
-      return {
-        'id': 'mock-table-${DateTime.now().millisecondsSinceEpoch}',
-        'numero': numero,
-        'qr_token': qrToken,
-        'ativo': true,
-        'created_at': DateTime.now().toIso8601String(),
-        'updated_at': DateTime.now().toIso8601String(),
-      };
+      return Mesa(
+        id: 'mock-table-${DateTime.now().millisecondsSinceEpoch}',
+        numero: numero,
+        qrToken: qrToken,
+        ativo: true,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
     }
     final response = await SupabaseConfig.client
         .from('mesas')
         .insert({'numero': numero, 'qr_token': qrToken, 'ativo': true})
         .select()
         .single();
-    return response;
+    return Mesa.fromJson(response as Map<String, dynamic>);
   }
 
   @override
