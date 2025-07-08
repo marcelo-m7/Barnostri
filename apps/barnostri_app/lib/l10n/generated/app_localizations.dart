@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,6 +8,8 @@ import 'package:intl/intl.dart' as intl;
 import 'app_localizations_en.dart';
 import 'app_localizations_fr.dart';
 import 'app_localizations_pt.dart';
+
+// ignore_for_file: type=lint
 
 /// Callers can lookup localized strings with an instance of AppLocalizations
 /// returned by `AppLocalizations.of(context)`.
@@ -27,7 +30,7 @@ import 'app_localizations_pt.dart';
 ///
 /// ## Update pubspec.yaml
 ///
-/// Please make sure to update your pubspec.yaml file to include the following
+/// Please make sure to update your pubspec.yaml to include the following
 /// packages:
 ///
 /// ```yaml
@@ -44,12 +47,12 @@ import 'app_localizations_pt.dart';
 ///
 /// iOS applications define key application metadata, including supported
 /// locales, in an Info.plist file that is built into the application bundle.
-/// To configure the locales supported by your app, you'll need to edit this
+/// To configure the locales supported by your app, you’ll need to edit this
 /// file.
 ///
-/// First, open your project's ios/Runner.xcworkspace Xcode workspace file.
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
 /// Then, in the Project Navigator, open the Info.plist file under the Runner
-/// project's Runner folder.
+/// project’s Runner folder.
 ///
 /// Next, select the Information Property List item, select Add Item from the
 /// Editor menu, then select Localizations from the pop-up menu.
@@ -60,7 +63,8 @@ import 'app_localizations_pt.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -68,7 +72,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -80,7 +85,8 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -91,683 +97,774 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('fr'),
-    Locale('pt')
+    Locale('pt'),
   ];
 
-  /// No description provided for @appTitle.
+  /// The title of the application
   ///
   /// In en, this message translates to:
   /// **'Barnostri'**
   String get appTitle;
 
-  /// No description provided for @welcomeMessage.
+  /// Welcome message on the home screen
   ///
   /// In en, this message translates to:
   /// **'Welcome to Barnostri Beach Kiosk'**
   String get welcomeMessage;
 
-  /// No description provided for @scanQRCode.
+  /// Button to scan QR code
   ///
   /// In en, this message translates to:
   /// **'Scan QR Code'**
   String get scanQRCode;
 
-  /// No description provided for @scanQRCodeDescription.
+  /// Description for QR code scanning
   ///
   /// In en, this message translates to:
   /// **'Scan the QR code on your table to start ordering'**
   String get scanQRCodeDescription;
 
-  /// No description provided for @adminAccess.
+  /// Admin access button
   ///
   /// In en, this message translates to:
   /// **'Admin Access'**
   String get adminAccess;
 
-  /// No description provided for @adminAccessDescription.
+  /// Description for admin access
   ///
   /// In en, this message translates to:
   /// **'Access administrative functions'**
   String get adminAccessDescription;
 
-  /// No description provided for @menu.
+  /// Menu label
   ///
   /// In en, this message translates to:
   /// **'Menu'**
   String get menu;
 
-  /// No description provided for @cart.
+  /// Cart label
   ///
   /// In en, this message translates to:
   /// **'Cart'**
   String get cart;
 
-  /// No description provided for @orders.
+  /// Orders label
   ///
   /// In en, this message translates to:
   /// **'Orders'**
   String get orders;
 
-  /// No description provided for @tables.
+  /// Tables label
   ///
   /// In en, this message translates to:
   /// **'Tables'**
   String get tables;
 
-  /// No description provided for @categories.
+  /// Categories label
   ///
   /// In en, this message translates to:
   /// **'Categories'**
   String get categories;
 
-  /// No description provided for @items.
+  /// Items label
   ///
   /// In en, this message translates to:
   /// **'Items'**
   String get items;
 
-  /// No description provided for @search.
+  /// Search label
   ///
   /// In en, this message translates to:
   /// **'Search'**
   String get search;
 
-  /// No description provided for @searchMenuItems.
+  /// Search placeholder text
   ///
   /// In en, this message translates to:
   /// **'Search menu items...'**
   String get searchMenuItems;
 
-  /// No description provided for @addToCart.
+  /// Add to cart button
   ///
   /// In en, this message translates to:
   /// **'Add to Cart'**
   String get addToCart;
 
-  /// No description provided for @quantity.
+  /// Quantity label
   ///
   /// In en, this message translates to:
   /// **'Quantity'**
   String get quantity;
 
-  /// No description provided for @observations.
+  /// Observations label
   ///
   /// In en, this message translates to:
   /// **'Observations'**
   String get observations;
 
-  /// No description provided for @observationsHint.
+  /// Observations hint text
   ///
   /// In en, this message translates to:
   /// **'Special requests or notes...'**
   String get observationsHint;
 
-  /// No description provided for @price.
+  /// Price label
   ///
   /// In en, this message translates to:
   /// **'Price'**
   String get price;
 
-  /// No description provided for @total.
+  /// Total label
   ///
   /// In en, this message translates to:
   /// **'Total'**
   String get total;
 
-  /// No description provided for @subtotal.
+  /// Subtotal label
   ///
   /// In en, this message translates to:
   /// **'Subtotal'**
   String get subtotal;
 
-  /// No description provided for @emptyCart.
+  /// Empty cart message
   ///
   /// In en, this message translates to:
   /// **'Your cart is empty'**
   String get emptyCart;
 
-  /// No description provided for @emptyCartDescription.
+  /// Empty cart description
   ///
   /// In en, this message translates to:
   /// **'Add items from the menu to start your order'**
   String get emptyCartDescription;
 
-  /// No description provided for @startOrdering.
+  /// Start ordering button
   ///
   /// In en, this message translates to:
   /// **'Start Ordering'**
   String get startOrdering;
 
-  /// No description provided for @paymentMethod.
+  /// Payment method label
   ///
   /// In en, this message translates to:
   /// **'Payment Method'**
   String get paymentMethod;
 
-  /// No description provided for @pix.
+  /// Pix payment method
   ///
   /// In en, this message translates to:
   /// **'Pix'**
   String get pix;
 
-  /// No description provided for @card.
+  /// Card payment method
   ///
   /// In en, this message translates to:
   /// **'Card'**
   String get card;
 
-  /// No description provided for @cash.
+  /// Cash payment method
   ///
   /// In en, this message translates to:
   /// **'Cash'**
   String get cash;
 
-  /// No description provided for @checkout.
+  /// Checkout button
   ///
   /// In en, this message translates to:
   /// **'Checkout'**
   String get checkout;
 
-  /// No description provided for @processingOrder.
+  /// Processing order message
   ///
   /// In en, this message translates to:
   /// **'Processing Order...'**
   String get processingOrder;
 
-  /// No description provided for @orderPlaced.
+  /// Order placed success message
   ///
   /// In en, this message translates to:
   /// **'Order Placed!'**
   String get orderPlaced;
 
-  /// No description provided for @orderPlacedDescription.
+  /// Order placed success description
   ///
   /// In en, this message translates to:
   /// **'Your order has been successfully placed and is being prepared'**
   String get orderPlacedDescription;
 
-  /// No description provided for @orderNumber.
+  /// Order number label
   ///
   /// In en, this message translates to:
   /// **'Order Number'**
   String get orderNumber;
 
-  /// No description provided for @trackOrder.
+  /// Track order button
   ///
   /// In en, this message translates to:
   /// **'Track Order'**
   String get trackOrder;
 
-  /// No description provided for @orderReceived.
+  /// Order received status
   ///
   /// In en, this message translates to:
   /// **'Order Received'**
   String get orderReceived;
 
-  /// No description provided for @inPreparation.
+  /// In preparation status
   ///
   /// In en, this message translates to:
   /// **'In Preparation'**
   String get inPreparation;
 
-  /// No description provided for @ready.
+  /// Ready status
   ///
   /// In en, this message translates to:
   /// **'Ready'**
   String get ready;
 
-  /// No description provided for @delivered.
+  /// Delivered status
   ///
   /// In en, this message translates to:
   /// **'Delivered'**
   String get delivered;
 
-  /// No description provided for @cancelled.
+  /// Cancelled status
   ///
   /// In en, this message translates to:
   /// **'Cancelled'**
   String get cancelled;
 
-  /// No description provided for @tableNumber.
+  /// Table number display
   ///
   /// In en, this message translates to:
   /// **'Table {number}'**
   String tableNumber(String number);
 
-  /// No description provided for @itemsCount.
+  /// Items count display
   ///
   /// In en, this message translates to:
   /// **'{count} items'**
   String itemsCount(int count);
 
-  /// No description provided for @admin.
+  /// Admin label
   ///
   /// In en, this message translates to:
   /// **'Admin'**
   String get admin;
 
-  /// No description provided for @login.
+  /// Login button
   ///
   /// In en, this message translates to:
   /// **'Login'**
   String get login;
 
-  /// No description provided for @logout.
+  /// Logout button
   ///
   /// In en, this message translates to:
   /// **'Logout'**
   String get logout;
 
-  /// No description provided for @email.
+  /// Email label
   ///
   /// In en, this message translates to:
   /// **'Email'**
   String get email;
 
-  /// No description provided for @password.
+  /// Password label
   ///
   /// In en, this message translates to:
   /// **'Password'**
   String get password;
 
-  /// No description provided for @emailHint.
+  /// Email input hint
   ///
   /// In en, this message translates to:
   /// **'Enter your email'**
   String get emailHint;
 
-  /// No description provided for @passwordHint.
+  /// Password input hint
   ///
   /// In en, this message translates to:
   /// **'Enter your password'**
   String get passwordHint;
 
-  /// No description provided for @invalidEmail.
+  /// Invalid email error
   ///
   /// In en, this message translates to:
   /// **'Please enter a valid email'**
   String get invalidEmail;
 
-  /// No description provided for @passwordRequired.
+  /// Password required error
   ///
   /// In en, this message translates to:
   /// **'Password is required'**
   String get passwordRequired;
 
-  /// No description provided for @loginError.
+  /// Login error message
   ///
   /// In en, this message translates to:
   /// **'Login failed. Please check your credentials.'**
   String get loginError;
 
-  /// No description provided for @demoMode.
+  /// Demo mode label
   ///
   /// In en, this message translates to:
   /// **'Demo Mode'**
   String get demoMode;
 
-  /// No description provided for @demoCredentials.
+  /// Demo credentials text
   ///
   /// In en, this message translates to:
   /// **'Use: admin@barnostri.com / admin123'**
   String get demoCredentials;
 
-  /// No description provided for @addItem.
+  /// Add item button
   ///
   /// In en, this message translates to:
   /// **'Add Item'**
   String get addItem;
 
-  /// No description provided for @editItem.
+  /// Edit item button
   ///
   /// In en, this message translates to:
   /// **'Edit Item'**
   String get editItem;
 
-  /// No description provided for @deleteItem.
+  /// Delete item button
   ///
   /// In en, this message translates to:
   /// **'Delete Item'**
   String get deleteItem;
 
-  /// No description provided for @addCategory.
+  /// Add category button
   ///
   /// In en, this message translates to:
   /// **'Add Category'**
   String get addCategory;
 
-  /// No description provided for @editCategory.
+  /// Edit category button
   ///
   /// In en, this message translates to:
   /// **'Edit Category'**
   String get editCategory;
 
-  /// No description provided for @addTable.
+  /// Add table button
   ///
   /// In en, this message translates to:
   /// **'Add Table'**
   String get addTable;
 
-  /// No description provided for @name.
+  /// Name label
   ///
   /// In en, this message translates to:
   /// **'Name'**
   String get name;
 
-  /// No description provided for @description.
+  /// Description label
   ///
   /// In en, this message translates to:
   /// **'Description'**
   String get description;
 
-  /// No description provided for @category.
+  /// Category label
   ///
   /// In en, this message translates to:
   /// **'Category'**
   String get category;
 
-  /// No description provided for @available.
+  /// Available label
   ///
   /// In en, this message translates to:
   /// **'Available'**
   String get available;
 
-  /// No description provided for @unavailable.
+  /// Unavailable label
   ///
   /// In en, this message translates to:
   /// **'Unavailable'**
   String get unavailable;
 
-  /// No description provided for @save.
+  /// Save button
   ///
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
 
-  /// No description provided for @cancel.
+  /// Cancel button
   ///
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
 
-  /// No description provided for @ok.
+  /// OK button
   ///
   /// In en, this message translates to:
   /// **'OK'**
   String get ok;
 
-  /// No description provided for @error.
+  /// Error label
   ///
   /// In en, this message translates to:
   /// **'Error'**
   String get error;
 
-  /// No description provided for @success.
+  /// Success label
   ///
   /// In en, this message translates to:
   /// **'Success'**
   String get success;
 
-  /// No description provided for @warning.
+  /// Warning label
   ///
   /// In en, this message translates to:
   /// **'Warning'**
   String get warning;
 
-  /// No description provided for @close.
+  /// Close button
   ///
   /// In en, this message translates to:
   /// **'Close'**
   String get close;
 
-  /// No description provided for @remove.
+  /// Remove button
   ///
   /// In en, this message translates to:
   /// **'Remove'**
   String get remove;
 
-  /// No description provided for @update.
+  /// Update button
   ///
   /// In en, this message translates to:
   /// **'Update'**
   String get update;
 
-  /// No description provided for @back.
+  /// Back button
   ///
   /// In en, this message translates to:
   /// **'Back'**
   String get back;
 
-  /// No description provided for @next.
+  /// Next button
   ///
   /// In en, this message translates to:
   /// **'Next'**
   String get next;
 
-  /// No description provided for @previous.
+  /// Previous button
   ///
   /// In en, this message translates to:
   /// **'Previous'**
   String get previous;
 
-  /// No description provided for @loading.
+  /// Loading message
   ///
   /// In en, this message translates to:
   /// **'Loading...'**
   String get loading;
 
-  /// No description provided for @noItemsFound.
+  /// No items found message
   ///
   /// In en, this message translates to:
   /// **'No items found'**
   String get noItemsFound;
 
-  /// No description provided for @tryAgain.
+  /// Try again button
   ///
   /// In en, this message translates to:
   /// **'Try Again'**
   String get tryAgain;
 
-  /// No description provided for @scanQRTitle.
+  /// QR scan page title
   ///
   /// In en, this message translates to:
   /// **'Scan QR Code'**
   String get scanQRTitle;
 
-  /// No description provided for @scanQRInstructions.
+  /// QR scan instructions
   ///
   /// In en, this message translates to:
   /// **'Position the QR code within the frame to scan'**
   String get scanQRInstructions;
 
-  /// No description provided for @manualEntry.
+  /// Manual entry button
   ///
   /// In en, this message translates to:
   /// **'Manual Entry'**
   String get manualEntry;
 
-  /// No description provided for @manualEntryDescription.
+  /// Manual entry description
   ///
   /// In en, this message translates to:
   /// **'Enter table number manually'**
   String get manualEntryDescription;
 
-  /// No description provided for @enterTableNumber.
+  /// Enter table number dialog title
   ///
   /// In en, this message translates to:
   /// **'Enter Table Number'**
   String get enterTableNumber;
 
-  /// No description provided for @tableNumberHint.
+  /// Table number input hint
   ///
   /// In en, this message translates to:
   /// **'Enter table number (e.g., 1, 2, 3...)'**
   String get tableNumberHint;
 
-  /// No description provided for @invalidTableNumber.
+  /// Invalid table number error
   ///
   /// In en, this message translates to:
   /// **'Invalid table number'**
   String get invalidTableNumber;
 
-  /// No description provided for @orderStatus.
+  /// Order status label
   ///
   /// In en, this message translates to:
   /// **'Order Status'**
   String get orderStatus;
 
-  /// No description provided for @orderDetails.
+  /// Order details label
   ///
   /// In en, this message translates to:
   /// **'Order Details'**
   String get orderDetails;
 
-  /// No description provided for @orderTime.
+  /// Order time label
   ///
   /// In en, this message translates to:
   /// **'Order Time'**
   String get orderTime;
 
-  /// No description provided for @paymentStatus.
+  /// Payment status label
   ///
   /// In en, this message translates to:
   /// **'Payment Status'**
   String get paymentStatus;
 
-  /// No description provided for @paid.
+  /// Paid status
   ///
   /// In en, this message translates to:
   /// **'Paid'**
   String get paid;
 
-  /// No description provided for @unpaid.
+  /// Unpaid status
   ///
   /// In en, this message translates to:
   /// **'Unpaid'**
   String get unpaid;
 
-  /// No description provided for @pending.
+  /// Pending status
   ///
   /// In en, this message translates to:
   /// **'Pending'**
   String get pending;
 
-  /// No description provided for @approved.
+  /// Approved status
   ///
   /// In en, this message translates to:
   /// **'Approved'**
   String get approved;
 
-  /// No description provided for @updateStatus.
+  /// Update status button
   ///
   /// In en, this message translates to:
   /// **'Update Status'**
   String get updateStatus;
 
-  /// No description provided for @markAsReady.
+  /// Mark as ready button
   ///
   /// In en, this message translates to:
   /// **'Mark as Ready'**
   String get markAsReady;
 
-  /// No description provided for @markAsDelivered.
+  /// Mark as delivered button
   ///
   /// In en, this message translates to:
   /// **'Mark as Delivered'**
   String get markAsDelivered;
 
-  /// No description provided for @orderUpdated.
+  /// Order updated success message
   ///
   /// In en, this message translates to:
   /// **'Order status updated successfully'**
   String get orderUpdated;
 
-  /// No description provided for @orderUpdateError.
+  /// Order update error message
   ///
   /// In en, this message translates to:
   /// **'Failed to update order status'**
   String get orderUpdateError;
 
-  /// No description provided for @confirmDelete.
+  /// Delete confirmation message
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to delete this item?'**
   String get confirmDelete;
 
-  /// No description provided for @deleteConfirmation.
+  /// Delete confirmation dialog title
   ///
   /// In en, this message translates to:
   /// **'Delete Confirmation'**
   String get deleteConfirmation;
 
-  /// No description provided for @itemDeleted.
+  /// Item deleted success message
   ///
   /// In en, this message translates to:
   /// **'Item deleted successfully'**
   String get itemDeleted;
 
-  /// No description provided for @itemAdded.
+  /// Item added success message
   ///
   /// In en, this message translates to:
   /// **'Item added successfully'**
   String get itemAdded;
 
-  /// No description provided for @itemUpdated.
+  /// Item updated success message
   ///
   /// In en, this message translates to:
   /// **'Item updated successfully'**
   String get itemUpdated;
 
-  /// No description provided for @categoryAdded.
+  /// Category added success message
   ///
   /// In en, this message translates to:
   /// **'Category added successfully'**
   String get categoryAdded;
 
-  /// No description provided for @tableAdded.
+  /// Table added success message
   ///
   /// In en, this message translates to:
   /// **'Table added successfully'**
   String get tableAdded;
 
-  /// No description provided for @fillAllFields.
+  /// Fill all fields error message
   ///
   /// In en, this message translates to:
   /// **'Please fill all required fields'**
   String get fillAllFields;
 
-  /// No description provided for @language.
+  /// Language label
   ///
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
 
-  /// No description provided for @settings.
+  /// Settings label
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
 
-  /// No description provided for @portuguese.
+  /// Portuguese language
   ///
   /// In en, this message translates to:
   /// **'Portuguese'**
   String get portuguese;
 
-  /// No description provided for @english.
+  /// English language
   ///
   /// In en, this message translates to:
   /// **'English'**
   String get english;
 
-  /// No description provided for @french.
+  /// French language
   ///
   /// In en, this message translates to:
   /// **'French'**
   String get french;
+
+  /// Warning shown when Supabase credentials are not configured
+  ///
+  /// In en, this message translates to:
+  /// **'Demo mode - Configure Supabase credentials for full features'**
+  String get demoModeCredentials;
+
+  /// Tagline shown in the footer
+  ///
+  /// In en, this message translates to:
+  /// **'🏖️ Beach • Flavor • Tradition'**
+  String get footerTagline;
+
+  /// Slogan displayed on the home screen
+  ///
+  /// In en, this message translates to:
+  /// **'Unique flavors of the Carioca beach 🏖️'**
+  String get homeSlogan;
+
+  /// Placeholder for menu search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search for food and drinks...'**
+  String get searchMenuPlaceholder;
+
+  /// Message shown when a category has no items
+  ///
+  /// In en, this message translates to:
+  /// **'No items available\nin the {categoryName} category'**
+  String emptyCategoryItems(String categoryName);
+
+  /// Error message when orders fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading orders'**
+  String get errorLoadingOrders;
+
+  /// Displayed when there are no active orders
+  ///
+  /// In en, this message translates to:
+  /// **'No active orders'**
+  String get noActiveOrders;
+
+  /// Hint when there are no active orders
+  ///
+  /// In en, this message translates to:
+  /// **'New orders will appear here'**
+  String get newOrdersAppearHere;
+
+  /// Title of the admin dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Panel'**
+  String get adminPanel;
+
+  /// Label for table code field
+  ///
+  /// In en, this message translates to:
+  /// **'Table Code'**
+  String get tableCode;
+
+  /// Prompt asking for the table code
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code on the table:'**
+  String get tableCodePrompt;
+
+  /// Hint for the table code input
+  ///
+  /// In en, this message translates to:
+  /// **'Ex: table_001_qr'**
+  String get tableCodeHint;
+
+  /// Button to manually enter a table code
+  ///
+  /// In en, this message translates to:
+  /// **'Insert code manually'**
+  String get insertCodeManually;
+
+  /// Section title for items in the cart
+  ///
+  /// In en, this message translates to:
+  /// **'Order Items'**
+  String get orderItems;
+
+  /// Label for total items in cart
+  ///
+  /// In en, this message translates to:
+  /// **'Total Items:'**
+  String get totalItems;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -776,7 +873,8 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'fr', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['en', 'fr', 'pt'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -785,14 +883,18 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en': return AppLocalizationsEn();
-    case 'fr': return AppLocalizationsFr();
-    case 'pt': return AppLocalizationsPt();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'pt':
+      return AppLocalizationsPt();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue on GitHub with a '
-    'reproducible example app and the exact error message you are seeing.'
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
   );
 }

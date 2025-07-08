@@ -36,8 +36,9 @@ class ItemCardapio {
       imagemUrl: json['imagem_url'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
-      categoria:
-          json['categorias'] != null ? Categoria.fromJson(json['categorias']) : null,
+      categoria: json['categorias'] != null
+          ? Categoria.fromJson(json['categorias'])
+          : null,
     );
   }
 

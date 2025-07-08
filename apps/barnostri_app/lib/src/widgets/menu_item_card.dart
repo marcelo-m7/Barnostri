@@ -4,7 +4,6 @@ import 'package:shared_models/shared_models.dart';
 import '../core/theme/theme.dart';
 import '../core/services/order_service.dart';
 
-
 class MenuItemCard extends StatefulWidget {
   final ItemCardapio item;
   final VoidCallback onTap;
@@ -19,7 +18,8 @@ class MenuItemCard extends StatefulWidget {
   State<MenuItemCard> createState() => _MenuItemCardState();
 }
 
-class _MenuItemCardState extends State<MenuItemCard> with SingleTickerProviderStateMixin {
+class _MenuItemCardState extends State<MenuItemCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
 
@@ -94,17 +94,19 @@ class _MenuItemCardState extends State<MenuItemCard> with SingleTickerProviderSt
                                 color: Theme.of(context).colorScheme.surface,
                                 child: Center(
                                   child: CircularProgressIndicator(
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     strokeWidth: 2,
                                   ),
                                 ),
                               ),
-                              errorWidget: (context, url, error) => _buildPlaceholderImage(),
+                              errorWidget: (context, url, error) =>
+                                  _buildPlaceholderImage(),
                             )
                           : _buildPlaceholderImage(),
                     ),
                   ),
-                  
+
                   // Content section
                   Padding(
                     padding: const EdgeInsets.all(16),
@@ -119,10 +121,15 @@ class _MenuItemCardState extends State<MenuItemCard> with SingleTickerProviderSt
                             Expanded(
                               child: Text(
                                 widget.item.nome,
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.onSurface,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface,
+                                    ),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -139,31 +146,43 @@ class _MenuItemCardState extends State<MenuItemCard> with SingleTickerProviderSt
                               ),
                               child: Text(
                                 OrderService().formatPrice(widget.item.preco),
-                                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  color: Theme.of(context).colorScheme.onPrimary,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                               ),
                             ),
                           ],
                         ),
-                        
+
                         // Description
-                        if (widget.item.descricao != null && widget.item.descricao!.isNotEmpty) ...[
+                        if (widget.item.descricao != null &&
+                            widget.item.descricao!.isNotEmpty) ...[
                           const SizedBox(height: 8),
                           Text(
                             widget.item.descricao!,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                              height: 1.4,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(0.7),
+                                  height: 1.4,
+                                ),
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],
-                        
+
                         const SizedBox(height: 12),
-                        
+
                         // Category and availability
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,18 +195,26 @@ class _MenuItemCardState extends State<MenuItemCard> with SingleTickerProviderSt
                                   vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondary
+                                      .withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
                                   widget.item.categoria!.nome,
-                                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                    color: Theme.of(context).colorScheme.secondary,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                 ),
                               ),
-                            
+
                             // Availability indicator
                             Container(
                               padding: const EdgeInsets.symmetric(
@@ -214,13 +241,18 @@ class _MenuItemCardState extends State<MenuItemCard> with SingleTickerProviderSt
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    widget.item.disponivel ? 'Disponível' : 'Indisponível',
-                                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                      color: widget.item.disponivel
-                                          ? Colors.green
-                                          : Colors.red,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    widget.item.disponivel
+                                        ? 'Disponível'
+                                        : 'Indisponível',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
+                                          color: widget.item.disponivel
+                                              ? Colors.green
+                                              : Colors.red,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                   ),
                                 ],
                               ),
@@ -243,21 +275,30 @@ class _MenuItemCardState extends State<MenuItemCard> with SingleTickerProviderSt
     // Get food-related image based on item name/category
     String keyword = widget.item.nome.toLowerCase();
     String category = 'food';
-    
-    if (keyword.contains('bebida') || keyword.contains('cerveja') || 
-        keyword.contains('caipirinha') || keyword.contains('suco') ||
-        keyword.contains('refrigerante') || keyword.contains('água')) {
+
+    if (keyword.contains('bebida') ||
+        keyword.contains('cerveja') ||
+        keyword.contains('caipirinha') ||
+        keyword.contains('suco') ||
+        keyword.contains('refrigerante') ||
+        keyword.contains('água')) {
       category = 'drinks';
       keyword = 'brazilian drinks';
-    } else if (keyword.contains('sobremesa') || keyword.contains('pudim') ||
-               keyword.contains('brigadeiro') || keyword.contains('sorvete')) {
+    } else if (keyword.contains('sobremesa') ||
+        keyword.contains('pudim') ||
+        keyword.contains('brigadeiro') ||
+        keyword.contains('sorvete')) {
       category = 'desserts';
       keyword = 'brazilian desserts';
-    } else if (keyword.contains('camarão') || keyword.contains('peixe') ||
-               keyword.contains('moqueca') || keyword.contains('siri')) {
+    } else if (keyword.contains('camarão') ||
+        keyword.contains('peixe') ||
+        keyword.contains('moqueca') ||
+        keyword.contains('siri')) {
       keyword = 'brazilian seafood';
-    } else if (keyword.contains('entrada') || keyword.contains('petisco') ||
-               keyword.contains('pastel') || keyword.contains('bolinho')) {
+    } else if (keyword.contains('entrada') ||
+        keyword.contains('petisco') ||
+        keyword.contains('pastel') ||
+        keyword.contains('bolinho')) {
       keyword = 'brazilian appetizers';
     } else {
       keyword = 'brazilian food';
