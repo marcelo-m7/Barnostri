@@ -5,19 +5,40 @@ on:
   pull_request:
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
+
+      # Get dependencies for both packages
       - run: flutter pub get
         working-directory: apps/barnostri_app
-      - run: dart pub get
+
+      - run: flutter pub get
         working-directory: packages/shared_models
+
+      # Format both projects
       - run: dart format --set-exit-if-changed .
+        working-directory: apps/barnostri_app
+
+      - run: dart format --set-exit-if-changed .
+        working-directory: packages/shared_models
+
+      # Analyze both projects
       - run: flutter analyze
+        working-directory: apps/barnostri_app
+
+      - run: flutter analyze
+        working-directory: packages/shared_models
+
+      # Test both projects
+      - run: flutter test
+        working-directory: apps/barnostri_app
+
       - run: flutter test
         working-directory: packages/shared_models
