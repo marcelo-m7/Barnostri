@@ -1,4 +1,4 @@
-library shared_models;
+library;
 
 export 'src/models/table_model.dart';
 export 'src/models/category.dart';
