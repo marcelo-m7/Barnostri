@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../../core/services/menu_service.dart';
 import '../../../core/services/order_service.dart';
@@ -7,14 +7,15 @@ import '../../../widgets/menu_item_card.dart';
 import '../../../core/theme/theme.dart';
 import 'cart_page.dart';
 
-class MenuPage extends StatefulWidget {
+class MenuPage extends ConsumerStatefulWidget {
   const MenuPage({super.key});
 
   @override
-  State<MenuPage> createState() => _MenuPageState();
+  ConsumerState<MenuPage> createState() => _MenuPageState();
 }
 
-class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin {
+class _MenuPageState extends ConsumerState<MenuPage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
@@ -27,7 +28,7 @@ class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin
   }
 
   Future<void> _loadData() async {
-    final menuService = Provider.of<MenuService>(context, listen: false);
+    final menuService = ref.read(menuServiceProvider.notifier);
     await menuService.loadAll();
     
     if (mounted) {
@@ -47,8 +48,12 @@ class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Consumer2<MenuService, OrderService>(
-        builder: (context, menuService, orderService, child) {
+      body: Builder(
+        builder: (context) {
+          final menuService = ref.watch(menuServiceProvider.notifier);
+          final menuState = ref.watch(menuServiceProvider);
+          final orderState = ref.watch(orderServiceProvider);
+          final orderNotifier = ref.watch(orderServiceProvider.notifier);
           if (_isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -108,9 +113,9 @@ class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      if (orderService.currentMesa != null)
+                                      if (orderState.currentMesa != null)
                                         Text(
-                                          'Mesa ${orderService.currentMesa!.numero}',
+                                          'Mesa ${orderState.currentMesa!.numero}',
                                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                             color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                                           ),
@@ -182,7 +187,7 @@ class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin
               ),
 
               // Tab Bar
-              if (_searchQuery.isEmpty && menuService.categorias.isNotEmpty)
+              if (_searchQuery.isEmpty && menuState.categorias.isNotEmpty)
                 SliverToBoxAdapter(
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -198,7 +203,7 @@ class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin
                         fontWeight: FontWeight.bold,
                       ),
                       unselectedLabelStyle: Theme.of(context).textTheme.labelLarge,
-                      tabs: menuService.categorias.map((categoria) => Tab(
+                      tabs: menuState.categorias.map((categoria) => Tab(
                         text: categoria.nome,
                       )).toList(),
                     ),
@@ -207,9 +212,9 @@ class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin
 
               // Content
               if (_searchQuery.isNotEmpty)
-                _buildSearchResults(menuService)
-              else if (menuService.categorias.isNotEmpty)
-                _buildCategorizedMenu(menuService)
+                _buildSearchResults(menuService, menuState)
+              else if (menuState.categorias.isNotEmpty)
+                _buildCategorizedMenu(menuService, menuState)
               else
                 const SliverToBoxAdapter(
                   child: Center(
@@ -222,9 +227,11 @@ class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin
       ),
       
       // Floating Cart Button
-      floatingActionButton: Consumer<OrderService>(
-        builder: (context, orderService, child) {
-          if (orderService.cartItemCount == 0) return const SizedBox();
+      floatingActionButton: Builder(
+        builder: (context) {
+          final orderState = ref.watch(orderServiceProvider);
+          final orderNotifier = ref.watch(orderServiceProvider.notifier);
+          if (orderState.cartItemCount == 0) return const SizedBox();
           
           return FloatingActionButton.extended(
             onPressed: () {
@@ -242,14 +249,14 @@ class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${orderService.cartItemCount} ${orderService.cartItemCount == 1 ? 'item' : 'itens'}',
+                  '${orderState.cartItemCount} ${orderState.cartItemCount == 1 ? 'item' : 'itens'}',
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
-                  orderService.formatPrice(orderService.cartTotal),
+                  OrderService.formatPrice(orderState.cartTotal),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -263,7 +270,7 @@ class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin
     );
   }
 
-  Widget _buildSearchResults(MenuService menuService) {
+  Widget _buildSearchResults(MenuService menuService, MenuState menuState) {
     final filteredItems = menuService.searchItens(_searchQuery);
     
     return SliverPadding(
@@ -288,11 +295,11 @@ class _MenuPageState extends State<MenuPage> with SingleTickerProviderStateMixin
     );
   }
 
-  Widget _buildCategorizedMenu(MenuService menuService) {
+  Widget _buildCategorizedMenu(MenuService menuService, MenuState menuState) {
     return SliverFillRemaining(
       child: TabBarView(
         controller: _tabController,
-        children: menuService.categorias.map((categoria) {
+        children: menuState.categorias.map((categoria) {
           final items = menuService.getItensByCategoria(categoria.id);
           
           return Padding(
@@ -514,7 +521,7 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: widget.item.disponivel ? () {
-                        final orderService = Provider.of<OrderService>(context, listen: false);
+                        final orderService = ref.read(orderServiceProvider.notifier);
                         orderService.addToCart(
                           widget.item,
                           quantidade: _quantity,

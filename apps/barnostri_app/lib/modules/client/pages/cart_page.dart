@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../../core/services/order_service.dart';
 import '../../../core/theme/theme.dart';
 import '../../../widgets/order_status_widget.dart';
 
-class CartPage extends StatefulWidget {
+class CartPage extends ConsumerStatefulWidget {
   const CartPage({super.key});
 
   @override
-  State<CartPage> createState() => _CartPageState();
+  ConsumerState<CartPage> createState() => _CartPageState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _CartPageState extends ConsumerState<CartPage> {
   PaymentMethod _selectedPaymentMethod = PaymentMethod.pix;
   bool _isProcessingPayment = false;
   String? _currentOrderId;
@@ -32,17 +32,19 @@ class _CartPageState extends State<CartPage> {
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
-      body: Consumer<OrderService>(
-        builder: (context, orderService, child) {
+      body: Builder(
+        builder: (context) {
+          final orderState = ref.watch(orderServiceProvider);
+          final orderNotifier = ref.watch(orderServiceProvider.notifier);
           if (_currentOrderId != null) {
             return _buildOrderTracking();
           }
 
-          if (orderService.cartItems.isEmpty) {
+          if (orderState.cartItems.isEmpty) {
             return _buildEmptyCart();
           }
 
-          return _buildCartContent(orderService);
+          return _buildCartContent(orderNotifier, orderState);
         },
       ),
     );
@@ -92,7 +94,7 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget _buildCartContent(OrderService orderService) {
+  Widget _buildCartContent(OrderService orderNotifier, OrderState orderState) {
     return Column(
       children: [
         Expanded(
@@ -100,7 +102,7 @@ class _CartPageState extends State<CartPage> {
             padding: const EdgeInsets.all(16),
             children: [
               // Mesa info
-              if (orderService.currentMesa != null)
+              if (orderState.currentMesa != null)
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -117,7 +119,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        'Mesa ${orderService.currentMesa!.numero}',
+                        'Mesa ${orderState.currentMesa!.numero}',
                         style: Theme.of(
                           context,
                         ).textTheme.titleMedium?.copyWith(
@@ -140,10 +142,10 @@ class _CartPageState extends State<CartPage> {
               ),
               const SizedBox(height: 16),
 
-              ...orderService.cartItems.asMap().entries.map((entry) {
+              ...orderState.cartItems.asMap().entries.map((entry) {
                 final index = entry.key;
                 final cartItem = entry.value;
-                return _buildCartItem(orderService, cartItem, index);
+                return _buildCartItem(orderNotifier, cartItem, index);
               }).toList(),
 
               const SizedBox(height: 24),
@@ -164,19 +166,19 @@ class _CartPageState extends State<CartPage> {
               const SizedBox(height: 24),
 
               // Order summary
-              _buildOrderSummary(orderService),
+              _buildOrderSummary(orderState),
             ],
           ),
         ),
 
         // Bottom checkout button
-        _buildCheckoutButton(orderService),
+        _buildCheckoutButton(orderNotifier, orderState),
       ],
     );
   }
 
   Widget _buildCartItem(
-    OrderService orderService,
+    OrderService orderNotifier,
     CartItem cartItem,
     int index,
   ) {
@@ -224,7 +226,7 @@ class _CartPageState extends State<CartPage> {
               ),
               const SizedBox(width: 16),
               Text(
-                orderService.formatPrice(cartItem.subtotal),
+                OrderService.formatPrice(cartItem.subtotal),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
@@ -244,7 +246,7 @@ class _CartPageState extends State<CartPage> {
                   IconButton.filled(
                     onPressed:
                         cartItem.quantidade > 1
-                            ? () => orderService.updateCartItem(
+                            ? () => orderNotifier.updateCartItem(
                               index,
                               quantidade: cartItem.quantidade - 1,
                             )
@@ -268,7 +270,7 @@ class _CartPageState extends State<CartPage> {
                   const SizedBox(width: 12),
                   IconButton.filled(
                     onPressed:
-                        () => orderService.updateCartItem(
+                        () => orderNotifier.updateCartItem(
                           index,
                           quantidade: cartItem.quantidade + 1,
                         ),
@@ -284,7 +286,7 @@ class _CartPageState extends State<CartPage> {
 
               // Remove button
               TextButton.icon(
-                onPressed: () => orderService.removeFromCart(index),
+                onPressed: () => orderNotifier.removeFromCart(index),
                 icon: Icon(
                   Icons.delete_outline,
                   color: Theme.of(context).colorScheme.error,
@@ -342,7 +344,7 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget _buildOrderSummary(OrderService orderService) {
+  Widget _buildOrderSummary(OrderState orderState) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -362,7 +364,7 @@ class _CartPageState extends State<CartPage> {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               Text(
-                '${orderService.cartItemCount} ${orderService.cartItemCount == 1 ? 'item' : 'itens'}',
+                '${orderState.cartItemCount} ${orderState.cartItemCount == 1 ? 'item' : 'itens'}',
                 style: Theme.of(
                   context,
                 ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
@@ -380,7 +382,7 @@ class _CartPageState extends State<CartPage> {
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                orderService.formatPrice(orderService.cartTotal),
+                OrderService.formatPrice(orderState.cartTotal),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
@@ -393,7 +395,7 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget _buildCheckoutButton(OrderService orderService) {
+  Widget _buildCheckoutButton(OrderService orderNotifier, OrderState orderState) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -413,7 +415,7 @@ class _CartPageState extends State<CartPage> {
             onPressed:
                 _isProcessingPayment
                     ? null
-                    : () => _processCheckout(orderService),
+                    : () => _processCheckout(orderNotifier),
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -433,7 +435,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                     )
                     : Text(
-                      'Finalizar Pedido - ${orderService.formatPrice(orderService.cartTotal)}',
+                      'Finalizar Pedido - ${OrderService.formatPrice(orderState.cartTotal)}',
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -445,10 +447,11 @@ class _CartPageState extends State<CartPage> {
   }
 
   Widget _buildOrderTracking() {
-    return Consumer<OrderService>(
-      builder: (context, orderService, child) {
+    return Builder(
+      builder: (context) {
+        final orderNotifier = ref.watch(orderServiceProvider.notifier);
         return StreamBuilder<Pedido>(
-          stream: orderService.streamOrder(_currentOrderId!),
+          stream: orderNotifier.streamOrder(_currentOrderId!),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
@@ -492,16 +495,16 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Future<void> _processCheckout(OrderService orderService) async {
+  Future<void> _processCheckout(OrderService orderNotifier) async {
     setState(() {
       _isProcessingPayment = true;
     });
 
     try {
       // Process payment
-      final paymentSuccess = await orderService.processPayment(
+      final paymentSuccess = await orderNotifier.processPayment(
         method: _selectedPaymentMethod,
-        amount: orderService.cartTotal,
+        amount: orderNotifier.state.cartTotal,
       );
 
       if (!paymentSuccess) {
@@ -510,7 +513,7 @@ class _CartPageState extends State<CartPage> {
       }
 
       // Create order
-      final orderId = await orderService.createOrder(
+      final orderId = await orderNotifier.createOrder(
         paymentMethod: _selectedPaymentMethod,
       );
 
@@ -521,7 +524,7 @@ class _CartPageState extends State<CartPage> {
 
         _showSuccessDialog();
       } else {
-        _showErrorDialog(orderService.error ?? 'Erro ao processar pedido');
+        _showErrorDialog(orderNotifier.state.error ?? 'Erro ao processar pedido');
       }
     } catch (e) {
       _showErrorDialog('Erro inesperado: $e');

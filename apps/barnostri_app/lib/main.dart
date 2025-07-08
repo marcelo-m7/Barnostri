@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/theme.dart';
 import 'package:shared_models/shared_models.dart';
 import 'core/services/order_service.dart';
@@ -14,58 +13,50 @@ import 'l10n/generated/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize Supabase
   await SupabaseConfig.initialize();
-  
-  // Initialize Language Service
-  final languageService = LanguageService();
-  await languageService.initialize();
-  
-  runApp(BarnostriApp(languageService: languageService));
+
+  final container = ProviderContainer();
+  await container.read(languageServiceProvider.notifier).initialize();
+
+  runApp(
+    UncontrolledProviderScope(
+      container: container,
+      child: const BarnostriApp(),
+    ),
+  );
 }
 
-class BarnostriApp extends StatelessWidget {
-  final LanguageService languageService;
-  
-  const BarnostriApp({super.key, required this.languageService});
+class BarnostriApp extends ConsumerWidget {
+  const BarnostriApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => OrderService()),
-        ChangeNotifierProvider(create: (_) => MenuService()),
-        ChangeNotifierProvider.value(value: languageService),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final languageNotifier = ref.watch(languageServiceProvider.notifier);
+    final locale = ref.watch(languageServiceProvider);
+
+    return MaterialApp(
+      title: 'Barnostri',
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.system,
+      home: const HomePage(),
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
-      child: Consumer<LanguageService>(
-        builder: (context, languageService, child) {
-          return MaterialApp(
-            title: 'Barnostri',
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            themeMode: ThemeMode.system,
-            home: const HomePage(),
-            debugShowCheckedModeBanner: false,
-            // Localization configuration
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: LanguageService.supportedLocales,
-            locale: languageService.currentLocale,
-            // Fallback locale resolution
-            localeResolutionCallback: (deviceLocale, supportedLocales) {
-              if (deviceLocale != null) {
-                return languageService.getBestMatchingLocale([deviceLocale]);
-              }
-              return LanguageService.defaultLocale;
-            },
-          );
-        },
-      ),
+      supportedLocales: LanguageService.supportedLocales,
+      locale: locale,
+      localeResolutionCallback: (deviceLocale, supportedLocales) {
+        if (deviceLocale != null) {
+          return languageNotifier.getBestMatchingLocale([deviceLocale]);
+        }
+        return LanguageService.defaultLocale;
+      },
     );
   }
 }

@@ -1,63 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LanguageService extends ChangeNotifier {
+class LanguageService extends StateNotifier<Locale> {
+  LanguageService() : super(defaultLocale);
+
   static const String _languageKey = 'selected_language';
-  
-  // Supported locales
+
   static const List<Locale> supportedLocales = [
-    Locale('pt', 'BR'), // Portuguese (Brazil)
-    Locale('en', 'GB'), // English (UK)
-    Locale('fr', 'CH'), // French (Switzerland)
+    Locale('pt', 'BR'),
+    Locale('en', 'GB'),
+    Locale('fr', 'CH'),
   ];
-  
-  // Default locale
+
   static const Locale defaultLocale = Locale('pt', 'BR');
-  
-  Locale _currentLocale = defaultLocale;
-  
-  Locale get currentLocale => _currentLocale;
-  
-  /// Initialize the language service and load saved language preference
+
   Future<void> initialize() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final savedLanguage = prefs.getString(_languageKey);
-      
       if (savedLanguage != null) {
         final parts = savedLanguage.split('_');
         if (parts.length == 2) {
           final locale = Locale(parts[0], parts[1]);
           if (supportedLocales.contains(locale)) {
-            _currentLocale = locale;
+            state = locale;
+            return;
           }
         }
       }
-    } catch (e) {
-      print('Error loading language preference: $e');
-      _currentLocale = defaultLocale;
-    }
-    notifyListeners();
+    } catch (_) {}
+    state = defaultLocale;
   }
-  
-  /// Change the current language
+
   Future<void> changeLanguage(Locale locale) async {
     if (!supportedLocales.contains(locale)) {
       throw ArgumentError('Unsupported locale: $locale');
     }
-    
-    _currentLocale = locale;
-    notifyListeners();
-    
+    state = locale;
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_languageKey, '${locale.languageCode}_${locale.countryCode}');
-    } catch (e) {
-      print('Error saving language preference: $e');
-    }
+    } catch (_) {}
   }
-  
-  /// Get language display name
+
   String getLanguageDisplayName(Locale locale) {
     switch (locale.languageCode) {
       case 'pt':
@@ -70,8 +56,7 @@ class LanguageService extends ChangeNotifier {
         return locale.languageCode.toUpperCase();
     }
   }
-  
-  /// Get country flag emoji
+
   String getCountryFlag(Locale locale) {
     switch (locale.countryCode) {
       case 'BR':
@@ -84,34 +69,25 @@ class LanguageService extends ChangeNotifier {
         return '🌍';
     }
   }
-  
-  /// Check if a locale is supported
+
   bool isLocaleSupported(Locale locale) {
-    return supportedLocales.any((supportedLocale) => 
-      supportedLocale.languageCode == locale.languageCode &&
-      supportedLocale.countryCode == locale.countryCode
-    );
+    return supportedLocales.any((supported) =>
+        supported.languageCode == locale.languageCode &&
+        supported.countryCode == locale.countryCode);
   }
-  
-  /// Get the best matching locale from device locales
+
   Locale getBestMatchingLocale(List<Locale> deviceLocales) {
     for (final deviceLocale in deviceLocales) {
-      // First try exact match
-      if (isLocaleSupported(deviceLocale)) {
-        return deviceLocale;
-      }
-      
-      // Then try language code match
-      final matchingLocale = supportedLocales.firstWhere(
-        (supportedLocale) => supportedLocale.languageCode == deviceLocale.languageCode,
+      if (isLocaleSupported(deviceLocale)) return deviceLocale;
+      final match = supportedLocales.firstWhere(
+        (supported) => supported.languageCode == deviceLocale.languageCode,
         orElse: () => defaultLocale,
       );
-      
-      if (matchingLocale != defaultLocale) {
-        return matchingLocale;
-      }
+      if (match != defaultLocale) return match;
     }
-    
     return defaultLocale;
   }
 }
+
+final languageServiceProvider =
+    StateNotifierProvider<LanguageService, Locale>((ref) => LanguageService());

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/services/language_service.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../core/theme/theme.dart';
 
-class LanguageSelector extends StatelessWidget {
+class LanguageSelector extends ConsumerWidget {
   final bool showAsBottomSheet;
   final VoidCallback? onLanguageChanged;
   
@@ -15,8 +15,9 @@ class LanguageSelector extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final languageService = Provider.of<LanguageService>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final languageService = ref.watch(languageServiceProvider.notifier);
+    final currentLocale = ref.watch(languageServiceProvider);
     final l10n = AppLocalizations.of(context)!;
     
     if (showAsBottomSheet) {
@@ -38,7 +39,7 @@ class LanguageSelector extends StatelessWidget {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<Locale>(
-          value: languageService.currentLocale,
+          value: currentLocale,
           icon: Icon(
             Icons.keyboard_arrow_down,
             color: Theme.of(context).colorScheme.onSurface,
@@ -110,7 +111,7 @@ class LanguageSelector extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           ...LanguageService.supportedLocales.map((locale) {
-            final isSelected = languageService.currentLocale == locale;
+            final isSelected = locale == ref.watch(languageServiceProvider);
             
             return Container(
               margin: const EdgeInsets.only(bottom: 12),
@@ -220,7 +221,7 @@ class LanguageSelector extends StatelessWidget {
   }
 }
 
-class LanguageSelectorButton extends StatelessWidget {
+class LanguageSelectorButton extends ConsumerWidget {
   final VoidCallback? onLanguageChanged;
   
   const LanguageSelectorButton({
@@ -229,8 +230,9 @@ class LanguageSelectorButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final languageService = Provider.of<LanguageService>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final languageService = ref.watch(languageServiceProvider.notifier);
+    final locale = ref.watch(languageServiceProvider);
     final l10n = AppLocalizations.of(context)!;
     
     return Container(
@@ -258,12 +260,12 @@ class LanguageSelectorButton extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  languageService.getCountryFlag(languageService.currentLocale),
+                  languageService.getCountryFlag(currentLocale),
                   style: const TextStyle(fontSize: 20),
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  languageService.getLanguageDisplayName(languageService.currentLocale),
+                  languageService.getLanguageDisplayName(currentLocale),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),

@@ -1,68 +1,80 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 
-class MenuService extends ChangeNotifier {
-  static final MenuService _instance = MenuService._internal();
-  factory MenuService() => _instance;
-  MenuService._internal();
+class MenuState {
+  final List<Categoria> categorias;
+  final List<ItemCardapio> itensCardapio;
+  final List<Mesa> mesas;
+  final bool isLoading;
+  final String? error;
 
-  List<Categoria> _categorias = [];
-  List<ItemCardapio> _itensCardapio = [];
-  List<Mesa> _mesas = [];
-  bool _isLoading = false;
-  String? _error;
+  const MenuState({
+    this.categorias = const [],
+    this.itensCardapio = const [],
+    this.mesas = const [],
+    this.isLoading = false,
+    this.error,
+  });
 
-  List<Categoria> get categorias => _categorias;
-  List<ItemCardapio> get itensCardapio => _itensCardapio;
-  List<Mesa> get mesas => _mesas;
-  bool get isLoading => _isLoading;
-  String? get error => _error;
+  MenuState copyWith({
+    List<Categoria>? categorias,
+    List<ItemCardapio>? itensCardapio,
+    List<Mesa>? mesas,
+    bool? isLoading,
+    String? error,
+  }) {
+    return MenuState(
+      categorias: categorias ?? this.categorias,
+      itensCardapio: itensCardapio ?? this.itensCardapio,
+      mesas: mesas ?? this.mesas,
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+    );
+  }
+}
+
+class MenuService extends StateNotifier<MenuState> {
+  MenuService() : super(const MenuState());
 
   Future<void> loadCategorias() async {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
-
+    state = state.copyWith(isLoading: true, error: null);
     try {
       final data = await SupabaseConfig.getCategorias();
-      _categorias = data.map((json) => Categoria.fromJson(json)).toList();
+      state = state.copyWith(
+        categorias: data.map((json) => Categoria.fromJson(json)).toList(),
+      );
     } catch (e) {
-      _error = 'Erro ao carregar categorias: $e';
+      state = state.copyWith(error: 'Erro ao carregar categorias: $e');
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      state = state.copyWith(isLoading: false);
     }
   }
 
   Future<void> loadItensCardapio() async {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
-
+    state = state.copyWith(isLoading: true, error: null);
     try {
       final data = await SupabaseConfig.getItensCardapio();
-      _itensCardapio = data.map((json) => ItemCardapio.fromJson(json)).toList();
+      state = state.copyWith(
+        itensCardapio: data.map((json) => ItemCardapio.fromJson(json)).toList(),
+      );
     } catch (e) {
-      _error = 'Erro ao carregar itens do cardápio: $e';
+      state = state.copyWith(error: 'Erro ao carregar itens do cardápio: $e');
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      state = state.copyWith(isLoading: false);
     }
   }
 
   Future<void> loadMesas() async {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
-
+    state = state.copyWith(isLoading: true, error: null);
     try {
       final data = await SupabaseConfig.getMesas();
-      _mesas = data.map((json) => Mesa.fromJson(json)).toList();
+      state = state.copyWith(
+        mesas: data.map((json) => Mesa.fromJson(json)).toList(),
+      );
     } catch (e) {
-      _error = 'Erro ao carregar mesas: $e';
+      state = state.copyWith(error: 'Erro ao carregar mesas: $e');
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      state = state.copyWith(isLoading: false);
     }
   }
 
@@ -75,74 +87,61 @@ class MenuService extends ChangeNotifier {
   }
 
   List<ItemCardapio> getItensByCategoria(String categoriaId) {
-    return _itensCardapio.where((item) => item.categoriaId == categoriaId).toList();
+    return state.itensCardapio
+        .where((item) => item.categoriaId == categoriaId)
+        .toList();
   }
 
   List<ItemCardapio> searchItens(String query) {
-    if (query.isEmpty) return _itensCardapio;
-    
+    if (query.isEmpty) return state.itensCardapio;
     final lowerQuery = query.toLowerCase();
-    return _itensCardapio.where((item) =>
-      item.nome.toLowerCase().contains(lowerQuery) ||
-      (item.descricao?.toLowerCase().contains(lowerQuery) ?? false)
-    ).toList();
+    return state.itensCardapio.where((item) {
+      return item.nome.toLowerCase().contains(lowerQuery) ||
+          (item.descricao?.toLowerCase().contains(lowerQuery) ?? false);
+    }).toList();
   }
 
   Categoria? getCategoriaById(String id) {
     try {
-      return _categorias.firstWhere((cat) => cat.id == id);
-    } catch (e) {
+      return state.categorias.firstWhere((cat) => cat.id == id);
+    } catch (_) {
       return null;
     }
   }
 
   ItemCardapio? getItemById(String id) {
     try {
-      return _itensCardapio.firstWhere((item) => item.id == id);
-    } catch (e) {
+      return state.itensCardapio.firstWhere((item) => item.id == id);
+    } catch (_) {
       return null;
     }
   }
 
   Mesa? getMesaById(String id) {
     try {
-      return _mesas.firstWhere((mesa) => mesa.id == id);
-    } catch (e) {
+      return state.mesas.firstWhere((mesa) => mesa.id == id);
+    } catch (_) {
       return null;
     }
   }
 
-  // Admin functions for managing menu items
-  Future<bool> addCategoria({
-    required String nome,
-    required int ordem,
-  }) async {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
-
+  Future<bool> addCategoria({required String nome, required int ordem}) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
       final response = await SupabaseConfig.client
           .from('categorias')
-          .insert({
-            'nome': nome,
-            'ordem': ordem,
-            'ativo': true,
-          })
+          .insert({'nome': nome, 'ordem': ordem, 'ativo': true})
           .select()
           .single();
-
-      final novaCategoria = Categoria.fromJson(response);
-      _categorias.add(novaCategoria);
-      _categorias.sort((a, b) => a.ordem.compareTo(b.ordem));
-      
+      final nova = Categoria.fromJson(response);
+      final list = [...state.categorias, nova]..sort((a, b) => a.ordem.compareTo(b.ordem));
+      state = state.copyWith(categorias: list);
       return true;
     } catch (e) {
-      _error = 'Erro ao adicionar categoria: $e';
+      state = state.copyWith(error: 'Erro ao adicionar categoria: $e');
       return false;
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      state = state.copyWith(isLoading: false);
     }
   }
 
@@ -152,30 +151,20 @@ class MenuService extends ChangeNotifier {
     int? ordem,
     bool? ativo,
   }) async {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
-
+    state = state.copyWith(isLoading: true, error: null);
     try {
       final updateData = <String, dynamic>{};
       if (nome != null) updateData['nome'] = nome;
       if (ordem != null) updateData['ordem'] = ordem;
       if (ativo != null) updateData['ativo'] = ativo;
-
-      await SupabaseConfig.client
-          .from('categorias')
-          .update(updateData)
-          .eq('id', id);
-
-      // Refresh categorias
+      await SupabaseConfig.client.from('categorias').update(updateData).eq('id', id);
       await loadCategorias();
       return true;
     } catch (e) {
-      _error = 'Erro ao atualizar categoria: $e';
+      state = state.copyWith(error: 'Erro ao atualizar categoria: $e');
       return false;
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      state = state.copyWith(isLoading: false);
     }
   }
 
@@ -186,10 +175,7 @@ class MenuService extends ChangeNotifier {
     required String categoriaId,
     String? imagemUrl,
   }) async {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
-
+    state = state.copyWith(isLoading: true, error: null);
     try {
       final response = await SupabaseConfig.client
           .from('itens_cardapio')
@@ -203,18 +189,16 @@ class MenuService extends ChangeNotifier {
           })
           .select('*, categorias(*)')
           .single();
-
       final novoItem = ItemCardapio.fromJson(response);
-      _itensCardapio.add(novoItem);
-      _itensCardapio.sort((a, b) => a.nome.compareTo(b.nome));
-      
+      final list = [...state.itensCardapio, novoItem]
+        ..sort((a, b) => a.nome.compareTo(b.nome));
+      state = state.copyWith(itensCardapio: list);
       return true;
     } catch (e) {
-      _error = 'Erro ao adicionar item: $e';
+      state = state.copyWith(error: 'Erro ao adicionar item: $e');
       return false;
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      state = state.copyWith(isLoading: false);
     }
   }
 
@@ -227,10 +211,7 @@ class MenuService extends ChangeNotifier {
     bool? disponivel,
     String? imagemUrl,
   }) async {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
-
+    state = state.copyWith(isLoading: true, error: null);
     try {
       final updateData = <String, dynamic>{};
       if (nome != null) updateData['nome'] = nome;
@@ -239,96 +220,70 @@ class MenuService extends ChangeNotifier {
       if (categoriaId != null) updateData['categoria_id'] = categoriaId;
       if (disponivel != null) updateData['disponivel'] = disponivel;
       if (imagemUrl != null) updateData['imagem_url'] = imagemUrl;
-
       await SupabaseConfig.client
           .from('itens_cardapio')
           .update(updateData)
           .eq('id', id);
-
-      // Refresh itens
       await loadItensCardapio();
       return true;
     } catch (e) {
-      _error = 'Erro ao atualizar item: $e';
+      state = state.copyWith(error: 'Erro ao atualizar item: $e');
       return false;
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      state = state.copyWith(isLoading: false);
     }
   }
 
   Future<bool> toggleItemDisponibilidade(String id) async {
     final item = getItemById(id);
     if (item == null) return false;
-
-    return await updateItemCardapio(
-      id: id,
-      disponivel: !item.disponivel,
-    );
+    return await updateItemCardapio(id: id, disponivel: !item.disponivel);
   }
 
   Future<bool> deleteItemCardapio(String id) async {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
-
+    state = state.copyWith(isLoading: true, error: null);
     try {
-      await SupabaseConfig.client
-          .from('itens_cardapio')
-          .delete()
-          .eq('id', id);
-
-      _itensCardapio.removeWhere((item) => item.id == id);
-      
+      await SupabaseConfig.client.from('itens_cardapio').delete().eq('id', id);
+      final list = [...state.itensCardapio]..removeWhere((item) => item.id == id);
+      state = state.copyWith(itensCardapio: list);
       return true;
     } catch (e) {
-      _error = 'Erro ao deletar item: $e';
+      state = state.copyWith(error: 'Erro ao deletar item: $e');
       return false;
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      state = state.copyWith(isLoading: false);
     }
   }
 
-  Future<bool> addMesa({
-    required String numero,
-    required String qrToken,
-  }) async {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
-
+  Future<bool> addMesa({required String numero, required String qrToken}) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
       final response = await SupabaseConfig.client
           .from('mesas')
-          .insert({
-            'numero': numero,
-            'qr_token': qrToken,
-            'ativo': true,
-          })
+          .insert({'numero': numero, 'qr_token': qrToken, 'ativo': true})
           .select()
           .single();
-
       final novaMesa = Mesa.fromJson(response);
-      _mesas.add(novaMesa);
-      _mesas.sort((a, b) => a.numero.compareTo(b.numero));
-      
+      final list = [...state.mesas, novaMesa]
+        ..sort((a, b) => a.numero.compareTo(b.numero));
+      state = state.copyWith(mesas: list);
       return true;
     } catch (e) {
-      _error = 'Erro ao adicionar mesa: $e';
+      state = state.copyWith(error: 'Erro ao adicionar mesa: $e');
       return false;
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      state = state.copyWith(isLoading: false);
     }
   }
 
-  String formatPrice(double price) {
+  static String formatPrice(double price) {
     return 'R\$ ${price.toStringAsFixed(2).replaceAll('.', ',')}';
   }
 
   void clearError() {
-    _error = null;
-    notifyListeners();
+    state = state.copyWith(error: null);
   }
 }
+
+final menuServiceProvider =
+    StateNotifierProvider<MenuService, MenuState>((ref) => MenuService());
