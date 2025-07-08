@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../../core/repositories.dart';
+import '../domain/usecases/create_order_use_case.dart';
+import '../domain/usecases/update_order_status_use_case.dart';
 
 class OrderState {
   final List<CartItem> cartItems;
@@ -38,8 +40,14 @@ class OrderState {
 class OrderService extends StateNotifier<OrderState> {
   final OrderRepository _orderRepository;
   final MenuRepository _menuRepository;
-  OrderService(this._orderRepository, this._menuRepository)
-    : super(const OrderState());
+  final CreateOrderUseCase _createOrderUseCase;
+  final UpdateOrderStatusUseCase _updateOrderStatusUseCase;
+  OrderService(
+    this._orderRepository,
+    this._menuRepository,
+    this._createOrderUseCase,
+    this._updateOrderStatusUseCase,
+  ) : super(const OrderState());
 
   Future<T?> _guard<T>(Future<T> Function() action,
       {String Function(Object)? onError}) async {
@@ -108,11 +116,11 @@ class OrderService extends StateNotifier<OrderState> {
     }
     return await _guard<String?>(
       () async {
-        final orderId = await _orderRepository.createOrder(
+        final orderId = await _createOrderUseCase(
           tableId: state.currentTable!.id,
           items: state.cartItems,
           total: state.cartTotal,
-          paymentMethod: paymentMethod.displayName,
+          paymentMethod: paymentMethod,
         );
         if (orderId != null) {
           clearCart();
@@ -129,10 +137,7 @@ class OrderService extends StateNotifier<OrderState> {
   Future<bool> updateOrderStatus(String orderId, OrderStatus status) async {
     final success = await _guard<bool>(
       () async {
-        final result = await _orderRepository.updateStatus(
-          orderId,
-          status.displayName,
-        );
+        final result = await _updateOrderStatusUseCase(orderId, status);
         if (!result) {
           state = state.copyWith(error: 'Erro ao atualizar status do pedido');
         }
@@ -216,10 +221,14 @@ class OrderService extends StateNotifier<OrderState> {
   }
 }
 
-final orderServiceProvider = StateNotifierProvider<OrderService, OrderState>((
-  ref,
-) {
-  final pedidoRepo = ref.watch(pedidoRepositoryProvider);
-  final menuRepo = ref.watch(menuRepositoryProvider);
-  return OrderService(pedidoRepo, menuRepo);
-});
+final orderServiceProvider = StateNotifierProvider<OrderService, OrderState>(
+  (
+    ref,
+  ) {
+    final pedidoRepo = ref.watch(orderRepositoryProvider);
+    final menuRepo = ref.watch(menuRepositoryProvider);
+    final create = CreateOrderUseCase(pedidoRepo);
+    final update = UpdateOrderStatusUseCase(pedidoRepo);
+    return OrderService(pedidoRepo, menuRepo, create, update);
+  },
+);

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
+import '../domain/usecases/login_use_case.dart';
 
 class AuthState {
   final bool isAuthenticated;
@@ -23,7 +24,8 @@ class AuthState {
 
 class AuthService extends StateNotifier<AuthState> {
   final AuthRepository _authRepository;
-  AuthService(this._authRepository) : super(const AuthState()) {
+  final LoginUseCase _loginUseCase;
+  AuthService(this._authRepository, this._loginUseCase) : super(const AuthState()) {
     final user = _authRepository.getCurrentUser();
     state = state.copyWith(isAuthenticated: user != null);
     _authRepository.authStateChanges.listen((event) {
@@ -47,7 +49,7 @@ class AuthService extends StateNotifier<AuthState> {
 
   Future<void> login({required String email, required String password}) async {
     await _guard<void>(() async {
-      await _authRepository.signIn(email: email, password: password);
+      await _loginUseCase(email: email, password: password);
       state = state.copyWith(isAuthenticated: true);
     });
   }
@@ -60,9 +62,10 @@ class AuthService extends StateNotifier<AuthState> {
   }
 }
 
-final authServiceProvider = StateNotifierProvider<AuthService, AuthState>((
-  ref,
-) {
-  final repo = ref.watch(authRepositoryProvider);
-  return AuthService(repo);
-});
+final authServiceProvider = StateNotifierProvider<AuthService, AuthState>(
+  (ref) {
+    final repo = ref.watch(authRepositoryProvider);
+    final login = LoginUseCase(repo);
+    return AuthService(repo, login);
+  },
+);

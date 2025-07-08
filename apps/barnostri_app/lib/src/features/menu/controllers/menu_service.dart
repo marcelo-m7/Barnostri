@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../../core/repositories.dart';
+import '../domain/usecases/load_menu_use_case.dart';
 
 class MenuState {
   final List<Category> categories;
@@ -36,7 +37,8 @@ class MenuState {
 
 class MenuService extends StateNotifier<MenuState> {
   final MenuRepository _menuRepository;
-  MenuService(this._menuRepository) : super(const MenuState());
+  final LoadMenuUseCase _loadMenuUseCase;
+  MenuService(this._menuRepository, this._loadMenuUseCase) : super(const MenuState());
 
   Future<T?> _guard<T>(Future<T> Function() action,
       {String Function(Object)? onError}) async {
@@ -82,7 +84,14 @@ class MenuService extends StateNotifier<MenuState> {
   }
 
   Future<void> loadAll() async {
-    await Future.wait([loadCategories(), loadMenuItems(), loadTables()]);
+    await _guard<void>(() async {
+      final result = await _loadMenuUseCase();
+      state = state.copyWith(
+        categories: result.categories,
+        menuItems: result.items,
+        tables: result.tables,
+      );
+    }, onError: (e) => 'Erro ao carregar dados: $e');
   }
 
   List<MenuItem> getItemsByCategory(String categoryId) {
@@ -265,9 +274,12 @@ class MenuService extends StateNotifier<MenuState> {
   }
 }
 
-final menuServiceProvider = StateNotifierProvider<MenuService, MenuState>((
-  ref,
-) {
-  final menuRepo = ref.watch(menuRepositoryProvider);
-  return MenuService(menuRepo);
-});
+final menuServiceProvider = StateNotifierProvider<MenuService, MenuState>(
+  (
+    ref,
+  ) {
+    final menuRepo = ref.watch(menuRepositoryProvider);
+    final loadMenu = LoadMenuUseCase(menuRepo);
+    return MenuService(menuRepo, loadMenu);
+  },
+);
