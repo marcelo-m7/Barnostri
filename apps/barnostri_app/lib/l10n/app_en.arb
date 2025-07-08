@@ -457,5 +457,66 @@
   "french": "French",
   "@french": {
     "description": "French language"
+  },
+  "demoModeCredentials": "Demo mode - Configure Supabase credentials for full features",
+  "@demoModeCredentials": {
+    "description": "Warning shown when Supabase credentials are not configured"
+  },
+  "footerTagline": "🏖️ Beach • Flavor • Tradition",
+  "@footerTagline": {
+    "description": "Tagline shown in the footer"
+  },
+  "homeSlogan": "Unique flavors of the Carioca beach 🏖️",
+  "@homeSlogan": {
+    "description": "Slogan displayed on the home screen"
+  },
+  "searchMenuPlaceholder": "Search for food and drinks...",
+  "@searchMenuPlaceholder": {
+    "description": "Placeholder for menu search field"
+  },
+  "emptyCategoryItems": "No items available\nin the {categoryName} category",
+  "@emptyCategoryItems": {
+    "description": "Message shown when a category has no items",
+    "placeholders": {"categoryName": {"type": "String"}}
+  },
+  "errorLoadingOrders": "Error loading orders",
+  "@errorLoadingOrders": {
+    "description": "Error message when orders fail to load"
+  },
+  "noActiveOrders": "No active orders",
+  "@noActiveOrders": {
+    "description": "Displayed when there are no active orders"
+  },
+  "newOrdersAppearHere": "New orders will appear here",
+  "@newOrdersAppearHere": {
+    "description": "Hint when there are no active orders"
+  },
+  "adminPanel": "Admin Panel",
+  "@adminPanel": {
+    "description": "Title of the admin dashboard"
+  },
+  "tableCode": "Table Code",
+  "@tableCode": {
+    "description": "Label for table code field"
+  },
+  "tableCodePrompt": "Enter the code on the table:",
+  "@tableCodePrompt": {
+    "description": "Prompt asking for the table code"
+  },
+  "tableCodeHint": "Ex: table_001_qr",
+  "@tableCodeHint": {
+    "description": "Hint for the table code input"
+  },
+  "insertCodeManually": "Insert code manually",
+  "@insertCodeManually": {
+    "description": "Button to manually enter a table code"
+  },
+  "orderItems": "Order Items",
+  "@orderItems": {
+    "description": "Section title for items in the cart"
+  },
+  "totalItems": "Total Items:",
+  "@totalItems": {
+    "description": "Label for total items in cart"
   }
 }

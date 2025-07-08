@@ -193,7 +193,7 @@ class HomePage extends StatelessWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'Modo demonstração - Configure as credenciais do Supabase para usar recursos completos',
+                            l10n.demoModeCredentials,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: Colors.orange.shade100,
                             ),
@@ -332,7 +332,7 @@ class HomePage extends StatelessWidget {
                 
                 // Footer
                 Text(
-                  '🏖️ Praia • Sabor • Tradição',
+                  l10n.footerTagline,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
                   ),
