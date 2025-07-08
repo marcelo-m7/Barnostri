@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../core/services/language_service.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
-import '../core/theme/theme.dart';
+import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 
 class LanguageSelector extends ConsumerWidget {
   final bool showAsBottomSheet;

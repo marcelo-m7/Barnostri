@@ -16,8 +16,8 @@ Veja `docs/ARCHITECTURE_PLAN.md` para a organização completa e acompanhe as ta
 2. Baixe as dependências:
 
    ```bash
-   flutter pub get apps/barnostri_app
-   dart pub get packages/shared_models
+   (cd apps/barnostri_app && flutter pub get)
+   (cd packages/shared_models && dart pub get)
    ```
 3. Configure o Supabase preenchendo as variáveis em [`supabase/supabase-config.json`](supabase/supabase-config.json).
 4. Inicie o Supabase local (requer o [Supabase CLI](https://supabase.com/docs/guides/cli)):
@@ -28,7 +28,8 @@ Veja `docs/ARCHITECTURE_PLAN.md` para a organização completa e acompanhe as ta
 5. Execute o app:
 
    ```bash
-   flutter run -d <dispositivo> apps/barnostri_app
+   cd apps/barnostri_app
+   flutter run -d <dispositivo>
    ```
 
 O arquivo `supabase/supabase-config.json` é carregado pelo serviço `SupabaseConfig.initialize()` do pacote `shared_models`.
