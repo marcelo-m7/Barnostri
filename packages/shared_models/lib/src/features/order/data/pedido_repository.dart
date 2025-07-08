@@ -1,9 +1,10 @@
 import '../../models/order.dart';
+import '../../models/cart_item.dart';
 
 abstract class PedidoRepository {
   Future<String?> criarPedido({
     required String mesaId,
-    required List<Map<String, dynamic>> itens,
+    required List<CartItem> itens,
     required double total,
     required String formaPagamento,
   });

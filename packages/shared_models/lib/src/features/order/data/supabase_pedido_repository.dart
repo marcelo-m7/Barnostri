@@ -3,6 +3,7 @@ import '../../models/order.dart';
 import '../../models/order_item.dart';
 import '../../models/menu_item.dart';
 import '../../models/table.dart';
+import '../../models/cart_item.dart';
 import '../../../services/supabase_config.dart';
 import 'pedido_repository.dart';
 
@@ -10,7 +11,7 @@ class SupabasePedidoRepository implements PedidoRepository {
   @override
   Future<String?> criarPedido({
     required String mesaId,
-    required List<Map<String, dynamic>> itens,
+    required List<CartItem> itens,
     required double total,
     required String formaPagamento,
   }) async {
@@ -37,10 +38,10 @@ class SupabasePedidoRepository implements PedidoRepository {
           .map(
             (item) => {
               'pedido_id': pedidoId,
-              'item_cardapio_id': item['id'],
-              'quantidade': item['quantidade'],
-              'observacao': item['observacao'] ?? '',
-              'preco_unitario': item['preco'],
+              'item_cardapio_id': item.item.id,
+              'quantidade': item.quantidade,
+              'observacao': item.observacao ?? '',
+              'preco_unitario': item.item.preco,
             },
           )
           .toList();

@@ -48,11 +48,20 @@ void main() {
     });
 
     test('criarPedido returns mock id', () async {
+      final item = ItemCardapio(
+        id: 'i1',
+        nome: 'Item',
+        descricao: null,
+        preco: 10.0,
+        categoriaId: 'c1',
+        disponivel: true,
+        imagemUrl: null,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
       final id = await pedidoRepo.criarPedido(
         mesaId: '1',
-        itens: const [
-          {'id': 'i1', 'quantidade': 1, 'preco': 10.0},
-        ],
+        itens: [CartItem(item: item, quantidade: 1)],
         total: 10.0,
         formaPagamento: 'Pix',
       );
