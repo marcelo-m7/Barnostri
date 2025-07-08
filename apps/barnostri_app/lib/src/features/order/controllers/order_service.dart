@@ -141,8 +141,8 @@ class OrderService extends StateNotifier<OrderState> {
   Future<List<Pedido>> getAllOrders() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await _pedidoRepository.fetchPedidos();
-      return data.map((json) => Pedido.fromJson(json)).toList();
+      final pedidos = await _pedidoRepository.fetchPedidos();
+      return pedidos;
     } catch (e) {
       state = state.copyWith(error: 'Erro ao carregar pedidos: $e');
       return [];
@@ -152,23 +152,18 @@ class OrderService extends StateNotifier<OrderState> {
   }
 
   Stream<List<Pedido>> streamOrders() {
-    return _pedidoRepository.watchPedidos().map(
-      (data) => data.map((json) => Pedido.fromJson(json)).toList(),
-    );
+    return _pedidoRepository.watchPedidos();
   }
 
   Stream<Pedido> streamOrder(String pedidoId) {
-    return _pedidoRepository
-        .watchPedido(pedidoId)
-        .map((data) => Pedido.fromJson(data));
+    return _pedidoRepository.watchPedido(pedidoId);
   }
 
   Future<Mesa?> getMesaByQrToken(String qrToken) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await _menuRepository.getMesaByQrToken(qrToken);
-      if (data != null) {
-        final mesa = Mesa.fromJson(data);
+      final mesa = await _menuRepository.getMesaByQrToken(qrToken);
+      if (mesa != null) {
         setMesa(mesa);
         return mesa;
       } else {

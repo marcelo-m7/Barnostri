@@ -41,10 +41,8 @@ class MenuService extends StateNotifier<MenuState> {
   Future<void> loadCategorias() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await _menuRepository.fetchCategorias();
-      state = state.copyWith(
-        categorias: data.map((json) => Categoria.fromJson(json)).toList(),
-      );
+      final categorias = await _menuRepository.fetchCategorias();
+      state = state.copyWith(categorias: categorias);
     } catch (e) {
       state = state.copyWith(error: 'Erro ao carregar categorias: $e');
     } finally {
@@ -55,10 +53,8 @@ class MenuService extends StateNotifier<MenuState> {
   Future<void> loadItensCardapio() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await _menuRepository.fetchItensCardapio();
-      state = state.copyWith(
-        itensCardapio: data.map((json) => ItemCardapio.fromJson(json)).toList(),
-      );
+      final itens = await _menuRepository.fetchItensCardapio();
+      state = state.copyWith(itensCardapio: itens);
     } catch (e) {
       state = state.copyWith(error: 'Erro ao carregar itens do cardápio: $e');
     } finally {
@@ -69,10 +65,8 @@ class MenuService extends StateNotifier<MenuState> {
   Future<void> loadMesas() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await _menuRepository.fetchMesas();
-      state = state.copyWith(
-        mesas: data.map((json) => Mesa.fromJson(json)).toList(),
-      );
+      final mesas = await _menuRepository.fetchMesas();
+      state = state.copyWith(mesas: mesas);
     } catch (e) {
       state = state.copyWith(error: 'Erro ao carregar mesas: $e');
     } finally {
@@ -126,11 +120,7 @@ class MenuService extends StateNotifier<MenuState> {
   Future<bool> addCategoria({required String nome, required int ordem}) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final response = await _menuRepository.addCategoria(
-        nome: nome,
-        ordem: ordem,
-      );
-      final nova = Categoria.fromJson(response);
+      final nova = await _menuRepository.addCategoria(nome: nome, ordem: ordem);
       final list = [...state.categorias, nova]
         ..sort((a, b) => a.ordem.compareTo(b.ordem));
       state = state.copyWith(categorias: list);
@@ -178,14 +168,13 @@ class MenuService extends StateNotifier<MenuState> {
   }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final response = await _menuRepository.addItemCardapio(
+      final novoItem = await _menuRepository.addItemCardapio(
         nome: nome,
         descricao: descricao,
         preco: preco,
         categoriaId: categoriaId,
         imagemUrl: imagemUrl,
       );
-      final novoItem = ItemCardapio.fromJson(response);
       final list = [...state.itensCardapio, novoItem]
         ..sort((a, b) => a.nome.compareTo(b.nome));
       state = state.copyWith(itensCardapio: list);
@@ -260,11 +249,10 @@ class MenuService extends StateNotifier<MenuState> {
   }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final response = await _menuRepository.addMesa(
+      final novaMesa = await _menuRepository.addMesa(
         numero: numero,
         qrToken: qrToken,
       );
-      final novaMesa = Mesa.fromJson(response);
       final list = [...state.mesas, novaMesa]
         ..sort((a, b) => a.numero.compareTo(b.numero));
       state = state.copyWith(mesas: list);

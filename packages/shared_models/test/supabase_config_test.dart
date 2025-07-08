@@ -29,7 +29,7 @@ void main() {
 
     test('getMesaByQrToken returns mock mesa', () async {
       final mesa = await menuRepo.getMesaByQrToken('mesa_001_qr');
-      expect(mesa?['numero'], '1');
+      expect(mesa?.numero, '1');
     });
 
     test('fetchCategorias returns mock list', () async {
@@ -67,13 +67,13 @@ void main() {
 
     test('fetchPedidos returns mock data', () async {
       final pedidos = await pedidoRepo.fetchPedidos();
-      expect(pedidos.first['id'], 'mock-order-1');
+      expect(pedidos.first.id, 'mock-order-1');
     });
 
     test('watchPedidos emits list', () async {
       final stream = pedidoRepo.watchPedidos();
       final first = await stream.first;
-      expect(first, isA<List<Map<String, dynamic>>>());
+      expect(first, isA<List<Pedido>>());
     });
   });
 }
