@@ -6,9 +6,9 @@ import 'package:barnostri_app/src/features/order/data/supabase_order_repository.
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final auth = SupabaseAuthRepository();
-  final menu = SupabaseMenuRepository();
-  final pedidos = SupabaseOrderRepository();
+  final auth = SupabaseAuthRepository(null);
+  final menu = SupabaseMenuRepository(null);
+  final pedidos = SupabaseOrderRepository(null);
 
   group('AuthRepository', () {
     test('valid login returns user', () async {

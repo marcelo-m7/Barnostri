@@ -1,15 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_models/shared_models.dart';
+import '../../../core/services/supabase_config.dart';
 import 'auth_repository.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
+  final SupabaseClient? _client;
+
+  SupabaseAuthRepository(this._client);
+
   @override
   Future<AuthResponse> signIn({
     required String email,
     required String password,
   }) async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (kDebugMode) {
         print('🔒 Mock authentication: $email');
       }
@@ -44,7 +49,7 @@ class SupabaseAuthRepository implements AuthRepository {
       }
     }
     try {
-      final response = await SupabaseConfig.client.auth.signInWithPassword(
+      final response = await _client!.auth.signInWithPassword(
         email: email,
         password: password,
       );
@@ -59,14 +64,14 @@ class SupabaseAuthRepository implements AuthRepository {
 
   @override
   Future<void> signOut() async {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       if (kDebugMode) {
         print('🔓 Mock sign out');
       }
       return;
     }
     try {
-      await SupabaseConfig.client.auth.signOut();
+      await _client!.auth.signOut();
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao fazer logout: $e');
@@ -77,17 +82,17 @@ class SupabaseAuthRepository implements AuthRepository {
 
   @override
   User? getCurrentUser() {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return null;
     }
-    return SupabaseConfig.client.auth.currentUser;
+    return _client!.auth.currentUser;
   }
 
   @override
   Stream<AuthState> get authStateChanges {
-    if (!SupabaseConfig.isConfigured) {
+    if (_client == null) {
       return Stream.value(AuthState(AuthChangeEvent.signedOut, null));
     }
-    return SupabaseConfig.client.auth.onAuthStateChange;
+    return _client!.auth.onAuthStateChange;
   }
 }

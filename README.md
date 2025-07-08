@@ -33,7 +33,7 @@ Consulte também `docs/CODE_REVIEW.md` para um resumo de inconsistências identi
    flutter run -d <dispositivo>
    ```
 
-O arquivo `supabase/supabase-config.json` é carregado pelo serviço `SupabaseConfig.initialize()` do pacote `shared_models`.
+O arquivo `supabase/supabase-config.json` é carregado pelo serviço `SupabaseConfig.createClient()` dentro do aplicativo.
 
 ## Executando os testes
 

@@ -13,7 +13,7 @@ void main() {
 
   group('LoginUseCase', () {
     test('successful login returns user id', () async {
-      final repo = SupabaseAuthRepository();
+      final repo = SupabaseAuthRepository(null);
       final usecase = LoginUseCase(repo);
       final res = await usecase(email: 'admin@barnostri.com', password: 'admin123');
       expect(res.user?.id, 'demo-admin-id');
@@ -22,7 +22,7 @@ void main() {
 
   group('LoadMenuUseCase', () {
     test('loads categories, items and tables', () async {
-      final repo = SupabaseMenuRepository();
+      final repo = SupabaseMenuRepository(null);
       final usecase = LoadMenuUseCase(repo);
       final result = await usecase();
       expect(result.categories, isNotEmpty);
@@ -33,7 +33,7 @@ void main() {
 
   group('Order use cases', () {
     test('create order and update status', () async {
-      final pedidoRepo = SupabaseOrderRepository();
+      final pedidoRepo = SupabaseOrderRepository(null);
       final create = CreateOrderUseCase(pedidoRepo);
       final update = UpdateOrderStatusUseCase(pedidoRepo);
 

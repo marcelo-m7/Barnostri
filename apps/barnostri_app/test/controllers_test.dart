@@ -16,7 +16,7 @@ void main() {
 
   group('AuthService', () {
     test('login and logout flow', () async {
-      final repo = SupabaseAuthRepository();
+      final repo = SupabaseAuthRepository(null);
       final loginUseCase = LoginUseCase(repo);
       final service = AuthService(repo, loginUseCase);
       await service.login(email: 'admin@barnostri.com', password: 'admin123');
@@ -28,7 +28,7 @@ void main() {
 
   group('MenuService', () {
     test('loadAll fills data', () async {
-      final repo = SupabaseMenuRepository();
+      final repo = SupabaseMenuRepository(null);
       final loadUseCase = LoadMenuUseCase(repo);
       final service = MenuService(repo, loadUseCase);
       await service.loadAll();
@@ -40,8 +40,8 @@ void main() {
 
   group('OrderService', () {
     test('add to cart and create order', () async {
-      final pedidoRepo = SupabaseOrderRepository();
-      final menuRepo = SupabaseMenuRepository();
+      final pedidoRepo = SupabaseOrderRepository(null);
+      final menuRepo = SupabaseMenuRepository(null);
       final create = CreateOrderUseCase(pedidoRepo);
       final update = UpdateOrderStatusUseCase(pedidoRepo);
       final service = OrderService(pedidoRepo, menuRepo, create, update);

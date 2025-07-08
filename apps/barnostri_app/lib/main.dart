@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'src/core/theme/theme.dart';
-import 'package:shared_models/shared_models.dart';
+import 'src/core/services/supabase_config.dart';
 import 'src/core/services/language_service.dart';
 import 'src/features/order/presentation/pages/qr_scanner_page.dart';
 import 'src/features/order/presentation/pages/cart_page.dart';
@@ -38,10 +38,12 @@ final _router = GoRouter(
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Supabase
-  await SupabaseConfig.initialize();
+  // Initialize Supabase and provide the client
+  final client = await SupabaseConfig.createClient();
 
-  final container = ProviderContainer();
+  final container = ProviderContainer(
+    overrides: [supabaseClientProvider.overrideWithValue(client)],
+  );
   await container.read(languageServiceProvider.notifier).initialize();
 
   runApp(

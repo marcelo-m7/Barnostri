@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_models/shared_models.dart';
+import 'services/supabase_config.dart';
 
 /// Global providers used across the application.
 
