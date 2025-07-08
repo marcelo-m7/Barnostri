@@ -844,6 +844,18 @@ abstract class AppLocalizations {
   /// **'Ex: table_001_qr'**
   String get tableCodeHint;
 
+  /// Instructions to scan the QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Point the camera at the QR code'**
+  String get qrCameraInstructions;
+
+  /// Explains where the QR code is located
+  ///
+  /// In en, this message translates to:
+  /// **"You'll find it on your table"**
+  String get qrCodeLocation;
+
   /// Button to manually enter a table code
   ///
   /// In en, this message translates to:
