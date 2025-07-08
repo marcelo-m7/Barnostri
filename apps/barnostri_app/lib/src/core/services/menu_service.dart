@@ -124,7 +124,8 @@ class MenuService extends StateNotifier<MenuState> {
           .select()
           .single();
       final nova = Categoria.fromJson(response);
-      final list = [...state.categorias, nova]..sort((a, b) => a.ordem.compareTo(b.ordem));
+      final list = [...state.categorias, nova]
+        ..sort((a, b) => a.ordem.compareTo(b.ordem));
       state = state.copyWith(categorias: list);
       return true;
     } catch (e) {
@@ -142,7 +143,10 @@ class MenuService extends StateNotifier<MenuState> {
       if (nome != null) updateData['nome'] = nome;
       if (ordem != null) updateData['ordem'] = ordem;
       if (ativo != null) updateData['ativo'] = ativo;
-      await SupabaseConfig.client.from('categorias').update(updateData).eq('id', id);
+      await SupabaseConfig.client
+          .from('categorias')
+          .update(updateData)
+          .eq('id', id);
       await loadCategorias();
       return true;
     } catch (e) {
@@ -225,7 +229,8 @@ class MenuService extends StateNotifier<MenuState> {
     state = state.copyWith(isLoading: true, error: null);
     try {
       await SupabaseConfig.client.from('itens_cardapio').delete().eq('id', id);
-      final list = [...state.itensCardapio]..removeWhere((item) => item.id == id);
+      final list = [...state.itensCardapio]
+        ..removeWhere((item) => item.id == id);
       state = state.copyWith(itensCardapio: list);
       return true;
     } catch (e) {
@@ -236,7 +241,10 @@ class MenuService extends StateNotifier<MenuState> {
     }
   }
 
-  Future<bool> addMesa({required String numero, required String qrToken}) async {
+  Future<bool> addMesa({
+    required String numero,
+    required String qrToken,
+  }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final response = await SupabaseConfig.client

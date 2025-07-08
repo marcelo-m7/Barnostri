@@ -12,26 +12,24 @@ import 'src/modules/client/pages/cart_page.dart';
 import 'src/modules/admin/pages/admin_page.dart';
 import 'src/widgets/language_selector.dart';
 import 'l10n/generated/app_localizations.dart';
+import 'src/repositories/auth_repository.dart';
+import 'src/repositories/supabase/supabase_auth_repository.dart';
+
+final AuthRepository _authRepo = SupabaseAuthRepository();
 
 final _router = GoRouter(
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomePage(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const HomePage()),
     GoRoute(
       path: '/scanner',
       builder: (context, state) => const QrScannerPage(),
     ),
-    GoRoute(
-      path: '/cart',
-      builder: (context, state) => const CartPage(),
-    ),
+    GoRoute(path: '/cart', builder: (context, state) => const CartPage()),
     GoRoute(
       path: '/admin',
       builder: (context, state) => const AdminPage(),
       redirect: (context, state) {
-        final user = SupabaseConfig.getCurrentUser();
+        final user = _authRepo.getCurrentUser();
         if (user == null) {
           return '/';
         }
@@ -120,11 +118,7 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.info_outline,
-                      color: Colors.orange,
-                      size: 20,
-                    ),
+                    Icon(Icons.info_outline, color: Colors.orange, size: 20),
                     const SizedBox(width: 8),
                     Text(
                       '${l10n.demoMode} - ${l10n.demoCredentials}',
@@ -182,12 +176,11 @@ class HomePage extends StatelessWidget {
                             // Title
                             Text(
                               l10n.appTitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayMedium
+                              style: Theme.of(context).textTheme.displayMedium
                                   ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimary,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -196,14 +189,11 @@ class HomePage extends StatelessWidget {
 
                             Text(
                               l10n.welcomeMessage,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
+                              style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary
-                                        .withOpacity(0.9),
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimary.withOpacity(0.9),
                                   ),
                               textAlign: TextAlign.center,
                             ),
@@ -265,8 +255,9 @@ class HomePage extends StatelessWidget {
                                   Icon(
                                     Icons.qr_code_scanner,
                                     size: 48,
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimary,
                                   ),
                                   const SizedBox(height: 16),
                                   Text(
@@ -275,9 +266,9 @@ class HomePage extends StatelessWidget {
                                         .textTheme
                                         .titleLarge
                                         ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.onPrimary,
                                           fontWeight: FontWeight.bold,
                                         ),
                                   ),
@@ -303,11 +294,12 @@ class HomePage extends StatelessWidget {
                                     icon: const Icon(Icons.camera_alt),
                                     label: Text(l10n.scanQRCode),
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
-                                      foregroundColor:
-                                          Theme.of(context).colorScheme.primary,
+                                      backgroundColor: Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimary,
+                                      foregroundColor: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 24,
                                         vertical: 12,
@@ -340,10 +332,9 @@ class HomePage extends StatelessWidget {
                                   Icon(
                                     Icons.admin_panel_settings,
                                     size: 32,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary
-                                        .withOpacity(0.8),
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimary.withOpacity(0.8),
                                   ),
                                   const SizedBox(height: 12),
                                   Text(
@@ -362,9 +353,7 @@ class HomePage extends StatelessWidget {
                                   const SizedBox(height: 8),
                                   Text(
                                     l10n.adminAccessDescription,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
+                                    style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
                                           color: Theme.of(context)
                                               .colorScheme
@@ -380,9 +369,9 @@ class HomePage extends StatelessWidget {
                                     child: Text(
                                       l10n.adminAccess,
                                       style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onPrimary,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -400,11 +389,10 @@ class HomePage extends StatelessWidget {
                       Text(
                         l10n.footerTagline,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary
-                                  .withOpacity(0.7),
-                            ),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onPrimary.withOpacity(0.7),
+                        ),
                       ),
                     ],
                   ),

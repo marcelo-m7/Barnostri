@@ -43,4 +43,5 @@ class SupabaseConfig {
     }
     return _client.auth.onAuthStateChange;
   }
+
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
+import '../../../repositories/auth_repository.dart';
+import '../../../repositories/supabase/supabase_auth_repository.dart';
 import '../../core/services/order_service.dart';
 import "../../core/repositories.dart";
 import '../../core/services/menu_service.dart';
@@ -18,6 +20,7 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
   late TabController _tabController;
   bool _isAuthenticated = false;
   bool _isLoading = true;
+  final AuthRepository _authRepo = SupabaseAuthRepository();
 
   @override
   void initState() {
@@ -29,6 +32,7 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
   void _checkAuthentication() async {
     await Future.delayed(const Duration(milliseconds: 500));
     final user = ref.read(authRepositoryProvider).getCurrentUser();
+
     setState(() {
       _isAuthenticated = user != null;
       _isLoading = false;
@@ -153,6 +157,7 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                                   SnackBar(
                                     content: Text('Erro no login: $e'),
                                     backgroundColor: Theme.of(context).colorScheme.error,
+
                                   ),
                                 );
                               } finally {
@@ -364,6 +369,7 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: item.disponivel ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+
                 child: Icon(
                   item.disponivel ? Icons.check : Icons.close,
                   color: item.disponivel ? Colors.green : Colors.red,
@@ -452,6 +458,7 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
                         child: Icon(
                           Icons.table_restaurant,
                           color: mesa.ativo ? Theme.of(context).colorScheme.primary : Colors.grey,
+
                         ),
                       ),
                       title: Text('Mesa ${mesa.numero}'),
@@ -519,6 +526,7 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
+
           ElevatedButton(
             onPressed: () async {
               if (selectedCategoryId != null) {
@@ -600,6 +608,7 @@ class _AdminPageState extends ConsumerState<AdminPage> with SingleTickerProvider
           ElevatedButton(
             onPressed: () async {
               await menuService.addMesa(numero: numeroController.text, qrToken: qrTokenController.text);
+
               Navigator.pop(context);
             },
             child: const Text('Adicionar'),
