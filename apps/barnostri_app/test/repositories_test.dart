@@ -1,5 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_models/shared_models.dart';
+import 'package:barnostri_app/src/features/auth/data/supabase_auth_repository.dart';
+import 'package:barnostri_app/src/features/menu/data/supabase_menu_repository.dart';
+import 'package:barnostri_app/src/features/order/data/supabase_order_repository.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

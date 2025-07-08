@@ -1,6 +1,4 @@
-import '../../models/category.dart';
-import '../../models/menu_item.dart';
-import '../../models/table_model.dart';
+import 'package:shared_models/shared_models.dart';
 
 /// Data access layer for menu related entities.
 abstract class MenuRepository {

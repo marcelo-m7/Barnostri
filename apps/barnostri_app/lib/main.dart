@@ -5,12 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'src/core/theme/theme.dart';
 import 'package:shared_models/shared_models.dart';
 import 'src/core/services/language_service.dart';
-import 'src/features/order/pages/qr_scanner_page.dart';
-import 'src/features/order/pages/cart_page.dart';
-import 'src/features/auth/pages/admin_page.dart';
-import 'src/features/auth/controllers/auth_service.dart';
+import 'src/features/order/presentation/pages/qr_scanner_page.dart';
+import 'src/features/order/presentation/pages/cart_page.dart';
+import 'src/features/auth/presentation/pages/admin_page.dart';
+import 'src/features/auth/presentation/controllers/auth_service.dart';
 import 'l10n/generated/app_localizations.dart';
-import 'src/features/home/pages/home_page.dart';
+import 'src/features/home/presentation/pages/home_page.dart';
 
 final _router = GoRouter(
   routes: [
