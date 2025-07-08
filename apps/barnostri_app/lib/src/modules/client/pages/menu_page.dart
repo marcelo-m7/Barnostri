@@ -5,6 +5,7 @@ import '../../../core/services/menu_service.dart';
 import '../../../core/services/order_service.dart';
 import '../../../widgets/menu_item_card.dart';
 import '../../../core/theme/theme.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import 'cart_page.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
@@ -54,6 +55,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
           final menuState = ref.watch(menuServiceProvider);
           final orderState = ref.watch(orderServiceProvider);
           final orderNotifier = ref.watch(orderServiceProvider.notifier);
+          final l10n = AppLocalizations.of(context)!;
           if (_isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -107,7 +109,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Barnostri',
+                                        l10n.appTitle,
                                         style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                                           color: Theme.of(context).colorScheme.onPrimary,
                                           fontWeight: FontWeight.bold,
@@ -127,7 +129,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Sabores únicos da praia carioca 🏖️',
+                              l10n.homeSlogan,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
                               ),
@@ -152,7 +154,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                       });
                     },
                     decoration: InputDecoration(
-                      hintText: 'Buscar pratos e bebidas...',
+                      hintText: l10n.searchMenuPlaceholder,
                       prefixIcon: Icon(
                         Icons.search,
                         color: Theme.of(context).colorScheme.primary,
@@ -216,9 +218,9 @@ class _MenuPageState extends ConsumerState<MenuPage>
               else if (menuState.categorias.isNotEmpty)
                 _buildCategorizedMenu(menuService, menuState)
               else
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Center(
-                    child: Text('Nenhum item encontrado'),
+                    child: Text(l10n.noItemsFound),
                   ),
                 ),
             ],
@@ -249,7 +251,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${orderState.cartItemCount} ${orderState.cartItemCount == 1 ? 'item' : 'itens'}',
+                  l10n.itemsCount(orderState.cartItemCount),
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -301,6 +303,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
         controller: _tabController,
         children: menuState.categorias.map((categoria) {
           final items = menuService.getItensByCategoria(categoria.id);
+          final l10n = AppLocalizations.of(context)!;
           
           return Padding(
             padding: const EdgeInsets.all(16),
@@ -316,7 +319,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'Nenhum item disponível\nna categoria ${categoria.nome}',
+                          l10n.emptyCategoryItems(categoria.nome),
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                           ),

@@ -5,6 +5,7 @@ import '../../core/services/order_service.dart';
 import '../../core/services/menu_service.dart';
 import '../../widgets/order_status_widget.dart';
 import '../../core/theme/theme.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class AdminPage extends ConsumerStatefulWidget {
   const AdminPage({super.key});
@@ -252,12 +253,13 @@ class _AdminPageState extends ConsumerState<AdminPage>
   }
 
   Widget _buildAdminDashboard() {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: const Text('Painel Administrativo'),
+        title: Text(l10n.adminPanel),
         actions: [
           IconButton(
             onPressed: () async {
@@ -276,10 +278,10 @@ class _AdminPageState extends ConsumerState<AdminPage>
             context,
           ).colorScheme.onPrimary.withOpacity(0.7),
           indicatorColor: Theme.of(context).colorScheme.onPrimary,
-          tabs: const [
-            Tab(text: 'Pedidos', icon: Icon(Icons.restaurant_menu)),
-            Tab(text: 'Cardápio', icon: Icon(Icons.menu_book)),
-            Tab(text: 'Mesas', icon: Icon(Icons.table_restaurant)),
+          tabs: [
+            Tab(text: l10n.orders, icon: const Icon(Icons.restaurant_menu)),
+            Tab(text: l10n.menu, icon: const Icon(Icons.menu_book)),
+            Tab(text: l10n.tables, icon: const Icon(Icons.table_restaurant)),
           ],
         ),
       ),
@@ -294,6 +296,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
     return Builder(
       builder: (context) {
         final orderService = ref.watch(orderServiceProvider.notifier);
+        final l10n = AppLocalizations.of(context)!;
         return StreamBuilder<List<Pedido>>(
           stream: orderService.streamOrders(),
           builder: (context, snapshot) {
@@ -313,7 +316,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Erro ao carregar pedidos',
+                      l10n.errorLoadingOrders,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ],
@@ -343,12 +346,12 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Nenhum pedido ativo',
+                      l10n.noActiveOrders,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Novos pedidos aparecerão aqui',
+                      l10n.newOrdersAppearHere,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(
                           context,
@@ -381,6 +384,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
     return Builder(
       builder: (context) {
         final menuService = ref.watch(menuServiceProvider.notifier);
+        final l10n = AppLocalizations.of(context)!;
         return FutureBuilder(
           future: menuService.loadAll(),
           builder: (context, snapshot) {
@@ -392,8 +396,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
               length: 2,
               child: Column(
                 children: [
-                  const TabBar(
-                    tabs: [Tab(text: 'Itens'), Tab(text: 'Categorias')],
+                  TabBar(
+                    tabs: [Tab(text: l10n.items), Tab(text: l10n.categories)],
                   ),
                   Expanded(
                     child: TabBarView(

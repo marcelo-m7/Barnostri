@@ -102,7 +102,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Aponte a câmera para o QR Code da mesa',
+                              l10n.qrCameraInstructions,
                               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Theme.of(context).colorScheme.onSurface,
                                 fontWeight: FontWeight.w500,
@@ -111,7 +111,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'O QR Code está localizado na mesa ou no cardápio',
+                              l10n.qrCodeLocation,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                               ),
@@ -141,7 +141,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                               ),
                               const SizedBox(width: 12),
                               Text(
-                                'Processando...',
+                                l10n.processingOrder,
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: Theme.of(context).colorScheme.secondary,
                                   fontWeight: FontWeight.w500,
@@ -186,7 +186,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                           color: Theme.of(context).colorScheme.primary,
                         ),
                         label: Text(
-                          'Inserir código manualmente',
+                          l10n.insertCodeManually,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.w500,
@@ -253,7 +253,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
           borderRadius: BorderRadius.circular(16),
         ),
         title: Text(
-          'Código da Mesa',
+          l10n.tableCode,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -262,14 +262,14 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Digite o código que está na mesa:',
+              l10n.tableCodePrompt,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 16),
             TextField(
               controller: textController,
               decoration: InputDecoration(
-                hintText: 'Ex: mesa_001_qr',
+                hintText: l10n.tableCodeHint,
                 filled: true,
                 fillColor: Theme.of(context).colorScheme.surface,
                 border: OutlineInputBorder(
@@ -289,7 +289,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(
-              'Cancelar',
+              l10n.cancel,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
               ),
@@ -307,7 +307,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Text('Confirmar'),
+            child: Text(l10n.ok),
           ),
         ],
       ),

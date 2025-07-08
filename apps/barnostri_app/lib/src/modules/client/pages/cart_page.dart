@@ -4,6 +4,7 @@ import 'package:shared_models/shared_models.dart';
 import '../../../core/services/order_service.dart';
 import '../../../core/theme/theme.dart';
 import '../../../widgets/order_status_widget.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class CartPage extends ConsumerStatefulWidget {
   const CartPage({super.key});
@@ -19,6 +20,7 @@ class _CartPageState extends ConsumerState<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -26,7 +28,7 @@ class _CartPageState extends ConsumerState<CartPage> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Carrinho',
+          l10n.cart,
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -62,14 +64,14 @@ class _CartPageState extends ConsumerState<CartPage> {
           ),
           const SizedBox(height: 24),
           Text(
-            'Seu carrinho está vazio',
+            l10n.emptyCart,
             style: Theme.of(
               context,
             ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Text(
-            'Adicione alguns itens deliciosos do nosso cardápio!',
+            l10n.emptyCartDescription,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
             ),
@@ -79,7 +81,7 @@ class _CartPageState extends ConsumerState<CartPage> {
           ElevatedButton.icon(
             onPressed: () => Navigator.of(context).pop(),
             icon: const Icon(Icons.restaurant_menu),
-            label: const Text('Ver Cardápio'),
+            label: Text(l10n.menu),
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -119,7 +121,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        'Mesa ${orderState.currentMesa!.numero}',
+                        l10n.tableNumber(orderState.currentMesa!.numero),
                         style: Theme.of(
                           context,
                         ).textTheme.titleMedium?.copyWith(
@@ -135,7 +137,7 @@ class _CartPageState extends ConsumerState<CartPage> {
 
               // Cart items
               Text(
-                'Itens do Pedido',
+                l10n.orderItems,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -152,7 +154,7 @@ class _CartPageState extends ConsumerState<CartPage> {
 
               // Payment method selection
               Text(
-                'Forma de Pagamento',
+                l10n.paymentMethod,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -293,7 +295,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                   size: 18,
                 ),
                 label: Text(
-                  'Remover',
+                  l10n.remove,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.error,
                     fontWeight: FontWeight.w500,
@@ -360,11 +362,11 @@ class _CartPageState extends ConsumerState<CartPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Total de Itens:',
+                l10n.totalItems,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               Text(
-                '${orderState.cartItemCount} ${orderState.cartItemCount == 1 ? 'item' : 'itens'}',
+                l10n.itemsCount(orderState.cartItemCount),
                 style: Theme.of(
                   context,
                 ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
@@ -376,7 +378,7 @@ class _CartPageState extends ConsumerState<CartPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Total:',
+                l10n.total,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -435,7 +437,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                       ),
                     )
                     : Text(
-                      'Finalizar Pedido - ${OrderService.formatPrice(orderState.cartTotal)}',
+                      '${l10n.checkout} - ${OrderService.formatPrice(orderState.cartTotal)}',
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
