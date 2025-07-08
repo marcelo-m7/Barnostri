@@ -210,8 +210,8 @@ class SupabaseMenuRepository implements MenuRepository {
 
   @override
   Future<Category> addCategory({
-    required String nome,
-    required int ordem,
+    required String name,
+    required int sortOrder,
   }) async {
     if (_client == null) {
       return Category(
@@ -224,11 +224,11 @@ class SupabaseMenuRepository implements MenuRepository {
       );
     }
     final response = await _client!
-        .from('categorias')
-        .insert({'nome': nome, 'ordem': ordem, 'ativo': true})
+        .from('categories')
+        .insert({'name': name, 'sort_order': sortOrder, 'active': true})
         .select()
         .single();
-    return Categoria.fromJson(response as Map<String, dynamic>);
+    return Category.fromJson(response as Map<String, dynamic>);
   }
 
   @override
