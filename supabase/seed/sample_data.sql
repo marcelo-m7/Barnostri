@@ -121,7 +121,7 @@ INSERT INTO orders (table_id, status, total, payment_method, paid) VALUES
 ((SELECT id FROM tables WHERE number = '3'), 'Recebido', 32.50, 'Dinheiro', false);
 
 -- Insert sample order items
-INSERT INTO order_items (pedido_id, item_cardapio_id, quantidade, note, price_unitario) VALUES
+INSERT INTO order_items (order_id, menu_item_id, quantity, note, unit_price) VALUES
 -- Pedido 1
 ((SELECT id FROM orders WHERE total = 67.80), 
  (SELECT id FROM menu_items WHERE name = 'Moqueca de Peixe'), 1, 'Menos pimenta', 45.90),
@@ -141,7 +141,7 @@ INSERT INTO order_items (pedido_id, item_cardapio_id, quantidade, note, price_un
  (SELECT id FROM menu_items WHERE name = 'Água de Coco'), 1, '', 6.00);
 
 -- Insert sample payments
-INSERT INTO payments (pedido_id, method, amount, status, transaction_id) VALUES
+INSERT INTO payments (order_id, method, amount, status, transaction_id) VALUES
 ((SELECT id FROM orders WHERE total = 45.90), 'Cartão', 45.90, 'Aprovado', 'TXN_001'),
 ((SELECT id FROM orders WHERE total = 67.80), 'Pix', 67.80, 'Pendente', 'PIX_002'),
 ((SELECT id FROM orders WHERE total = 32.50), 'Dinheiro', 32.50, 'Pendente', null);
