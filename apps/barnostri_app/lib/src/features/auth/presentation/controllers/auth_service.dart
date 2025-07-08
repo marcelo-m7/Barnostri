@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
+import 'package:barnostri_app/src/core/repositories.dart';
 import 'package:barnostri_app/src/features/auth/domain/usecases/login_use_case.dart';
 
 class AuthState {
@@ -31,7 +32,7 @@ class AuthService extends StateNotifier<AuthState> {
     state = state.copyWith(isAuthenticated: user != null);
     _authRepository.authStateChanges.listen((event) {
       state = state.copyWith(
-        isAuthenticated: event.session != null || event.user != null,
+        isAuthenticated: event.session != null || event.session?.user != null,
       );
     });
   }
