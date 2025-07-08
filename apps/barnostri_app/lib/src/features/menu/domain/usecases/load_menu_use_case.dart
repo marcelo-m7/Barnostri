@@ -2,7 +2,7 @@ import 'package:shared_models/shared_models.dart';
 
 /// Result containing menu related entities loaded from repository.
 class LoadMenuResult {
-  final List<Category> categories;
+  final List<CategoryModel> categories;
   final List<MenuItem> items;
   final List<TableModel> tables;
 

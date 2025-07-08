@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'package:shared_models/shared_models.dart';
 
 void main() {
-  group('Category', () {
+  group('CategoryModel', () {
     const json = {
       'id': '1',
       'name': 'Entradas',
@@ -13,7 +13,7 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final categoria = Category.fromJson(json);
+      final categoria = CategoryModel.fromJson(json);
       expect(categoria.id, '1');
       expect(categoria.name, 'Entradas');
       expect(categoria.active, true);

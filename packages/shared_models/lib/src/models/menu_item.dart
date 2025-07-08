@@ -1,4 +1,4 @@
-import 'category.dart';
+import 'category_model.dart';
 
 class MenuItem {
   final String id;
@@ -10,7 +10,7 @@ class MenuItem {
   final String? imageUrl;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final Category? category;
+  final CategoryModel? category;
 
   MenuItem({
     required this.id,
@@ -37,7 +37,7 @@ class MenuItem {
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
       category: json['categories'] != null
-          ? Category.fromJson(json['categories'])
+          ? CategoryModel.fromJson(json['categories'])
           : null,
     );
   }

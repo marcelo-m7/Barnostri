@@ -7,7 +7,7 @@ This package contains common data models and services used by the Barnostri Flut
 The `lib/src/models` directory defines the data structures that mirror the Supabase tables:
 
 - `TableModel` – represents a restaurant table identified by a QR code token.
-- `Category` – menu category used to group `MenuItem` entries.
+- `CategoryModel` – menu category used to group `MenuItem` entries.
 - `MenuItem` – individual menu item belonging to a category.
 - `Order` and `OrderItem` – an order placed for a table and its items.
 - `Payment` – payment information for an order.
