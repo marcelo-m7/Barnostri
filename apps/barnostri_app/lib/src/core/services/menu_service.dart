@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
+import '../../repositories/menu_repository.dart';
+import '../../repositories/supabase/supabase_menu_repository.dart';
 
 class MenuState {
   final List<Categoria> categorias;
@@ -34,12 +36,14 @@ class MenuState {
 }
 
 class MenuService extends StateNotifier<MenuState> {
+  final MenuRepository _repo = SupabaseMenuRepository();
+
   MenuService() : super(const MenuState());
 
   Future<void> loadCategorias() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await SupabaseConfig.getCategorias();
+      final data = await _repo.getCategorias();
       state = state.copyWith(
         categorias: data.map((json) => Categoria.fromJson(json)).toList(),
       );
@@ -53,7 +57,7 @@ class MenuService extends StateNotifier<MenuState> {
   Future<void> loadItensCardapio() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await SupabaseConfig.getItensCardapio();
+      final data = await _repo.getItensCardapio();
       state = state.copyWith(
         itensCardapio: data.map((json) => ItemCardapio.fromJson(json)).toList(),
       );
@@ -67,7 +71,7 @@ class MenuService extends StateNotifier<MenuState> {
   Future<void> loadMesas() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await SupabaseConfig.getMesas();
+      final data = await _repo.getMesas();
       state = state.copyWith(
         mesas: data.map((json) => Mesa.fromJson(json)).toList(),
       );
@@ -79,11 +83,7 @@ class MenuService extends StateNotifier<MenuState> {
   }
 
   Future<void> loadAll() async {
-    await Future.wait([
-      loadCategorias(),
-      loadItensCardapio(),
-      loadMesas(),
-    ]);
+    await Future.wait([loadCategorias(), loadItensCardapio(), loadMesas()]);
   }
 
   List<ItemCardapio> getItensByCategoria(String categoriaId) {
@@ -134,7 +134,8 @@ class MenuService extends StateNotifier<MenuState> {
           .select()
           .single();
       final nova = Categoria.fromJson(response);
-      final list = [...state.categorias, nova]..sort((a, b) => a.ordem.compareTo(b.ordem));
+      final list = [...state.categorias, nova]
+        ..sort((a, b) => a.ordem.compareTo(b.ordem));
       state = state.copyWith(categorias: list);
       return true;
     } catch (e) {
@@ -157,7 +158,10 @@ class MenuService extends StateNotifier<MenuState> {
       if (nome != null) updateData['nome'] = nome;
       if (ordem != null) updateData['ordem'] = ordem;
       if (ativo != null) updateData['ativo'] = ativo;
-      await SupabaseConfig.client.from('categorias').update(updateData).eq('id', id);
+      await SupabaseConfig.client
+          .from('categorias')
+          .update(updateData)
+          .eq('id', id);
       await loadCategorias();
       return true;
     } catch (e) {
@@ -244,7 +248,8 @@ class MenuService extends StateNotifier<MenuState> {
     state = state.copyWith(isLoading: true, error: null);
     try {
       await SupabaseConfig.client.from('itens_cardapio').delete().eq('id', id);
-      final list = [...state.itensCardapio]..removeWhere((item) => item.id == id);
+      final list = [...state.itensCardapio]
+        ..removeWhere((item) => item.id == id);
       state = state.copyWith(itensCardapio: list);
       return true;
     } catch (e) {
@@ -255,7 +260,10 @@ class MenuService extends StateNotifier<MenuState> {
     }
   }
 
-  Future<bool> addMesa({required String numero, required String qrToken}) async {
+  Future<bool> addMesa({
+    required String numero,
+    required String qrToken,
+  }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final response = await SupabaseConfig.client
@@ -285,5 +293,6 @@ class MenuService extends StateNotifier<MenuState> {
   }
 }
 
-final menuServiceProvider =
-    StateNotifierProvider<MenuService, MenuState>((ref) => MenuService());
+final menuServiceProvider = StateNotifierProvider<MenuService, MenuState>(
+  (ref) => MenuService(),
+);

@@ -1,5 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
+import '../../repositories/order_repository.dart';
+import '../../repositories/menu_repository.dart';
+import '../../repositories/supabase/supabase_order_repository.dart';
+import '../../repositories/supabase/supabase_menu_repository.dart';
 
 class OrderState {
   final List<CartItem> cartItems;
@@ -35,6 +39,9 @@ class OrderState {
 }
 
 class OrderService extends StateNotifier<OrderState> {
+  final OrderRepository _repo = SupabaseOrderRepository();
+  final MenuRepository _menuRepo = SupabaseMenuRepository();
+
   OrderService() : super(const OrderState());
 
   void setMesa(Mesa mesa) {
@@ -43,16 +50,16 @@ class OrderService extends StateNotifier<OrderState> {
 
   void addToCart(ItemCardapio item, {int quantidade = 1, String? observacao}) {
     final items = [...state.cartItems];
-    final existingIndex = items.indexWhere((cartItem) =>
-        cartItem.item.id == item.id && cartItem.observacao == observacao);
+    final existingIndex = items.indexWhere(
+      (cartItem) =>
+          cartItem.item.id == item.id && cartItem.observacao == observacao,
+    );
     if (existingIndex != -1) {
       items[existingIndex].quantidade += quantidade;
     } else {
-      items.add(CartItem(
-        item: item,
-        quantidade: quantidade,
-        observacao: observacao,
-      ));
+      items.add(
+        CartItem(item: item, quantidade: quantidade, observacao: observacao),
+      );
     }
     state = state.copyWith(cartItems: items);
   }
@@ -91,8 +98,10 @@ class OrderService extends StateNotifier<OrderState> {
     }
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final itens = state.cartItems.map((cartItem) => cartItem.toJson()).toList();
-      final pedidoId = await SupabaseConfig.criarPedido(
+      final itens = state.cartItems
+          .map((cartItem) => cartItem.toJson())
+          .toList();
+      final pedidoId = await _repo.criarPedido(
         mesaId: state.currentMesa!.id,
         itens: itens,
         total: state.cartTotal,
@@ -116,7 +125,7 @@ class OrderService extends StateNotifier<OrderState> {
   Future<bool> updateOrderStatus(String pedidoId, OrderStatus status) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final success = await SupabaseConfig.atualizarStatusPedido(
+      final success = await _repo.atualizarStatusPedido(
         pedidoId,
         status.displayName,
       );
@@ -135,7 +144,7 @@ class OrderService extends StateNotifier<OrderState> {
   Future<List<Pedido>> getAllOrders() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await SupabaseConfig.getPedidos();
+      final data = await _repo.getPedidos();
       return data.map((json) => Pedido.fromJson(json)).toList();
     } catch (e) {
       state = state.copyWith(error: 'Erro ao carregar pedidos: $e');
@@ -146,19 +155,19 @@ class OrderService extends StateNotifier<OrderState> {
   }
 
   Stream<List<Pedido>> streamOrders() {
-    return SupabaseConfig.streamPedidos()
-        .map((data) => data.map((json) => Pedido.fromJson(json)).toList());
+    return _repo.streamPedidos().map(
+      (data) => data.map((json) => Pedido.fromJson(json)).toList(),
+    );
   }
 
   Stream<Pedido> streamOrder(String pedidoId) {
-    return SupabaseConfig.streamPedido(pedidoId)
-        .map((data) => Pedido.fromJson(data));
+    return _repo.streamPedido(pedidoId).map((data) => Pedido.fromJson(data));
   }
 
   Future<Mesa?> getMesaByQrToken(String qrToken) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final data = await SupabaseConfig.getMesaByQrToken(qrToken);
+      final data = await _menuRepo.getMesaByQrToken(qrToken);
       if (data != null) {
         final mesa = Mesa.fromJson(data);
         setMesa(mesa);
@@ -217,5 +226,6 @@ class OrderService extends StateNotifier<OrderState> {
   }
 }
 
-final orderServiceProvider =
-    StateNotifierProvider<OrderService, OrderState>((ref) => OrderService());
+final orderServiceProvider = StateNotifierProvider<OrderService, OrderState>(
+  (ref) => OrderService(),
+);
