@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
-import '../../domain/usecases/login_use_case.dart';
+import 'package:barnostri_app/src/features/auth/domain/usecases/login_use_case.dart';
 
 class AuthState {
   final bool isAuthenticated;
@@ -25,7 +25,8 @@ class AuthState {
 class AuthService extends StateNotifier<AuthState> {
   final AuthRepository _authRepository;
   final LoginUseCase _loginUseCase;
-  AuthService(this._authRepository, this._loginUseCase) : super(const AuthState()) {
+  AuthService(this._authRepository, this._loginUseCase)
+      : super(const AuthState()) {
     final user = _authRepository.getCurrentUser();
     state = state.copyWith(isAuthenticated: user != null);
     _authRepository.authStateChanges.listen((event) {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
-import '../../order/presentation/controllers/order_service.dart';
-import '../../../core/repositories.dart';
-import '../controllers/auth_service.dart';
-import '../../menu/presentation/controllers/menu_service.dart';
-import '../../../widgets/order_status_widget.dart';
-import '../../../l10n/generated/app_localizations.dart';
+import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
+import 'package:barnostri_app/src/core/repositories.dart';
+import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
+import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_service.dart';
+import 'package:barnostri_app/src/widgets/order_status_widget.dart';
+import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 
 class AdminPage extends ConsumerStatefulWidget {
   const AdminPage({super.key});
@@ -71,8 +71,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
               Text(
                 'Barnostri Admin',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
 
               const SizedBox(height: 8),
@@ -80,10 +80,10 @@ class _AdminPageState extends ConsumerState<AdminPage>
               Text(
                 'Acesso restrito para funcionários',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withOpacity(0.7),
-                ),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.7),
+                    ),
               ),
 
               const SizedBox(height: 48),
@@ -145,9 +145,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                   onPressed: authState.isLoading
                       ? null
                       : () async {
-                          await ref
-                              .read(authServiceProvider.notifier)
-                              .login(
+                          await ref.read(authServiceProvider.notifier).login(
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                               );
@@ -182,7 +180,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
                         )
                       : Text(
                           'Entrar',
-                          style: Theme.of(context).textTheme.labelLarge
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                 ),
@@ -203,8 +203,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     Text(
                       'Credenciais de demonstração:',
                       style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -324,10 +324,10 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     Text(
                       l10n.newOrdersAppearHere,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withOpacity(0.7),
-                      ),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.7),
+                          ),
                     ),
                   ],
                 ),
@@ -404,7 +404,6 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 backgroundColor: item.available
                     ? Colors.green.withOpacity(0.1)
                     : Colors.red.withOpacity(0.1),
-
                 child: Icon(
                   item.available ? Icons.check : Icons.close,
                   color: item.available ? Colors.green : Colors.red,
@@ -503,8 +502,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
                               : Colors.grey,
                         ),
                       ),
-                      title:
-                          Text(AppLocalizations.of(context)!.tableNumber(mesa.number)),
+                      title: Text(AppLocalizations.of(context)!
+                          .tableNumber(mesa.number)),
                       subtitle: Text('QR: ${mesa.qrToken}'),
                       trailing: Icon(
                         mesa.active ? Icons.check_circle : Icons.cancel,
@@ -585,7 +584,6 @@ class _AdminPageState extends ConsumerState<AdminPage>
             onPressed: () => Navigator.pop(context),
             child: Text(AppLocalizations.of(context)!.cancel),
           ),
-
           ElevatedButton(
             onPressed: () async {
               if (selectedCategoryId != null) {

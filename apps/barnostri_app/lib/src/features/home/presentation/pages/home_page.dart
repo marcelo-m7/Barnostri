@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/app_providers.dart';
-import '../../../l10n/generated/app_localizations.dart';
-import '../../../widgets/language_selector.dart';
+import 'package:barnostri_app/src/core/app_providers.dart';
+import 'package:barnostri_app/l10n/generated/app_localizations.dart';
+import 'package:barnostri_app/src/widgets/language_selector.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -96,7 +96,9 @@ class HomePage extends ConsumerWidget {
                             // Title
                             Text(
                               l10n.appTitle,
-                              style: Theme.of(context).textTheme.displayMedium
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
                                   ?.copyWith(
                                     color: Theme.of(
                                       context,
@@ -107,7 +109,9 @@ class HomePage extends ConsumerWidget {
                             const SizedBox(height: 8),
                             Text(
                               l10n.welcomeMessage,
-                              style: Theme.of(context).textTheme.titleMedium
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
                                   ?.copyWith(
                                     color: Theme.of(
                                       context,
@@ -265,7 +269,9 @@ class HomePage extends ConsumerWidget {
                                   const SizedBox(height: 8),
                                   Text(
                                     l10n.adminAccessDescription,
-                                    style: Theme.of(context).textTheme.bodySmall
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
                                         ?.copyWith(
                                           color: Theme.of(context)
                                               .colorScheme
@@ -299,10 +305,10 @@ class HomePage extends ConsumerWidget {
                       Text(
                         l10n.footerTagline,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onPrimary.withOpacity(0.7),
-                        ),
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onPrimary.withOpacity(0.7),
+                            ),
                       ),
                     ],
                   ),
