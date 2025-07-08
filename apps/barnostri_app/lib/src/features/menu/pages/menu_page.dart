@@ -31,12 +31,12 @@ class _MenuPageState extends ConsumerState<MenuPage>
   Future<void> _loadData() async {
     final menuService = ref.read(menuServiceProvider.notifier);
     await menuService.loadAll();
-    
+
     if (mounted) {
       setState(() {
         _isLoading = false;
       });
-      
+
       // Initialize tab controller after loading categories
       _tabController = TabController(
         length: menuService.categorias.length,
@@ -57,9 +57,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
           final orderNotifier = ref.watch(orderServiceProvider.notifier);
           final l10n = AppLocalizations.of(context)!;
           if (_isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
           return CustomScrollView(
@@ -99,28 +97,42 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                   ),
                                   child: Icon(
                                     Icons.restaurant_menu,
-                                    color: Theme.of(context).colorScheme.onPrimary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimary,
                                     size: 32,
                                   ),
                                 ),
                                 const SizedBox(width: 16),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         l10n.appTitle,
-                                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimary,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium
+                                            ?.copyWith(
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.onPrimary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                       if (orderState.currentMesa != null)
                                         Text(
                                           'Mesa ${orderState.currentMesa!.numero}',
-                                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                            color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary
+                                                    .withOpacity(0.8),
+                                              ),
                                         ),
                                     ],
                                   ),
@@ -130,9 +142,12 @@ class _MenuPageState extends ConsumerState<MenuPage>
                             const SizedBox(height: 16),
                             Text(
                               l10n.homeSlogan,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimary.withOpacity(0.9),
+                                  ),
                             ),
                           ],
                         ),
@@ -163,7 +178,9 @@ class _MenuPageState extends ConsumerState<MenuPage>
                           ? IconButton(
                               icon: Icon(
                                 Icons.clear,
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withOpacity(0.7),
                               ),
                               onPressed: () {
                                 _searchController.clear();
@@ -198,16 +215,19 @@ class _MenuPageState extends ConsumerState<MenuPage>
                       isScrollable: true,
                       tabAlignment: TabAlignment.start,
                       labelColor: Theme.of(context).colorScheme.primary,
-                      unselectedLabelColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                      unselectedLabelColor: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.6),
                       indicatorColor: Theme.of(context).colorScheme.primary,
                       indicatorWeight: 3,
-                      labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      unselectedLabelStyle: Theme.of(context).textTheme.labelLarge,
-                      tabs: menuState.categorias.map((categoria) => Tab(
-                        text: categoria.nome,
-                      )).toList(),
+                      labelStyle: Theme.of(context).textTheme.labelLarge
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                      unselectedLabelStyle: Theme.of(
+                        context,
+                      ).textTheme.labelLarge,
+                      tabs: menuState.categorias
+                          .map((categoria) => Tab(text: categoria.nome))
+                          .toList(),
                     ),
                   ),
                 ),
@@ -219,22 +239,20 @@ class _MenuPageState extends ConsumerState<MenuPage>
                 _buildCategorizedMenu(menuService, menuState)
               else
                 SliverToBoxAdapter(
-                  child: Center(
-                    child: Text(l10n.noItemsFound),
-                  ),
+                  child: Center(child: Text(l10n.noItemsFound)),
                 ),
             ],
           );
         },
       ),
-      
+
       // Floating Cart Button
       floatingActionButton: Builder(
         builder: (context) {
           final orderState = ref.watch(orderServiceProvider);
           final orderNotifier = ref.watch(orderServiceProvider.notifier);
           if (orderState.cartItemCount == 0) return const SizedBox();
-          
+
           return FloatingActionButton.extended(
             onPressed: () {
               context.push('/cart');
@@ -270,7 +288,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
 
   Widget _buildSearchResults(MenuService menuService, MenuState menuState) {
     final filteredItems = menuService.searchItens(_searchQuery);
-    
+
     return SliverPadding(
       padding: const EdgeInsets.all(16),
       sliver: SliverGrid(
@@ -279,16 +297,10 @@ class _MenuPageState extends ConsumerState<MenuPage>
           childAspectRatio: 1.2,
           mainAxisSpacing: 16,
         ),
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final item = filteredItems[index];
-            return MenuItemCard(
-              item: item,
-              onTap: () => _showItemDetails(item),
-            );
-          },
-          childCount: filteredItems.length,
-        ),
+        delegate: SliverChildBuilderDelegate((context, index) {
+          final item = filteredItems[index];
+          return MenuItemCard(item: item, onTap: () => _showItemDetails(item));
+        }, childCount: filteredItems.length),
       ),
     );
   }
@@ -300,7 +312,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
         children: menuState.categorias.map((categoria) {
           final items = menuService.getItensByCategoria(categoria.id);
           final l10n = AppLocalizations.of(context)!;
-          
+
           return Padding(
             padding: const EdgeInsets.all(16),
             child: items.isEmpty
@@ -311,25 +323,31 @@ class _MenuPageState extends ConsumerState<MenuPage>
                         Icon(
                           Icons.restaurant_menu,
                           size: 64,
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.3),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           l10n.emptyCategoryItems(categoria.nome),
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withOpacity(0.6),
+                              ),
                           textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                   )
                 : GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      childAspectRatio: 1.2,
-                      mainAxisSpacing: 16,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          childAspectRatio: 1.2,
+                          mainAxisSpacing: 16,
+                        ),
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       final item = items[index];
@@ -400,12 +418,14 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
             ),
-            
+
             Padding(
               padding: const EdgeInsets.all(24),
               child: Column(
@@ -421,17 +441,19 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                           children: [
                             Text(
                               widget.item.nome,
-                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: Theme.of(context).textTheme.headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             if (widget.item.descricao != null) ...[
                               const SizedBox(height: 8),
                               Text(
                                 widget.item.descricao!,
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface.withOpacity(0.7),
+                                    ),
                               ),
                             ],
                           ],
@@ -440,16 +462,17 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                       const SizedBox(width: 16),
                       Text(
                         OrderService().formatPrice(widget.item.preco),
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall
+                            ?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ],
                   ),
-                  
+
                   const SizedBox(height: 24),
-                  
+
                   // Quantity selector
                   Text(
                     'Quantidade',
@@ -461,34 +484,43 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                   Row(
                     children: [
                       IconButton.filled(
-                        onPressed: _quantity > 1 ? () => setState(() => _quantity--) : null,
+                        onPressed: _quantity > 1
+                            ? () => setState(() => _quantity--)
+                            : null,
                         icon: const Icon(Icons.remove),
                         style: IconButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                          foregroundColor: Theme.of(context).colorScheme.primary,
+                          backgroundColor: Theme.of(
+                            context,
+                          ).colorScheme.primary.withOpacity(0.1),
+                          foregroundColor: Theme.of(
+                            context,
+                          ).colorScheme.primary,
                         ),
                       ),
                       const SizedBox(width: 16),
                       Text(
                         _quantity.toString(),
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(width: 16),
                       IconButton.filled(
                         onPressed: () => setState(() => _quantity++),
                         icon: const Icon(Icons.add),
                         style: IconButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.primary,
-                          foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                          backgroundColor: Theme.of(
+                            context,
+                          ).colorScheme.primary,
+                          foregroundColor: Theme.of(
+                            context,
+                          ).colorScheme.onPrimary,
                         ),
                       ),
                     ],
                   ),
-                  
+
                   const SizedBox(height: 24),
-                  
+
                   // Observation field
                   Text(
                     'Observações (opcional)',
@@ -507,47 +539,60 @@ class _ItemDetailsSheetState extends State<_ItemDetailsSheet> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.outline.withOpacity(0.3),
                         ),
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 24),
-                  
+
                   // Add to cart button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: widget.item.disponivel ? () {
-                        final orderService = ref.read(orderServiceProvider.notifier);
-                        orderService.addToCart(
-                          widget.item,
-                          quantidade: _quantity,
-                          observacao: _observationController.text.trim().isEmpty
-                              ? null
-                              : _observationController.text.trim(),
-                        );
-                        Navigator.of(context).pop();
-                        
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('${widget.item.nome} adicionado ao carrinho!'),
-                            backgroundColor: Theme.of(context).colorScheme.primary,
-                            duration: const Duration(seconds: 2),
-                          ),
-                        );
-                      } : null,
+                      onPressed: widget.item.disponivel
+                          ? () {
+                              final orderService = ref.read(
+                                orderServiceProvider.notifier,
+                              );
+                              orderService.addToCart(
+                                widget.item,
+                                quantidade: _quantity,
+                                observacao:
+                                    _observationController.text.trim().isEmpty
+                                    ? null
+                                    : _observationController.text.trim(),
+                              );
+                              Navigator.of(context).pop();
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    '${widget.item.nome} adicionado ao carrinho!',
+                                  ),
+                                  backgroundColor: Theme.of(
+                                    context,
+                                  ).colorScheme.primary,
+                                  duration: const Duration(seconds: 2),
+                                ),
+                              );
+                            }
+                          : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                        foregroundColor: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
                       ),
                       child: Text(
-                        widget.item.disponivel 
+                        widget.item.disponivel
                             ? 'Adicionar ao Carrinho - ${OrderService().formatPrice(widget.item.preco * _quantity)}'
                             : 'Item Indisponível',
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(

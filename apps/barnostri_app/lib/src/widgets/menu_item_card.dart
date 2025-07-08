@@ -7,11 +7,7 @@ class MenuItemCard extends StatefulWidget {
   final ItemCardapio item;
   final VoidCallback onTap;
 
-  const MenuItemCard({
-    super.key,
-    required this.item,
-    required this.onTap,
-  });
+  const MenuItemCard({super.key, required this.item, required this.onTap});
 
   @override
   State<MenuItemCard> createState() => _MenuItemCardState();
@@ -29,13 +25,9 @@ class _MenuItemCardState extends State<MenuItemCard>
       duration: const Duration(milliseconds: 150),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.95,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
   }
 
   @override
@@ -93,8 +85,9 @@ class _MenuItemCardState extends State<MenuItemCard>
                                 color: Theme.of(context).colorScheme.surface,
                                 child: Center(
                                   child: CircularProgressIndicator(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                     strokeWidth: 2,
                                   ),
                                 ),
@@ -120,14 +113,12 @@ class _MenuItemCardState extends State<MenuItemCard>
                             Expanded(
                               child: Text(
                                 widget.item.nome,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
+                                style: Theme.of(context).textTheme.titleMedium
                                     ?.copyWith(
                                       fontWeight: FontWeight.bold,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface,
                                     ),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -145,13 +136,11 @@ class _MenuItemCardState extends State<MenuItemCard>
                               ),
                               child: Text(
                                 OrderService.formatPrice(widget.item.preco),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
+                                style: Theme.of(context).textTheme.labelMedium
                                     ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimary,
                                       fontWeight: FontWeight.bold,
                                     ),
                               ),
@@ -165,14 +154,11 @@ class _MenuItemCardState extends State<MenuItemCard>
                           const SizedBox(height: 8),
                           Text(
                             widget.item.descricao!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
+                            style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
-                                      .withOpacity(0.7),
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface.withOpacity(0.7),
                                   height: 1.4,
                                 ),
                             maxLines: 3,
@@ -194,21 +180,18 @@ class _MenuItemCardState extends State<MenuItemCard>
                                   vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .secondary
-                                      .withOpacity(0.1),
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.secondary.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
                                   widget.item.categoria!.nome,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall
+                                  style: Theme.of(context).textTheme.labelSmall
                                       ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.secondary,
                                         fontWeight: FontWeight.w500,
                                       ),
                                 ),
@@ -325,11 +308,7 @@ class _MenuItemCardState extends State<MenuItemCard>
             Container(
               color: Colors.black.withOpacity(0.5),
               child: const Center(
-                child: Icon(
-                  Icons.no_food,
-                  size: 48,
-                  color: Colors.white,
-                ),
+                child: Icon(Icons.no_food, size: 48, color: Colors.white),
               ),
             ),
         ],

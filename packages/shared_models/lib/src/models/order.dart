@@ -39,8 +39,8 @@ class Pedido {
       mesa: json['mesas'] != null ? Mesa.fromJson(json['mesas']) : null,
       itens: json['itens_pedido'] != null
           ? (json['itens_pedido'] as List)
-              .map((item) => ItemPedido.fromJson(item))
-              .toList()
+                .map((item) => ItemPedido.fromJson(item))
+                .toList()
           : [],
     );
   }

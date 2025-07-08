@@ -5,7 +5,10 @@ import 'auth_repository.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
   @override
-  Future<AuthResponse> signIn({required String email, required String password}) async {
+  Future<AuthResponse> signIn({
+    required String email,
+    required String password,
+  }) async {
     if (!SupabaseConfig.isConfigured) {
       if (kDebugMode) {
         print('🔒 Mock authentication: $email');
@@ -41,7 +44,10 @@ class SupabaseAuthRepository implements AuthRepository {
       }
     }
     try {
-      final response = await SupabaseConfig.client.auth.signInWithPassword(email: email, password: password);
+      final response = await SupabaseConfig.client.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
       return response;
     } catch (e) {
       if (kDebugMode) {

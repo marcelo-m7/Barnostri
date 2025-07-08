@@ -46,7 +46,7 @@ void main() {
       final id = await pedidoRepo.criarPedido(
         mesaId: '1',
         itens: const [
-          {'id': 'i1', 'quantidade': 1, 'preco': 10.0}
+          {'id': 'i1', 'quantidade': 1, 'preco': 10.0},
         ],
         total: 10.0,
         formaPagamento: 'Pix',
@@ -64,6 +64,5 @@ void main() {
       final pedidos = await pedidoRepo.fetchPedidos();
       expect(pedidos.first['id'], 'mock-order-1');
     });
-
   });
 }

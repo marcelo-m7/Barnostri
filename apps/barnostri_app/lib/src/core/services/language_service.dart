@@ -40,7 +40,10 @@ class LanguageService extends StateNotifier<Locale> {
     state = locale;
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_languageKey, '${locale.languageCode}_${locale.countryCode}');
+      await prefs.setString(
+        _languageKey,
+        '${locale.languageCode}_${locale.countryCode}',
+      );
     } catch (_) {}
   }
 
@@ -71,9 +74,11 @@ class LanguageService extends StateNotifier<Locale> {
   }
 
   bool isLocaleSupported(Locale locale) {
-    return supportedLocales.any((supported) =>
-        supported.languageCode == locale.languageCode &&
-        supported.countryCode == locale.countryCode);
+    return supportedLocales.any(
+      (supported) =>
+          supported.languageCode == locale.languageCode &&
+          supported.countryCode == locale.countryCode,
+    );
   }
 
   Locale getBestMatchingLocale(List<Locale> deviceLocales) {
@@ -89,5 +94,6 @@ class LanguageService extends StateNotifier<Locale> {
   }
 }
 
-final languageServiceProvider =
-    StateNotifierProvider<LanguageService, Locale>((ref) => LanguageService());
+final languageServiceProvider = StateNotifierProvider<LanguageService, Locale>(
+  (ref) => LanguageService(),
+);
