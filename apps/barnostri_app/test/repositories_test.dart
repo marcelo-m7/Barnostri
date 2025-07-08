@@ -9,12 +9,18 @@ void main() {
 
   group('AuthRepository', () {
     test('valid login returns user', () async {
-      final res = await auth.signIn(email: 'admin@barnostri.com', password: 'admin123');
+      final res = await auth.signIn(
+        email: 'admin@barnostri.com',
+        password: 'admin123',
+      );
       expect(res.user?.id, 'demo-admin-id');
     });
 
     test('invalid login throws', () async {
-      expect(() => auth.signIn(email: 'x', password: 'y'), throwsA(isA<AuthException>()));
+      expect(
+        () => auth.signIn(email: 'x', password: 'y'),
+        throwsA(isA<AuthException>()),
+      );
     });
   });
 

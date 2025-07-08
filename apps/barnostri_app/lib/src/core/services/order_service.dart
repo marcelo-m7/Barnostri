@@ -201,10 +201,6 @@ class OrderService extends StateNotifier<OrderState> {
     state = state.copyWith(error: null);
   }
 
-  static String formatPrice(double price) {
-    return 'R\$ ${price.toStringAsFixed(2).replaceAll('.', ',')}';
-  }
-
   static String formatDateTime(DateTime dateTime) {
     return '${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year} ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
   }
