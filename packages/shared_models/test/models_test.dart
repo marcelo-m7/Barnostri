@@ -13,11 +13,11 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final categoria = CategoryModel.fromJson(json);
-      expect(categoria.id, '1');
-      expect(categoria.name, 'Entradas');
-      expect(categoria.active, true);
-      expect(categoria.toJson(), {
+      final category = CategoryModel.fromJson(json);
+      expect(category.id, '1');
+      expect(category.name, 'Entradas');
+      expect(category.active, true);
+      expect(category.toJson(), {
         'id': '1',
         'name': 'Entradas',
         'sort_order': 1,
@@ -70,9 +70,9 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final mesa = TableModel.fromJson(json);
-      expect(mesa.number, '1');
-      expect(mesa.toJson(), {
+      final table = TableModel.fromJson(json);
+      expect(table.number, '1');
+      expect(table.toJson(), {
         'id': 't1',
         'number': '1',
         'qr_token': 'token1',
@@ -94,9 +94,9 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final usuario = UserModel.fromJson(json);
-      expect(usuario.isAdmin, isTrue);
-      expect(usuario.toJson(), {
+      final user = UserModel.fromJson(json);
+      expect(user.isAdmin, isTrue);
+      expect(user.toJson(), {
         'id': 'u1',
         'name': 'Admin',
         'email': 'a@a.com',
@@ -165,10 +165,10 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final pedido = Order.fromJson(json);
-      expect(pedido.tableId, 't1');
-      expect(pedido.items.length, 1);
-      expect(pedido.toJson(), {
+      final order = Order.fromJson(json);
+      expect(order.tableId, 't1');
+      expect(order.items.length, 1);
+      expect(order.toJson(), {
         'id': 'p1',
         'table_id': 't1',
         'status': 'Recebido',
@@ -194,9 +194,9 @@ void main() {
     };
 
     test('fromJson and toJson', () {
-      final pagamento = Payment.fromJson(json);
-      expect(pagamento.method, 'Pix');
-      expect(pagamento.toJson(), {
+      final payment = Payment.fromJson(json);
+      expect(payment.method, 'Pix');
+      expect(payment.toJson(), {
         'id': 'pay1',
         'order_id': 'p1',
         'method': 'Pix',

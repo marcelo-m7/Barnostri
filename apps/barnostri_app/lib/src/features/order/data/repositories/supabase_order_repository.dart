@@ -33,7 +33,7 @@ class SupabaseOrderRepository implements OrderRepository {
           .select()
           .single();
       final orderId = orderResponse['id'];
-      final itensData = items
+      final itemsData = items
           .map(
             (item) => {
               'order_id': orderId,
@@ -44,7 +44,7 @@ class SupabaseOrderRepository implements OrderRepository {
             },
           )
           .toList();
-      await _client!.from('order_items').insert(itensData);
+      await _client!.from('order_items').insert(itemsData);
       return orderId;
     } catch (e) {
       if (kDebugMode) {
