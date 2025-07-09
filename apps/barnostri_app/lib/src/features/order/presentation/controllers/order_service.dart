@@ -4,6 +4,8 @@ import 'package:barnostri_app/src/core/repositories.dart';
 import 'package:barnostri_app/src/core/services/language_service.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 
+typedef Reader = T Function<T>(ProviderListenable<T> provider);
+
 class OrderState {
   final List<CartItem> cartItems;
   final TableModel? currentTable;
