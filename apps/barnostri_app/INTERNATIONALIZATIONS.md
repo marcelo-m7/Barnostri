@@ -259,5 +259,4 @@ lib/
 │   └── language_selector.dart        # Language selection UI
 └── main.dart                         # App configuration with i18n support
 ```
-
 The internationalization system is fully integrated and ready for production use, providing seamless language switching and comprehensive translation coverage for all user-facing text in the Barnostri app.
