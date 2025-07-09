@@ -61,8 +61,8 @@ jobs:
       - run: flutter build web --release
         working-directory: apps/barnostri_app
 
-      - uses: w9jds/firebase-action@v2
-        with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      # - uses: w9jds/firebase-action@v2
+      #   with:
+      #     args: deploy --only hosting
+      #   env:
+      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
