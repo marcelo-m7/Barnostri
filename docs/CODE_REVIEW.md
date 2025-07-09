@@ -20,3 +20,7 @@ Os arquivos de migração utilizam nomes de tabelas em português (`mesas`, `ped
 
 ## Próximos passos
 Renomear classes, arquivos e métodos para inglês e atualizar toda a base (tests, serviços e repositórios). Comentários podem continuar em português.
+
+## Correções recentes
+- O enum `OrderStatus` agora aceita valores em português ("Recebido", "Em preparo", "Pronto" etc.) para manter compatibilidade com os dados do Supabase.
+- O enum `PaymentMethod` reconhece "Cartão" e "Dinheiro" além das formas em inglês.

@@ -57,6 +57,9 @@ Os testes unitários estão em `packages/shared_models/test` e podem ser executa
 flutter test packages/shared_models
 ```
 
+Os testes cobrem também a conversão de valores em inglês e português para os enums
+`OrderStatus` e `PaymentMethod`, garantindo compatibilidade com os dados do Supabase.
+
 ## Integração contínua
 
 O workflow [`flutter.yml`](.github/workflows/flutter.yml) é acionado a cada *push* ou *pull request*. Ele instala dependências, formata o código, roda `flutter analyze` e executa os testes.
