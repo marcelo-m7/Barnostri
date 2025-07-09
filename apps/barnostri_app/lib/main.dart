@@ -9,7 +9,6 @@ import 'package:barnostri_app/src/features/order/presentation/pages/qr_scanner_p
 import 'package:barnostri_app/src/features/order/presentation/pages/cart_page.dart';
 import 'package:barnostri_app/src/features/menu/presentation/pages/menu_page.dart';
 import 'package:barnostri_app/src/features/auth/presentation/pages/admin_page.dart';
-import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'package:barnostri_app/src/features/home/presentation/pages/home_page.dart';
 
@@ -22,18 +21,7 @@ final _router = GoRouter(
     ),
     GoRoute(path: '/cart', builder: (context, state) => const CartPage()),
     GoRoute(path: '/menu', builder: (context, state) => const MenuPage()),
-    GoRoute(
-      path: '/admin',
-      builder: (context, state) => const AdminPage(),
-      redirect: (context, state) {
-        final container = ProviderScope.containerOf(context, listen: false);
-        final isAuth = container.read(authServiceProvider).isAuthenticated;
-        if (!isAuth) {
-          return '/';
-        }
-        return null;
-      },
-    ),
+    GoRoute(path: '/admin', builder: (context, state) => const AdminPage()),
   ],
 );
 

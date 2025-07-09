@@ -3,11 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:barnostri_app/main.dart';
-import 'package:barnostri_app/src/core/services/guard_mixin.dart';
 import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import 'package:barnostri_app/src/features/auth/presentation/pages/admin_page.dart';
+import 'package:barnostri_app/src/features/home/presentation/pages/home_page.dart';
 
 class _FakeAuthRepository implements AuthRepository {
   bool loggedIn;
@@ -45,7 +45,10 @@ class _FakeAuthRepository implements AuthRepository {
 
 class FakeAuthService extends AuthService {
   FakeAuthService(bool loggedIn)
-      : super(_FakeAuthRepository(loggedIn), LoginUseCase(_FakeAuthRepository(loggedIn))) {
+    : super(
+        _FakeAuthRepository(loggedIn),
+        LoginUseCase(_FakeAuthRepository(loggedIn)),
+      ) {
     state = state.copyWith(isAuthenticated: loggedIn);
   }
 
@@ -71,8 +74,9 @@ void main() {
         child: const BarnostriApp(),
       ),
     );
+    await tester.pumpAndSettle();
 
-    final router = GoRouter.of(tester.element(find.byType(BarnostriApp)));
+    final router = GoRouter.of(tester.element(find.byType(HomePage)));
     router.go('/admin');
     await tester.pumpAndSettle();
     expect(find.byType(AdminPage), findsOneWidget);
@@ -93,12 +97,12 @@ void main() {
         child: const BarnostriApp(),
       ),
     );
+    await tester.pumpAndSettle();
 
-    final router = GoRouter.of(tester.element(find.byType(BarnostriApp)));
+    final router = GoRouter.of(tester.element(find.byType(HomePage)));
     router.go('/admin');
     await tester.pumpAndSettle();
     expect(find.byType(AdminPage), findsOneWidget);
     expect(find.textContaining('Pedidos'), findsOneWidget);
   });
 }
-

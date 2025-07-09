@@ -55,178 +55,179 @@ class _AdminPageState extends ConsumerState<AdminPage>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-              // Logo/Title
-              Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Icon(
-                  Icons.admin_panel_settings,
-                  size: 64,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-              ),
-
-              const SizedBox(height: 32),
-
-              Text(
-                l10n.adminTitle,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              Text(
-                l10n.adminRestricted,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
-                ),
-              ),
-
-              const SizedBox(height: 48),
-
-              // Email field
-              TextField(
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: l10n.emailLabel,
-                  prefixIcon: Icon(
-                    Icons.email,
-                    color: Theme.of(context).colorScheme.primary,
+                  // Logo/Title
+                  Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Icon(
+                      Icons.admin_panel_settings,
+                      size: 64,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
-                  filled: true,
-                  fillColor: Theme.of(context).colorScheme.surface,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(
+
+                  const SizedBox(height: 32),
+
+                  Text(
+                    l10n.adminTitle,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  Text(
+                    l10n.adminRestricted,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(
                         context,
-                      ).colorScheme.outline.withAlpha((0.3 * 255).round()),
+                      ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
                     ),
                   ),
-                ),
-              ),
 
-              const SizedBox(height: 16),
+                  const SizedBox(height: 48),
 
-              // Password field
-              TextField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: l10n.passwordLabel,
-                  prefixIcon: Icon(
-                    Icons.lock,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  filled: true,
-                  fillColor: Theme.of(context).colorScheme.surface,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.outline.withAlpha((0.3 * 255).round()),
-                    ),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Login button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: authState.isLoading
-                      ? null
-                      : () async {
-                          await ref
-                              .read(authServiceProvider.notifier)
-                              .login(
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                              );
-                          if (!context.mounted) return;
-                          final error = ref.read(authServiceProvider).error;
-                          if (error != null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Erro no login: $error'),
-                                backgroundColor: Theme.of(
-                                  context,
-                                ).colorScheme.error,
-                              ),
-                            );
-                          }
-                        },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: authState.isLoading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : Text(
-                          'Entrar',
-                          style: Theme.of(context).textTheme.labelLarge
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                  // Email field
+                  TextField(
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: l10n.emailLabel,
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      filled: true,
+                      fillColor: Theme.of(context).colorScheme.surface,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.outline.withAlpha((0.3 * 255).round()),
                         ),
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              // Demo credentials
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.secondary.withAlpha((0.1 * 255).round()),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      l10n.demoCredentialsTitle,
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Email: admin@barnostri.com',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Password field
+                  TextField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: l10n.passwordLabel,
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      filled: true,
+                      fillColor: Theme.of(context).colorScheme.surface,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.outline.withAlpha((0.3 * 255).round()),
+                        ),
+                      ),
                     ),
-                    Text(
-                      'Senha: admin123',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // Login button
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: authState.isLoading
+                          ? null
+                          : () async {
+                              await ref
+                                  .read(authServiceProvider.notifier)
+                                  .login(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  );
+                              if (!context.mounted) return;
+                              final error = ref.read(authServiceProvider).error;
+                              if (error != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Erro no login: $error'),
+                                    backgroundColor: Theme.of(
+                                      context,
+                                    ).colorScheme.error,
+                                  ),
+                                );
+                              }
+                            },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        foregroundColor: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: authState.isLoading
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Text(
+                              'Entrar',
+                              style: Theme.of(context).textTheme.labelLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Demo credentials
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.secondary.withAlpha((0.1 * 255).round()),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          l10n.demoCredentialsTitle,
+                          style: Theme.of(context).textTheme.labelMedium
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Email: admin@barnostri.com',
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(fontFamily: 'monospace'),
+                        ),
+                        Text(
+                          'Senha: admin123',
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(fontFamily: 'monospace'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
