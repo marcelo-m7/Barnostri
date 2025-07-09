@@ -5,17 +5,54 @@ import 'package:go_router/go_router.dart';
 import 'package:barnostri_app/main.dart';
 import 'package:barnostri_app/src/core/services/guard_mixin.dart';
 import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
+import 'package:shared_models/shared_models.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import 'package:barnostri_app/src/features/auth/presentation/pages/admin_page.dart';
 
-class FakeAuthService extends StateNotifier<AuthState> with GuardMixin<AuthState> {
-  FakeAuthService(bool loggedIn) : super(AuthState(isAuthenticated: loggedIn));
+class _FakeAuthRepository implements AuthRepository {
+  bool loggedIn;
+  _FakeAuthRepository(this.loggedIn);
 
   @override
-  AuthState copyWithGuard(AuthState state, {bool? isLoading, String? error}) {
-    return state.copyWith(isLoading: isLoading, error: error);
+  Future<supabase.AuthResponse> signIn({
+    required String email,
+    required String password,
+  }) async {
+    loggedIn = true;
+    return supabase.AuthResponse();
   }
 
-  Future<void> login({String email = '', String password = ''}) async {}
+  @override
+  Future<void> signOut() async {
+    loggedIn = false;
+  }
+
+  @override
+  supabase.User? getCurrentUser() {
+    if (!loggedIn) return null;
+    return const supabase.User(
+      id: '1',
+      appMetadata: {},
+      userMetadata: {},
+      aud: 'authenticated',
+      createdAt: '',
+    );
+  }
+
+  @override
+  Stream<supabase.AuthState> get authStateChanges => const Stream.empty();
+}
+
+class FakeAuthService extends AuthService {
+  FakeAuthService(bool loggedIn)
+      : super(_FakeAuthRepository(loggedIn), LoginUseCase(_FakeAuthRepository(loggedIn))) {
+    state = state.copyWith(isAuthenticated: loggedIn);
+  }
+
+  @override
+  Future<void> login({required String email, required String password}) async {}
+
+  @override
   Future<void> logout() async {}
 }
 
@@ -64,3 +101,4 @@ void main() {
     expect(find.textContaining('Pedidos'), findsOneWidget);
   });
 }
+

@@ -154,7 +154,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                               );
-                          if (!mounted) return;
+                          if (!context.mounted) return;
                           final error = ref.read(authServiceProvider).error;
                           if (error != null) {
                             ScaffoldMessenger.of(context).showSnackBar(
