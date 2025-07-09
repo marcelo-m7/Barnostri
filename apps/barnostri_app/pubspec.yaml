@@ -16,7 +16,8 @@ dependencies:
 
   supabase_flutter: ^2.9.1        # mesma major que shared_models
   cached_network_image: ^3.0.0
-  qr_code_scanner: ^1.0.0
+  qr_code_scanner:
+    path: ../../packages/qr_code_scanner
   image_picker: '>=1.1.2'
   cupertino_icons: ^1.0.0
   fl_chart: 0.68.0

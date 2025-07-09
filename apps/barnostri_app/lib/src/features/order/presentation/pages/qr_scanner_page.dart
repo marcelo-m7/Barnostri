@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'qr_scanner_interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
