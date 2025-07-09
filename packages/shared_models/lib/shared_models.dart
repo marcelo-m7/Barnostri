@@ -10,6 +10,7 @@ export 'src/models/user_model.dart';
 export 'src/models/cart_item.dart';
 export 'src/models/enums.dart';
 export 'src/utils/formatting.dart';
+export 'src/utils/service_guard.dart';
 export 'src/repositories/auth_repository.dart';
 export 'src/repositories/menu_repository.dart';
 export 'src/repositories/order_repository.dart';

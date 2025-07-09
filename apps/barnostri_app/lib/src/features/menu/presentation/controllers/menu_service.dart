@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
+import 'package:shared_models/shared_models.dart' show GuardedStateNotifier;
 import 'package:barnostri_app/src/core/repositories.dart';
 
 class MenuState {
@@ -34,52 +35,43 @@ class MenuState {
   }
 }
 
-class MenuService extends StateNotifier<MenuState> {
+class MenuService extends GuardedStateNotifier<MenuState> {
   final MenuRepository _menuRepository;
   final LoadMenuUseCase _loadMenuUseCase;
   MenuService(this._menuRepository, this._loadMenuUseCase)
     : super(const MenuState());
 
-  Future<T?> _guard<T>(
-    Future<T> Function() action, {
-    String Function(Object)? onError,
-  }) async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      return await action();
-    } catch (e) {
-      state = state.copyWith(
-        error: onError != null ? onError(e) : e.toString(),
-      );
-      return null;
-    } finally {
-      state = state.copyWith(isLoading: false);
-    }
-  }
+  @override
+  MenuState setLoading(MenuState state, bool isLoading) =>
+      state.copyWith(isLoading: isLoading);
+
+  @override
+  MenuState setError(MenuState state, String? error) =>
+      state.copyWith(error: error);
 
   Future<void> loadCategories() async {
-    await _guard<void>(() async {
+    await guard<void>(() async {
       final categories = await _menuRepository.fetchCategories();
       state = state.copyWith(categories: categories);
     }, onError: (e) => 'Erro ao carregar categorias: $e');
   }
 
   Future<void> loadMenuItems() async {
-    await _guard<void>(() async {
+    await guard<void>(() async {
       final items = await _menuRepository.fetchMenuItems();
       state = state.copyWith(menuItems: items);
     }, onError: (e) => 'Erro ao carregar itens do cardápio: $e');
   }
 
   Future<void> loadTables() async {
-    await _guard<void>(() async {
+    await guard<void>(() async {
       final tables = await _menuRepository.fetchTables();
       state = state.copyWith(tables: tables);
     }, onError: (e) => 'Erro ao carregar mesas: $e');
   }
 
   Future<void> loadAll() async {
-    await _guard<void>(() async {
+    await guard<void>(() async {
       final result = await _loadMenuUseCase();
       state = state.copyWith(
         categories: result.categories,
@@ -132,7 +124,7 @@ class MenuService extends StateNotifier<MenuState> {
     required String name,
     required int sortOrder,
   }) async {
-    final result = await _guard<bool>(() async {
+    final result = await guard<bool>(() async {
       final newCat = await _menuRepository.addCategory(
         name: name,
         sortOrder: sortOrder,
@@ -151,7 +143,7 @@ class MenuService extends StateNotifier<MenuState> {
     int? sortOrder,
     bool? active,
   }) async {
-    final ok = await _guard<bool>(() async {
+    final ok = await guard<bool>(() async {
       final result = await _menuRepository.updateCategory(
         id: id,
         name: name,
@@ -173,7 +165,7 @@ class MenuService extends StateNotifier<MenuState> {
     required String categoryId,
     String? imageUrl,
   }) async {
-    final result = await _guard<bool>(() async {
+    final result = await guard<bool>(() async {
       final newItem = await _menuRepository.addMenuItem(
         name: name,
         description: description,
@@ -198,7 +190,7 @@ class MenuService extends StateNotifier<MenuState> {
     bool? available,
     String? imageUrl,
   }) async {
-    final ok = await _guard<bool>(() async {
+    final ok = await guard<bool>(() async {
       final result = await _menuRepository.updateMenuItem(
         id: id,
         name: name,
@@ -223,7 +215,7 @@ class MenuService extends StateNotifier<MenuState> {
   }
 
   Future<bool> deleteMenuItem(String id) async {
-    final ok = await _guard<bool>(() async {
+    final ok = await guard<bool>(() async {
       final success = await _menuRepository.deleteMenuItem(id);
       if (success) {
         final list = [...state.menuItems]..removeWhere((item) => item.id == id);
@@ -238,7 +230,7 @@ class MenuService extends StateNotifier<MenuState> {
     required String number,
     required String qrToken,
   }) async {
-    final result = await _guard<bool>(() async {
+    final result = await guard<bool>(() async {
       final newTable = await _menuRepository.addTable(
         number: number,
         qrToken: qrToken,

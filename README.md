@@ -55,6 +55,13 @@ cd apps/barnostri_app
 flutter build web
 ```
 
+Para rodar os testes no navegador utilize o driver do Chrome:
+
+```bash
+cd apps/barnostri_app
+flutter test -d chrome
+```
+
 ### Atualizando arquivos de localização
 
 Os textos em diferentes idiomas ficam nos arquivos `.arb` dentro de

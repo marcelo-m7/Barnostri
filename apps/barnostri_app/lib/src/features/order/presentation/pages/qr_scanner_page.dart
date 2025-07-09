@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 import 'package:barnostri_app/src/features/menu/presentation/pages/menu_page.dart';
+import 'package:go_router/go_router.dart';
 
 class QrScannerPage extends ConsumerStatefulWidget {
   const QrScannerPage({super.key});
@@ -246,9 +247,8 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
 
     if (table != null) {
       if (mounted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const MenuPage()),
-        );
+        if (!mounted) return;
+        context.go('/menu');
       }
     } else {
       // Show error and resume camera

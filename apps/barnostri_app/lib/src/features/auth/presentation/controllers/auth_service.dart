@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import 'package:barnostri_app/src/core/repositories.dart';
 import 'package:shared_models/shared_models.dart';
+import 'package:shared_models/shared_models.dart' show GuardedStateNotifier;
 
 class AuthState {
   final bool isAuthenticated;
@@ -23,7 +24,7 @@ class AuthState {
   }
 }
 
-class AuthService extends StateNotifier<AuthState> {
+class AuthService extends GuardedStateNotifier<AuthState> {
   final AuthRepository _authRepository;
   final LoginUseCase _loginUseCase;
   AuthService(this._authRepository, this._loginUseCase)
@@ -35,27 +36,23 @@ class AuthService extends StateNotifier<AuthState> {
     });
   }
 
-  Future<T?> _guard<T>(Future<T> Function() action) async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      return await action();
-    } catch (e) {
-      state = state.copyWith(error: e.toString());
-      return null;
-    } finally {
-      state = state.copyWith(isLoading: false);
-    }
-  }
+  @override
+  AuthState setLoading(AuthState state, bool isLoading) =>
+      state.copyWith(isLoading: isLoading);
+
+  @override
+  AuthState setError(AuthState state, String? error) =>
+      state.copyWith(error: error);
 
   Future<void> login({required String email, required String password}) async {
-    await _guard<void>(() async {
+    await guard<void>(() async {
       await _loginUseCase(email: email, password: password);
       state = state.copyWith(isAuthenticated: true);
     });
   }
 
   Future<void> logout() async {
-    await _guard<void>(() async {
+    await guard<void>(() async {
       await _authRepository.signOut();
       state = state.copyWith(isAuthenticated: false);
     });
