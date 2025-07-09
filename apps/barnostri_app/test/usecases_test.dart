@@ -11,10 +11,8 @@ void main() {
     test('successful login returns user id', () async {
       final repo = SupabaseAuthRepository(null);
       final usecase = LoginUseCase(repo);
-      final res = await usecase(
-        email: 'admin@barnostri.com',
-        password: 'admin123',
-      );
+      final res =
+          await usecase(email: 'admin@barnostri.com', password: 'admin123');
       expect(res.user?.id, 'demo-admin-id');
     });
   });

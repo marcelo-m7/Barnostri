@@ -38,4 +38,6 @@ class SupabaseConfig {
 /// Provider that holds the [SupabaseClient] instance.
 ///
 /// It defaults to `null` and is overridden during application initialization.
-final supabaseClientProvider = Provider<SupabaseClient?>((ref) => null);
+final supabaseClientProvider = Provider<SupabaseClient?>(
+  (ref) => null,
+);
