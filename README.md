@@ -18,7 +18,7 @@ Consulte também `docs/CODE_REVIEW.md` para um resumo de inconsistências identi
 
    ```bash
    (cd apps/barnostri_app && flutter pub get)
-   (cd packages/shared_models && dart pub get)
+   (cd packages/shared_models && flutter pub get)
    ```
 3. Configure o Supabase preenchendo as variáveis em [`supabase/supabase-config.json`](supabase/supabase-config.json).
 4. Inicie o Supabase local (requer o [Supabase CLI](https://supabase.com/docs/guides/cli)):
@@ -51,10 +51,18 @@ O arquivo `supabase/supabase-config.json` é carregado pelo serviço `SupabaseCo
 
 ## Executando os testes
 
-Os testes unitários estão em `packages/shared_models/test` e podem ser executados com:
+Execute os testes para cada pacote com:
 
 ```bash
-flutter test packages/shared_models
+(cd packages/shared_models && flutter test)
+(cd apps/barnostri_app && flutter test)
+```
+
+Para automatizar instalação do Flutter e execução dos testes utilize o script
+`setup_enviroment.sh`:
+
+```bash
+bash setup_enviroment.sh
 ```
 
 ## Integração contínua
