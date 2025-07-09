@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/core/repositories.dart';
-import 'package:barnostri_app/src/features/order/domain/usecases/create_order_use_case.dart';
-import 'package:barnostri_app/src/features/order/domain/usecases/update_order_status_use_case.dart';
 
 class OrderState {
   final List<CartItem> cartItems;

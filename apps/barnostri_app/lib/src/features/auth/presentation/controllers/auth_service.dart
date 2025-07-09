@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_models/shared_models.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import 'package:barnostri_app/src/core/repositories.dart';
-import 'package:barnostri_app/src/features/auth/domain/usecases/login_use_case.dart';
+import 'package:shared_models/shared_models.dart';
 
 class AuthState {
   final bool isAuthenticated;

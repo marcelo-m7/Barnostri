@@ -4,10 +4,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:barnostri_app/src/features/auth/data/repositories/supabase_auth_repository.dart';
 import 'package:barnostri_app/src/features/menu/data/repositories/supabase_menu_repository.dart';
 import 'package:barnostri_app/src/features/order/data/repositories/supabase_order_repository.dart';
-import 'package:barnostri_app/src/features/auth/domain/usecases/login_use_case.dart';
-import 'package:barnostri_app/src/features/menu/domain/usecases/load_menu_use_case.dart';
-import 'package:barnostri_app/src/features/order/domain/usecases/create_order_use_case.dart';
-import 'package:barnostri_app/src/features/order/domain/usecases/update_order_status_use_case.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
