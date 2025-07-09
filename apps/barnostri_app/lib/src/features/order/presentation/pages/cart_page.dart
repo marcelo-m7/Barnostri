@@ -554,7 +554,7 @@ class _CartPageState extends ConsumerState<CartPage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Row(
           children: [
-            Icon(Icons.check_circle, color: Colors.green, size: 32),
+            const Icon(Icons.check_circle, color: Colors.green, size: 32),
             const SizedBox(width: 12),
             Text(AppLocalizations.of(context).orderPlaced),
           ],

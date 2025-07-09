@@ -24,7 +24,7 @@ class QRView extends StatelessWidget {
   Widget build(BuildContext context) {
     // Notify that scanning is not available on web
     onQRViewCreated?.call(const QRViewController());
-    return Center(child: Text('QR scanning not supported on web'));
+    return const Center(child: Text('QR scanning not supported on web'));
   }
 }
 
