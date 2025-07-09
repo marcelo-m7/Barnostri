@@ -32,4 +32,4 @@ pubspec.lock
 .env
 .env.local
 .env.*.local
-supabase-config.json
+# supabase-config.json
