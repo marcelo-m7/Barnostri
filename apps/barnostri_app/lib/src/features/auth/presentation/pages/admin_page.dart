@@ -47,11 +47,14 @@ class _AdminPageState extends ConsumerState<AdminPage>
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
               // Logo/Title
               Container(
                 padding: const EdgeInsets.all(24),
