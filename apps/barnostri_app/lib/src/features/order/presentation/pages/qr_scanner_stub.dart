@@ -17,7 +17,7 @@ typedef QRViewCreatedCallback = void Function(QRViewController controller);
 
 class QRView extends StatelessWidget {
   final QRViewCreatedCallback? onQRViewCreated;
-  final Widget? overlay;
+  final QrScannerOverlayShape? overlay;
   const QRView({super.key, this.onQRViewCreated, this.overlay});
 
   @override
@@ -37,10 +37,12 @@ class QrScannerOverlayShape extends ShapeBorder {
     this.overlayColor = const Color(0x00000000),
     this.borderRadius = 0,
     this.borderLength = 0,
-    this.cutOutWidth = 0,
-    this.cutOutHeight = 0,
+    double? cutOutSize,
+    double? cutOutWidth,
+    double? cutOutHeight,
     this.cutOutBottomOffset = 0,
-  });
+  })  : cutOutWidth = cutOutWidth ?? cutOutSize ?? 0,
+        cutOutHeight = cutOutHeight ?? cutOutSize ?? 0;
 
   final Color borderColor;
   final double borderWidth;
