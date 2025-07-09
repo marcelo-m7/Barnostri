@@ -20,7 +20,7 @@ class SupabaseOrderRepository implements OrderRepository {
       return 'mock-order-${DateTime.now().millisecondsSinceEpoch}';
     }
     try {
-      final orderResponse = await _client
+      final orderResponse = await _client!
           .from('orders')
           .insert({
             'table_id': tableId,
@@ -43,7 +43,7 @@ class SupabaseOrderRepository implements OrderRepository {
             },
           )
           .toList();
-      await _client.from('order_items').insert(itemsData);
+      await _client!.from('order_items').insert(itemsData);
       return orderId;
     } catch (e) {
       if (kDebugMode) {
@@ -62,7 +62,7 @@ class SupabaseOrderRepository implements OrderRepository {
       return true;
     }
     try {
-      await _client
+      await _client!
           .from('orders')
           .update({'status': newStatus})
           .eq('id', orderId);
@@ -142,7 +142,7 @@ class SupabaseOrderRepository implements OrderRepository {
       ];
     }
     try {
-      final response = await _client
+      final response = await _client!
           .from('orders')
           .select('*, tables(*), order_items(*, menu_items(*))')
           .order('created_at', ascending: false);
@@ -176,7 +176,7 @@ class SupabaseOrderRepository implements OrderRepository {
         ],
       );
     }
-    return _client
+    return _client!
         .from('orders')
         .stream(primaryKey: ['id'])
         .order('created_at', ascending: false)
@@ -200,7 +200,7 @@ class SupabaseOrderRepository implements OrderRepository {
         ),
       );
     }
-    return _client
+    return _client!
         .from('orders')
         .stream(primaryKey: ['id'])
         .eq('id', orderId)
