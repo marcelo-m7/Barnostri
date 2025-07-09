@@ -17,32 +17,32 @@ jobs:
 
       # Get dependencies for both packages
       - run: flutter pub get
-        working-directory: apps/barnostri_app
-
-      - run: flutter pub get
         working-directory: packages/shared_models
 
+      - run: flutter pub get
+        working-directory: apps/barnostri_app
+  
       # Format both projects
-      # - run: dart format --set-exit-if-changed .
-      #   working-directory: apps/barnostri_app
+      - run: dart format --set-exit-if-changed .
+        working-directory: packages/shared_models
 
-      # - run: dart format --set-exit-if-changed .
-      #   working-directory: packages/shared_models
+      - run: dart format --set-exit-if-changed .
+        working-directory: apps/barnostri_app
 
       # Analyze both projects
       - run: flutter analyze
-        working-directory: apps/barnostri_app
+        working-directory: packages/shared_models
 
       - run: flutter analyze
-        working-directory: packages/shared_models
-
+        working-directory: apps/barnostri_app
+  
       # Test both projects
       - run: flutter test
-        working-directory: apps/barnostri_app
-
-      - run: flutter test
         working-directory: packages/shared_models
 
+      - run: flutter test
+        working-directory: apps/barnostri_app
+  
   build:
     needs: tests
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

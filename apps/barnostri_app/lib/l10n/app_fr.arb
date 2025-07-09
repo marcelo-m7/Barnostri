@@ -30,6 +30,10 @@
   "cash": "Espèces",
   "checkout": "Valider la Commande",
   "processingOrder": "Traitement de la Commande...",
+  "paymentFailureRetry": "Échec du paiement. Veuillez réessayer.",
+  "@paymentFailureRetry": {
+    "description": "Affiché lorsque le paiement échoue"
+  },
   "orderPlaced": "Commande Passée!",
   "orderPlacedDescription": "Votre commande a été passée avec succès et est en cours de préparation",
   "orderNumber": "Numéro de Commande",
@@ -119,6 +123,15 @@
   "markAsDelivered": "Marquer comme Livré",
   "orderUpdated": "Statut de la commande mis à jour avec succès",
   "orderUpdateError": "Échec de la mise à jour du statut de la commande",
+  "orderCreationFailure": "Échec de la création de la commande",
+  "@orderCreationFailure": {
+    "description": "Message d'erreur lors de la création de la commande"
+  },
+  "orderProcessingFailure": "Échec du traitement de la commande : {error}",
+  "@orderProcessingFailure": {
+    "description": "Erreur détaillée lorsque le traitement de la commande échoue",
+    "placeholders": {"error": {}}
+  },
   "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet article?",
   "deleteConfirmation": "Confirmation de Suppression",
   "itemDeleted": "Article supprimé avec succès",
@@ -231,11 +244,15 @@
   "@tableNotFound": {
     "description": "Message d'erreur lorsque la table est introuvable"
   },
+  "tableLookupError": "Erreur lors de la recherche de la table : {error}",
+  "@tableLookupError": {
+    "description": "Erreur générique lors de la recherche de table",
+    "placeholders": {"error": {}}
+  },
   "noTableSelected": "Aucune table sélectionnée",
   "@noTableSelected": {
     "description": "Message d'erreur lorsqu'aucune table n'est sélectionnée"
   },
   "orderField": "Ordre",
   "@orderField": {
-    "description": "Label for numeric ordering field"
-  }}
+    "description": "Label for numeric ordering field"  }}

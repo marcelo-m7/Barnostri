@@ -7,8 +7,10 @@ abstract class MenuRepository {
   Future<List<CategoryModel>> fetchCategories();
   Future<List<MenuItem>> fetchMenuItems();
 
-  Future<CategoryModel> addCategory(
-      {required String name, required int sortOrder});
+  Future<CategoryModel> addCategory({
+    required String name,
+    required int sortOrder,
+  });
 
   Future<bool> updateCategory({
     required String id,
@@ -39,8 +41,10 @@ abstract class MenuRepository {
 
   Future<bool> deleteMenuItem(String id);
 
-  Future<TableModel> addTable(
-      {required String number, required String qrToken});
+  Future<TableModel> addTable({
+    required String number,
+    required String qrToken,
+  });
 
   Future<bool> updateTable({
     required String id,

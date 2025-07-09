@@ -120,6 +120,10 @@
   "@processingOrder": {
     "description": "Processing order message"
   },
+  "paymentFailureRetry": "Payment failed. Please try again.",
+  "@paymentFailureRetry": {
+    "description": "Shown when payment processing fails"
+  },
   "orderPlaced": "Order Placed!",
   "@orderPlaced": {
     "description": "Order placed success message"
@@ -426,6 +430,15 @@
   "@orderUpdateError": {
     "description": "Order update error message"
   },
+  "orderCreationFailure": "Failed to create order",
+  "@orderCreationFailure": {
+    "description": "Error message when order creation fails"
+  },
+  "orderProcessingFailure": "Failed to process order: {error}",
+  "@orderProcessingFailure": {
+    "description": "Detailed error when processing order fails",
+    "placeholders": {"error": {}}
+  },
   "confirmDelete": "Are you sure you want to delete this item?",
   "@confirmDelete": {
     "description": "Delete confirmation message"
@@ -623,11 +636,15 @@
   "@tableNotFound": {
     "description": "Error message when table is not found"
   },
+  "tableLookupError": "Error fetching table: {error}",
+  "@tableLookupError": {
+    "description": "Generic error when looking up a table",
+    "placeholders": {"error": {}}
+  },
   "noTableSelected": "No table selected",
   "@noTableSelected": {
     "description": "Error message when no table is selected"
   },
   "orderField": "Order",
   "@orderField": {
-    "description": "Label for numeric ordering field"
-  }}
+    "description": "Label for numeric ordering field"  }}

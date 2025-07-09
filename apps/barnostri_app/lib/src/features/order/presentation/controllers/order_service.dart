@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/core/repositories.dart';
+import 'package:barnostri_app/src/core/services/language_service.dart';
+import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 
 class OrderState {
   final List<CartItem> cartItems;
@@ -36,16 +38,21 @@ class OrderState {
 }
 
 class OrderService extends StateNotifier<OrderState> {
+  final Reader _read;
   final OrderRepository _orderRepository;
   final MenuRepository _menuRepository;
   final CreateOrderUseCase _createOrderUseCase;
   final UpdateOrderStatusUseCase _updateOrderStatusUseCase;
   OrderService(
+    this._read,
     this._orderRepository,
     this._menuRepository,
     this._createOrderUseCase,
     this._updateOrderStatusUseCase,
   ) : super(const OrderState());
+
+  AppLocalizations get _l10n =>
+      lookupAppLocalizations(_read(languageServiceProvider));
 
   Future<T?> _guard<T>(
     Future<T> Function() action, {
@@ -106,11 +113,11 @@ class OrderService extends StateNotifier<OrderState> {
 
   Future<String?> createOrder({required PaymentMethod paymentMethod}) async {
     if (state.currentTable == null) {
-      state = state.copyWith(error: 'Nenhuma mesa selecionada');
+      state = state.copyWith(error: _l10n.noTableSelected);
       return null;
     }
     if (state.cartItems.isEmpty) {
-      state = state.copyWith(error: 'Carrinho está vazio');
+      state = state.copyWith(error: _l10n.emptyCart);
       return null;
     }
     return await _guard<String?>(() async {
@@ -124,20 +131,20 @@ class OrderService extends StateNotifier<OrderState> {
         clearCart();
         return orderId;
       } else {
-        state = state.copyWith(error: 'Erro ao criar pedido');
+        state = state.copyWith(error: _l10n.orderCreationFailure);
         return null;
       }
-    }, onError: (e) => 'Erro ao processar pedido: $e');
+    }, onError: (e) => _l10n.orderProcessingFailure(e));
   }
 
   Future<bool> updateOrderStatus(String orderId, OrderStatus status) async {
     final success = await _guard<bool>(() async {
       final result = await _updateOrderStatusUseCase(orderId, status);
       if (!result) {
-        state = state.copyWith(error: 'Erro ao atualizar status do pedido');
+        state = state.copyWith(error: _l10n.orderUpdateError);
       }
       return result;
-    }, onError: (e) => 'Erro ao atualizar status: $e');
+    }, onError: (e) => _l10n.statusUpdateErrorDetailed(e));
     return success ?? false;
   }
 
@@ -145,7 +152,7 @@ class OrderService extends StateNotifier<OrderState> {
     final orders = await _guard<List<Order>>(() async {
       final result = await _orderRepository.fetchOrders();
       return result;
-    }, onError: (e) => 'Erro ao carregar pedidos: $e');
+    }, onError: (e) => _l10n.errorLoadingOrders);
     return orders ?? [];
   }
 
@@ -164,10 +171,10 @@ class OrderService extends StateNotifier<OrderState> {
         setTable(table);
         return table;
       } else {
-        state = state.copyWith(error: 'Mesa não encontrada');
+        state = state.copyWith(error: _l10n.tableNotFound);
         return null;
       }
-    }, onError: (e) => 'Erro ao buscar mesa: $e');
+    }, onError: (e) => _l10n.tableLookupError(e));
   }
 
   Future<bool> processPayment({
@@ -177,6 +184,9 @@ class OrderService extends StateNotifier<OrderState> {
     state = state.copyWith(isLoading: true);
     await Future.delayed(const Duration(seconds: 2));
     final success = true;
+    if (!success) {
+      state = state.copyWith(error: _l10n.paymentFailureRetry);
+    }
     state = state.copyWith(isLoading: false);
     return success;
   }
@@ -212,5 +222,5 @@ final orderServiceProvider = StateNotifierProvider<OrderService, OrderState>((
   final menuRepo = ref.watch(menuRepositoryProvider);
   final create = CreateOrderUseCase(orderRepo);
   final update = UpdateOrderStatusUseCase(orderRepo);
-  return OrderService(orderRepo, menuRepo, create, update);
+  return OrderService(ref.read, orderRepo, menuRepo, create, update);
 });

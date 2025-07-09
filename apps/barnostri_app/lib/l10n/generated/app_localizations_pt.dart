@@ -101,6 +101,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get processingOrder => 'Processando Pedido...';
 
   @override
+  String get paymentFailureRetry => 'Falha no pagamento. Tente novamente.';
+
+  @override
   String get orderPlaced => 'Pedido Realizado!';
 
   @override
@@ -329,6 +332,14 @@ class AppLocalizationsPt extends AppLocalizations {
   String get orderUpdateError => 'Falha ao atualizar status do pedido';
 
   @override
+  String get orderCreationFailure => 'Failed to create order';
+
+  @override
+  String orderProcessingFailure(Object error) {
+    return 'Failed to process order: $error';
+  }
+
+  @override
   String get confirmDelete => 'Tem certeza que deseja excluir este item?';
 
   @override
@@ -484,6 +495,11 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tableNotFound => 'Mesa não encontrada';
+
+  @override
+  String tableLookupError(Object error) {
+    return 'Erro ao buscar mesa: $error';
+  }
 
   @override
   String get noTableSelected => 'Nenhuma mesa selecionada';
