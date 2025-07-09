@@ -478,7 +478,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
 
                   // Quantity selector
                   Text(
-                    'Quantidade',
+                    AppLocalizations.of(context).quantity,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
