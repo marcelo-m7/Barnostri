@@ -26,7 +26,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -270,7 +270,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
   }
 
   void _showManualInputDialog(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final textController = TextEditingController();
 
     showDialog(

@@ -5,7 +5,6 @@ import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_se
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
 import 'package:barnostri_app/src/widgets/menu_item_card.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
-import 'package:barnostri_app/src/features/order/presentation/pages/cart_page.dart';
 import 'package:go_router/go_router.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
@@ -22,7 +21,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
   String _searchQuery = '';
   bool _isLoading = true;
 
-  AppLocalizations get l10n => AppLocalizations.of(context)!;
+  AppLocalizations get l10n => AppLocalizations.of(context);
 
   @override
   void initState() {
@@ -57,7 +56,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
           final menuState = ref.watch(menuServiceProvider);
           final orderState = ref.watch(orderServiceProvider);
           final orderNotifier = ref.watch(orderServiceProvider.notifier);
-          final l10n = AppLocalizations.of(context)!;
+          final l10n = AppLocalizations.of(context);
           if (_isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -318,7 +317,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
         controller: _tabController,
         children: menuState.categories.map((category) {
           final items = menuService.getItemsByCategory(category.id);
-          final l10n = AppLocalizations.of(context)!;
+          final l10n = AppLocalizations.of(context);
 
           return Padding(
             padding: const EdgeInsets.all(16),
@@ -536,7 +535,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
 
                   // Observation field
                   Text(
-                    AppLocalizations.of(context)!.observationOptional,
+                    AppLocalizations.of(context).observationOptional,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -548,7 +547,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                     decoration: InputDecoration(
                       hintText: AppLocalizations.of(
                         context,
-                      )!
+                      )
                           .observationExample,
                       filled: true,
                       fillColor: Theme.of(context).colorScheme.surface,
@@ -588,7 +587,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                                   content: Text(
                                     AppLocalizations.of(
                                       context,
-                                    )!
+                                    )
                                         .addedToCartMessage(widget.item.name),
                                   ),
                                   backgroundColor: Theme.of(
@@ -611,8 +610,8 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                       ),
                       child: Text(
                         widget.item.available
-                            ? '${AppLocalizations.of(context)!.addToCart} - ${formatCurrency(widget.item.price * _quantity)}'
-                            : AppLocalizations.of(context)!.itemUnavailable,
+                            ? '${AppLocalizations.of(context).addToCart} - ${formatCurrency(widget.item.price * _quantity)}'
+                            : AppLocalizations.of(context).itemUnavailable,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),

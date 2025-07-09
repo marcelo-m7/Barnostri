@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
-import 'package:barnostri_app/src/core/repositories.dart';
 import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
 import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_service.dart';
 import 'package:barnostri_app/src/widgets/order_status_widget.dart';
@@ -231,7 +230,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
   }
 
   Widget _buildAdminDashboard() {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -271,7 +270,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
     return Builder(
       builder: (context) {
         final orderService = ref.watch(orderServiceProvider.notifier);
-        final l10n = AppLocalizations.of(context)!;
+        final l10n = AppLocalizations.of(context);
         return StreamBuilder<List<Order>>(
           stream: orderService.streamOrders(),
           builder: (context, snapshot) {
@@ -356,7 +355,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
     return Builder(
       builder: (context) {
         final menuService = ref.watch(menuServiceProvider.notifier);
-        final l10n = AppLocalizations.of(context)!;
+        final l10n = AppLocalizations.of(context);
         return FutureBuilder(
           future: menuService.loadAll(),
           builder: (context, snapshot) {
@@ -507,7 +506,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                         ),
                       ),
                       title: Text(
-                        AppLocalizations.of(context)!.tableNumber(table.number),
+                        AppLocalizations.of(context).tableNumber(table.number),
                       ),
                       subtitle: Text('QR: ${table.qrToken}'),
                       trailing: Icon(
@@ -540,7 +539,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.addItem),
+        title: Text(AppLocalizations.of(context).addItem),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -548,20 +547,20 @@ class _AdminPageState extends ConsumerState<AdminPage>
               TextField(
                 controller: nomeController,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.name,
+                  labelText: AppLocalizations.of(context).name,
                 ),
               ),
               TextField(
                 controller: descricaoController,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.description,
+                  labelText: AppLocalizations.of(context).description,
                 ),
                 maxLines: 3,
               ),
               TextField(
                 controller: precoController,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.price,
+                  labelText: AppLocalizations.of(context).price,
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -569,7 +568,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
               DropdownButtonFormField<String>(
                 value: selectedCategoryId,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.category,
+                  labelText: AppLocalizations.of(context).category,
                 ),
                 items: menuService.state.categories
                     .map(
@@ -587,7 +586,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)!.cancel),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -602,7 +601,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 Navigator.pop(context);
               }
             },
-            child: Text(AppLocalizations.of(context)!.add),
+            child: Text(AppLocalizations.of(context).add),
           ),
         ],
       ),
@@ -616,20 +615,20 @@ class _AdminPageState extends ConsumerState<AdminPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.addCategory),
+        title: Text(AppLocalizations.of(context).addCategory),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nomeController,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.name,
+                labelText: AppLocalizations.of(context).name,
               ),
             ),
             TextField(
               controller: ordemController,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.orderField,
+                labelText: AppLocalizations.of(context).orderField,
               ),
               keyboardType: TextInputType.number,
             ),
@@ -638,7 +637,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)!.cancel),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -649,7 +648,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
               if (!context.mounted) return;
               Navigator.pop(context);
             },
-            child: Text(AppLocalizations.of(context)!.add),
+            child: Text(AppLocalizations.of(context).add),
           ),
         ],
       ),
@@ -663,20 +662,20 @@ class _AdminPageState extends ConsumerState<AdminPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.addTable),
+        title: Text(AppLocalizations.of(context).addTable),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: numeroController,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.tableNumberLabel,
+                labelText: AppLocalizations.of(context).tableNumberLabel,
               ),
             ),
             TextField(
               controller: qrTokenController,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.qrToken,
+                labelText: AppLocalizations.of(context).qrToken,
               ),
             ),
           ],
@@ -684,7 +683,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)!.cancel),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -696,7 +695,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
               if (!context.mounted) return;
               Navigator.pop(context);
             },
-            child: Text(AppLocalizations.of(context)!.add),
+            child: Text(AppLocalizations.of(context).add),
           ),
         ],
       ),

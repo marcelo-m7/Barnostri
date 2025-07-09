@@ -17,11 +17,11 @@ class _CartPageState extends ConsumerState<CartPage> {
   bool _isProcessingPayment = false;
   String? _currentOrderId;
 
-  AppLocalizations get l10n => AppLocalizations.of(context)!;
+  AppLocalizations get l10n => AppLocalizations.of(context);
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -476,7 +476,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                           _currentOrderId = null;
                         });
                       },
-                      child: Text(AppLocalizations.of(context)!.back),
+                      child: Text(AppLocalizations.of(context).back),
                     ),
                   ],
                 ),
@@ -547,10 +547,10 @@ class _CartPageState extends ConsumerState<CartPage> {
           children: [
             Icon(Icons.check_circle, color: Colors.green, size: 32),
             const SizedBox(width: 12),
-            Text(AppLocalizations.of(context)!.orderPlaced),
+            Text(AppLocalizations.of(context).orderPlaced),
           ],
         ),
-        content: Text(AppLocalizations.of(context)!.orderConfirmedKitchen),
+        content: Text(AppLocalizations.of(context).orderConfirmedKitchen),
         actions: [
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -558,7 +558,7 @@ class _CartPageState extends ConsumerState<CartPage> {
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
             ),
-            child: Text(AppLocalizations.of(context)!.ok),
+            child: Text(AppLocalizations.of(context).ok),
           ),
         ],
       ),
@@ -578,14 +578,14 @@ class _CartPageState extends ConsumerState<CartPage> {
               size: 32,
             ),
             const SizedBox(width: 12),
-            Text(AppLocalizations.of(context)!.error),
+            Text(AppLocalizations.of(context).error),
           ],
         ),
         content: Text(message),
         actions: [
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(AppLocalizations.of(context)!.ok),
+            child: Text(AppLocalizations.of(context).ok),
           ),
         ],
       ),

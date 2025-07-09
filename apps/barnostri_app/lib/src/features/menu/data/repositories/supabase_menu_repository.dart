@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_models/shared_models.dart';
-import 'package:barnostri_app/src/core/services/supabase_config.dart';
 
 class SupabaseMenuRepository implements MenuRepository {
   final SupabaseClient? _client;
@@ -30,7 +29,7 @@ class SupabaseMenuRepository implements MenuRepository {
       ];
     }
     try {
-      final response = await _client!
+      final response = await _client
           .from('tables')
           .select('*')
           .eq('active', true)
@@ -71,13 +70,13 @@ class SupabaseMenuRepository implements MenuRepository {
       return null;
     }
     try {
-      final response = await _client!
+      final response = await _client
           .from('tables')
           .select('*')
           .eq('qr_token', qrToken)
           .eq('active', true)
           .single();
-      return TableModel.fromJson(response as Map<String, dynamic>);
+      return TableModel.fromJson(response);
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao buscar mesa por QR: $e');
@@ -125,7 +124,7 @@ class SupabaseMenuRepository implements MenuRepository {
       ];
     }
     try {
-      final response = await _client!
+      final response = await _client
           .from('categories')
           .select('*')
           .eq('active', true)
@@ -192,7 +191,7 @@ class SupabaseMenuRepository implements MenuRepository {
       ];
     }
     try {
-      final response = await _client!
+      final response = await _client
           .from('menu_items')
           .select()
           .eq('available', true)
@@ -223,12 +222,12 @@ class SupabaseMenuRepository implements MenuRepository {
         updatedAt: DateTime.now(),
       );
     }
-    final response = await _client!
+    final response = await _client
         .from('categories')
         .insert({'name': name, 'sort_order': sortOrder, 'active': true})
         .select()
         .single();
-    return CategoryModel.fromJson(response as Map<String, dynamic>);
+    return CategoryModel.fromJson(response);
   }
 
   @override
@@ -248,7 +247,7 @@ class SupabaseMenuRepository implements MenuRepository {
     if (name != null) updateData['name'] = name;
     if (sortOrder != null) updateData['sort_order'] = sortOrder;
     if (active != null) updateData['active'] = active;
-    await _client!.from('categories').update(updateData).eq('id', id);
+    await _client.from('categories').update(updateData).eq('id', id);
     return true;
   }
 
@@ -260,7 +259,7 @@ class SupabaseMenuRepository implements MenuRepository {
       }
       return true;
     }
-    await _client!.from('categories').delete().eq('id', id);
+    await _client.from('categories').delete().eq('id', id);
     return true;
   }
 
@@ -285,7 +284,7 @@ class SupabaseMenuRepository implements MenuRepository {
         updatedAt: DateTime.now(),
       );
     }
-    final response = await _client!
+    final response = await _client
         .from('menu_items')
         .insert({
           'name': name,
@@ -297,7 +296,7 @@ class SupabaseMenuRepository implements MenuRepository {
         })
         .select('*, categories(*)')
         .single();
-    return MenuItem.fromJson(response as Map<String, dynamic>);
+    return MenuItem.fromJson(response);
   }
 
   @override
@@ -323,7 +322,7 @@ class SupabaseMenuRepository implements MenuRepository {
     if (categoryId != null) updateData['category_id'] = categoryId;
     if (available != null) updateData['available'] = available;
     if (imageUrl != null) updateData['image_url'] = imageUrl;
-    await _client!.from('menu_items').update(updateData).eq('id', id);
+    await _client.from('menu_items').update(updateData).eq('id', id);
     return true;
   }
 
@@ -335,7 +334,7 @@ class SupabaseMenuRepository implements MenuRepository {
       }
       return true;
     }
-    await _client!.from('menu_items').delete().eq('id', id);
+    await _client.from('menu_items').delete().eq('id', id);
     return true;
   }
 
@@ -354,12 +353,12 @@ class SupabaseMenuRepository implements MenuRepository {
         updatedAt: DateTime.now(),
       );
     }
-    final response = await _client!
+    final response = await _client
         .from('tables')
         .insert({'number': number, 'qr_token': qrToken, 'active': true})
         .select()
         .single();
-    return TableModel.fromJson(response as Map<String, dynamic>);
+    return TableModel.fromJson(response);
   }
 
   @override
@@ -379,7 +378,7 @@ class SupabaseMenuRepository implements MenuRepository {
     if (number != null) updateData['number'] = number;
     if (qrToken != null) updateData['qr_token'] = qrToken;
     if (active != null) updateData['active'] = active;
-    await _client!.from('tables').update(updateData).eq('id', id);
+    await _client.from('tables').update(updateData).eq('id', id);
     return true;
   }
 
@@ -391,7 +390,7 @@ class SupabaseMenuRepository implements MenuRepository {
       }
       return true;
     }
-    await _client!.from('tables').delete().eq('id', id);
+    await _client.from('tables').delete().eq('id', id);
     return true;
   }
 }

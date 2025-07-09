@@ -16,7 +16,7 @@ class LanguageSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final languageService = ref.watch(languageServiceProvider.notifier);
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     if (showAsBottomSheet) {
       return _buildBottomSheet(context, ref, languageService, l10n);
@@ -256,7 +256,7 @@ class LanguageSelectorButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final languageService = ref.watch(languageServiceProvider.notifier);
     final locale = ref.watch(languageServiceProvider);
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       decoration: BoxDecoration(

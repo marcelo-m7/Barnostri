@@ -106,7 +106,7 @@ class OrderStatusWidget extends ConsumerWidget {
                 Text(
                   AppLocalizations.of(
                     context,
-                  )!.tableNumber(order.table!.number),
+                  ).tableNumber(order.table!.number),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(
                       context,
@@ -179,7 +179,7 @@ class OrderStatusWidget extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)!.orderStatus,
+            AppLocalizations.of(context).orderStatus,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -335,7 +335,7 @@ class OrderStatusWidget extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)!.orderItems,
+            AppLocalizations.of(context).orderItems,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -450,7 +450,7 @@ class OrderStatusWidget extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)!.adminActions,
+            AppLocalizations.of(context).adminActions,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -467,7 +467,7 @@ class OrderStatusWidget extends ConsumerWidget {
                     label: Text(
                       AppLocalizations.of(
                         context,
-                      )!.markAsStatus(nextStatus.displayName),
+                      ).markAsStatus(nextStatus.displayName),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -487,7 +487,7 @@ class OrderStatusWidget extends ConsumerWidget {
                     onPressed: () =>
                         _updateOrderStatus(context, ref, OrderStatus.canceled),
                     icon: const Icon(Icons.cancel),
-                    label: Text(AppLocalizations.of(context)!.cancel),
+                    label: Text(AppLocalizations.of(context).cancel),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Theme.of(context).colorScheme.error,
                       side: BorderSide(
@@ -524,15 +524,15 @@ class OrderStatusWidget extends ConsumerWidget {
   String _getStatusDescription(BuildContext context, OrderStatus status) {
     switch (status) {
       case OrderStatus.received:
-        return AppLocalizations.of(context)!.statusReceivedDescription;
+        return AppLocalizations.of(context).statusReceivedDescription;
       case OrderStatus.preparing:
-        return AppLocalizations.of(context)!.statusInPrepDescription;
+        return AppLocalizations.of(context).statusInPrepDescription;
       case OrderStatus.ready:
-        return AppLocalizations.of(context)!.statusReadyDescription;
+        return AppLocalizations.of(context).statusReadyDescription;
       case OrderStatus.delivered:
-        return AppLocalizations.of(context)!.statusDeliveredDescription;
+        return AppLocalizations.of(context).statusDeliveredDescription;
       case OrderStatus.canceled:
-        return AppLocalizations.of(context)!.statusCancelledDescription;
+        return AppLocalizations.of(context).statusCancelledDescription;
     }
   }
 
@@ -562,7 +562,7 @@ class OrderStatusWidget extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            AppLocalizations.of(context)!.statusUpdated(newStatus.displayName),
+            AppLocalizations.of(context).statusUpdated(newStatus.displayName),
           ),
           backgroundColor: Theme.of(context).colorScheme.primary,
         ),
@@ -573,7 +573,7 @@ class OrderStatusWidget extends ConsumerWidget {
           content: Text(
             AppLocalizations.of(
               context,
-            )!.statusUpdateErrorDetailed(orderService.state.error ?? ''),
+            ).statusUpdateErrorDetailed(orderService.state.error ?? ''),
           ),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),

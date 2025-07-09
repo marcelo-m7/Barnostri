@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_models/shared_models.dart';
-import 'package:barnostri_app/src/core/services/supabase_config.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
   final SupabaseClient? _client;
@@ -48,7 +47,7 @@ class SupabaseAuthRepository implements AuthRepository {
       }
     }
     try {
-      final response = await _client!.auth.signInWithPassword(
+      final response = await _client.auth.signInWithPassword(
         email: email,
         password: password,
       );
@@ -70,7 +69,7 @@ class SupabaseAuthRepository implements AuthRepository {
       return;
     }
     try {
-      await _client!.auth.signOut();
+      await _client.auth.signOut();
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao fazer logout: $e');
@@ -84,7 +83,7 @@ class SupabaseAuthRepository implements AuthRepository {
     if (_client == null) {
       return null;
     }
-    return _client!.auth.currentUser;
+    return _client.auth.currentUser;
   }
 
   @override
@@ -92,6 +91,6 @@ class SupabaseAuthRepository implements AuthRepository {
     if (_client == null) {
       return Stream.value(AuthState(AuthChangeEvent.signedOut, null));
     }
-    return _client!.auth.onAuthStateChange;
+    return _client.auth.onAuthStateChange;
   }
 }

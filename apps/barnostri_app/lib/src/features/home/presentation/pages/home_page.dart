@@ -11,7 +11,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final isDemoMode = ref.watch(demoModeProvider);
 
     return Scaffold(
