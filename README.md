@@ -28,10 +28,24 @@ Consulte também `docs/CODE_REVIEW.md` para um resumo de inconsistências identi
    ```
 5. Execute o app:
 
-   ```bash
-   cd apps/barnostri_app
-   flutter run -d <dispositivo>
-   ```
+  ```bash
+  cd apps/barnostri_app
+  flutter run -d <dispositivo>
+  ```
+
+### Atualizando arquivos de localização
+
+Os textos em diferentes idiomas ficam nos arquivos `.arb` dentro de
+`apps/barnostri_app/lib/l10n`. Sempre que modificar esses arquivos, gere os
+fontes de localização com:
+
+```bash
+cd apps/barnostri_app
+flutter gen-l10n
+```
+
+Isso atualizará o conteúdo de `lib/l10n/generated`, que deve ser versionado em
+seguida.
 
 O arquivo `supabase/supabase-config.json` é carregado pelo serviço `SupabaseConfig.createClient()` dentro do aplicativo.
 
