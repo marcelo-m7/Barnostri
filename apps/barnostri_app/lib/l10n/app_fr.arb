@@ -42,17 +42,37 @@
   "tableNumber": "Table {number}",
   "itemsCount": "{count} articles",
   "admin": "Admin",
+  "adminTitle": "Barnostri Admin",
+  "@adminTitle": {
+    "description": "Titre de la page de connexion admin"
+  },
+  "adminRestricted": "Accès réservé au personnel",
+  "@adminRestricted": {
+    "description": "Sous-titre indiquant un accès restreint"
+  },
   "login": "Se connecter",
   "logout": "Se déconnecter",
   "email": "Email",
   "password": "Mot de passe",
   "emailHint": "Entrez votre email",
   "passwordHint": "Entrez votre mot de passe",
+  "emailLabel": "Email",
+  "@emailLabel": {
+    "description": "Label du champ email pour la connexion admin"
+  },
+  "passwordLabel": "Mot de passe",
+  "@passwordLabel": {
+    "description": "Label du champ mot de passe pour la connexion admin"
+  },
   "invalidEmail": "Veuillez entrer un email valide",
   "passwordRequired": "Le mot de passe est requis",
   "loginError": "Échec de la connexion. Vérifiez vos identifiants.",
   "demoMode": "Mode Démo",
   "demoCredentials": "Utilisez: admin@barnostri.com / admin123",
+  "demoCredentialsTitle": "Identifiants de démonstration:",
+  "@demoCredentialsTitle": {
+    "description": "Titre précédant les identifiants de démonstration"
+  },
   "addItem": "Ajouter un Article",
   "editItem": "Modifier l'Article",
   "deleteItem": "Supprimer l'Article",

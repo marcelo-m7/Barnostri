@@ -142,6 +142,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get admin => 'Admin';
 
   @override
+  String get adminTitle => 'Barnostri Admin';
+
+  @override
+  String get adminRestricted => 'Restricted access for staff';
+
+  @override
   String get login => 'Login';
 
   @override
@@ -152,6 +158,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get password => 'Password';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get passwordLabel => 'Password';
 
   @override
   String get emailHint => 'Enter your email';
@@ -173,6 +185,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get demoCredentials => 'Use: admin@barnostri.com / admin123';
+
+  @override
+  String get demoCredentialsTitle => 'Demo credentials:';
 
   @override
   String get addItem => 'Add Item';
