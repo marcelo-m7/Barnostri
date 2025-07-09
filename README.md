@@ -29,8 +29,15 @@ Consulte também `docs/CODE_REVIEW.md` para um resumo de inconsistências identi
 5. Execute o app:
 
   ```bash
+ cd apps/barnostri_app
+ flutter run -d <dispositivo>
+ ```
+
+6. Para executar no navegador, utilize:
+
+  ```bash
   cd apps/barnostri_app
-  flutter run -d <dispositivo>
+  flutter run -d web-server
   ```
 
 ### Atualizando arquivos de localização
