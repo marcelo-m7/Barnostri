@@ -40,6 +40,21 @@ Consulte também `docs/CODE_REVIEW.md` para um resumo de inconsistências identi
   flutter run -d web-server
   ```
 
+Para gerar o APK de distribuição, é necessário possuir o Android SDK
+configurado (normalmente via Android Studio) e então executar:
+
+```bash
+cd apps/barnostri_app
+flutter build apk
+```
+
+Já para compilar a aplicação web utilize:
+
+```bash
+cd apps/barnostri_app
+flutter build web
+```
+
 ### Atualizando arquivos de localização
 
 Os textos em diferentes idiomas ficam nos arquivos `.arb` dentro de
