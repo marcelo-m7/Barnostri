@@ -13,7 +13,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter    # puxa intl 0.20.2
   # Se você realmente usa Intl diretamente, deixe esta linha
-  intl: ^0.18.1
+  intl: ">=0.18.1 <0.21.0"
 
   supabase_flutter: ^2.8.4        # compatível com o SDK usado nos testes
   cached_network_image: ^3.3.0
