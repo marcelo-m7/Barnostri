@@ -35,7 +35,7 @@ echo "🎨 Formata tudo"
 dart format --set-exit-if-changed packages/shared_models || true
 dart format --set-exit-if-changed apps/barnostri_app || true
 
-dart fix --dry--run
+dart fix --dry-run
 dart fix --apply
 
 echo "🔍 Analisa"
@@ -45,5 +45,4 @@ flutter analyze apps/barnostri_app
 echo "🧪 Testa"
 (cd packages/shared_models && flutter test)
 (cd apps/barnostri_app && flutter test)
-
 echo "✅ PRONTO"
