@@ -207,7 +207,7 @@ class LanguageSelector extends ConsumerWidget {
                 ),
               ),
             );
-          }).toList(),
+          }),
           const SizedBox(height: 24),
         ],
       ),

@@ -148,7 +148,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                 final index = entry.key;
                 final cartItem = entry.value;
                 return _buildCartItem(orderNotifier, cartItem, index);
-              }).toList(),
+              }),
 
               const SizedBox(height: 24),
 

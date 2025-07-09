@@ -1,4 +1,4 @@
-library barnostri_app;
+library;
 
 export 'src/core/services/language_service.dart';
 export 'src/features/menu/presentation/controllers/menu_service.dart';

@@ -74,7 +74,7 @@ class _MenuItemCardState extends State<MenuItemCard>
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16),
                     ),
-                    child: Container(
+                    child: SizedBox(
                       height: 140,
                       width: double.infinity,
                       child: widget.item.imageUrl != null

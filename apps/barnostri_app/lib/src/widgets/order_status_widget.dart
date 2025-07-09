@@ -196,7 +196,7 @@ class OrderStatusWidget extends ConsumerWidget {
               isCurrent,
               index < statuses.length - 1,
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -339,7 +339,7 @@ class OrderStatusWidget extends ConsumerWidget {
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
-          ...order.items.map((item) => _buildOrderItem(context, item)).toList(),
+          ...order.items.map((item) => _buildOrderItem(context, item)),
           const SizedBox(height: 16),
           Divider(
             color: Theme.of(context).colorScheme.outline.withAlpha((0.2 * 255).round()),
