@@ -38,7 +38,7 @@ class OrderState {
 }
 
 class OrderService extends StateNotifier<OrderState> {
-  final Reader _read;
+  final T Function<T>(ProviderListenable<T> provider) _read;
   final OrderRepository _orderRepository;
   final MenuRepository _menuRepository;
   final CreateOrderUseCase _createOrderUseCase;
