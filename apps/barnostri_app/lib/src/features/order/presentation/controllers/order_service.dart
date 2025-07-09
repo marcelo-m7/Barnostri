@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
+import 'package:shared_models/shared_models.dart' show GuardedStateNotifier;
 import 'package:barnostri_app/src/core/repositories.dart';
 import 'package:barnostri_app/src/core/services/language_service.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
@@ -39,7 +40,7 @@ class OrderState {
       cartItems.fold(0, (count, item) => count + item.quantity);
 }
 
-class OrderService extends StateNotifier<OrderState> {
+class OrderService extends GuardedStateNotifier<OrderState> {
   final T Function<T>(ProviderListenable<T> provider) _read;
   final OrderRepository _orderRepository;
   final MenuRepository _menuRepository;
@@ -56,22 +57,13 @@ class OrderService extends StateNotifier<OrderState> {
   AppLocalizations get _l10n =>
       lookupAppLocalizations(_read(languageServiceProvider));
 
-  Future<T?> _guard<T>(
-    Future<T> Function() action, {
-    String Function(Object)? onError,
-  }) async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      return await action();
-    } catch (e) {
-      state = state.copyWith(
-        error: onError != null ? onError(e) : e.toString(),
-      );
-      return null;
-    } finally {
-      state = state.copyWith(isLoading: false);
-    }
-  }
+  @override
+  OrderState setLoading(OrderState state, bool isLoading) =>
+      state.copyWith(isLoading: isLoading);
+
+  @override
+  OrderState setError(OrderState state, String? error) =>
+      state.copyWith(error: error);
 
   void setTable(TableModel table) {
     state = state.copyWith(currentTable: table);
@@ -122,7 +114,7 @@ class OrderService extends StateNotifier<OrderState> {
       state = state.copyWith(error: _l10n.emptyCart);
       return null;
     }
-    return await _guard<String?>(() async {
+    return await guard<String?>(() async {
       final orderId = await _createOrderUseCase(
         tableId: state.currentTable!.id,
         items: state.cartItems,
@@ -140,7 +132,7 @@ class OrderService extends StateNotifier<OrderState> {
   }
 
   Future<bool> updateOrderStatus(String orderId, OrderStatus status) async {
-    final success = await _guard<bool>(() async {
+    final success = await guard<bool>(() async {
       final result = await _updateOrderStatusUseCase(orderId, status);
       if (!result) {
         state = state.copyWith(error: _l10n.orderUpdateError);
@@ -151,7 +143,7 @@ class OrderService extends StateNotifier<OrderState> {
   }
 
   Future<List<Order>> getAllOrders() async {
-    final orders = await _guard<List<Order>>(() async {
+    final orders = await guard<List<Order>>(() async {
       final result = await _orderRepository.fetchOrders();
       return result;
     }, onError: (e) => _l10n.errorLoadingOrders);
@@ -167,7 +159,7 @@ class OrderService extends StateNotifier<OrderState> {
   }
 
   Future<TableModel?> getTableByQrToken(String qrToken) async {
-    return await _guard<TableModel?>(() async {
+    return await guard<TableModel?>(() async {
       final table = await _menuRepository.getTableByQrToken(qrToken);
       if (table != null) {
         setTable(table);

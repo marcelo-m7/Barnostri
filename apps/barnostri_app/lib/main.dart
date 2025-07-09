@@ -7,6 +7,7 @@ import 'package:barnostri_app/src/core/services/supabase_config.dart';
 import 'package:barnostri_app/src/core/services/language_service.dart';
 import 'package:barnostri_app/src/features/order/presentation/pages/qr_scanner_page.dart';
 import 'package:barnostri_app/src/features/order/presentation/pages/cart_page.dart';
+import 'package:barnostri_app/src/features/menu/presentation/pages/menu_page.dart';
 import 'package:barnostri_app/src/features/auth/presentation/pages/admin_page.dart';
 import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
 import 'l10n/generated/app_localizations.dart';
@@ -18,6 +19,10 @@ final _router = GoRouter(
     GoRoute(
       path: '/scanner',
       builder: (context, state) => const QrScannerPage(),
+    ),
+    GoRoute(
+      path: '/menu',
+      builder: (context, state) => const MenuPage(),
     ),
     GoRoute(path: '/cart', builder: (context, state) => const CartPage()),
     GoRoute(
