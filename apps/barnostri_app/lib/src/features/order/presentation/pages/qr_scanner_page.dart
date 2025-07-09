@@ -119,9 +119,10 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                               l10n.qrCodeLocation,
                               style: Theme.of(context).textTheme.bodyMedium
                                   ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withAlpha((0.7 * 255).round()),
                                   ),
                               textAlign: TextAlign.center,
                             ),
@@ -133,9 +134,8 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.secondary.withAlpha((0.1 * 255).round()),
+                            color: Theme.of(context).colorScheme.secondary
+                                .withAlpha((0.1 * 255).round()),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
@@ -308,7 +308,9 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
             child: Text(
               l10n.cancel,
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
               ),
             ),
           ),

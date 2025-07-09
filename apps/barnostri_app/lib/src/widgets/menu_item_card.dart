@@ -61,7 +61,9 @@ class _MenuItemCardState extends State<MenuItemCard>
                   ),
                 ],
                 border: Border.all(
-                  color: Theme.of(context).colorScheme.outline.withAlpha((0.1 * 255).round()),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.outline.withAlpha((0.1 * 255).round()),
                   width: 1,
                 ),
               ),
@@ -156,9 +158,8 @@ class _MenuItemCardState extends State<MenuItemCard>
                             widget.item.description!,
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                                  color: Theme.of(context).colorScheme.onSurface
+                                      .withAlpha((0.7 * 255).round()),
                                   height: 1.4,
                                 ),
                             maxLines: 3,
@@ -180,9 +181,8 @@ class _MenuItemCardState extends State<MenuItemCard>
                                   vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.secondary.withAlpha((0.1 * 255).round()),
+                                  color: Theme.of(context).colorScheme.secondary
+                                      .withAlpha((0.1 * 255).round()),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
@@ -205,7 +205,9 @@ class _MenuItemCardState extends State<MenuItemCard>
                               ),
                               decoration: BoxDecoration(
                                 color: widget.item.available
-                                    ? Colors.green.withAlpha((0.1 * 255).round())
+                                    ? Colors.green.withAlpha(
+                                        (0.1 * 255).round(),
+                                      )
                                     : Colors.red.withAlpha((0.1 * 255).round()),
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -298,11 +300,15 @@ class _MenuItemCardState extends State<MenuItemCard>
             width: double.infinity,
             height: double.infinity,
             errorBuilder: (context, error, stackTrace) => Container(
-              color: Theme.of(context).colorScheme.primary.withAlpha((0.1 * 255).round()),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withAlpha((0.1 * 255).round()),
               child: Icon(
                 Icons.restaurant_menu,
                 size: 48,
-                color: Theme.of(context).colorScheme.primary.withAlpha((0.5 * 255).round()),
+                color: Theme.of(
+                  context,
+                ).colorScheme.primary.withAlpha((0.5 * 255).round()),
               ),
             ),
           ),

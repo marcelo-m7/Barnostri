@@ -61,7 +61,9 @@ class _CartPageState extends ConsumerState<CartPage> {
           Icon(
             Icons.shopping_cart_outlined,
             size: 80,
-            color: Theme.of(context).colorScheme.onSurface.withAlpha((0.3 * 255).round()),
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withAlpha((0.3 * 255).round()),
           ),
           const SizedBox(height: 24),
           Text(
@@ -74,7 +76,9 @@ class _CartPageState extends ConsumerState<CartPage> {
           Text(
             l10n.emptyCartDescription,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
             ),
             textAlign: TextAlign.center,
           ),
@@ -191,7 +195,9 @@ class _CartPageState extends ConsumerState<CartPage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withAlpha((0.2 * 255).round()),
+          color: Theme.of(
+            context,
+          ).colorScheme.outline.withAlpha((0.2 * 255).round()),
         ),
       ),
       child: Column(
@@ -215,9 +221,8 @@ class _CartPageState extends ConsumerState<CartPage> {
                       Text(
                         'Obs: ${cartItem.note}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                          color: Theme.of(context).colorScheme.onSurface
+                              .withAlpha((0.7 * 255).round()),
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -334,7 +339,9 @@ class _CartPageState extends ConsumerState<CartPage> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         tileColor: _selectedPaymentMethod == method
-            ? Theme.of(context).colorScheme.primary.withAlpha((0.1 * 255).round())
+            ? Theme.of(
+                context,
+              ).colorScheme.primary.withAlpha((0.1 * 255).round())
             : null,
       ),
     );
@@ -344,10 +351,14 @@ class _CartPageState extends ConsumerState<CartPage> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary.withAlpha((0.05 * 255).round()),
+        color: Theme.of(
+          context,
+        ).colorScheme.primary.withAlpha((0.05 * 255).round()),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withAlpha((0.2 * 255).round()),
+          color: Theme.of(
+            context,
+          ).colorScheme.primary.withAlpha((0.2 * 255).round()),
         ),
       ),
       child: Column(

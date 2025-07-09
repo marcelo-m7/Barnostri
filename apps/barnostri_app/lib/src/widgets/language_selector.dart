@@ -38,7 +38,9 @@ class LanguageSelector extends ConsumerWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withAlpha((0.3 * 255).round()),
+          color: Theme.of(
+            context,
+          ).colorScheme.outline.withAlpha((0.3 * 255).round()),
         ),
       ),
       child: DropdownButtonHideUnderline(
@@ -126,7 +128,9 @@ class LanguageSelector extends ConsumerWidget {
               margin: const EdgeInsets.only(bottom: 12),
               child: Material(
                 color: isSelected
-                    ? Theme.of(context).colorScheme.primary.withAlpha((0.1 * 255).round())
+                    ? Theme.of(
+                        context,
+                      ).colorScheme.primary.withAlpha((0.1 * 255).round())
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
                 child: InkWell(
@@ -151,9 +155,8 @@ class LanguageSelector extends ConsumerWidget {
                             border: Border.all(
                               color: isSelected
                                   ? Theme.of(context).colorScheme.primary
-                                  : Theme.of(
-                                      context,
-                                    ).colorScheme.outline.withAlpha((0.3 * 255).round()),
+                                  : Theme.of(context).colorScheme.outline
+                                        .withAlpha((0.3 * 255).round()),
                             ),
                           ),
                           child: Center(
@@ -185,9 +188,10 @@ class LanguageSelector extends ConsumerWidget {
                                 _getLanguageSubtitle(locale, l10n),
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withAlpha((0.7 * 255).round()),
                                     ),
                               ),
                             ],
@@ -263,7 +267,9 @@ class LanguageSelectorButton extends ConsumerWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withAlpha((0.3 * 255).round()),
+          color: Theme.of(
+            context,
+          ).colorScheme.outline.withAlpha((0.3 * 255).round()),
         ),
       ),
       child: Material(

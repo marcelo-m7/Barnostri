@@ -93,7 +93,9 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                 Container(
                                   padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withAlpha((0.2 * 255).round()),
+                                    color: Colors.white.withAlpha(
+                                      (0.2 * 255).round(),
+                                    ),
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Icon(
@@ -134,7 +136,9 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                                 color: Theme.of(context)
                                                     .colorScheme
                                                     .onPrimary
-                                                    .withAlpha((0.8 * 255).round()),
+                                                    .withAlpha(
+                                                      (0.8 * 255).round(),
+                                                    ),
                                               ),
                                         ),
                                     ],
@@ -147,9 +151,10 @@ class _MenuPageState extends ConsumerState<MenuPage>
                               l10n.homeSlogan,
                               style: Theme.of(context).textTheme.bodyMedium
                                   ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onPrimary.withAlpha((0.9 * 255).round()),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary
+                                        .withAlpha((0.9 * 255).round()),
                                   ),
                             ),
                           ],
@@ -181,9 +186,8 @@ class _MenuPageState extends ConsumerState<MenuPage>
                           ? IconButton(
                               icon: Icon(
                                 Icons.clear,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                                color: Theme.of(context).colorScheme.onSurface
+                                    .withAlpha((0.7 * 255).round()),
                               ),
                               onPressed: () {
                                 _searchController.clear();
@@ -326,18 +330,16 @@ class _MenuPageState extends ConsumerState<MenuPage>
                         Icon(
                           Icons.restaurant_menu,
                           size: 64,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withAlpha((0.3 * 255).round()),
+                          color: Theme.of(context).colorScheme.onSurface
+                              .withAlpha((0.3 * 255).round()),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           l10n.emptyCategoryItems(category.name),
                           style: Theme.of(context).textTheme.bodyLarge
                               ?.copyWith(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurface.withAlpha((0.6 * 255).round()),
+                                color: Theme.of(context).colorScheme.onSurface
+                                    .withAlpha((0.6 * 255).round()),
                               ),
                           textAlign: TextAlign.center,
                         ),
@@ -453,9 +455,10 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                                 widget.item.description!,
                                 style: Theme.of(context).textTheme.bodyMedium
                                     ?.copyWith(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withAlpha((0.7 * 255).round()),
                                     ),
                               ),
                             ],
@@ -611,7 +614,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
           ],
         ),
       ),
-      );
+    );
   }
 
   @override

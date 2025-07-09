@@ -457,7 +457,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 category.active ? Icons.visibility : Icons.visibility_off,
                 color: category.active
                     ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.onSurface.withAlpha((0.5 * 255).round()),
+                    : Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withAlpha((0.5 * 255).round()),
               ),
             ),
           );
@@ -495,9 +497,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundColor: table.active
-                            ? Theme.of(
-                                context,
-                              ).colorScheme.primary.withAlpha((0.1 * 255).round())
+                            ? Theme.of(context).colorScheme.primary.withAlpha(
+                                (0.1 * 255).round(),
+                              )
                             : Colors.grey.withAlpha((0.1 * 255).round()),
                         child: Icon(
                           Icons.table_restaurant,

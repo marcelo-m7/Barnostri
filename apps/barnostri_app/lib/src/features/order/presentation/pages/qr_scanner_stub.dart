@@ -41,8 +41,8 @@ class QrScannerOverlayShape extends ShapeBorder {
     double? cutOutWidth,
     double? cutOutHeight,
     this.cutOutBottomOffset = 0,
-  })  : cutOutWidth = cutOutWidth ?? cutOutSize ?? 0,
-        cutOutHeight = cutOutHeight ?? cutOutSize ?? 0;
+  }) : cutOutWidth = cutOutWidth ?? cutOutSize ?? 0,
+       cutOutHeight = cutOutHeight ?? cutOutSize ?? 0;
 
   final Color borderColor;
   final double borderWidth;
