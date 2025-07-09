@@ -30,6 +30,10 @@
   "cash": "Dinheiro",
   "checkout": "Finalizar Pedido",
   "processingOrder": "Processando Pedido...",
+  "paymentFailureRetry": "Falha no pagamento. Tente novamente.",
+  "@paymentFailureRetry": {
+    "description": "Mensagem exibida quando o pagamento falha"
+  },
   "orderPlaced": "Pedido Realizado!",
   "orderPlacedDescription": "Seu pedido foi realizado com sucesso e está sendo preparado",
   "orderNumber": "Número do Pedido",
@@ -231,11 +235,15 @@
   "@tableNotFound": {
     "description": "Mensagem de erro quando a mesa não é encontrada"
   },
+  "tableLookupError": "Erro ao buscar mesa: {error}",
+  "@tableLookupError": {
+    "description": "Erro genérico ao buscar mesa",
+    "placeholders": {"error": {}}
+  },
   "noTableSelected": "Nenhuma mesa selecionada",
   "@noTableSelected": {
     "description": "Mensagem de erro quando nenhuma mesa está selecionada"
   },
   "orderField": "Ordem",
   "@orderField": {
-    "description": "Campo de ordem numérica"
-  }}
+    "description": "Campo de ordem numérica"  }}

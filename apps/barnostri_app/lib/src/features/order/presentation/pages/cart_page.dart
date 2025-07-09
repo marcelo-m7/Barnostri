@@ -505,7 +505,7 @@ class _CartPageState extends ConsumerState<CartPage> {
       );
 
       if (!paymentSuccess) {
-        _showErrorDialog('Falha no pagamento. Tente novamente.');
+        _showErrorDialog(AppLocalizations.of(context).paymentFailureRetry);
         return;
       }
 
