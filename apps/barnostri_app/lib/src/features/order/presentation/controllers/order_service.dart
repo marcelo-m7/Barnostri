@@ -47,6 +47,9 @@ class OrderService extends StateNotifier<OrderState> {
     this._updateOrderStatusUseCase,
   ) : super(const OrderState());
 
+  double get cartTotal => state.cartTotal;
+  String? get error => state.error;
+
   Future<T?> _guard<T>(Future<T> Function() action,
       {String Function(Object)? onError}) async {
     state = state.copyWith(isLoading: true, error: null);

@@ -40,6 +40,8 @@ class MenuService extends StateNotifier<MenuState> {
   MenuService(this._menuRepository, this._loadMenuUseCase)
     : super(const MenuState());
 
+  List<CategoryModel> get categories => state.categories;
+
   Future<T?> _guard<T>(
     Future<T> Function() action, {
     String Function(Object)? onError,

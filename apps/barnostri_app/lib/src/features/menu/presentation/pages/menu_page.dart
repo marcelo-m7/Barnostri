@@ -93,7 +93,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                 Container(
                                   padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.2),
+                                    color: Colors.white.withValues(alpha: (0.2 * 255).round()),
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Icon(
@@ -133,7 +133,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                                 color: Theme.of(context)
                                                     .colorScheme
                                                     .onPrimary
-                                                    .withOpacity(0.8),
+                                                    .withValues(alpha: (0.8 * 255).round()),
                                               ),
                                         ),
                                     ],
@@ -150,7 +150,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                   ?.copyWith(
                                     color: Theme.of(
                                       context,
-                                    ).colorScheme.onPrimary.withOpacity(0.9),
+                                    ).colorScheme.onPrimary.withValues(alpha: (0.9 * 255).round()),
                                   ),
                             ),
                           ],
@@ -184,7 +184,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                 Icons.clear,
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onSurface.withOpacity(0.7),
+                                ).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round()),
                               ),
                               onPressed: () {
                                 _searchController.clear();
@@ -221,7 +221,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                       labelColor: Theme.of(context).colorScheme.primary,
                       unselectedLabelColor: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withOpacity(0.6),
+                      ).colorScheme.onSurface.withValues(alpha: (0.6 * 255).round()),
                       indicatorColor: Theme.of(context).colorScheme.primary,
                       indicatorWeight: 3,
                       labelStyle: Theme.of(context)
@@ -331,7 +331,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                           size: 64,
                           color: Theme.of(
                             context,
-                          ).colorScheme.onSurface.withOpacity(0.3),
+                          ).colorScheme.onSurface.withValues(alpha: (0.3 * 255).round()),
                         ),
                         const SizedBox(height: 16),
                         Text(
@@ -340,7 +340,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: Theme.of(
                                       context,
-                                    ).colorScheme.onSurface.withOpacity(0.6),
+                                    ).colorScheme.onSurface.withValues(alpha: (0.6 * 255).round()),
                                   ),
                           textAlign: TextAlign.center,
                         ),
@@ -426,7 +426,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                 decoration: BoxDecoration(
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface.withOpacity(0.3),
+                  ).colorScheme.onSurface.withValues(alpha: (0.3 * 255).round()),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -462,7 +462,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                                     ?.copyWith(
                                       color: Theme.of(
                                         context,
-                                      ).colorScheme.onSurface.withOpacity(0.7),
+                                      ).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round()),
                                     ),
                               ),
                             ],
@@ -501,7 +501,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                         style: IconButton.styleFrom(
                           backgroundColor: Theme.of(
                             context,
-                          ).colorScheme.primary.withOpacity(0.1),
+                          ).colorScheme.primary.withValues(alpha: (0.1 * 255).round()),
                           foregroundColor: Theme.of(
                             context,
                           ).colorScheme.primary,
@@ -556,7 +556,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                         borderSide: BorderSide(
                           color: Theme.of(
                             context,
-                          ).colorScheme.outline.withOpacity(0.3),
+                          ).colorScheme.outline.withValues(alpha: (0.3 * 255).round()),
                         ),
                       ),
                     ),

@@ -81,7 +81,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withOpacity(0.7),
+                      ).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round()),
                     ),
               ),
 
@@ -104,7 +104,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     borderSide: BorderSide(
                       color: Theme.of(
                         context,
-                      ).colorScheme.outline.withOpacity(0.3),
+                      ).colorScheme.outline.withValues(alpha: (0.3 * 255).round()),
                     ),
                   ),
                 ),
@@ -129,7 +129,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     borderSide: BorderSide(
                       color: Theme.of(
                         context,
-                      ).colorScheme.outline.withOpacity(0.3),
+                      ).colorScheme.outline.withValues(alpha: (0.3 * 255).round()),
                     ),
                   ),
                 ),
@@ -195,7 +195,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 decoration: BoxDecoration(
                   color: Theme.of(
                     context,
-                  ).colorScheme.secondary.withOpacity(0.1),
+                  ).colorScheme.secondary.withValues(alpha: (0.1 * 255).round()),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -250,7 +250,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
           labelColor: Theme.of(context).colorScheme.onPrimary,
           unselectedLabelColor: Theme.of(
             context,
-          ).colorScheme.onPrimary.withOpacity(0.7),
+          ).colorScheme.onPrimary.withValues(alpha: (0.7 * 255).round()),
           indicatorColor: Theme.of(context).colorScheme.onPrimary,
           tabs: [
             Tab(text: l10n.orders, icon: const Icon(Icons.restaurant_menu)),
@@ -313,7 +313,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                       size: 64,
                       color: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withOpacity(0.3),
+                      ).colorScheme.onSurface.withValues(alpha: (0.3 * 255).round()),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -326,7 +326,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: Theme.of(
                               context,
-                            ).colorScheme.onSurface.withOpacity(0.7),
+                            ).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round()),
                           ),
                     ),
                   ],
@@ -403,8 +403,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: item.available
-                    ? Colors.green.withOpacity(0.1)
-                    : Colors.red.withOpacity(0.1),
+                    ? Colors.green.withValues(alpha: (0.1 * 255).round())
+                    : Colors.red.withValues(alpha: (0.1 * 255).round()),
                 child: Icon(
                   item.available ? Icons.check : Icons.close,
                   color: item.available ? Colors.green : Colors.red,
@@ -445,7 +445,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
               leading: CircleAvatar(
                 backgroundColor: Theme.of(
                   context,
-                ).colorScheme.secondary.withOpacity(0.1),
+                ).colorScheme.secondary.withValues(alpha: (0.1 * 255).round()),
                 child: Text(category.sortOrder.toString()),
               ),
               title: Text(category.name),
@@ -456,7 +456,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 category.active ? Icons.visibility : Icons.visibility_off,
                 color: category.active
                     ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                    : Theme.of(context).colorScheme.onSurface.withValues(alpha: (0.5 * 255).round()),
               ),
             ),
           );
@@ -496,8 +496,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
                         backgroundColor: table.active
                             ? Theme.of(
                                 context,
-                              ).colorScheme.primary.withOpacity(0.1)
-                            : Colors.grey.withOpacity(0.1),
+                              ).colorScheme.primary.withValues(alpha: (0.1 * 255).round())
+                            : Colors.grey.withValues(alpha: (0.1 * 255).round()),
                         child: Icon(
                           Icons.table_restaurant,
                           color: table.active
@@ -570,7 +570,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context).category,
                 ),
-                items: menuService.state.categories
+                items: menuService.categories
                     .map(
                       (cat) => DropdownMenuItem(
                         value: cat.id,
