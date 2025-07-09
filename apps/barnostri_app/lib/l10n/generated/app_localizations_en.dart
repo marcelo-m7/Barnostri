@@ -329,6 +329,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get orderUpdateError => 'Failed to update order status';
 
   @override
+  String get orderCreationFailure => 'Failed to create order';
+
+  @override
+  String orderProcessingFailure(Object error) {
+    return 'Failed to process order: $error';
+  }
+
+  @override
   String get confirmDelete => 'Are you sure you want to delete this item?';
 
   @override
@@ -483,6 +491,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tableNotFound => 'Table not found';
+
+  @override
+  String tableLookupError(Object error) {
+    return 'Error fetching table: $error';
+  }
+
+  @override
+  String get paymentFailureRetry => 'Payment failed. Please try again.';
 
   @override
   String get noTableSelected => 'No table selected';

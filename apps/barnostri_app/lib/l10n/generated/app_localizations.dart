@@ -724,6 +724,18 @@ abstract class AppLocalizations {
   /// **'Failed to update order status'**
   String get orderUpdateError;
 
+  /// Error message when order creation fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create order'**
+  String get orderCreationFailure;
+
+  /// Detailed error when order processing fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to process order: {error}'**
+  String orderProcessingFailure(Object error);
+
   /// Delete confirmation message
   ///
   /// In en, this message translates to:
@@ -1011,6 +1023,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Table not found'**
   String get tableNotFound;
+
+  /// Generic error when looking up a table
+  ///
+  /// In en, this message translates to:
+  /// **'Error fetching table: {error}'**
+  String tableLookupError(Object error);
+
+  /// Error shown when payment fails
+  ///
+  /// In en, this message translates to:
+  /// **'Payment failed. Please try again.'**
+  String get paymentFailureRetry;
 
   /// Error message when no table is selected
   ///

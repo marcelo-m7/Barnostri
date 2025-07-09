@@ -330,6 +330,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Échec de la mise à jour du statut de la commande';
 
   @override
+  String get orderCreationFailure =>
+      'Échec de la création de la commande';
+
+  @override
+  String orderProcessingFailure(Object error) {
+    return 'Échec du traitement de la commande : $error';
+  }
+
+  @override
   String get confirmDelete => 'Êtes-vous sûr de vouloir supprimer cet article?';
 
   @override
@@ -484,6 +493,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tableNotFound => 'Table introuvable';
+
+  @override
+  String tableLookupError(Object error) {
+    return 'Erreur lors de la recherche de la table : $error';
+  }
+
+  @override
+  String get paymentFailureRetry =>
+      'Échec du paiement. Veuillez réessayer.';
 
   @override
   String get noTableSelected => 'Aucune table sélectionnée';

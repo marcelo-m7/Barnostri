@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/auth/data/repositories/supabase_auth_repository.dart';
 import 'package:barnostri_app/src/features/menu/data/repositories/supabase_menu_repository.dart';
@@ -36,11 +37,18 @@ void main() {
 
   group('OrderService', () {
     test('add to cart and create order', () async {
+      final container = ProviderContainer();
       final orderRepo = SupabaseOrderRepository(null);
       final menuRepo = SupabaseMenuRepository(null);
       final create = CreateOrderUseCase(orderRepo);
       final update = UpdateOrderStatusUseCase(orderRepo);
-      final service = OrderService(orderRepo, menuRepo, create, update);
+      final service = OrderService(
+        container.read,
+        orderRepo,
+        menuRepo,
+        create,
+        update,
+      );
 
       final table = TableModel(
         id: '1',
