@@ -43,7 +43,7 @@ class SupabaseAuthRepository implements AuthRepository {
           ),
         );
       } else {
-        throw AuthException('Invalid credentials');
+        throw const AuthException('Invalid credentials');
       }
     }
     try {
@@ -89,7 +89,7 @@ class SupabaseAuthRepository implements AuthRepository {
   @override
   Stream<AuthState> get authStateChanges {
     if (_client == null) {
-      return Stream.value(AuthState(AuthChangeEvent.signedOut, null));
+      return Stream.value(const AuthState(AuthChangeEvent.signedOut, null));
     }
     return _client!.auth.onAuthStateChange;
   }

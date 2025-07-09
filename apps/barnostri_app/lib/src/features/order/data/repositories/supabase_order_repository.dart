@@ -146,8 +146,8 @@ class SupabaseOrderRepository implements OrderRepository {
           .from('orders')
           .select('*, tables(*), order_items(*, menu_items(*))')
           .order('created_at', ascending: false);
-      return (response as List<dynamic>)
-          .map((e) => Order.fromJson(e as Map<String, dynamic>))
+      return response
+          .map<Order>((e) => Order.fromJson(e))
           .toList();
     } catch (e) {
       if (kDebugMode) {

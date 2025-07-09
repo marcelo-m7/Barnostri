@@ -70,7 +70,7 @@ class HomePage extends ConsumerWidget {
                   child: Column(
                     children: [
                       // Language Selector
-                      Align(
+                      const Align(
                         alignment: Alignment.topRight,
                         child: LanguageSelectorButton(),
                       ),

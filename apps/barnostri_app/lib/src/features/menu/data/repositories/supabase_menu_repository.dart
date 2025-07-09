@@ -34,8 +34,8 @@ class SupabaseMenuRepository implements MenuRepository {
           .select('*')
           .eq('active', true)
           .order('number');
-      return (response as List<dynamic>)
-          .map((e) => TableModel.fromJson(e as Map<String, dynamic>))
+      return response
+          .map<TableModel>((e) => TableModel.fromJson(e))
           .toList();
     } catch (e) {
       if (kDebugMode) {
@@ -129,8 +129,8 @@ class SupabaseMenuRepository implements MenuRepository {
           .select('*')
           .eq('active', true)
           .order('sort_order');
-      return (response as List<dynamic>)
-          .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
+      return response
+          .map<CategoryModel>((e) => CategoryModel.fromJson(e))
           .toList();
     } catch (e) {
       if (kDebugMode) {
@@ -196,8 +196,8 @@ class SupabaseMenuRepository implements MenuRepository {
           .select()
           .eq('available', true)
           .order('name');
-      return (response as List<dynamic>)
-          .map((e) => MenuItem.fromJson(e as Map<String, dynamic>))
+      return response
+          .map<MenuItem>((e) => MenuItem.fromJson(e))
           .toList();
     } catch (e) {
       if (kDebugMode) {

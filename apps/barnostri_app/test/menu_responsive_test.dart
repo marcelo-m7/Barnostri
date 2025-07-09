@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:barnostri_app/src/features/menu/presentation/pages/menu_page.dart';
 import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_service.dart';
 import 'package:barnostri_app/src/features/menu/data/repositories/supabase_menu_repository.dart';
-import 'package:barnostri_app/src/features/menu/data/usecases/load_menu_usecase.dart';
+import 'package:shared_models/shared_models.dart';
 
 Future<ProviderContainer> _createContainer() async {
   final repo = SupabaseMenuRepository(null);

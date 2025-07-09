@@ -178,7 +178,7 @@ class OrderService extends StateNotifier<OrderState> with GuardMixin<OrderState>
   }) async {
     state = state.copyWith(isLoading: true);
     await Future.delayed(const Duration(seconds: 2));
-    final success = true;
+    const success = true;
     // if (!success) {
     //   state = state.copyWith(error: _l10n.paymentFailureRetry);
     // }
