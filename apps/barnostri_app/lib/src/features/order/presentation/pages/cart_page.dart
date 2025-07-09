@@ -74,9 +74,8 @@ class _CartPageState extends ConsumerState<CartPage> {
           Text(
             l10n.emptyCartDescription,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                ),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
@@ -124,11 +123,11 @@ class _CartPageState extends ConsumerState<CartPage> {
                       const SizedBox(width: 12),
                       Text(
                         l10n.tableNumber(orderState.currentTable!.number),
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                       ),
                     ],
                   ),
@@ -208,19 +207,19 @@ class _CartPageState extends ConsumerState<CartPage> {
                     Text(
                       cartItem.item.name,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     if (cartItem.note != null && cartItem.note!.isNotEmpty) ...[
                       const SizedBox(height: 4),
                       Text(
                         'Obs: ${cartItem.note}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurface.withOpacity(0.7),
-                              fontStyle: FontStyle.italic,
-                            ),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.7),
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
                     ],
                   ],
@@ -230,9 +229,9 @@ class _CartPageState extends ConsumerState<CartPage> {
               Text(
                 formatCurrency(cartItem.subtotal),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ],
           ),
@@ -246,9 +245,9 @@ class _CartPageState extends ConsumerState<CartPage> {
                   IconButton.filled(
                     onPressed: cartItem.quantity > 1
                         ? () => orderNotifier.updateCartItem(
-                              index,
-                              quantity: cartItem.quantity - 1,
-                            )
+                            index,
+                            quantity: cartItem.quantity - 1,
+                          )
                         : null,
                     icon: const Icon(Icons.remove),
                     style: IconButton.styleFrom(
@@ -263,8 +262,8 @@ class _CartPageState extends ConsumerState<CartPage> {
                   Text(
                     cartItem.quantity.toString(),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   IconButton.filled(
@@ -381,9 +380,9 @@ class _CartPageState extends ConsumerState<CartPage> {
               Text(
                 formatCurrency(orderState.cartTotal),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ],
           ),
@@ -435,8 +434,8 @@ class _CartPageState extends ConsumerState<CartPage> {
                 : Text(
                     '${l10n.checkout} - ${formatCurrency(orderState.cartTotal)}',
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
           ),
         ),
@@ -464,9 +463,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                     const SizedBox(height: 16),
                     Text(
                       'Erro ao carregar pedido',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall
+                      style: Theme.of(context).textTheme.headlineSmall
                           ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 24),

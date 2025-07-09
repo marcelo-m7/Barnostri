@@ -104,9 +104,7 @@ class OrderStatusWidget extends ConsumerWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  AppLocalizations.of(
-                    context,
-                  ).tableNumber(order.table!.number),
+                  AppLocalizations.of(context).tableNumber(order.table!.number),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(
                       context,
@@ -341,9 +339,7 @@ class OrderStatusWidget extends ConsumerWidget {
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
-          ...order.items
-              .map((item) => _buildOrderItem(context, item))
-              .toList(),
+          ...order.items.map((item) => _buildOrderItem(context, item)).toList(),
           const SizedBox(height: 16),
           Divider(
             color: Theme.of(context).colorScheme.outline.withOpacity(0.2),

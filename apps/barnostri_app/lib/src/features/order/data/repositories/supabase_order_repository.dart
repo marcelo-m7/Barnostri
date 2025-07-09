@@ -180,11 +180,7 @@ class SupabaseOrderRepository implements OrderRepository {
         .from('orders')
         .stream(primaryKey: ['id'])
         .order('created_at', ascending: false)
-        .map(
-          (list) => list
-              .map((e) => Order.fromJson(e))
-              .toList(),
-        );
+        .map((list) => list.map((e) => Order.fromJson(e)).toList());
   }
 
   @override

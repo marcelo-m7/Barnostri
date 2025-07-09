@@ -70,8 +70,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
               Text(
                 'Barnostri Admin',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
 
               const SizedBox(height: 8),
@@ -79,10 +79,10 @@ class _AdminPageState extends ConsumerState<AdminPage>
               Text(
                 'Acesso restrito para funcionários',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withOpacity(0.7),
-                    ),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withOpacity(0.7),
+                ),
               ),
 
               const SizedBox(height: 48),
@@ -144,7 +144,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
                   onPressed: authState.isLoading
                       ? null
                       : () async {
-                          await ref.read(authServiceProvider.notifier).login(
+                          await ref
+                              .read(authServiceProvider.notifier)
+                              .login(
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                               );
@@ -180,9 +182,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                         )
                       : Text(
                           'Entrar',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge
+                          style: Theme.of(context).textTheme.labelLarge
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                 ),
@@ -203,8 +203,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     Text(
                       'Credenciais de demonstração:',
                       style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -324,10 +324,10 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     Text(
                       l10n.newOrdersAppearHere,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withOpacity(0.7),
-                          ),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.7),
+                      ),
                     ),
                   ],
                 ),
