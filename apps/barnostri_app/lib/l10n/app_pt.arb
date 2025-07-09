@@ -123,6 +123,15 @@
   "markAsDelivered": "Marcar como Entregue",
   "orderUpdated": "Status do pedido atualizado com sucesso",
   "orderUpdateError": "Falha ao atualizar status do pedido",
+  "orderCreationFailure": "Falha ao criar pedido",
+  "@orderCreationFailure": {
+    "description": "Mensagem de erro quando a criação do pedido falha"
+  },
+  "orderProcessingFailure": "Falha ao processar pedido: {error}",
+  "@orderProcessingFailure": {
+    "description": "Erro detalhado ao processar pedido",
+    "placeholders": {"error": {}}
+  },
   "confirmDelete": "Tem certeza que deseja excluir este item?",
   "deleteConfirmation": "Confirmação de Exclusão",
   "itemDeleted": "Item excluído com sucesso",
@@ -245,5 +254,6 @@
     "description": "Mensagem de erro quando nenhuma mesa está selecionada"
   },
   "orderField": "Ordem",
-  "@orderField": {
-    "description": "Campo de ordem numérica"  }}
+  "@orderField": {    "description": "Campo de ordem numérica"
+  }
+}

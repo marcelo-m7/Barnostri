@@ -332,11 +332,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get orderUpdateError => 'Falha ao atualizar status do pedido';
 
   @override
-  String get orderCreationFailure => 'Failed to create order';
+  String get orderCreationFailure => 'Falha ao criar pedido';
 
   @override
   String orderProcessingFailure(Object error) {
-    return 'Failed to process order: $error';
+    return 'Falha ao processar pedido: $error';
   }
 
   @override
