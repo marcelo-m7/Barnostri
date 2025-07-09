@@ -517,6 +517,7 @@ class _CartPageState extends ConsumerState<CartPage> {
       );
 
       if (!paymentSuccess) {
+        // ignore: use_build_context_synchronously
         _showErrorDialog(AppLocalizations.of(context).paymentFailureRetry);
         return;
       }

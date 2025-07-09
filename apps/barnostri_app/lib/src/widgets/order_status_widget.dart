@@ -589,9 +589,7 @@ class OrderStatusWidget extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            AppLocalizations.of(
-              context,
-            ).statusUpdateErrorDetailed(
+            AppLocalizations.of(context).statusUpdateErrorDetailed(
               ref.read(orderServiceProvider).error ?? '',
             ),
           ),
