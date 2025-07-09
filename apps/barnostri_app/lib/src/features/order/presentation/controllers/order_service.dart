@@ -222,11 +222,5 @@ final orderServiceProvider = StateNotifierProvider<OrderService, OrderState>((
   final menuRepo = ref.watch(menuRepositoryProvider);
   final create = CreateOrderUseCase(orderRepo);
   final update = UpdateOrderStatusUseCase(orderRepo);
-  return OrderService(
-    ref.read,
-    orderRepo,
-    menuRepo,
-    create,
-    update,
-  );
+  return OrderService(ref.read, orderRepo, menuRepo, create, update);
 });

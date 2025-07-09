@@ -280,6 +280,12 @@ abstract class AppLocalizations {
   /// **'Processing Order...'**
   String get processingOrder;
 
+  /// Shown when payment processing fails
+  ///
+  /// In en, this message translates to:
+  /// **'Payment failed. Please try again.'**
+  String get paymentFailureRetry;
+
   /// Order placed success message
   ///
   /// In en, this message translates to:
@@ -730,7 +736,7 @@ abstract class AppLocalizations {
   /// **'Failed to create order'**
   String get orderCreationFailure;
 
-  /// Detailed error when order processing fails
+  /// Detailed error when processing order fails
   ///
   /// In en, this message translates to:
   /// **'Failed to process order: {error}'**
@@ -1029,12 +1035,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error fetching table: {error}'**
   String tableLookupError(Object error);
-
-  /// Error shown when payment fails
-  ///
-  /// In en, this message translates to:
-  /// **'Payment failed. Please try again.'**
-  String get paymentFailureRetry;
 
   /// Error message when no table is selected
   ///

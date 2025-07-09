@@ -101,6 +101,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get processingOrder => 'Processing Order...';
 
   @override
+  String get paymentFailureRetry => 'Payment failed. Please try again.';
+
+  @override
   String get orderPlaced => 'Order Placed!';
 
   @override
@@ -496,9 +499,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String tableLookupError(Object error) {
     return 'Error fetching table: $error';
   }
-
-  @override
-  String get paymentFailureRetry => 'Payment failed. Please try again.';
 
   @override
   String get noTableSelected => 'No table selected';
