@@ -55,7 +55,7 @@ INSERT INTO categories (name, sort_order, active) VALUES
 ('Entradas', 1, true),
 ('Bebidas', 2, true),
 ('Pratos Principais', 3, true),
-('Sobretables', 4, true),
+('Sobremesas', 4, true),
 ('Especiais da Casa', 5, true);
 
 -- Insert sample menu items
@@ -96,15 +96,15 @@ INSERT INTO menu_items (name, description, price, category_id, available, image_
 ('Hambúrguer Artesanal', 'Hambúrguer artesanal com batata frita', 28.90, 
  (SELECT id FROM categories WHERE name = 'Pratos Principais'), true, null),
 
--- Sobretables
+-- Sobremesas
 ('Pudim de Leite', 'Pudim caseiro com calda de caramelo', 12.90, 
- (SELECT id FROM categories WHERE name = 'Sobretables'), true, null),
+(SELECT id FROM categories WHERE name = 'Sobremesas'), true, null),
 ('Brigadeiro Gourmet', 'Brigadeiro gourmet com granulado especial', 8.90, 
- (SELECT id FROM categories WHERE name = 'Sobretables'), true, null),
+(SELECT id FROM categories WHERE name = 'Sobremesas'), true, null),
 ('Sorvete', 'Sorvete de creme com frutas', 10.90, 
- (SELECT id FROM categories WHERE name = 'Sobretables'), true, null),
+(SELECT id FROM categories WHERE name = 'Sobremesas'), true, null),
 ('Mousse de Maracujá', 'Mousse cremoso de maracujá com cobertura', 11.90, 
- (SELECT id FROM categories WHERE name = 'Sobretables'), true, null),
+(SELECT id FROM categories WHERE name = 'Sobremesas'), true, null),
 
 -- Especiais da Casa
 ('Combo Casal', 'Moqueca + 2 Caipirinhas + Sobremesa para compartilhar', 85.90, 
