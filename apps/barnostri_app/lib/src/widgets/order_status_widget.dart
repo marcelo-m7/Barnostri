@@ -591,7 +591,9 @@ class OrderStatusWidget extends ConsumerWidget {
           content: Text(
             AppLocalizations.of(
               context,
-            ).statusUpdateErrorDetailed(orderService.state.error ?? ''),
+            ).statusUpdateErrorDetailed(
+              ref.read(orderServiceProvider).error ?? '',
+            ),
           ),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
