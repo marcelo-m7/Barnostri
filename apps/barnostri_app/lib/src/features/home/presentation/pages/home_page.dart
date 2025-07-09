@@ -25,10 +25,10 @@ class HomePage extends ConsumerWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withOpacity(0.1),
+                  color: Colors.orange.withValues(alpha: (0.1 * 255).round()),
                   border: Border(
                     bottom: BorderSide(
-                      color: Colors.orange.withOpacity(0.3),
+                      color: Colors.orange.withValues(alpha: (0.3 * 255).round()),
                       width: 1,
                     ),
                   ),
@@ -83,7 +83,7 @@ class HomePage extends ConsumerWidget {
                             Container(
                               padding: const EdgeInsets.all(32),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Colors.white.withValues(alpha: (0.2 * 255).round()),
                                 borderRadius: BorderRadius.circular(32),
                               ),
                               child: Icon(
@@ -96,9 +96,7 @@ class HomePage extends ConsumerWidget {
                             // Title
                             Text(
                               l10n.appTitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayMedium
+                              style: Theme.of(context).textTheme.displayMedium
                                   ?.copyWith(
                                     color: Theme.of(
                                       context,
@@ -109,13 +107,11 @@ class HomePage extends ConsumerWidget {
                             const SizedBox(height: 8),
                             Text(
                               l10n.welcomeMessage,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
+                              style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(
                                     color: Theme.of(
                                       context,
-                                    ).colorScheme.onPrimary.withOpacity(0.9),
+                                    ).colorScheme.onPrimary.withValues(alpha: (0.9 * 255).round()),
                                   ),
                               textAlign: TextAlign.center,
                             ),
@@ -126,10 +122,10 @@ class HomePage extends ConsumerWidget {
                                 width: double.infinity,
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  color: Colors.orange.withOpacity(0.2),
+                                  color: Colors.orange.withValues(alpha: (0.2 * 255).round()),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
-                                    color: Colors.orange.withOpacity(0.3),
+                                    color: Colors.orange.withValues(alpha: (0.3 * 255).round()),
                                     width: 1,
                                   ),
                                 ),
@@ -161,10 +157,10 @@ class HomePage extends ConsumerWidget {
                               width: double.infinity,
                               padding: const EdgeInsets.all(24),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.1),
+                                color: Colors.white.withValues(alpha: (0.1 * 255).round()),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: Colors.white.withOpacity(0.2),
+                                  color: Colors.white.withValues(alpha: (0.2 * 255).round()),
                                   width: 1,
                                 ),
                               ),
@@ -200,7 +196,7 @@ class HomePage extends ConsumerWidget {
                                           color: Theme.of(context)
                                               .colorScheme
                                               .onPrimary
-                                              .withOpacity(0.8),
+                                              .withValues(alpha: (0.8 * 255).round()),
                                         ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -236,10 +232,10 @@ class HomePage extends ConsumerWidget {
                               width: double.infinity,
                               padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.05),
+                                color: Colors.white.withValues(alpha: (0.05 * 255).round()),
                                 borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
-                                  color: Colors.white.withOpacity(0.1),
+                                  color: Colors.white.withValues(alpha: (0.1 * 255).round()),
                                   width: 1,
                                 ),
                               ),
@@ -250,7 +246,7 @@ class HomePage extends ConsumerWidget {
                                     size: 32,
                                     color: Theme.of(
                                       context,
-                                    ).colorScheme.onPrimary.withOpacity(0.8),
+                                    ).colorScheme.onPrimary.withValues(alpha: (0.8 * 255).round()),
                                   ),
                                   const SizedBox(height: 12),
                                   Text(
@@ -262,21 +258,19 @@ class HomePage extends ConsumerWidget {
                                           color: Theme.of(context)
                                               .colorScheme
                                               .onPrimary
-                                              .withOpacity(0.9),
+                                              .withValues(alpha: (0.9 * 255).round()),
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     l10n.adminAccessDescription,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
+                                    style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
                                           color: Theme.of(context)
                                               .colorScheme
                                               .onPrimary
-                                              .withOpacity(0.7),
+                                              .withValues(alpha: (0.7 * 255).round()),
                                         ),
                                   ),
                                   const SizedBox(height: 16),
@@ -305,10 +299,10 @@ class HomePage extends ConsumerWidget {
                       Text(
                         l10n.footerTagline,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onPrimary.withOpacity(0.7),
-                            ),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onPrimary.withValues(alpha: (0.7 * 255).round()),
+                        ),
                       ),
                     ],
                   ),
