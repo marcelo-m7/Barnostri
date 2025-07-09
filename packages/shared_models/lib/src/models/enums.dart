@@ -11,14 +11,19 @@ enum OrderStatus {
   static OrderStatus fromString(String status) {
     switch (status) {
       case 'Received':
+      case 'Recebido':
         return OrderStatus.received;
       case 'Preparing':
+      case 'Em preparo':
         return OrderStatus.preparing;
       case 'Ready':
+      case 'Pronto':
         return OrderStatus.ready;
       case 'Delivered':
+      case 'Entregue':
         return OrderStatus.delivered;
       case 'Canceled':
+      case 'Cancelado':
         return OrderStatus.canceled;
       default:
         return OrderStatus.received;
@@ -39,8 +44,11 @@ enum PaymentMethod {
       case 'Pix':
         return PaymentMethod.pix;
       case 'Card':
+      case 'Cartão':
+      case 'Cartao':
         return PaymentMethod.card;
       case 'Cash':
+      case 'Dinheiro':
         return PaymentMethod.cash;
       default:
         return PaymentMethod.pix;

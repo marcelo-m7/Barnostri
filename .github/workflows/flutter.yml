@@ -23,11 +23,11 @@ jobs:
         working-directory: packages/shared_models
 
       # Format both projects
-#      - run: dart format --set-exit-if-changed .
-#        working-directory: apps/barnostri_app
+      - run: dart format --set-exit-if-changed .
+        working-directory: apps/barnostri_app
 
-#      - run: dart format --set-exit-if-changed .
-#        working-directory: packages/shared_models
+      - run: dart format --set-exit-if-changed .
+        working-directory: packages/shared_models
 
       # Analyze both projects
       - run: flutter analyze

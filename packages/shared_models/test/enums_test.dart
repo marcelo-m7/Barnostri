@@ -6,11 +6,19 @@ void main() {
     test('fromString returns correct value', () {
       expect(OrderStatus.fromString('Ready'), OrderStatus.ready);
     });
+
+    test('supports Portuguese values', () {
+      expect(OrderStatus.fromString('Em preparo'), OrderStatus.preparing);
+    });
   });
 
   group('PaymentMethod enum', () {
     test('fromString returns correct value', () {
       expect(PaymentMethod.fromString('Card'), PaymentMethod.card);
+    });
+
+    test('supports Portuguese values', () {
+      expect(PaymentMethod.fromString('Cartão'), PaymentMethod.card);
     });
   });
 }
