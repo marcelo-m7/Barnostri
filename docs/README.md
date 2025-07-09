@@ -23,6 +23,7 @@ supabase/
   migrations/
   seed/
   functions/
+apps/barnostri_app/supabase/
   supabase-config.json
 ```
 

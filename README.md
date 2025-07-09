@@ -20,7 +20,7 @@ Consulte também `docs/CODE_REVIEW.md` para um resumo de inconsistências identi
    (cd apps/barnostri_app && flutter pub get)
    (cd packages/shared_models && dart pub get)
    ```
-3. Configure o Supabase preenchendo as variáveis em [`supabase/supabase-config.json`](supabase/supabase-config.json).
+3. Configure o Supabase preenchendo as variáveis em [`apps/barnostri_app/supabase/supabase-config.json`](apps/barnostri_app/supabase/supabase-config.json).
 4. Inicie o Supabase local (requer o [Supabase CLI](https://supabase.com/docs/guides/cli)):
 
    ```bash
@@ -54,7 +54,7 @@ flutter gen-l10n
 Isso atualizará o conteúdo de `lib/l10n/generated`, que deve ser versionado em
 seguida.
 
-O arquivo `supabase/supabase-config.json` é carregado pelo serviço `SupabaseConfig.createClient()` dentro do aplicativo.
+O arquivo `apps/barnostri_app/supabase/supabase-config.json` é carregado pelo serviço `SupabaseConfig.createClient()` dentro do aplicativo.
 
 ## Executando os testes
 

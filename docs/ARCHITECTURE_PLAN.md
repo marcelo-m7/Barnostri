@@ -27,6 +27,7 @@ barnostri/
 │   ├── migrations/
 │   ├── seed/
 │   ├── functions/
+├── apps/barnostri_app/supabase/
 │   └── supabase-config.json
 ```
 
@@ -39,7 +40,7 @@ barnostri/
 - All SQL migrations live under `supabase/migrations/` and are versioned with the Supabase CLI.
 - Example data goes in `supabase/seed/`.
 - Edge functions (if any) stay under `supabase/functions/`.
-- Environment variables are stored in `supabase/supabase-config.json` (one per environment).
+- Environment variables are stored in `apps/barnostri_app/supabase/supabase-config.json` (one per environment).
 
 ## Packages
 - `packages/shared_models` exposes models and repository helpers shared by the apps.
