@@ -49,6 +49,14 @@ class _MenuPageState extends ConsumerState<MenuPage>
     }
   }
 
+  int _getCrossAxisCount(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width >= 1000) return 4;
+    if (width >= 700) return 3;
+    if (width >= 500) return 2;
+    return 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -296,19 +304,23 @@ class _MenuPageState extends ConsumerState<MenuPage>
 
   Widget _buildSearchResults(MenuService menuService, MenuState menuState) {
     final filteredItems = menuService.searchItems(_searchQuery);
+    final columns = _getCrossAxisCount(context);
 
     return SliverPadding(
       padding: const EdgeInsets.all(16),
       sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: columns,
           childAspectRatio: 1.2,
           mainAxisSpacing: 16,
         ),
-        delegate: SliverChildBuilderDelegate((context, index) {
-          final item = filteredItems[index];
-          return MenuItemCard(item: item, onTap: () => _showItemDetails(item));
-        }, childCount: filteredItems.length),
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            final item = filteredItems[index];
+            return MenuItemCard(item: item, onTap: () => _showItemDetails(item));
+          },
+          childCount: filteredItems.length,
+        ),
       ),
     );
   }
@@ -348,12 +360,11 @@ class _MenuPageState extends ConsumerState<MenuPage>
                     ),
                   )
                 : GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          childAspectRatio: 1.2,
-                          mainAxisSpacing: 16,
-                        ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: _getCrossAxisCount(context),
+                      childAspectRatio: 1.2,
+                      mainAxisSpacing: 16,
+                    ),
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       final item = items[index];
