@@ -13,10 +13,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   testWidgets('App loads home page', (WidgetTester tester) async {
-    final binding = TestWidgetsFlutterBinding.ensureInitialized();
-    binding.window.physicalSizeTestValue = const Size(800, 1400);
-    binding.window.devicePixelRatioTestValue = 1.0;
-    addTearDown(binding.window.clearPhysicalSizeTestValue);
+    TestWidgetsFlutterBinding.ensureInitialized();
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
 
     await tester.pumpWidget(ProviderScope(child: const BarnostriApp()));
 
