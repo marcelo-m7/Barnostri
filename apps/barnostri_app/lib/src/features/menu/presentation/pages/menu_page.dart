@@ -611,6 +611,12 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
           ],
         ),
       ),
-    );
+      );
+  }
+
+  @override
+  void dispose() {
+    _observationController.dispose();
+    super.dispose();
   }
 }
