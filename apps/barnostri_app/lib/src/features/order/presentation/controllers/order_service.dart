@@ -47,17 +47,14 @@ class OrderService extends StateNotifier<OrderState> {
     this._updateOrderStatusUseCase,
   ) : super(const OrderState());
 
-  Future<T?> _guard<T>(
-    Future<T> Function() action, {
-    String Function(Object)? onError,
-  }) async {
+  Future<T?> _guard<T>(Future<T> Function() action,
+      {String Function(Object)? onError}) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       return await action();
     } catch (e) {
-      state = state.copyWith(
-        error: onError != null ? onError(e) : e.toString(),
-      );
+      state =
+          state.copyWith(error: onError != null ? onError(e) : e.toString());
       return null;
     } finally {
       state = state.copyWith(isLoading: false);
@@ -76,7 +73,9 @@ class OrderService extends StateNotifier<OrderState> {
     if (existingIndex != -1) {
       items[existingIndex].quantity += quantity;
     } else {
-      items.add(CartItem(item: item, quantity: quantity, note: note));
+      items.add(
+        CartItem(item: item, quantity: quantity, note: note),
+      );
     }
     state = state.copyWith(cartItems: items);
   }
@@ -113,39 +112,48 @@ class OrderService extends StateNotifier<OrderState> {
       state = state.copyWith(error: 'Carrinho está vazio');
       return null;
     }
-    return await _guard<String?>(() async {
-      final orderId = await _createOrderUseCase(
-        tableId: state.currentTable!.id,
-        items: state.cartItems,
-        total: state.cartTotal,
-        paymentMethod: paymentMethod,
-      );
-      if (orderId != null) {
-        clearCart();
-        return orderId;
-      } else {
-        state = state.copyWith(error: 'Erro ao criar pedido');
-        return null;
-      }
-    }, onError: (e) => 'Erro ao processar pedido: $e');
+    return await _guard<String?>(
+      () async {
+        final orderId = await _createOrderUseCase(
+          tableId: state.currentTable!.id,
+          items: state.cartItems,
+          total: state.cartTotal,
+          paymentMethod: paymentMethod,
+        );
+        if (orderId != null) {
+          clearCart();
+          return orderId;
+        } else {
+          state = state.copyWith(error: 'Erro ao criar pedido');
+          return null;
+        }
+      },
+      onError: (e) => 'Erro ao processar pedido: $e',
+    );
   }
 
   Future<bool> updateOrderStatus(String orderId, OrderStatus status) async {
-    final success = await _guard<bool>(() async {
-      final result = await _updateOrderStatusUseCase(orderId, status);
-      if (!result) {
-        state = state.copyWith(error: 'Erro ao atualizar status do pedido');
-      }
-      return result;
-    }, onError: (e) => 'Erro ao atualizar status: $e');
+    final success = await _guard<bool>(
+      () async {
+        final result = await _updateOrderStatusUseCase(orderId, status);
+        if (!result) {
+          state = state.copyWith(error: 'Erro ao atualizar status do pedido');
+        }
+        return result;
+      },
+      onError: (e) => 'Erro ao atualizar status: $e',
+    );
     return success ?? false;
   }
 
   Future<List<Order>> getAllOrders() async {
-    final orders = await _guard<List<Order>>(() async {
-      final result = await _orderRepository.fetchOrders();
-      return result;
-    }, onError: (e) => 'Erro ao carregar pedidos: $e');
+    final orders = await _guard<List<Order>>(
+      () async {
+        final result = await _orderRepository.fetchOrders();
+        return result;
+      },
+      onError: (e) => 'Erro ao carregar pedidos: $e',
+    );
     return orders ?? [];
   }
 
@@ -158,16 +166,19 @@ class OrderService extends StateNotifier<OrderState> {
   }
 
   Future<TableModel?> getTableByQrToken(String qrToken) async {
-    return await _guard<TableModel?>(() async {
-      final table = await _menuRepository.getTableByQrToken(qrToken);
-      if (table != null) {
-        setTable(table);
-        return table;
-      } else {
-        state = state.copyWith(error: 'Mesa não encontrada');
-        return null;
-      }
-    }, onError: (e) => 'Erro ao buscar mesa: $e');
+    return await _guard<TableModel?>(
+      () async {
+        final table = await _menuRepository.getTableByQrToken(qrToken);
+        if (table != null) {
+          setTable(table);
+          return table;
+        } else {
+          state = state.copyWith(error: 'Mesa não encontrada');
+          return null;
+        }
+      },
+      onError: (e) => 'Erro ao buscar mesa: $e',
+    );
   }
 
   Future<bool> processPayment({
@@ -208,12 +219,14 @@ class OrderService extends StateNotifier<OrderState> {
   }
 }
 
-final orderServiceProvider = StateNotifierProvider<OrderService, OrderState>((
-  ref,
-) {
-  final orderRepo = ref.watch(orderRepositoryProvider);
-  final menuRepo = ref.watch(menuRepositoryProvider);
-  final create = CreateOrderUseCase(orderRepo);
-  final update = UpdateOrderStatusUseCase(orderRepo);
-  return OrderService(orderRepo, menuRepo, create, update);
-});
+final orderServiceProvider = StateNotifierProvider<OrderService, OrderState>(
+  (
+    ref,
+  ) {
+    final orderRepo = ref.watch(orderRepositoryProvider);
+    final menuRepo = ref.watch(menuRepositoryProvider);
+    final create = CreateOrderUseCase(orderRepo);
+    final update = UpdateOrderStatusUseCase(orderRepo);
+    return OrderService(orderRepo, menuRepo, create, update);
+  },
+);

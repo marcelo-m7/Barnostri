@@ -61,7 +61,7 @@ class _CartPageState extends ConsumerState<CartPage> {
           Icon(
             Icons.shopping_cart_outlined,
             size: 80,
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: (0.3 * 255).round()),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
           ),
           const SizedBox(height: 24),
           Text(
@@ -74,8 +74,9 @@ class _CartPageState extends ConsumerState<CartPage> {
           Text(
             l10n.emptyCartDescription,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round()),
-            ),
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
@@ -111,7 +112,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                   decoration: BoxDecoration(
                     color: Theme.of(
                       context,
-                    ).colorScheme.primary.withValues(alpha: (0.1 * 255).round()),
+                    ).colorScheme.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Row(
@@ -123,11 +124,11 @@ class _CartPageState extends ConsumerState<CartPage> {
                       const SizedBox(width: 12),
                       Text(
                         l10n.tableNumber(orderState.currentTable!.number),
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                       ),
                     ],
                   ),
@@ -191,7 +192,7 @@ class _CartPageState extends ConsumerState<CartPage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withValues(alpha: (0.2 * 255).round()),
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
         ),
       ),
       child: Column(
@@ -207,19 +208,19 @@ class _CartPageState extends ConsumerState<CartPage> {
                     Text(
                       cartItem.item.name,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     if (cartItem.note != null && cartItem.note!.isNotEmpty) ...[
                       const SizedBox(height: 4),
                       Text(
                         'Obs: ${cartItem.note}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round()),
-                          fontStyle: FontStyle.italic,
-                        ),
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withOpacity(0.7),
+                              fontStyle: FontStyle.italic,
+                            ),
                       ),
                     ],
                   ],
@@ -229,9 +230,9 @@ class _CartPageState extends ConsumerState<CartPage> {
               Text(
                 formatCurrency(cartItem.subtotal),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
               ),
             ],
           ),
@@ -245,15 +246,15 @@ class _CartPageState extends ConsumerState<CartPage> {
                   IconButton.filled(
                     onPressed: cartItem.quantity > 1
                         ? () => orderNotifier.updateCartItem(
-                            index,
-                            quantity: cartItem.quantity - 1,
-                          )
+                              index,
+                              quantity: cartItem.quantity - 1,
+                            )
                         : null,
                     icon: const Icon(Icons.remove),
                     style: IconButton.styleFrom(
                       backgroundColor: Theme.of(
                         context,
-                      ).colorScheme.primary.withValues(alpha: (0.1 * 255).round()),
+                      ).colorScheme.primary.withOpacity(0.1),
                       foregroundColor: Theme.of(context).colorScheme.primary,
                       minimumSize: const Size(36, 36),
                     ),
@@ -262,8 +263,8 @@ class _CartPageState extends ConsumerState<CartPage> {
                   Text(
                     cartItem.quantity.toString(),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(width: 12),
                   IconButton.filled(
@@ -334,7 +335,7 @@ class _CartPageState extends ConsumerState<CartPage> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         tileColor: _selectedPaymentMethod == method
-            ? Theme.of(context).colorScheme.primary.withValues(alpha: (0.1 * 255).round())
+            ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
             : null,
       ),
     );
@@ -344,10 +345,10 @@ class _CartPageState extends ConsumerState<CartPage> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary.withValues(alpha: (0.05 * 255).round()),
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withValues(alpha: (0.2 * 255).round()),
+          color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
         ),
       ),
       child: Column(
@@ -380,9 +381,9 @@ class _CartPageState extends ConsumerState<CartPage> {
               Text(
                 formatCurrency(orderState.cartTotal),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
               ),
             ],
           ),
@@ -401,7 +402,7 @@ class _CartPageState extends ConsumerState<CartPage> {
         color: Theme.of(context).colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: (0.05 * 255).round()),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, -5),
           ),
@@ -413,7 +414,7 @@ class _CartPageState extends ConsumerState<CartPage> {
           child: ElevatedButton(
             onPressed: _isProcessingPayment
                 ? null
-                : () => _processCheckout(orderNotifier, orderState),
+                : () => _processCheckout(orderNotifier),
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -434,8 +435,8 @@ class _CartPageState extends ConsumerState<CartPage> {
                 : Text(
                     '${l10n.checkout} - ${formatCurrency(orderState.cartTotal)}',
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
           ),
         ),
@@ -463,7 +464,9 @@ class _CartPageState extends ConsumerState<CartPage> {
                     const SizedBox(height: 16),
                     Text(
                       'Erro ao carregar pedido',
-                      style: Theme.of(context).textTheme.headlineSmall
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
                           ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 24),
@@ -492,10 +495,7 @@ class _CartPageState extends ConsumerState<CartPage> {
     );
   }
 
-  Future<void> _processCheckout(
-    OrderService orderNotifier,
-    OrderState orderState,
-  ) async {
+  Future<void> _processCheckout(OrderService orderNotifier) async {
     setState(() {
       _isProcessingPayment = true;
     });
@@ -504,7 +504,7 @@ class _CartPageState extends ConsumerState<CartPage> {
       // Process payment
       final paymentSuccess = await orderNotifier.processPayment(
         method: _selectedPaymentMethod,
-        amount: orderState.cartTotal,
+        amount: orderNotifier.state.cartTotal,
       );
 
       if (!paymentSuccess) {
@@ -524,7 +524,9 @@ class _CartPageState extends ConsumerState<CartPage> {
 
         _showSuccessDialog();
       } else {
-        _showErrorDialog(orderState.error ?? 'Erro ao processar pedido');
+        _showErrorDialog(
+          orderNotifier.state.error ?? 'Erro ao processar pedido',
+        );
       }
     } catch (e) {
       _showErrorDialog('Erro inesperado: $e');

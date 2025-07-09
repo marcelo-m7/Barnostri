@@ -38,7 +38,7 @@ class LanguageSelector extends ConsumerWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withValues(alpha: (0.3 * 255).round()),
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
         ),
       ),
       child: DropdownButtonHideUnderline(
@@ -126,7 +126,7 @@ class LanguageSelector extends ConsumerWidget {
               margin: const EdgeInsets.only(bottom: 12),
               child: Material(
                 color: isSelected
-                    ? Theme.of(context).colorScheme.primary.withValues(alpha: (0.1 * 255).round())
+                    ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
                 child: InkWell(
@@ -153,7 +153,7 @@ class LanguageSelector extends ConsumerWidget {
                                   ? Theme.of(context).colorScheme.primary
                                   : Theme.of(
                                       context,
-                                    ).colorScheme.outline.withValues(alpha: (0.3 * 255).round()),
+                                    ).colorScheme.outline.withOpacity(0.3),
                             ),
                           ),
                           child: Center(
@@ -187,7 +187,7 @@ class LanguageSelector extends ConsumerWidget {
                                     ?.copyWith(
                                       color: Theme.of(
                                         context,
-                                      ).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round()),
+                                      ).colorScheme.onSurface.withOpacity(0.7),
                                     ),
                               ),
                             ],
@@ -263,7 +263,7 @@ class LanguageSelectorButton extends ConsumerWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withValues(alpha: (0.3 * 255).round()),
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
         ),
       ),
       child: Material(

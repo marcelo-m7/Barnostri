@@ -78,7 +78,7 @@ class OrderStatusWidget extends ConsumerWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: (0.2 * 255).round()),
+                  color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Text(
@@ -99,16 +99,18 @@ class OrderStatusWidget extends ConsumerWidget {
                   Icons.table_restaurant,
                   color: Theme.of(
                     context,
-                  ).colorScheme.onPrimary.withValues(alpha: (0.8 * 255).round()),
+                  ).colorScheme.onPrimary.withOpacity(0.8),
                   size: 20,
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  AppLocalizations.of(context).tableNumber(order.table!.number),
+                  AppLocalizations.of(
+                    context,
+                  ).tableNumber(order.table!.number),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(
                       context,
-                    ).colorScheme.onPrimary.withValues(alpha: (0.8 * 255).round()),
+                    ).colorScheme.onPrimary.withOpacity(0.8),
                   ),
                 ),
               ],
@@ -118,7 +120,7 @@ class OrderStatusWidget extends ConsumerWidget {
             children: [
               Icon(
                 Icons.schedule,
-                color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: (0.8 * 255).round()),
+                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -127,7 +129,7 @@ class OrderStatusWidget extends ConsumerWidget {
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(
                     context,
-                  ).colorScheme.onPrimary.withValues(alpha: (0.8 * 255).round()),
+                  ).colorScheme.onPrimary.withOpacity(0.8),
                 ),
               ),
             ],
@@ -137,7 +139,7 @@ class OrderStatusWidget extends ConsumerWidget {
             children: [
               Icon(
                 Icons.payment,
-                color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: (0.8 * 255).round()),
+                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -146,7 +148,7 @@ class OrderStatusWidget extends ConsumerWidget {
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(
                     context,
-                  ).colorScheme.onPrimary.withValues(alpha: (0.8 * 255).round()),
+                  ).colorScheme.onPrimary.withOpacity(0.8),
                 ),
               ),
             ],
@@ -170,7 +172,7 @@ class OrderStatusWidget extends ConsumerWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withValues(alpha: (0.2 * 255).round()),
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
         ),
       ),
       child: Column(
@@ -220,14 +222,14 @@ class OrderStatusWidget extends ConsumerWidget {
               decoration: BoxDecoration(
                 color: isActive
                     ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.outline.withValues(alpha: (0.3 * 255).round()),
+                    : Theme.of(context).colorScheme.outline.withOpacity(0.3),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 _getStatusIcon(status),
                 color: isActive
                     ? Theme.of(context).colorScheme.onPrimary
-                    : Theme.of(context).colorScheme.onSurface.withValues(alpha: (0.5 * 255).round()),
+                    : Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                 size: 20,
               ),
             ),
@@ -247,7 +249,7 @@ class OrderStatusWidget extends ConsumerWidget {
                           ? Theme.of(context).colorScheme.onSurface
                           : Theme.of(
                               context,
-                            ).colorScheme.onSurface.withValues(alpha: (0.5 * 255).round()),
+                            ).colorScheme.onSurface.withOpacity(0.5),
                     ),
                   ),
                   Text(
@@ -256,10 +258,10 @@ class OrderStatusWidget extends ConsumerWidget {
                       color: isActive
                           ? Theme.of(
                               context,
-                            ).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round())
+                            ).colorScheme.onSurface.withOpacity(0.7)
                           : Theme.of(
                               context,
-                            ).colorScheme.onSurface.withValues(alpha: (0.4 * 255).round()),
+                            ).colorScheme.onSurface.withOpacity(0.4),
                     ),
                   ),
                 ],
@@ -271,7 +273,7 @@ class OrderStatusWidget extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withValues(alpha: (0.1 * 255).round()),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -308,7 +310,7 @@ class OrderStatusWidget extends ConsumerWidget {
                 height: 24,
                 color: isActive
                     ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.outline.withValues(alpha: (0.3 * 255).round()),
+                    : Theme.of(context).colorScheme.outline.withOpacity(0.3),
               ),
             ],
           ),
@@ -326,7 +328,7 @@ class OrderStatusWidget extends ConsumerWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withValues(alpha: (0.2 * 255).round()),
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
         ),
       ),
       child: Column(
@@ -339,10 +341,12 @@ class OrderStatusWidget extends ConsumerWidget {
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
-          ...order.items.map((item) => _buildOrderItem(context, item)).toList(),
+          ...order.items
+              .map((item) => _buildOrderItem(context, item))
+              .toList(),
           const SizedBox(height: 16),
           Divider(
-            color: Theme.of(context).colorScheme.outline.withValues(alpha: (0.2 * 255).round()),
+            color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
           ),
           const SizedBox(height: 16),
           Row(
@@ -378,7 +382,7 @@ class OrderStatusWidget extends ConsumerWidget {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.withValues(alpha: (0.1 * 255).round()),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Center(
@@ -409,7 +413,7 @@ class OrderStatusWidget extends ConsumerWidget {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round()),
+                      ).colorScheme.onSurface.withOpacity(0.7),
                       fontStyle: FontStyle.italic,
                     ),
                   ),
@@ -439,7 +443,7 @@ class OrderStatusWidget extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.tertiary.withValues(alpha: (0.1 * 255).round()),
+        color: Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(

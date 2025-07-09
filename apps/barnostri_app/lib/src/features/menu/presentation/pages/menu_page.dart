@@ -93,7 +93,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                 Container(
                                   padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: (0.2 * 255).round()),
+                                    color: Colors.white.withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Icon(
@@ -125,8 +125,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                       if (orderState.currentTable != null)
                                         Text(
                                           l10n.tableNumber(
-                                            orderState.currentTable!.number,
-                                          ),
+                                              orderState.currentTable!.number),
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge
@@ -134,7 +133,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                                 color: Theme.of(context)
                                                     .colorScheme
                                                     .onPrimary
-                                                    .withValues(alpha: (0.8 * 255).round()),
+                                                    .withOpacity(0.8),
                                               ),
                                         ),
                                     ],
@@ -145,11 +144,13 @@ class _MenuPageState extends ConsumerState<MenuPage>
                             const SizedBox(height: 16),
                             Text(
                               l10n.homeSlogan,
-                              style: Theme.of(context).textTheme.bodyMedium
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
                                   ?.copyWith(
                                     color: Theme.of(
                                       context,
-                                    ).colorScheme.onPrimary.withValues(alpha: (0.9 * 255).round()),
+                                    ).colorScheme.onPrimary.withOpacity(0.9),
                                   ),
                             ),
                           ],
@@ -183,7 +184,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
                                 Icons.clear,
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round()),
+                                ).colorScheme.onSurface.withOpacity(0.7),
                               ),
                               onPressed: () {
                                 _searchController.clear();
@@ -220,10 +221,12 @@ class _MenuPageState extends ConsumerState<MenuPage>
                       labelColor: Theme.of(context).colorScheme.primary,
                       unselectedLabelColor: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withValues(alpha: (0.6 * 255).round()),
+                      ).colorScheme.onSurface.withOpacity(0.6),
                       indicatorColor: Theme.of(context).colorScheme.primary,
                       indicatorWeight: 3,
-                      labelStyle: Theme.of(context).textTheme.labelLarge
+                      labelStyle: Theme.of(context)
+                          .textTheme
+                          .labelLarge
                           ?.copyWith(fontWeight: FontWeight.bold),
                       unselectedLabelStyle: Theme.of(
                         context,
@@ -328,17 +331,17 @@ class _MenuPageState extends ConsumerState<MenuPage>
                           size: 64,
                           color: Theme.of(
                             context,
-                          ).colorScheme.onSurface.withValues(alpha: (0.3 * 255).round()),
+                          ).colorScheme.onSurface.withOpacity(0.3),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           l10n.emptyCategoryItems(category.name),
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurface.withValues(alpha: (0.6 * 255).round()),
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface.withOpacity(0.6),
+                                  ),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -347,10 +350,10 @@ class _MenuPageState extends ConsumerState<MenuPage>
                 : GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          childAspectRatio: 1.2,
-                          mainAxisSpacing: 16,
-                        ),
+                      crossAxisCount: 1,
+                      childAspectRatio: 1.2,
+                      mainAxisSpacing: 16,
+                    ),
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       final item = items[index];
@@ -423,7 +426,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                 decoration: BoxDecoration(
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface.withValues(alpha: (0.3 * 255).round()),
+                  ).colorScheme.onSurface.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -444,18 +447,22 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                           children: [
                             Text(
                               widget.item.name,
-                              style: Theme.of(context).textTheme.headlineSmall
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             if (widget.item.description != null) ...[
                               const SizedBox(height: 8),
                               Text(
                                 widget.item.description!,
-                                style: Theme.of(context).textTheme.bodyMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
                                     ?.copyWith(
                                       color: Theme.of(
                                         context,
-                                      ).colorScheme.onSurface.withValues(alpha: (0.7 * 255).round()),
+                                      ).colorScheme.onSurface.withOpacity(0.7),
                                     ),
                               ),
                             ],
@@ -465,11 +472,11 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                       const SizedBox(width: 16),
                       Text(
                         formatCurrency(widget.item.price),
-                        style: Theme.of(context).textTheme.headlineSmall
-                            ?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                     ],
                   ),
@@ -480,8 +487,8 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                   Text(
                     'Quantidade',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -494,7 +501,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                         style: IconButton.styleFrom(
                           backgroundColor: Theme.of(
                             context,
-                          ).colorScheme.primary.withValues(alpha: (0.1 * 255).round()),
+                          ).colorScheme.primary.withOpacity(0.1),
                           foregroundColor: Theme.of(
                             context,
                           ).colorScheme.primary,
@@ -503,7 +510,9 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                       const SizedBox(width: 16),
                       Text(
                         _quantity.toString(),
-                        style: Theme.of(context).textTheme.headlineSmall
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(width: 16),
@@ -528,15 +537,18 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                   Text(
                     AppLocalizations.of(context).observationOptional,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(height: 8),
                   TextField(
                     controller: _observationController,
                     maxLines: 3,
                     decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context).observationExample,
+                      hintText: AppLocalizations.of(
+                        context,
+                      )
+                          .observationExample,
                       filled: true,
                       fillColor: Theme.of(context).colorScheme.surface,
                       border: OutlineInputBorder(
@@ -544,7 +556,7 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                         borderSide: BorderSide(
                           color: Theme.of(
                             context,
-                          ).colorScheme.outline.withValues(alpha: (0.3 * 255).round()),
+                          ).colorScheme.outline.withOpacity(0.3),
                         ),
                       ),
                     ),
@@ -575,7 +587,8 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                                   content: Text(
                                     AppLocalizations.of(
                                       context,
-                                    ).addedToCartMessage(widget.item.name),
+                                    )
+                                        .addedToCartMessage(widget.item.name),
                                   ),
                                   backgroundColor: Theme.of(
                                     context,
@@ -600,8 +613,8 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                             ? '${AppLocalizations.of(context).addToCart} - ${formatCurrency(widget.item.price * _quantity)}'
                             : AppLocalizations.of(context).itemUnavailable,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                   ),
