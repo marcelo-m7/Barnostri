@@ -41,7 +41,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
 
       // Initialize tab controller after loading categories
       _tabController = TabController(
-        length: menuService.categories.length,
+        length: ref.read(menuServiceProvider).categories.length,
         vsync: this,
       );
     }
