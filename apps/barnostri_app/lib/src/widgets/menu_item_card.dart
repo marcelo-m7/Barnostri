@@ -258,9 +258,8 @@ class _MenuItemCardState extends State<MenuItemCard>
   }
 
   Widget _buildPlaceholderImage() {
-    // Get food-related image based on item name/category
+    // Get food-related image based on item name
     String keyword = widget.item.name.toLowerCase();
-    String category = 'food';
 
     if (keyword.contains('bebida') ||
         keyword.contains('cerveja') ||
@@ -268,13 +267,11 @@ class _MenuItemCardState extends State<MenuItemCard>
         keyword.contains('suco') ||
         keyword.contains('refrigerante') ||
         keyword.contains('água')) {
-      category = 'drinks';
       keyword = 'brazilian drinks';
     } else if (keyword.contains('sobremesa') ||
         keyword.contains('pudim') ||
         keyword.contains('brigadeiro') ||
         keyword.contains('sorvete')) {
-      category = 'desserts';
       keyword = 'brazilian desserts';
     } else if (keyword.contains('camarão') ||
         keyword.contains('peixe') ||

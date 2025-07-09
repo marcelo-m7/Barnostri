@@ -55,7 +55,6 @@ class _MenuPageState extends ConsumerState<MenuPage>
           final menuService = ref.watch(menuServiceProvider.notifier);
           final menuState = ref.watch(menuServiceProvider);
           final orderState = ref.watch(orderServiceProvider);
-          final orderNotifier = ref.watch(orderServiceProvider.notifier);
           final l10n = AppLocalizations.of(context);
           if (_isLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -257,7 +256,6 @@ class _MenuPageState extends ConsumerState<MenuPage>
       floatingActionButton: Builder(
         builder: (context) {
           final orderState = ref.watch(orderServiceProvider);
-          final orderNotifier = ref.watch(orderServiceProvider.notifier);
           if (orderState.cartItemCount == 0) return const SizedBox();
 
           return FloatingActionButton.extended(

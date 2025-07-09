@@ -177,9 +177,6 @@ class OrderService extends StateNotifier<OrderState> {
     state = state.copyWith(isLoading: true);
     await Future.delayed(const Duration(seconds: 2));
     final success = true;
-    if (!success) {
-      state = state.copyWith(error: 'Falha no pagamento. Tente novamente.');
-    }
     state = state.copyWith(isLoading: false);
     return success;
   }

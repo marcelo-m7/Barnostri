@@ -47,7 +47,6 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
       ),
       body: Builder(
         builder: (context) {
-          final orderNotifier = ref.watch(orderServiceProvider.notifier);
           final orderState = ref.watch(orderServiceProvider);
           return Column(
             children: [

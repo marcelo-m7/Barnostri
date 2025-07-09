@@ -27,7 +27,6 @@ class _AdminPageState extends ConsumerState<AdminPage>
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authServiceProvider);
-    final l10n = AppLocalizations.of(context);
     if (authState.isLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
@@ -40,6 +39,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
   }
 
   Widget _buildLoginScreen() {
+    final l10n = AppLocalizations.of(context);
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     final authState = ref.watch(authServiceProvider);
@@ -151,7 +151,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                               );
-                          if (!context.mounted) return;
+                          if (!mounted) return;
                           final error = ref.read(authServiceProvider).error;
                           if (error != null) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -573,7 +573,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context).category,
                 ),
-                items: menuService.state.categories
+                items: ref
+                    .read(menuServiceProvider)
+                    .categories
                     .map(
                       (cat) => DropdownMenuItem(
                         value: cat.id,

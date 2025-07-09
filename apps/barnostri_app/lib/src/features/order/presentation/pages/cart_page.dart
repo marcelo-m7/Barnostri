@@ -510,9 +510,10 @@ class _CartPageState extends ConsumerState<CartPage> {
 
     try {
       // Process payment
+      final cartTotal = ref.read(orderServiceProvider).cartTotal;
       final paymentSuccess = await orderNotifier.processPayment(
         method: _selectedPaymentMethod,
-        amount: orderNotifier.state.cartTotal,
+        amount: cartTotal,
       );
 
       if (!paymentSuccess) {
@@ -532,9 +533,8 @@ class _CartPageState extends ConsumerState<CartPage> {
 
         _showSuccessDialog();
       } else {
-        _showErrorDialog(
-          orderNotifier.state.error ?? 'Erro ao processar pedido',
-        );
+        final error = ref.read(orderServiceProvider).error;
+        _showErrorDialog(error ?? 'Erro ao processar pedido');
       }
     } catch (e) {
       _showErrorDialog('Erro inesperado: $e');

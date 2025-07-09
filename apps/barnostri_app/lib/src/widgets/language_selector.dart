@@ -260,7 +260,6 @@ class LanguageSelectorButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final languageService = ref.watch(languageServiceProvider.notifier);
     final locale = ref.watch(languageServiceProvider);
-    final l10n = AppLocalizations.of(context);
 
     return Container(
       decoration: BoxDecoration(
