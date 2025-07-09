@@ -41,7 +41,7 @@ CREATE POLICY "Authenticated users can manage categories" ON categories
 
 -- Itens_cardapio policies (public read access)
 CREATE POLICY "Anyone can view available menu items" ON menu_items
-    FOR SELECT USING (disponivel = true);
+    FOR SELECT USING (available = true);
 
 CREATE POLICY "Authenticated users can manage menu items" ON menu_items
     FOR ALL USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
