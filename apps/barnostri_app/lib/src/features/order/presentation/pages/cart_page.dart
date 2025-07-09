@@ -413,7 +413,7 @@ class _CartPageState extends ConsumerState<CartPage> {
           child: ElevatedButton(
             onPressed: _isProcessingPayment
                 ? null
-                : () => _processCheckout(orderNotifier, orderState),
+                : () => _processCheckout(orderNotifier),
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -492,10 +492,7 @@ class _CartPageState extends ConsumerState<CartPage> {
     );
   }
 
-  Future<void> _processCheckout(
-    OrderService orderNotifier,
-    OrderState orderState,
-  ) async {
+  Future<void> _processCheckout(OrderService orderNotifier) async {
     setState(() {
       _isProcessingPayment = true;
     });
@@ -504,7 +501,7 @@ class _CartPageState extends ConsumerState<CartPage> {
       // Process payment
       final paymentSuccess = await orderNotifier.processPayment(
         method: _selectedPaymentMethod,
-        amount: orderState.cartTotal,
+        amount: orderNotifier.state.cartTotal,
       );
 
       if (!paymentSuccess) {
@@ -524,7 +521,9 @@ class _CartPageState extends ConsumerState<CartPage> {
 
         _showSuccessDialog();
       } else {
-        _showErrorDialog(orderState.error ?? 'Erro ao processar pedido');
+        _showErrorDialog(
+          orderNotifier.state.error ?? 'Erro ao processar pedido',
+        );
       }
     } catch (e) {
       _showErrorDialog('Erro inesperado: $e');

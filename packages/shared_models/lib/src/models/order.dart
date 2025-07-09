@@ -36,12 +36,11 @@ class Order {
       paid: json['paid'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
-      table:
-          json['tables'] != null ? TableModel.fromJson(json['tables']) : null,
+      table: json['tables'] != null ? TableModel.fromJson(json['tables']) : null,
       items: json['order_items'] != null
           ? (json['order_items'] as List)
-              .map((item) => OrderItem.fromJson(item))
-              .toList()
+                .map((item) => OrderItem.fromJson(item))
+                .toList()
           : [],
     );
   }

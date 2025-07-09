@@ -570,9 +570,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context).category,
                 ),
-                items: ref
-                    .read(menuServiceProvider)
-                    .categories
+                items: menuService.state.categories
                     .map(
                       (cat) => DropdownMenuItem(
                         value: cat.id,
