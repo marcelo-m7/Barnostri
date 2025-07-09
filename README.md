@@ -55,6 +55,23 @@ cd apps/barnostri_app
 flutter build web
 ```
 
+Para testar o build web localmente, sirva o diretório `build/web` em um servidor
+HTTP simples:
+
+```bash
+cd apps/barnostri_app/build/web
+python3 -m http.server 8080
+```
+
+Em seguida acesse `http://localhost:8080` no navegador.
+
+Para rodar todos os testes (unitários, widgets e integração) utilize:
+
+```bash
+flutter test
+flutter test integration_test
+```
+
 ### Atualizando arquivos de localização
 
 Os textos em diferentes idiomas ficam nos arquivos `.arb` dentro de
