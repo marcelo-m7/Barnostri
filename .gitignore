@@ -7,6 +7,26 @@ node_modules/
 build/
 **/build/
 pubspec.lock
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.ico
+*.webp
+*.heic
+*.tiff
+*.otf
+*.ttf
+*.pdf
+*.mp3
+*.mp4
+*.avi
+*.mov
+*.zip
+*.tar
+*.gz
+*.7z
 
 # Optional: environment files
 .env
