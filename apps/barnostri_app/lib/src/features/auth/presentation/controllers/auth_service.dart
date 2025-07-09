@@ -27,13 +27,11 @@ class AuthService extends StateNotifier<AuthState> {
   final AuthRepository _authRepository;
   final LoginUseCase _loginUseCase;
   AuthService(this._authRepository, this._loginUseCase)
-      : super(const AuthState()) {
+    : super(const AuthState()) {
     final user = _authRepository.getCurrentUser();
     state = state.copyWith(isAuthenticated: user != null);
     _authRepository.authStateChanges.listen((supabase.AuthState event) {
-      state = state.copyWith(
-        isAuthenticated: event.session?.user != null,
-      );
+      state = state.copyWith(isAuthenticated: event.session?.user != null);
     });
   }
 
@@ -64,10 +62,10 @@ class AuthService extends StateNotifier<AuthState> {
   }
 }
 
-final authServiceProvider = StateNotifierProvider<AuthService, AuthState>(
-  (ref) {
-    final repo = ref.watch(authRepositoryProvider);
-    final login = LoginUseCase(repo);
-    return AuthService(repo, login);
-  },
-);
+final authServiceProvider = StateNotifierProvider<AuthService, AuthState>((
+  ref,
+) {
+  final repo = ref.watch(authRepositoryProvider);
+  final login = LoginUseCase(repo);
+  return AuthService(repo, login);
+});
