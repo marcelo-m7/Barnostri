@@ -352,6 +352,18 @@ abstract class AppLocalizations {
   /// **'Admin'**
   String get admin;
 
+  /// Title for the admin login page
+  ///
+  /// In en, this message translates to:
+  /// **'Barnostri Admin'**
+  String get adminTitle;
+
+  /// Subtitle indicating restricted access
+  ///
+  /// In en, this message translates to:
+  /// **'Restricted access for staff'**
+  String get adminRestricted;
+
   /// Login button
   ///
   /// In en, this message translates to:
@@ -375,6 +387,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password'**
   String get password;
+
+  /// Label for email field on admin login
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailLabel;
+
+  /// Label for password field on admin login
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
 
   /// Email input hint
   ///
@@ -417,6 +441,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use: admin@barnostri.com / admin123'**
   String get demoCredentials;
+
+  /// Title preceding the demo credentials
+  ///
+  /// In en, this message translates to:
+  /// **'Demo credentials:'**
+  String get demoCredentialsTitle;
 
   /// Add item button
   ///

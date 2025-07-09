@@ -27,6 +27,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authServiceProvider);
+    final l10n = AppLocalizations.of(context);
     if (authState.isLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
@@ -68,7 +69,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
               const SizedBox(height: 32),
 
               Text(
-                'Barnostri Admin',
+                l10n.adminTitle,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -77,7 +78,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
               const SizedBox(height: 8),
 
               Text(
-                'Acesso restrito para funcionários',
+                l10n.adminRestricted,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(
                     context,
@@ -92,7 +93,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
-                  labelText: 'Email',
+                  labelText: l10n.emailLabel,
                   prefixIcon: Icon(
                     Icons.email,
                     color: Theme.of(context).colorScheme.primary,
@@ -117,7 +118,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Senha',
+                  labelText: l10n.passwordLabel,
                   prefixIcon: Icon(
                     Icons.lock,
                     color: Theme.of(context).colorScheme.primary,
@@ -201,7 +202,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 child: Column(
                   children: [
                     Text(
-                      'Credenciais de demonstração:',
+                      l10n.demoCredentialsTitle,
                       style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

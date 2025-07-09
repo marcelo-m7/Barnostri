@@ -178,6 +178,14 @@
   "@admin": {
     "description": "Admin label"
   },
+  "adminTitle": "Barnostri Admin",
+  "@adminTitle": {
+    "description": "Title for the admin login page"
+  },
+  "adminRestricted": "Restricted access for staff",
+  "@adminRestricted": {
+    "description": "Subtitle indicating restricted access"
+  },
   "login": "Login",
   "@login": {
     "description": "Login button"
@@ -193,6 +201,14 @@
   "password": "Password",
   "@password": {
     "description": "Password label"
+  },
+  "emailLabel": "Email",
+  "@emailLabel": {
+    "description": "Label for email field on admin login"
+  },
+  "passwordLabel": "Password",
+  "@passwordLabel": {
+    "description": "Label for password field on admin login"
   },
   "emailHint": "Enter your email",
   "@emailHint": {
@@ -221,6 +237,10 @@
   "demoCredentials": "Use: admin@barnostri.com / admin123",
   "@demoCredentials": {
     "description": "Demo credentials text"
+  },
+  "demoCredentialsTitle": "Demo credentials:",
+  "@demoCredentialsTitle": {
+    "description": "Title preceding the demo credentials"
   },
   "addItem": "Add Item",
   "@addItem": {

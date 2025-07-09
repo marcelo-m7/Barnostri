@@ -42,17 +42,37 @@
   "tableNumber": "Mesa {number}",
   "itemsCount": "{count} itens",
   "admin": "Admin",
+  "adminTitle": "Barnostri Admin",
+  "@adminTitle": {
+    "description": "Título da tela de login do admin"
+  },
+  "adminRestricted": "Acesso restrito para funcionários",
+  "@adminRestricted": {
+    "description": "Subtítulo indicando acesso restrito"
+  },
   "login": "Entrar",
   "logout": "Sair",
   "email": "Email",
   "password": "Senha",
   "emailHint": "Digite seu email",
   "passwordHint": "Digite sua senha",
+  "emailLabel": "Email",
+  "@emailLabel": {
+    "description": "Rótulo do campo de email no login do admin"
+  },
+  "passwordLabel": "Senha",
+  "@passwordLabel": {
+    "description": "Rótulo do campo de senha no login do admin"
+  },
   "invalidEmail": "Por favor, digite um email válido",
   "passwordRequired": "Senha é obrigatória",
   "loginError": "Falha no login. Verifique suas credenciais.",
   "demoMode": "Modo Demo",
   "demoCredentials": "Use: admin@barnostri.com / admin123",
+  "demoCredentialsTitle": "Credenciais de demonstração:",
+  "@demoCredentialsTitle": {
+    "description": "Título para as credenciais de demonstração"
+  },
   "addItem": "Adicionar Item",
   "editItem": "Editar Item",
   "deleteItem": "Excluir Item",

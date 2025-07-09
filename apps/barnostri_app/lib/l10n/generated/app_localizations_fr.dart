@@ -142,6 +142,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get admin => 'Admin';
 
   @override
+  String get adminTitle => 'Barnostri Admin';
+
+  @override
+  String get adminRestricted => 'Accès réservé au personnel';
+
+  @override
   String get login => 'Se connecter';
 
   @override
@@ -152,6 +158,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get password => 'Mot de passe';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get passwordLabel => 'Mot de passe';
 
   @override
   String get emailHint => 'Entrez votre email';
@@ -173,6 +185,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get demoCredentials => 'Utilisez: admin@barnostri.com / admin123';
+
+  @override
+  String get demoCredentialsTitle => 'Identifiants de démonstration:';
 
   @override
   String get addItem => 'Ajouter un Article';
