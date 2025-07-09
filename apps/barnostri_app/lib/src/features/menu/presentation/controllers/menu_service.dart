@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/core/repositories.dart';
-import 'package:barnostri_app/src/features/menu/domain/usecases/load_menu_use_case.dart';
 
 class MenuState {
   final List<CategoryModel> categories;

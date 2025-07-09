@@ -7,10 +7,6 @@ import 'package:barnostri_app/src/features/order/data/repositories/supabase_orde
 import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_service.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
 import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
-import 'package:barnostri_app/src/features/auth/domain/usecases/login_use_case.dart';
-import 'package:barnostri_app/src/features/menu/domain/usecases/load_menu_use_case.dart';
-import 'package:barnostri_app/src/features/order/domain/usecases/create_order_use_case.dart';
-import 'package:barnostri_app/src/features/order/domain/usecases/update_order_status_use_case.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
