@@ -231,5 +231,35 @@ void main() {
         'note': 'obs',
       });
     });
+
+    test('subtotal returns expected value', () {
+      final item = MenuItem(
+        id: 'i1',
+        name: 'Item',
+        description: null,
+        price: 10.0,
+        categoryId: 'c1',
+        available: true,
+        imageUrl: null,
+        createdAt: DateTime.parse('2024-01-01T00:00:00.000Z'),
+        updatedAt: DateTime.parse('2024-01-02T00:00:00.000Z'),
+      );
+      final cartItem = CartItem(item: item, quantity: 3);
+      expect(cartItem.subtotal, 30.0);
+    });
+  });
+
+  group('OrderItem', () {
+    test('subtotal returns expected value', () {
+      final orderItem = OrderItem(
+        id: 'o1',
+        orderId: 'p1',
+        menuItemId: 'i1',
+        quantity: 4,
+        unitPrice: 5.0,
+        createdAt: DateTime.parse('2024-01-01T00:00:00.000Z'),
+      );
+      expect(orderItem.subtotal, 20.0);
+    });
   });
 }

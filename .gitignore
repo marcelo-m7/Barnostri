@@ -8,6 +8,7 @@ build/
 **/build/
 pubspec.lock
 .flutter-plugins-dependencies
+untranslated.txt
 *.png
 *.jpg
 *.jpeg
