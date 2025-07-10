@@ -2,6 +2,8 @@
 
 This project uses a Flutter + Supabase monorepo. The mobile app and backend resources live together and shared code sits inside packages.
 
+**Only the web target is currently supported; Android configuration has been removed.**
+
 ```
 barnostri/
 ├── apps/
@@ -14,7 +16,6 @@ barnostri/
 │       │               ├── presentation/
 │       │               ├── domain/
 │       │               └── data/
-│       ├── android/
 │       ├── ios/
 │       ├── web/
 │       └── pubspec.yaml
