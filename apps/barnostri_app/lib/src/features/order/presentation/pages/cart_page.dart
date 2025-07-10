@@ -604,7 +604,7 @@ class _CartPageState extends ConsumerState<CartPage> {
   IconData _getPaymentIcon(PaymentMethod method) {
     switch (method) {
       case PaymentMethod.pix:
-        return Icons.pix;
+        return Icons.qr_code;
       case PaymentMethod.card:
         return Icons.credit_card;
       case PaymentMethod.cash:
