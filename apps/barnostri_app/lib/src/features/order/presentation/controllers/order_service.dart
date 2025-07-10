@@ -4,6 +4,7 @@ import 'package:barnostri_app/src/core/repositories.dart';
 import 'package:barnostri_app/src/core/services/language_service.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 import 'package:barnostri_app/src/core/services/guard_mixin.dart';
+import 'package:intl/intl.dart';
 
 typedef Reader = T Function<T>(ProviderListenable<T> provider);
 
@@ -190,23 +191,12 @@ class OrderService extends StateNotifier<OrderState> with GuardMixin<OrderState>
     state = state.copyWith(error: null);
   }
 
-  static String formatDateTime(DateTime dateTime) {
-    return '${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year} ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
-  }
-
-  static String getOrderStatusColor(OrderStatus status) {
-    switch (status) {
-      case OrderStatus.received:
-        return 'blue';
-      case OrderStatus.preparing:
-        return 'orange';
-      case OrderStatus.ready:
-        return 'green';
-      case OrderStatus.delivered:
-        return 'grey';
-      case OrderStatus.canceled:
-        return 'red';
-    }
+  static String formatDateTime(
+    DateTime dateTime, {
+    String? locale,
+  }) {
+    final formatter = DateFormat('dd/MM/yyyy HH:mm', locale);
+    return formatter.format(dateTime);
   }
 }
 
