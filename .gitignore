@@ -18,6 +18,7 @@ untranslated.txt
 *.webp
 *.heic
 *.tiff
+!apps/barnostri_app/test/golden/goldens/*.png
 *.otf
 *.ttf
 *.pdf
