@@ -6,14 +6,13 @@ utilidades compartilhadas entre módulos de cliente e administrador.
 
 Consulte `docs/README.md` para uma visão geral da estrutura.
 
-Aplicativo Flutter integrado ao Supabase. Todo o código e scripts de banco ficam reunidos neste monorepo.
+Aplicativo Flutter integrado ao Supabase. Todo o código e scripts do banco ficam neste monorepo.
 
-Veja `docs/ARCHITECTURE_PLAN.md` para a organização completa e acompanhe as tarefas em `docs/tasks/`.
-Consulte também `docs/CODE_REVIEW.md` para um resumo de inconsistências identificadas.
+Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consulte `docs/CODE_REVIEW.md` para um resumo de inconsistências identificadas.
 
 ## Executando o aplicativo Flutter
 
-1. Instale o Flutter (canal *stable*).
+1. Execute o script `./setup_enviroment.sh` para instalar o Flutter e todas as dependências necessárias.
 2. Baixe as dependências:
 
    ```bash
