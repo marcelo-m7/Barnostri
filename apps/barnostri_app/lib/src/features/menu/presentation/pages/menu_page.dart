@@ -57,6 +57,13 @@ class _MenuPageState extends ConsumerState<MenuPage>
     return 1;
   }
 
+int menuCrossAxisCount(double width) {
+  if (width >= 1000) return 4;
+  if (width >= 700) return 3;
+  if (width >= 500) return 2;
+  return 1;
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
