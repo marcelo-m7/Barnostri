@@ -45,4 +45,5 @@ flutter analyze apps/barnostri_app
 echo "🧪 Testa"
 (cd packages/shared_models && flutter test)
 (cd apps/barnostri_app && flutter test)
+(cd apps/barnostri_app && flutter test integration_test -d chrome)
 echo "✅ PRONTO"

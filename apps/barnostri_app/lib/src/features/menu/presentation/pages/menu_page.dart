@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../utils/menu_responsive.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_service.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
@@ -51,18 +52,8 @@ class _MenuPageState extends ConsumerState<MenuPage>
 
   int _getCrossAxisCount(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    if (width >= 1000) return 4;
-    if (width >= 700) return 3;
-    if (width >= 500) return 2;
-    return 1;
+    return menuCrossAxisCount(width);
   }
-
-int menuCrossAxisCount(double width) {
-  if (width >= 1000) return 4;
-  if (width >= 700) return 3;
-  if (width >= 500) return 2;
-  return 1;
-}
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +157,9 @@ int menuCrossAxisCount(double width) {
                             const SizedBox(height: 16),
                             Text(
                               l10n.homeSlogan,
-                              style: Theme.of(context).textTheme.bodyMedium
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
                                   ?.copyWith(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -203,7 +196,9 @@ int menuCrossAxisCount(double width) {
                           ? IconButton(
                               icon: Icon(
                                 Icons.clear,
-                                color: Theme.of(context).colorScheme.onSurface
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
                                     .withAlpha((0.7 * 255).round()),
                               ),
                               onPressed: () {
@@ -244,7 +239,9 @@ int menuCrossAxisCount(double width) {
                       ).colorScheme.onSurface.withAlpha((0.6 * 255).round()),
                       indicatorColor: Theme.of(context).colorScheme.primary,
                       indicatorWeight: 3,
-                      labelStyle: Theme.of(context).textTheme.labelLarge
+                      labelStyle: Theme.of(context)
+                          .textTheme
+                          .labelLarge
                           ?.copyWith(fontWeight: FontWeight.bold),
                       unselectedLabelStyle: Theme.of(
                         context,
@@ -324,7 +321,8 @@ int menuCrossAxisCount(double width) {
         delegate: SliverChildBuilderDelegate(
           (context, index) {
             final item = filteredItems[index];
-            return MenuItemCard(item: item, onTap: () => _showItemDetails(item));
+            return MenuItemCard(
+                item: item, onTap: () => _showItemDetails(item));
           },
           childCount: filteredItems.length,
         ),
@@ -350,17 +348,21 @@ int menuCrossAxisCount(double width) {
                         Icon(
                           Icons.restaurant_menu,
                           size: 64,
-                          color: Theme.of(context).colorScheme.onSurface
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
                               .withAlpha((0.3 * 255).round()),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           l10n.emptyCategoryItems(category.name),
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurface
-                                    .withAlpha((0.6 * 255).round()),
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withAlpha((0.6 * 255).round()),
+                                  ),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -465,14 +467,18 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                           children: [
                             Text(
                               widget.item.name,
-                              style: Theme.of(context).textTheme.headlineSmall
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             if (widget.item.description != null) ...[
                               const SizedBox(height: 8),
                               Text(
                                 widget.item.description!,
-                                style: Theme.of(context).textTheme.bodyMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
                                     ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -487,11 +493,11 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                       const SizedBox(width: 16),
                       Text(
                         formatCurrency(widget.item.price),
-                        style: Theme.of(context).textTheme.headlineSmall
-                            ?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                     ],
                   ),
@@ -502,8 +508,8 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                   Text(
                     AppLocalizations.of(context).quantity,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -525,7 +531,9 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                       const SizedBox(width: 16),
                       Text(
                         _quantity.toString(),
-                        style: Theme.of(context).textTheme.headlineSmall
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(width: 16),
@@ -550,8 +558,8 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                   Text(
                     AppLocalizations.of(context).observationOptional,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(height: 8),
                   TextField(
@@ -622,8 +630,8 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                             ? '${AppLocalizations.of(context).addToCart} - ${formatCurrency(widget.item.price * _quantity)}'
                             : AppLocalizations.of(context).itemUnavailable,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                   ),
