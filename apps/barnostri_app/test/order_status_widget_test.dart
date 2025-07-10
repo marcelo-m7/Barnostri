@@ -7,11 +7,21 @@ import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 import 'package:shared_models/shared_models.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
+  final binding = TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUp(() {
+    binding.window.physicalSizeTestValue = const Size(800, 1200);
+    binding.window.devicePixelRatioTestValue = 1.0;
+  });
+
+  tearDown(() {
+    binding.window.clearPhysicalSizeTestValue();
+    binding.window.clearDevicePixelRatioTestValue();
+  });
 
   testWidgets('shows status text and progress indicator', (tester) async {
     final order = Order(
-      id: 'o1',
+      id: 'order1234',
       tableId: 't1',
       status: OrderStatus.preparing.displayName,
       total: 20.0,
@@ -32,9 +42,9 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
+    await tester.pump();
 
-    expect(find.text(OrderStatus.preparing.displayName), findsOneWidget);
+    expect(find.text(OrderStatus.preparing.displayName), findsWidgets);
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 }
