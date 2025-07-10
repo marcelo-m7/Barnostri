@@ -7,19 +7,13 @@ import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 import 'package:shared_models/shared_models.dart';
 
 void main() {
-  final binding = TestWidgetsFlutterBinding.ensureInitialized();
-
-  setUp(() {
-    binding.window.physicalSizeTestValue = const Size(800, 1200);
-    binding.window.devicePixelRatioTestValue = 1.0;
-  });
-
-  tearDown(() {
-    binding.window.clearPhysicalSizeTestValue();
-    binding.window.clearDevicePixelRatioTestValue();
-  });
+  TestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('shows status text and progress indicator', (tester) async {
+    tester.view.physicalSize = const Size(800, 1200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     final order = Order(
       id: 'order1234',
       tableId: 't1',
