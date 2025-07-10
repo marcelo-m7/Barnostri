@@ -8,6 +8,8 @@ Consulte `docs/README.md` para uma visão geral da estrutura.
 
 Aplicativo Flutter integrado ao Supabase. Todo o código e scripts do banco ficam neste monorepo.
 
+> **Nota:** Esta versão mantém apenas a configuração para web. As pastas e arquivos referentes ao Android foram removidos.
+
 Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consulte `docs/CODE_REVIEW.md` para um resumo de inconsistências identificadas.
 
 ## Executando o aplicativo Flutter
@@ -26,29 +28,14 @@ Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consult
    ```bash
    supabase start
    ```
-5. Execute o app:
-
-  ```bash
- cd apps/barnostri_app
- flutter run -d <dispositivo>
- ```
-
-6. Para executar no navegador, utilize:
+5. Execute no navegador:
 
   ```bash
   cd apps/barnostri_app
   flutter run -d web-server
   ```
 
-Para gerar o APK de distribuição, é necessário possuir o Android SDK
-configurado (normalmente via Android Studio) e então executar:
-
-```bash
-cd apps/barnostri_app
-flutter build apk
-```
-
-Já para compilar a aplicação web utilize:
+Para compilar a aplicação web utilize:
 
 ```bash
 cd apps/barnostri_app
