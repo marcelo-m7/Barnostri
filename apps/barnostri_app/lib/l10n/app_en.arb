@@ -647,4 +647,19 @@
   },
   "orderField": "Order",
   "@orderField": {
-    "description": "Label for numeric ordering field"  }}
+    "description": "Label for numeric ordering field"
+  },
+  "orderHeader": "Order #",
+  "@orderHeader": {
+    "description": "Prefix for order header"
+  },
+  "currentStatus": "Current",
+  "@currentStatus": {
+    "description": "Indicator for current status step"
+  },
+  "loginErrorDetailed": "Login error: {error}",
+  "@loginErrorDetailed": {
+    "description": "Snackbar message when login fails with details",
+    "placeholders": {"error": {}}
+  }
+}

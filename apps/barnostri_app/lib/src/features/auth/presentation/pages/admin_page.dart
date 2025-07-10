@@ -159,7 +159,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
                               if (error != null) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text('Erro no login: $error'),
+                                    content: Text(
+                                      AppLocalizations.of(context).loginErrorDetailed(error),
+                                    ),
                                     backgroundColor: Theme.of(
                                       context,
                                     ).colorScheme.error,
