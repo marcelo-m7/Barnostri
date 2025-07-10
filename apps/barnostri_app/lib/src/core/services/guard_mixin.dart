@@ -9,7 +9,10 @@ mixin GuardMixin<S> on StateNotifier<S> {
 
   S copyWithGuard(S state, {bool? isLoading, String? error});
 
-  Future<T?> guard<T>(Future<T> Function() action,{String Function(Object)? onError}) async {
+  Future<T?> guard<T>(
+    Future<T> Function() action, {
+    String Function(Object)? onError,
+  }) async {
     state = copyWithGuard(state, isLoading: true, error: null);
     try {
       return await action();
