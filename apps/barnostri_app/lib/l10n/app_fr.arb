@@ -255,4 +255,19 @@
   },
   "orderField": "Ordre",
   "@orderField": {
-    "description": "Label for numeric ordering field"  }}
+    "description": "Label for numeric ordering field"
+  },
+  "orderHeader": "Commande #",
+  "@orderHeader": {
+    "description": "Préfixe pour l'en-tête de commande"
+  },
+  "currentStatus": "Actuel",
+  "@currentStatus": {
+    "description": "Indicateur de l'étape actuelle"
+  },
+  "loginErrorDetailed": "Erreur de connexion : {error}",
+  "@loginErrorDetailed": {
+    "description": "Message affiché lorsque la connexion échoue",
+    "placeholders": {"error": {}}
+  }
+}

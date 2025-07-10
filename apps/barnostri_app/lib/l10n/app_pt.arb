@@ -254,6 +254,18 @@
     "description": "Mensagem de erro quando nenhuma mesa está selecionada"
   },
   "orderField": "Ordem",
-  "@orderField": {    "description": "Campo de ordem numérica"
+  "@orderField": {    "description": "Campo de ordem numérica" },
+  "orderHeader": "Pedido #",
+  "@orderHeader": {
+    "description": "Prefixo do cabeçalho do pedido"
+  },
+  "currentStatus": "Atual",
+  "@currentStatus": {
+    "description": "Indicador de passo atual"
+  },
+  "loginErrorDetailed": "Erro no login: {error}",
+  "@loginErrorDetailed": {
+    "description": "Mensagem exibida quando o login falha",
+    "placeholders": {"error": {}}
   }
 }

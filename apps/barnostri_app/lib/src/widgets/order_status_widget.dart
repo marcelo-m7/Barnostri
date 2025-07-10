@@ -66,7 +66,7 @@ class OrderStatusWidget extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Pedido #${order.id.substring(0, 8)}',
+                '${AppLocalizations.of(context).orderHeader}${order.id.substring(0, 8)}',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
@@ -299,7 +299,7 @@ class OrderStatusWidget extends ConsumerWidget {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'Atual',
+                      AppLocalizations.of(context).currentStatus,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
