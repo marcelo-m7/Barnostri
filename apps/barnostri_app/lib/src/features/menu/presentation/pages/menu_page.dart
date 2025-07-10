@@ -5,6 +5,7 @@ import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_se
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
 import 'package:barnostri_app/src/widgets/menu_item_card.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
+import 'package:barnostri_app/src/features/menu/presentation/menu_layout.dart';
 import 'package:go_router/go_router.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
@@ -26,13 +27,20 @@ class _MenuPageState extends ConsumerState<MenuPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 1, vsync: this);
+    final initialCount = ref.read(menuServiceProvider).categories.length;
+    _tabController =
+        TabController(length: initialCount > 0 ? initialCount : 1, vsync: this);
     _loadData();
   }
 
   Future<void> _loadData() async {
     final menuService = ref.read(menuServiceProvider.notifier);
-    await menuService.loadAll();
+    final state = ref.read(menuServiceProvider);
+    if (state.categories.isEmpty &&
+        state.menuItems.isEmpty &&
+        state.tables.isEmpty) {
+      await menuService.loadAll();
+    }
 
     if (mounted) {
       setState(() {
@@ -41,20 +49,18 @@ class _MenuPageState extends ConsumerState<MenuPage>
 
       // Initialize tab controller after loading categories
       final count = ref.read(menuServiceProvider).categories.length;
-      _tabController.dispose();
+      final previous = _tabController;
       _tabController = TabController(
         length: count > 0 ? count : 1,
         vsync: this,
       );
+      previous.dispose();
     }
   }
 
   int _getCrossAxisCount(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    if (width >= 1000) return 4;
-    if (width >= 700) return 3;
-    if (width >= 500) return 2;
-    return 1;
+    return responsiveCrossAxisCount(width);
   }
 
   @override
@@ -159,7 +165,9 @@ class _MenuPageState extends ConsumerState<MenuPage>
                             const SizedBox(height: 16),
                             Text(
                               l10n.homeSlogan,
-                              style: Theme.of(context).textTheme.bodyMedium
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
                                   ?.copyWith(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -196,7 +204,9 @@ class _MenuPageState extends ConsumerState<MenuPage>
                           ? IconButton(
                               icon: Icon(
                                 Icons.clear,
-                                color: Theme.of(context).colorScheme.onSurface
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
                                     .withAlpha((0.7 * 255).round()),
                               ),
                               onPressed: () {
@@ -237,7 +247,9 @@ class _MenuPageState extends ConsumerState<MenuPage>
                       ).colorScheme.onSurface.withAlpha((0.6 * 255).round()),
                       indicatorColor: Theme.of(context).colorScheme.primary,
                       indicatorWeight: 3,
-                      labelStyle: Theme.of(context).textTheme.labelLarge
+                      labelStyle: Theme.of(context)
+                          .textTheme
+                          .labelLarge
                           ?.copyWith(fontWeight: FontWeight.bold),
                       unselectedLabelStyle: Theme.of(
                         context,
@@ -317,7 +329,8 @@ class _MenuPageState extends ConsumerState<MenuPage>
         delegate: SliverChildBuilderDelegate(
           (context, index) {
             final item = filteredItems[index];
-            return MenuItemCard(item: item, onTap: () => _showItemDetails(item));
+            return MenuItemCard(
+                item: item, onTap: () => _showItemDetails(item));
           },
           childCount: filteredItems.length,
         ),
@@ -343,17 +356,21 @@ class _MenuPageState extends ConsumerState<MenuPage>
                         Icon(
                           Icons.restaurant_menu,
                           size: 64,
-                          color: Theme.of(context).colorScheme.onSurface
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
                               .withAlpha((0.3 * 255).round()),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           l10n.emptyCategoryItems(category.name),
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurface
-                                    .withAlpha((0.6 * 255).round()),
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withAlpha((0.6 * 255).round()),
+                                  ),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -458,14 +475,18 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                           children: [
                             Text(
                               widget.item.name,
-                              style: Theme.of(context).textTheme.headlineSmall
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             if (widget.item.description != null) ...[
                               const SizedBox(height: 8),
                               Text(
                                 widget.item.description!,
-                                style: Theme.of(context).textTheme.bodyMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
                                     ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -480,11 +501,11 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                       const SizedBox(width: 16),
                       Text(
                         formatCurrency(widget.item.price),
-                        style: Theme.of(context).textTheme.headlineSmall
-                            ?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                     ],
                   ),
@@ -495,8 +516,8 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                   Text(
                     AppLocalizations.of(context).quantity,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -518,7 +539,9 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                       const SizedBox(width: 16),
                       Text(
                         _quantity.toString(),
-                        style: Theme.of(context).textTheme.headlineSmall
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(width: 16),
@@ -543,8 +566,8 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                   Text(
                     AppLocalizations.of(context).observationOptional,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(height: 8),
                   TextField(
@@ -615,8 +638,8 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                             ? '${AppLocalizations.of(context).addToCart} - ${formatCurrency(widget.item.price * _quantity)}'
                             : AppLocalizations.of(context).itemUnavailable,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                   ),
