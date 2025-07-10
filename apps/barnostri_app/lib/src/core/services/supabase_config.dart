@@ -18,9 +18,16 @@ class SupabaseConfig {
         'supabase/supabase-config.json',
       );
       final data = jsonDecode(configJson) as Map<String, dynamic>;
-      final envConfig = data[env] as Map<String, dynamic>;
-      final supabaseUrl = envConfig['SUPABASE_URL'] as String;
-      final anonKey = envConfig['SUPABASE_ANON_KEY'] as String;
+      final rawEnv = data[env];
+      if (rawEnv is! Map<String, dynamic>) {
+        throw FormatException('Environment "$env" not found');
+      }
+      final envConfig = rawEnv;
+      final supabaseUrl = envConfig['SUPABASE_URL'] as String?;
+      final anonKey = envConfig['SUPABASE_ANON_KEY'] as String?;
+      if (supabaseUrl == null || anonKey == null) {
+        throw const FormatException('Invalid Supabase configuration');
+      }
 
       await Supabase.initialize(url: supabaseUrl, anonKey: anonKey);
       _isConfigured = true;

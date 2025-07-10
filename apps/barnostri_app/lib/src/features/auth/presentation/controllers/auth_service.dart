@@ -32,13 +32,21 @@ class AuthState {
 class AuthService extends StateNotifier<AuthState> with GuardMixin<AuthState> {
   final AuthRepository _authRepository;
   final LoginUseCase _loginUseCase;
+  late final StreamSubscription<supabase.AuthState> _authSub;
+
   AuthService(this._authRepository, this._loginUseCase)
-    : super(const AuthState()) {
+      : super(const AuthState()) {
     final user = _authRepository.getCurrentUser();
     state = state.copyWith(isAuthenticated: user != null);
-    _authRepository.authStateChanges.listen((supabase.AuthState event) {
+    _authSub = _authRepository.authStateChanges.listen((event) {
       state = state.copyWith(isAuthenticated: event.session?.user != null);
     });
+  }
+
+  @override
+  void dispose() {
+    _authSub.cancel();
+    super.dispose();
   }
 
   @override
