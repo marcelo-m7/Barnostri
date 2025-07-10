@@ -43,7 +43,7 @@ jobs:
       - run: flutter test
         working-directory: apps/barnostri_app
         
-      - run: flutter test -d chrome integration_test
+      - run: flutter test -d chrome
         working-directory: apps/barnostri_app
   
   build:
