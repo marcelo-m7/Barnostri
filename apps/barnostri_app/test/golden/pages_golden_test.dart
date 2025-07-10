@@ -13,6 +13,8 @@ import 'package:barnostri_app/src/features/order/data/repositories/supabase_orde
 import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
+import 'package:barnostri_app/l10n/generated/app_localizations.dart';
+import 'package:barnostri_app/src/core/services/language_service.dart';
 
 class _FakeAuthRepository implements AuthRepository {
   bool loggedIn;
@@ -85,7 +87,13 @@ void main() {
         name: 'home',
       );
 
-    await tester.pumpDeviceBuilder(builder);
+    await tester.pumpDeviceBuilder(
+      builder,
+      wrapper: materialAppWrapper(
+        localizations: AppLocalizations.localizationsDelegates,
+        localeOverrides: LanguageService.supportedLocales,
+      ),
+    );
     await screenMatchesGolden(tester, 'home_page');
   });
 
@@ -106,7 +114,13 @@ void main() {
         name: 'menu',
       );
 
-    await tester.pumpDeviceBuilder(builder);
+    await tester.pumpDeviceBuilder(
+      builder,
+      wrapper: materialAppWrapper(
+        localizations: AppLocalizations.localizationsDelegates,
+        localeOverrides: LanguageService.supportedLocales,
+      ),
+    );
     await screenMatchesGolden(tester, 'menu_page');
   });
 
@@ -127,7 +141,13 @@ void main() {
         name: 'cart',
       );
 
-    await tester.pumpDeviceBuilder(builder);
+    await tester.pumpDeviceBuilder(
+      builder,
+      wrapper: materialAppWrapper(
+        localizations: AppLocalizations.localizationsDelegates,
+        localeOverrides: LanguageService.supportedLocales,
+      ),
+    );
     await screenMatchesGolden(tester, 'cart_page');
   });
 
@@ -149,7 +169,13 @@ void main() {
         name: 'admin',
       );
 
-    await tester.pumpDeviceBuilder(builder);
+    await tester.pumpDeviceBuilder(
+      builder,
+      wrapper: materialAppWrapper(
+        localizations: AppLocalizations.localizationsDelegates,
+        localeOverrides: LanguageService.supportedLocales,
+      ),
+    );
     await screenMatchesGolden(tester, 'admin_page');
   });
 }

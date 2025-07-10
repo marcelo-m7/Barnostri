@@ -28,7 +28,9 @@ class _MenuPageState extends ConsumerState<MenuPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 1, vsync: this);
-    _loadData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadData();
+    });
   }
 
   Future<void> _loadData() async {
