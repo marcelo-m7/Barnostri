@@ -68,9 +68,9 @@ class OrderStatusWidget extends ConsumerWidget {
               Text(
                 '${AppLocalizations.of(context).orderHeader}${order.id.substring(0, 8)}',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -84,9 +84,9 @@ class OrderStatusWidget extends ConsumerWidget {
                 child: Text(
                   order.status,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
               ),
             ],
@@ -106,10 +106,10 @@ class OrderStatusWidget extends ConsumerWidget {
                 Text(
                   AppLocalizations.of(context).tableNumber(order.table!.number),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onPrimary.withAlpha((0.8 * 255).round()),
-                  ),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary.withAlpha((0.8 * 255).round()),
+                      ),
                 ),
               ],
             ),
@@ -127,10 +127,10 @@ class OrderStatusWidget extends ConsumerWidget {
               Text(
                 OrderService.formatDateTime(order.createdAt),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onPrimary.withAlpha((0.8 * 255).round()),
-                ),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onPrimary.withAlpha((0.8 * 255).round()),
+                    ),
               ),
             ],
           ),
@@ -148,10 +148,10 @@ class OrderStatusWidget extends ConsumerWidget {
               Text(
                 order.paymentMethod,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onPrimary.withAlpha((0.8 * 255).round()),
-                ),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onPrimary.withAlpha((0.8 * 255).round()),
+                    ),
               ),
             ],
           ),
@@ -225,7 +225,7 @@ class OrderStatusWidget extends ConsumerWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: isActive
-                    ? Theme.of(context).colorScheme.primary
+                    ? OrderService.getOrderStatusColor(status)
                     : Theme.of(
                         context,
                       ).colorScheme.outline.withAlpha((0.3 * 255).round()),
@@ -252,25 +252,35 @@ class OrderStatusWidget extends ConsumerWidget {
                   Text(
                     status.displayName,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: isCurrent ? FontWeight.bold : FontWeight.w500,
-                      color: isActive
-                          ? Theme.of(context).colorScheme.onSurface
-                          : Theme.of(context).colorScheme.onSurface.withAlpha(
-                              (0.5 * 255).round(),
-                            ),
-                    ),
+                          fontWeight:
+                              isCurrent ? FontWeight.bold : FontWeight.w500,
+                          color: isActive
+                              ? Theme.of(context).colorScheme.onSurface
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withAlpha(
+                                    (0.5 * 255).round(),
+                                  ),
+                        ),
                   ),
                   Text(
                     _getStatusDescription(context, status),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: isActive
-                          ? Theme.of(context).colorScheme.onSurface.withAlpha(
-                              (0.7 * 255).round(),
-                            )
-                          : Theme.of(context).colorScheme.onSurface.withAlpha(
-                              (0.4 * 255).round(),
-                            ),
-                    ),
+                          color: isActive
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withAlpha(
+                                    (0.7 * 255).round(),
+                                  )
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withAlpha(
+                                    (0.4 * 255).round(),
+                                  ),
+                        ),
                   ),
                 ],
               ),
@@ -301,9 +311,9 @@ class OrderStatusWidget extends ConsumerWidget {
                     Text(
                       AppLocalizations.of(context).currentStatus,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ],
                 ),
@@ -319,7 +329,7 @@ class OrderStatusWidget extends ConsumerWidget {
                 width: 2,
                 height: 24,
                 color: isActive
-                    ? Theme.of(context).colorScheme.primary
+                    ? OrderService.getOrderStatusColor(status)
                     : Theme.of(
                         context,
                       ).colorScheme.outline.withAlpha((0.3 * 255).round()),
@@ -375,9 +385,9 @@ class OrderStatusWidget extends ConsumerWidget {
               Text(
                 formatCurrency(order.total),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
               ),
             ],
           ),
@@ -405,9 +415,9 @@ class OrderStatusWidget extends ConsumerWidget {
               child: Text(
                 '${item.quantity}x',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
               ),
             ),
           ),
@@ -427,11 +437,14 @@ class OrderStatusWidget extends ConsumerWidget {
                   Text(
                     'Obs: ${item.note}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
-                      fontStyle: FontStyle.italic,
-                    ),
+                          color: Theme.of(
+                            context,
+                          )
+                              .colorScheme
+                              .onSurface
+                              .withAlpha((0.7 * 255).round()),
+                          fontStyle: FontStyle.italic,
+                        ),
                   ),
                 ],
               ],
