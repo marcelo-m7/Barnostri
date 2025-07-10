@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/core/repositories.dart';
@@ -45,7 +46,8 @@ class OrderState {
       cartItems.fold(0, (count, item) => count + item.quantity);
 }
 
-class OrderService extends StateNotifier<OrderState> with GuardMixin<OrderState> {
+class OrderService extends StateNotifier<OrderState>
+    with GuardMixin<OrderState> {
   final T Function<T>(ProviderListenable<T> provider) _read;
   final OrderRepository _orderRepository;
   final MenuRepository _menuRepository;
@@ -189,6 +191,22 @@ class OrderService extends StateNotifier<OrderState> with GuardMixin<OrderState>
 
   void clearError() {
     state = state.copyWith(error: null);
+  }
+
+  static Color getOrderStatusColor(BuildContext context, OrderStatus status) {
+    final scheme = Theme.of(context).colorScheme;
+    switch (status) {
+      case OrderStatus.received:
+        return scheme.primary;
+      case OrderStatus.preparing:
+        return scheme.secondary;
+      case OrderStatus.ready:
+        return scheme.tertiary;
+      case OrderStatus.delivered:
+        return Colors.green;
+      case OrderStatus.canceled:
+        return scheme.error;
+    }
   }
 
   static String formatDateTime(
