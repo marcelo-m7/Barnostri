@@ -10,6 +10,10 @@ void main() {
     test('supports Portuguese values', () {
       expect(OrderStatus.fromString('Em preparo'), OrderStatus.preparing);
     });
+
+    test('defaults to received for unknown values', () {
+      expect(OrderStatus.fromString('unknown'), OrderStatus.received);
+    });
   });
 
   group('PaymentMethod enum', () {
@@ -19,6 +23,10 @@ void main() {
 
     test('supports Portuguese values', () {
       expect(PaymentMethod.fromString('Cartão'), PaymentMethod.card);
+    });
+
+    test('defaults to pix for unknown values', () {
+      expect(PaymentMethod.fromString('bitcoin'), PaymentMethod.pix);
     });
   });
 }
