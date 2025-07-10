@@ -20,6 +20,7 @@ Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consult
    (cd packages/shared_models && dart pub get)
    ```
 3. Configure o Supabase preenchendo as variáveis em [`apps/barnostri_app/supabase/supabase-config.json`](apps/barnostri_app/supabase/supabase-config.json).
+   Este é o único arquivo de configuração usado pelo app.
 4. Inicie o Supabase local (requer o [Supabase CLI](https://supabase.com/docs/guides/cli)):
 
    ```bash
@@ -86,6 +87,7 @@ Isso atualizará o conteúdo de `lib/l10n/generated`, que deve ser versionado em
 seguida.
 
 O arquivo `apps/barnostri_app/supabase/supabase-config.json` é carregado pelo serviço `SupabaseConfig.createClient()` dentro do aplicativo.
+Esse método foi atualizado para buscar apenas esse caminho, evitando duplicação de arquivos.
 
 ## Executando os testes
 
