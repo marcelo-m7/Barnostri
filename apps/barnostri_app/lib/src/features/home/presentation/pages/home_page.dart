@@ -76,238 +76,248 @@ class HomePage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 24),
                       Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Logo
-                            Container(
-                              padding: const EdgeInsets.all(32),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withAlpha(
-                                  (0.2 * 255).round(),
-                                ),
-                                borderRadius: BorderRadius.circular(32),
-                              ),
-                              child: Icon(
-                                Icons.waves,
-                                size: 80,
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
-                            ),
-                            const SizedBox(height: 32),
-                            // Title
-                            Text(
-                              l10n.appTitle,
-                              style: Theme.of(context).textTheme.displayMedium
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onPrimary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              l10n.welcomeMessage,
-                              style: Theme.of(context).textTheme.titleMedium
-                                  ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary
-                                        .withAlpha((0.9 * 255).round()),
-                                  ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 24),
-                            // Configuration status banner
-                            if (isDemoMode)
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Logo
                               Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(32),
                                 decoration: BoxDecoration(
-                                  color: Colors.orange.withAlpha(
+                                  color: Colors.white.withAlpha(
                                     (0.2 * 255).round(),
                                   ),
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
+                                  borderRadius: BorderRadius.circular(32),
+                                ),
+                                child: Icon(
+                                  Icons.waves,
+                                  size: 80,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                ),
+                              ),
+                              const SizedBox(height: 32),
+                              // Title
+                              Text(
+                                l10n.appTitle,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayMedium
+                                    ?.copyWith(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                l10n.welcomeMessage,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary
+                                          .withAlpha((0.9 * 255).round()),
+                                    ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 24),
+                              // Configuration status banner
+                              if (isDemoMode)
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
                                     color: Colors.orange.withAlpha(
-                                      (0.3 * 255).round(),
+                                      (0.2 * 255).round(),
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: Colors.orange.withAlpha(
+                                        (0.3 * 255).round(),
+                                      ),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: Colors.orange.shade100,
+                                        size: 20,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          l10n.demoModeCredentials,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                color: Colors.orange.shade100,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              const SizedBox(height: 24),
+                              // Customer section
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(24),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withAlpha(
+                                    (0.1 * 255).round(),
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color: Colors.white.withAlpha(
+                                      (0.2 * 255).round(),
                                     ),
                                     width: 1,
                                   ),
                                 ),
-                                child: Row(
+                                child: Column(
                                   children: [
                                     Icon(
-                                      Icons.info_outline,
-                                      color: Colors.orange.shade100,
-                                      size: 20,
+                                      Icons.qr_code_scanner,
+                                      size: 48,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimary,
                                     ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Text(
-                                        l10n.demoModeCredentials,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(
-                                              color: Colors.orange.shade100,
-                                            ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      l10n.scanQRCode,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.onPrimary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      l10n.scanQRCodeDescription,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary
+                                                .withAlpha((0.8 * 255).round()),
+                                          ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 24),
+                                    ElevatedButton.icon(
+                                      onPressed: () {
+                                        context.push('/scanner');
+                                      },
+                                      icon: const Icon(Icons.camera_alt),
+                                      label: Text(l10n.scanQRCode),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Theme.of(
+                                          context,
+                                        ).colorScheme.onPrimary,
+                                        foregroundColor: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 24,
+                                          vertical: 12,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            const SizedBox(height: 24),
-                            // Customer section
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(24),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withAlpha(
-                                  (0.1 * 255).round(),
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
+                              const SizedBox(height: 32),
+                              // Admin section
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
                                   color: Colors.white.withAlpha(
-                                    (0.2 * 255).round(),
+                                    (0.05 * 255).round(),
                                   ),
-                                  width: 1,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: Colors.white.withAlpha(
+                                      (0.1 * 255).round(),
+                                    ),
+                                    width: 1,
+                                  ),
                                 ),
-                              ),
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.qr_code_scanner,
-                                    size: 48,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onPrimary,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    l10n.scanQRCode,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge
-                                        ?.copyWith(
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      Icons.admin_panel_settings,
+                                      size: 32,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary
+                                          .withAlpha((0.8 * 255).round()),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      l10n.adminAccess,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary
+                                                .withAlpha((0.9 * 255).round()),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      l10n.adminAccessDescription,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary
+                                                .withAlpha((0.7 * 255).round()),
+                                          ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    TextButton(
+                                      onPressed: () {
+                                        context.push('/admin');
+                                      },
+                                      child: Text(
+                                        l10n.adminAccess,
+                                        style: TextStyle(
                                           color: Theme.of(
                                             context,
                                           ).colorScheme.onPrimary,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w500,
                                         ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    l10n.scanQRCodeDescription,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary
-                                              .withAlpha((0.8 * 255).round()),
-                                        ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 24),
-                                  ElevatedButton.icon(
-                                    onPressed: () {
-                                      context.push('/scanner');
-                                    },
-                                    icon: const Icon(Icons.camera_alt),
-                                    label: Text(l10n.scanQRCode),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Theme.of(
-                                        context,
-                                      ).colorScheme.onPrimary,
-                                      foregroundColor: Theme.of(
-                                        context,
-                                      ).colorScheme.primary,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24,
-                                        vertical: 12,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(16),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 32),
-                            // Admin section
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withAlpha(
-                                  (0.05 * 255).round(),
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: Colors.white.withAlpha(
-                                    (0.1 * 255).round(),
-                                  ),
-                                  width: 1,
+                                  ],
                                 ),
                               ),
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.admin_panel_settings,
-                                    size: 32,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary
-                                        .withAlpha((0.8 * 255).round()),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    l10n.adminAccess,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary
-                                              .withAlpha((0.9 * 255).round()),
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    l10n.adminAccessDescription,
-                                    style: Theme.of(context).textTheme.bodySmall
-                                        ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary
-                                              .withAlpha((0.7 * 255).round()),
-                                        ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  TextButton(
-                                    onPressed: () {
-                                      context.push('/admin');
-                                    },
-                                    child: Text(
-                                      l10n.adminAccess,
-                                      style: TextStyle(
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onPrimary,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(height: 48),
@@ -315,9 +325,11 @@ class HomePage extends ConsumerWidget {
                       Text(
                         l10n.footerTagline,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary
-                              .withAlpha((0.7 * 255).round()),
-                        ),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimary
+                                  .withAlpha((0.7 * 255).round()),
+                            ),
                       ),
                     ],
                   ),
