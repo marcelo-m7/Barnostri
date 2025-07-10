@@ -37,6 +37,8 @@ dev_dependencies:
     sdk: flutter
   change_app_package_name: ^1.4.0
   flutter_lints: ^4.0.0
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
