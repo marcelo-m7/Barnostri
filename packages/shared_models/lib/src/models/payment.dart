@@ -8,7 +8,7 @@ class Payment {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Payment({
+  const Payment({
     required this.id,
     required this.orderId,
     required this.method,

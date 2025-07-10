@@ -6,7 +6,7 @@ class TableModel {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  TableModel({
+  const TableModel({
     required this.id,
     required this.number,
     required this.qrToken,

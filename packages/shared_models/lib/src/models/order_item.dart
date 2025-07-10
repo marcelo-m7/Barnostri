@@ -10,7 +10,7 @@ class OrderItem {
   final DateTime createdAt;
   final MenuItem? menuItem;
 
-  OrderItem({
+  const OrderItem({
     required this.id,
     required this.orderId,
     required this.menuItemId,
