@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:barnostri_app/main.dart';
 import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import 'package:barnostri_app/src/features/auth/presentation/pages/admin_page.dart';
-import 'package:barnostri_app/src/features/home/presentation/pages/home_page.dart';
+import 'package:barnostri_app/src/core/repositories.dart';
 
 class _FakeAuthRepository implements AuthRepository {
   bool loggedIn;
@@ -59,6 +58,28 @@ class FakeAuthService extends AuthService {
   Future<void> logout() async {}
 }
 
+class _FakeOrderRepository implements OrderRepository {
+  @override
+  Future<String?> createOrder({
+    required String tableId,
+    required List<CartItem> items,
+    required double total,
+    required String paymentMethod,
+  }) async => 'mock';
+
+  @override
+  Future<bool> updateStatus(String orderId, String newStatus) async => true;
+
+  @override
+  Future<List<Order>> fetchOrders() async => [];
+
+  @override
+  Stream<List<Order>> watchOrders() => Stream.value([]);
+
+  @override
+  Stream<Order> watchOrder(String orderId) => const Stream.empty();
+}
+
 void main() {
   testWidgets('Admin route shows login when not authenticated', (tester) async {
     TestWidgetsFlutterBinding.ensureInitialized();
@@ -70,14 +91,15 @@ void main() {
       ProviderScope(
         overrides: [
           authServiceProvider.overrideWith((ref) => FakeAuthService(false)),
+          orderRepositoryProvider.overrideWith((ref) => _FakeOrderRepository()),
         ],
         child: const BarnostriApp(),
       ),
     );
+    await tester.pump();
     await tester.pumpAndSettle();
 
-    final router = GoRouter.of(tester.element(find.byType(HomePage)));
-    router.go('/admin');
+    appRouter.go('/admin');
     await tester.pumpAndSettle();
     expect(find.byType(AdminPage), findsOneWidget);
     expect(find.text('Entrar'), findsOneWidget);
@@ -93,14 +115,15 @@ void main() {
       ProviderScope(
         overrides: [
           authServiceProvider.overrideWith((ref) => FakeAuthService(true)),
+          orderRepositoryProvider.overrideWith((ref) => _FakeOrderRepository()),
         ],
         child: const BarnostriApp(),
       ),
     );
+    await tester.pump();
     await tester.pumpAndSettle();
 
-    final router = GoRouter.of(tester.element(find.byType(HomePage)));
-    router.go('/admin');
+    appRouter.go('/admin');
     await tester.pumpAndSettle();
     expect(find.byType(AdminPage), findsOneWidget);
     expect(find.textContaining('Pedidos'), findsOneWidget);

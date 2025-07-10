@@ -25,6 +25,9 @@ final _router = GoRouter(
   ],
 );
 
+@visibleForTesting
+GoRouter get appRouter => _router;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
