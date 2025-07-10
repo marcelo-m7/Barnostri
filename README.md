@@ -12,7 +12,7 @@ Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consult
 
 ## Executando o aplicativo Flutter
 
-1. Execute o script `./setup_enviroment.sh` para instalar o Flutter e todas as dependências necessárias.
+1. Execute o script `./setup_environment.sh` para instalar o Flutter e todas as dependências necessárias.
 2. Baixe as dependências:
 
    ```bash
