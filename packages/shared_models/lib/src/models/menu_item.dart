@@ -12,7 +12,7 @@ class MenuItem {
   final DateTime updatedAt;
   final CategoryModel? category;
 
-  MenuItem({
+  const MenuItem({
     required this.id,
     required this.name,
     this.description,

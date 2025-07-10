@@ -6,7 +6,7 @@ class CategoryModel {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  CategoryModel({
+  const CategoryModel({
     required this.id,
     required this.name,
     required this.sortOrder,

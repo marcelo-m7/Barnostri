@@ -13,7 +13,7 @@ class Order {
   final TableModel? table;
   final List<OrderItem> items;
 
-  Order({
+  const Order({
     required this.id,
     required this.tableId,
     required this.status,

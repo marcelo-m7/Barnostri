@@ -6,7 +6,7 @@ class LoadMenuResult {
   final List<MenuItem> items;
   final List<TableModel> tables;
 
-  LoadMenuResult({
+  const LoadMenuResult({
     required this.categories,
     required this.items,
     required this.tables,
