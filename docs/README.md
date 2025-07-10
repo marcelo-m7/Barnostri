@@ -33,7 +33,7 @@ apps/barnostri_app/supabase/
 - **packages/shared_models**: modelos e repositórios compartilhados.
 - **supabase/**: scripts SQL e configurações do banco.
 
-Consulte `docs/ARCHITECTURE_PLAN.md` para detalhes da arquitetura e as tarefas em `docs/tasks/` para acompanhar o progresso.
+Consulte `docs/ARCHITECTURE_PLAN.md` para detalhes da arquitetura.
 
 ### Criando uma nova feature
 
