@@ -42,5 +42,32 @@ void main() {
         throwsA(isA<ArgumentError>()),
       );
     });
+
+    test('isLocaleSupported checks supported locales', () {
+      final service = LanguageService();
+      expect(service.isLocaleSupported(const Locale('pt', 'BR')), isTrue);
+      expect(service.isLocaleSupported(const Locale('en', 'GB')), isTrue);
+      expect(service.isLocaleSupported(const Locale('fr', 'CH')), isTrue);
+      expect(service.isLocaleSupported(const Locale('es', 'ES')), isFalse);
+    });
+
+    test('getBestMatchingLocale picks best match from device locales', () {
+      final service = LanguageService();
+      final result = service.getBestMatchingLocale([
+        const Locale('es', 'ES'),
+        const Locale('fr', 'FR'),
+        const Locale('en', 'US'),
+      ]);
+      expect(result, const Locale('fr', 'CH'));
+    });
+
+    test('getBestMatchingLocale falls back to defaultLocale', () {
+      final service = LanguageService();
+      final result = service.getBestMatchingLocale([
+        const Locale('es', 'ES'),
+        const Locale('de', 'DE'),
+      ]);
+      expect(result, LanguageService.defaultLocale);
+    });
   });
 }
