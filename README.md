@@ -90,3 +90,6 @@ Os testes cobrem também a conversão de valores em inglês e português para os
 ## Integração contínua
 
 O workflow [`flutter.yml`](.github/workflows/flutter.yml) é acionado a cada *push* ou *pull request*. Ele instala dependências, formata o código, roda `flutter analyze` e executa os testes.
+
+## Próximas melhorias
+Consulte [docs/REVIEW_TASKS.md](docs/REVIEW_TASKS.md) para uma lista de tarefas de aprimoramento sugeridas.
