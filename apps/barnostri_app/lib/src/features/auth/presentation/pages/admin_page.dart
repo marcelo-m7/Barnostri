@@ -17,10 +17,14 @@ class AdminPage extends ConsumerStatefulWidget {
 class _AdminPageState extends ConsumerState<AdminPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
 
   @override
   void initState() {
     super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -40,8 +44,6 @@ class _AdminPageState extends ConsumerState<AdminPage>
 
   Widget _buildLoginScreen() {
     final l10n = AppLocalizations.of(context);
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
     final authState = ref.watch(authServiceProvider);
 
     return Scaffold(
@@ -715,6 +717,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
 
   @override
   void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
     _tabController.dispose();
     super.dispose();
   }
