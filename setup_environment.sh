@@ -4,32 +4,44 @@ set -euo pipefail
 cd /workspace/Barnostri
 ls -la
 
-echo "🛠️  Atualizando pacotes..."
-sudo apt-get update -y
-sudo apt-get install -y curl git unzip xz-utils apt-transport-https gnupg
+echo "🔧 Configurando ambiente de desenvolvimento Barnostri"
 
-FLUTTER_DIR="$HOME/development/flutter"
-if [ ! -d "$FLUTTER_DIR" ]; then
-  echo "📥 Instalando Flutter SDK..."
-  mkdir -p "$(dirname "$FLUTTER_DIR")"
-  if [ -n "${FLUTTER_SDK_ARCHIVE:-}" ] && [ -f "$FLUTTER_SDK_ARCHIVE" ]; then
-    echo "📦 Extraindo Flutter de $FLUTTER_SDK_ARCHIVE"
-    tar xf "$FLUTTER_SDK_ARCHIVE" -C "$(dirname "$FLUTTER_DIR")"
-  else
-    echo "📥 Clonando Flutter SDK (stable)..."
-    git clone https://github.com/flutter/flutter.git -b stable "$FLUTTER_DIR"
-  fi
+echo "🛠️ Instalando dependências do sistema..."
+sudo apt update
+sudo apt install -y curl git unzip xz-utils zip libglu1-mesa wget
+
+echo "📥 Instalando Google Chrome..."
+wget -q -O google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install -y ./google-chrome.deb
+rm google-chrome.deb
+
+echo "📥 Baixando Flutter SDK (canal stable)..."
+cd ~
+if [ ! -d "flutter" ]; then
+  curl -O https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.0-stable.tar.xz
+  tar xf flutter_linux_3.13.0-stable.tar.xz
+  rm flutter_linux_3.13.0-stable.tar.xz
 fi
 
-export PATH="$FLUTTER_DIR/bin:$PATH"
+echo "🔧 Corrigindo permissões e Git do Flutter..."
+cd ~/flutter
+git config --global --add safe.directory "$PWD"
+git init
+git remote add origin https://github.com/flutter/flutter.git || true
+git fetch origin
+git checkout stable
 
-echo "🚀 Testando flutter e dart"
-flutter --version
-dart --version
+echo "🔧 Adicionando Flutter ao PATH..."
+if ! grep -q 'flutter/bin' ~/.bashrc; then
+  echo 'export PATH="$HOME/flutter/bin:$PATH"' >> ~/.bashrc
+fi
+export PATH="$HOME/flutter/bin:$PATH"
 
-echo "📦 Instala dependências"
-flutter pub get -C packages/shared_models
-flutter pub get -C apps/barnostri_app
+echo "🔄Git Config "
+git config --global --add safe.directory /root/flutter
+
+echo "🧪 Verificando instalação com flutter doctor..."
+flutter doctor
 
 echo "🎨 Formata tudo"
 dart format --set-exit-if-changed packages/shared_models || true
@@ -49,4 +61,5 @@ echo "🧪 Testa"
 (cd packages/shared_models && flutter test)
 (cd apps/barnostri_app && flutter test)
 (cd apps/barnostri_app && flutter test integration_test -d chrome)
+
 echo "✅ PRONTO"
