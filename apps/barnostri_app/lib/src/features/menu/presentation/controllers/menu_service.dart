@@ -43,8 +43,7 @@ class MenuService extends StateNotifier<MenuState> with GuardMixin<MenuState> {
   final MenuRepository _menuRepository;
   final LoadMenuUseCase _loadMenuUseCase;
   MenuService(this._menuRepository, this._loadMenuUseCase)
-    : super(const MenuState());
-
+      : super(const MenuState());
 
   @override
   MenuState copyWithGuard(MenuState state, {bool? isLoading, String? error}) {

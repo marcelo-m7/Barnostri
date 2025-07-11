@@ -64,8 +64,7 @@ class SupabaseOrderRepository implements OrderRepository {
     try {
       await _client!
           .from('orders')
-          .update({'status': newStatus})
-          .eq('id', orderId);
+          .update({'status': newStatus}).eq('id', orderId);
       return true;
     } catch (e) {
       if (kDebugMode) {
@@ -146,9 +145,7 @@ class SupabaseOrderRepository implements OrderRepository {
           .from('orders')
           .select('*, tables(*), order_items(*, menu_items(*))')
           .order('created_at', ascending: false);
-      return response
-          .map<Order>((e) => Order.fromJson(e))
-          .toList();
+      return response.map<Order>((e) => Order.fromJson(e)).toList();
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao buscar pedidos: $e');

@@ -76,8 +76,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
                   Text(
                     l10n.adminTitle,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
 
                   const SizedBox(height: 8),
@@ -85,10 +85,13 @@ class _AdminPageState extends ConsumerState<AdminPage>
                   Text(
                     l10n.adminRestricted,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
-                    ),
+                          color: Theme.of(
+                            context,
+                          )
+                              .colorScheme
+                              .onSurface
+                              .withAlpha((0.7 * 255).round()),
+                        ),
                   ),
 
                   const SizedBox(height: 48),
@@ -162,7 +165,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      AppLocalizations.of(context).loginErrorDetailed(error),
+                                      AppLocalizations.of(context)
+                                          .loginErrorDetailed(error),
                                     ),
                                     backgroundColor: Theme.of(
                                       context,
@@ -192,7 +196,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
                             )
                           : Text(
                               'Entrar',
-                              style: Theme.of(context).textTheme.labelLarge
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                     ),
@@ -212,18 +218,24 @@ class _AdminPageState extends ConsumerState<AdminPage>
                       children: [
                         Text(
                           l10n.demoCredentialsTitle,
-                          style: Theme.of(context).textTheme.labelMedium
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'Email: admin@barnostri.com',
-                          style: Theme.of(context).textTheme.bodySmall
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
                               ?.copyWith(fontFamily: 'monospace'),
                         ),
                         Text(
                           'Senha: admin123',
-                          style: Theme.of(context).textTheme.bodySmall
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
                               ?.copyWith(fontFamily: 'monospace'),
                         ),
                       ],
@@ -333,10 +345,13 @@ class _AdminPageState extends ConsumerState<AdminPage>
                     Text(
                       l10n.newOrdersAppearHere,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withAlpha((0.7 * 255).round()),
-                      ),
+                            color: Theme.of(
+                              context,
+                            )
+                                .colorScheme
+                                .onSurface
+                                .withAlpha((0.7 * 255).round()),
+                          ),
                     ),
                   ],
                 ),
@@ -506,8 +521,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
                       leading: CircleAvatar(
                         backgroundColor: table.active
                             ? Theme.of(context).colorScheme.primary.withAlpha(
-                                (0.1 * 255).round(),
-                              )
+                                  (0.1 * 255).round(),
+                                )
                             : Colors.grey.withAlpha((0.1 * 255).round()),
                         child: Icon(
                           Icons.table_restaurant,

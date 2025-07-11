@@ -34,9 +34,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .select('*')
           .eq('active', true)
           .order('number');
-      return response
-          .map<TableModel>((e) => TableModel.fromJson(e))
-          .toList();
+      return response.map<TableModel>((e) => TableModel.fromJson(e)).toList();
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao buscar mesas: $e');
@@ -196,9 +194,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .select()
           .eq('available', true)
           .order('name');
-      return response
-          .map<MenuItem>((e) => MenuItem.fromJson(e))
-          .toList();
+      return response.map<MenuItem>((e) => MenuItem.fromJson(e)).toList();
     } catch (e) {
       if (kDebugMode) {
         print('Erro ao buscar itens do cardápio: $e');

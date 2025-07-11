@@ -44,10 +44,10 @@ class _FakeAuthRepository implements AuthRepository {
 
 class FakeAuthService extends AuthService {
   FakeAuthService(bool loggedIn)
-    : super(
-        _FakeAuthRepository(loggedIn),
-        LoginUseCase(_FakeAuthRepository(loggedIn)),
-      ) {
+      : super(
+          _FakeAuthRepository(loggedIn),
+          LoginUseCase(_FakeAuthRepository(loggedIn)),
+        ) {
     state = state.copyWith(isAuthenticated: loggedIn);
   }
 
@@ -65,7 +65,8 @@ class _FakeOrderRepository implements OrderRepository {
     required List<CartItem> items,
     required double total,
     required String paymentMethod,
-  }) async => 'mock';
+  }) async =>
+      'mock';
 
   @override
   Future<bool> updateStatus(String orderId, String newStatus) async => true;
