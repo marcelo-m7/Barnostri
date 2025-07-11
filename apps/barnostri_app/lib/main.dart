@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:barnostri_app/src/core/theme/theme.dart';
 import 'package:barnostri_app/src/core/services/supabase_config.dart';
 import 'package:barnostri_app/src/core/services/language_service.dart';
+import 'package:barnostri_app/src/core/logger.dart';
 import 'package:barnostri_app/src/features/order/presentation/pages/qr_scanner_page.dart';
 import 'package:barnostri_app/src/features/order/presentation/pages/cart_page.dart';
 import 'package:barnostri_app/src/features/menu/presentation/pages/menu_page.dart';
@@ -32,6 +33,7 @@ GoRouter get appRouter => _router;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setupLogger();
 
   // Initialize Supabase and provide the client
   final client = await SupabaseConfig.createClient();

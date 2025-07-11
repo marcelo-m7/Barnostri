@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_models/shared_models.dart';
+import 'package:barnostri_app/src/core/logger.dart';
 
 class SupabaseMenuRepository implements MenuRepository {
   final SupabaseClient? _client;
@@ -36,9 +37,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .order('number');
       return response.map<TableModel>((e) => TableModel.fromJson(e)).toList();
     } catch (e) {
-      if (kDebugMode) {
-        print('Erro ao buscar mesas: $e');
-      }
+      logger.severe('Erro ao buscar mesas: $e');
       rethrow;
     }
   }
@@ -76,9 +75,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .single();
       return TableModel.fromJson(response);
     } catch (e) {
-      if (kDebugMode) {
-        print('Erro ao buscar mesa por QR: $e');
-      }
+      logger.severe('Erro ao buscar mesa por QR: $e');
       return null;
     }
   }
@@ -131,9 +128,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .map<CategoryModel>((e) => CategoryModel.fromJson(e))
           .toList();
     } catch (e) {
-      if (kDebugMode) {
-        print('Erro ao buscar categorias: $e');
-      }
+      logger.severe('Erro ao buscar categorias: $e');
       return [];
     }
   }
@@ -196,9 +191,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .order('name');
       return response.map<MenuItem>((e) => MenuItem.fromJson(e)).toList();
     } catch (e) {
-      if (kDebugMode) {
-        print('Erro ao buscar itens do cardápio: $e');
-      }
+      logger.severe('Erro ao buscar itens do cardápio: $e');
       rethrow;
     }
   }
@@ -235,7 +228,7 @@ class SupabaseMenuRepository implements MenuRepository {
   }) async {
     if (_client == null) {
       if (kDebugMode) {
-        print('📝 Mock update categoria $id');
+        logger.info('📝 Mock update categoria $id');
       }
       return true;
     }
@@ -251,7 +244,7 @@ class SupabaseMenuRepository implements MenuRepository {
   Future<bool> deleteCategory(String id) async {
     if (_client == null) {
       if (kDebugMode) {
-        print('🗑️ Mock delete categoria $id');
+        logger.info('🗑️ Mock delete categoria $id');
       }
       return true;
     }
@@ -307,7 +300,7 @@ class SupabaseMenuRepository implements MenuRepository {
   }) async {
     if (_client == null) {
       if (kDebugMode) {
-        print('📝 Mock update item $id');
+        logger.info('📝 Mock update item $id');
       }
       return true;
     }
@@ -326,7 +319,7 @@ class SupabaseMenuRepository implements MenuRepository {
   Future<bool> deleteMenuItem(String id) async {
     if (_client == null) {
       if (kDebugMode) {
-        print('🗑️ Mock delete item $id');
+        logger.info('🗑️ Mock delete item $id');
       }
       return true;
     }
@@ -366,7 +359,7 @@ class SupabaseMenuRepository implements MenuRepository {
   }) async {
     if (_client == null) {
       if (kDebugMode) {
-        print('📝 Mock update mesa $id');
+        logger.info('📝 Mock update mesa $id');
       }
       return true;
     }
@@ -382,7 +375,7 @@ class SupabaseMenuRepository implements MenuRepository {
   Future<bool> deleteTable(String id) async {
     if (_client == null) {
       if (kDebugMode) {
-        print('🗑️ Mock delete mesa $id');
+        logger.info('🗑️ Mock delete mesa $id');
       }
       return true;
     }

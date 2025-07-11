@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_models/shared_models.dart';
+import 'package:barnostri_app/src/core/logger.dart';
 
 class SupabaseOrderRepository implements OrderRepository {
   final SupabaseClient? _client;
@@ -15,7 +16,7 @@ class SupabaseOrderRepository implements OrderRepository {
   }) async {
     if (_client == null) {
       if (kDebugMode) {
-        print('📝 Mock order created: Table $tableId, Total: R\$ $total');
+        logger.info('📝 Mock order created: Table $tableId, Total: R\$ $total');
       }
       return 'mock-order-${DateTime.now().millisecondsSinceEpoch}';
     }
@@ -46,9 +47,7 @@ class SupabaseOrderRepository implements OrderRepository {
       await _client!.from('order_items').insert(itemsData);
       return orderId;
     } catch (e) {
-      if (kDebugMode) {
-        print('Erro ao criar pedido: $e');
-      }
+      logger.severe('Erro ao criar pedido: $e');
       return null;
     }
   }
@@ -57,7 +56,7 @@ class SupabaseOrderRepository implements OrderRepository {
   Future<bool> updateStatus(String orderId, String newStatus) async {
     if (_client == null) {
       if (kDebugMode) {
-        print('📊 Mock status update: $orderId -> $newStatus');
+        logger.info('📊 Mock status update: $orderId -> $newStatus');
       }
       return true;
     }
@@ -67,9 +66,7 @@ class SupabaseOrderRepository implements OrderRepository {
           .update({'status': newStatus}).eq('id', orderId);
       return true;
     } catch (e) {
-      if (kDebugMode) {
-        print('Erro ao atualizar status do pedido: $e');
-      }
+      logger.severe('Erro ao atualizar status do pedido: $e');
       return false;
     }
   }
@@ -147,9 +144,7 @@ class SupabaseOrderRepository implements OrderRepository {
           .order('created_at', ascending: false);
       return response.map<Order>((e) => Order.fromJson(e)).toList();
     } catch (e) {
-      if (kDebugMode) {
-        print('Erro ao buscar pedidos: $e');
-      }
+      logger.severe('Erro ao buscar pedidos: $e');
       return [];
     }
   }
