@@ -11,6 +11,7 @@ import 'package:barnostri_app/src/features/menu/presentation/pages/menu_page.dar
 import 'package:barnostri_app/src/features/auth/presentation/pages/admin_page.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'package:barnostri_app/src/features/home/presentation/pages/home_page.dart';
+import 'package:barnostri_app/src/features/home/presentation/pages/not_found_page.dart';
 
 final _router = GoRouter(
   routes: [
@@ -23,6 +24,7 @@ final _router = GoRouter(
     GoRoute(path: '/menu', builder: (context, state) => const MenuPage()),
     GoRoute(path: '/admin', builder: (context, state) => const AdminPage()),
   ],
+  errorBuilder: (context, state) => const NotFoundPage(),
 );
 
 @visibleForTesting
