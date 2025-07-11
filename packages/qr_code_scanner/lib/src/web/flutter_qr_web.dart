@@ -251,12 +251,12 @@ class QRViewControllerWeb implements QRViewController {
   final _WebQrViewState _state;
 
   QRViewControllerWeb(this._state);
+
   @override
   void dispose() => _state.cancel();
 
   @override
   Future<CameraFacing> flipCamera() async {
-    // TODO: improve error handling
     _state.facing = _state.facing == CameraFacing.front
         ? CameraFacing.back
         : CameraFacing.front;
@@ -271,51 +271,59 @@ class QRViewControllerWeb implements QRViewController {
 
   @override
   Future<bool?> getFlashStatus() async {
-    // TODO: flash is simply not supported by JavaScipt. To avoid issuing applications, we always return it to be off.
+    // Flash is not currently supported on web
     return false;
   }
 
   @override
-  Future<SystemFeatures> getSystemFeatures() {
-    // TODO: implement getSystemFeatures
-    throw UnimplementedError();
+  Future<SystemFeatures> getSystemFeatures() async {
+    try {
+      final devices =
+          await html.window.navigator.mediaDevices?.enumerateDevices();
+      final cameras =
+          devices?.where((e) => e.kind == 'videoinput').toList() ?? <dynamic>[];
+      final hasBack = cameras.isNotEmpty;
+      final hasFront = cameras.length > 1;
+      return SystemFeatures(false, hasBack, hasFront);
+    } catch (_) {
+      return SystemFeatures(false, false, false);
+    }
   }
 
   @override
-  // TODO: implement hasPermissions. Blocking: WebQrView.cameraAvailable() returns a Future<bool> whereas a bool is required
-  bool get hasPermissions => throw UnimplementedError();
+  bool get hasPermissions => _state._localStream != null;
 
   @override
-  Future<void> pauseCamera() {
-    // TODO: implement pauseCamera
-    throw UnimplementedError();
+  Future<void> pauseCamera() async {
+    _state._frameIntervall?.cancel();
+    _state.video.pause();
   }
 
   @override
-  Future<void> resumeCamera() {
-    // TODO: implement resumeCamera
-    throw UnimplementedError();
+  Future<void> resumeCamera() async {
+    await _state.start();
   }
 
   @override
   Stream<Barcode> get scannedDataStream => _state._scanUpdateController.stream;
 
   @override
-  Future<void> stopCamera() {
-    // TODO: implement stopCamera
-    throw UnimplementedError();
+  Future<void> stopCamera() async {
+    _state._frameIntervall?.cancel();
+    _state._frameIntervall = null;
+    await _state._stopStream();
   }
 
   @override
   Future<void> toggleFlash() async {
-    // TODO: flash is simply not supported by JavaScipt
+    // Flash is not currently supported on web
     return;
   }
 
   @override
-  Future<void> scanInvert(bool isScanInvert) {
-    // TODO: implement scanInvert
-    throw UnimplementedError();
+  Future<void> scanInvert(bool isScanInvert) async {
+    // Inverted scanning is not supported on web
+    return;
   }
 }
 
