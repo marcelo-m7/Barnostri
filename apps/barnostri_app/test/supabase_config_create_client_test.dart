@@ -1,0 +1,84 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:barnostri_app/src/core/services/supabase_config.dart';
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  const channel = 'flutter/assets';
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+  });
+
+  tearDown(() async {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMessageHandler(channel, null);
+    rootBundle.clear();
+    try {
+      await Supabase.instance.dispose();
+    } catch (_) {}
+  });
+
+  group('SupabaseConfig.createClient', () {
+    test('loads JSON from supabase/supabase-config.json', () async {
+      final config = jsonEncode({
+        'dev': {
+          'SUPABASE_URL': 'https://example.com',
+          'SUPABASE_ANON_KEY': 'KEY',
+        }
+      });
+      final data = Uint8List.fromList(utf8.encode(config));
+
+      String? received;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMessageHandler(
+        channel,
+        (ByteData? message) async {
+          received = utf8.decode(message!.buffer.asUint8List());
+          if (received ==
+              'packages/barnostri_app/supabase/supabase-config.json') {
+            return ByteData.view(data.buffer);
+          }
+          return null;
+        },
+      );
+
+      final client = await SupabaseConfig.createClient();
+      expect(received, 'packages/barnostri_app/supabase/supabase-config.json');
+      expect(client, isA<SupabaseClient>());
+    });
+
+    test('returns null when asset path is wrong', () async {
+      final config = jsonEncode({
+        'dev': {
+          'SUPABASE_URL': 'https://example.com',
+          'SUPABASE_ANON_KEY': 'KEY',
+        }
+      });
+      final data = Uint8List.fromList(utf8.encode(config));
+
+      String? received;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMessageHandler(
+        channel,
+        (ByteData? message) async {
+          received = utf8.decode(message!.buffer.asUint8List());
+          if (received == 'wrong/path.json') {
+            return ByteData.view(data.buffer);
+          }
+          return null;
+        },
+      );
+
+      final client = await SupabaseConfig.createClient();
+      expect(received, 'packages/barnostri_app/supabase/supabase-config.json');
+      expect(client, isNull);
+    });
+  });
+}
