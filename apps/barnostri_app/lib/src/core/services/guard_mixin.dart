@@ -17,7 +17,8 @@ mixin GuardMixin<S> on StateNotifier<S> {
     try {
       return await action();
     } catch (e) {
-      state = copyWithGuard(state, error: onError != null ? onError(e) : e.toString());
+      state = copyWithGuard(state,
+          error: onError != null ? onError(e) : e.toString());
       return null;
     } finally {
       state = copyWithGuard(state, isLoading: false);

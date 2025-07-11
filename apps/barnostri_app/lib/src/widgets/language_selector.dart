@@ -51,8 +51,8 @@ class LanguageSelector extends ConsumerWidget {
             color: Theme.of(context).colorScheme.onSurface,
           ),
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
           items: LanguageService.supportedLocales.map((locale) {
             return DropdownMenuItem<Locale>(
               value: locale,
@@ -67,8 +67,8 @@ class LanguageSelector extends ConsumerWidget {
                   Text(
                     languageService.getLanguageDisplayName(locale),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                   ),
                 ],
               ),
@@ -107,9 +107,9 @@ class LanguageSelector extends ConsumerWidget {
               Text(
                 l10n.language,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  fontWeight: FontWeight.w600,
-                ),
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
               IconButton(
                 onPressed: () => Navigator.pop(context),
@@ -155,8 +155,10 @@ class LanguageSelector extends ConsumerWidget {
                             border: Border.all(
                               color: isSelected
                                   ? Theme.of(context).colorScheme.primary
-                                  : Theme.of(context).colorScheme.outline
-                                        .withAlpha((0.3 * 255).round()),
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .outline
+                                      .withAlpha((0.3 * 255).round()),
                             ),
                           ),
                           child: Center(
@@ -173,7 +175,9 @@ class LanguageSelector extends ConsumerWidget {
                             children: [
                               Text(
                                 languageService.getLanguageDisplayName(locale),
-                                style: Theme.of(context).textTheme.titleMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
                                     ?.copyWith(
                                       color: Theme.of(
                                         context,
@@ -186,7 +190,9 @@ class LanguageSelector extends ConsumerWidget {
                               const SizedBox(height: 4),
                               Text(
                                 _getLanguageSubtitle(locale, l10n),
-                                style: Theme.of(context).textTheme.bodySmall
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
                                     ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -295,8 +301,8 @@ class LanguageSelectorButton extends ConsumerWidget {
                 Text(
                   languageService.getLanguageDisplayName(locale),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                 ),
                 const SizedBox(width: 8),
                 Icon(
