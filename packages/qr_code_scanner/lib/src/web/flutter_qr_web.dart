@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:html' as html;
 import 'dart:js_util';
-import 'dart:ui' as ui;
+import 'dart:ui_web' as ui; // ignore: uri_does_not_exist
 
 import 'package:flutter/material.dart';
 
