@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
-import 'package:barnostri_app/src/widgets/qr_scanner_overlay_shape.dart';
 
 class Barcode {
   final String? rawValue;
