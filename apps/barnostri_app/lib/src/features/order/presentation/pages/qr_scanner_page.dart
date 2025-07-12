@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'qr_scanner_interface.dart';
+import 'package:barnostri_app/src/widgets/qr_scanner_overlay_shape.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
@@ -345,43 +346,4 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
     controller.dispose();
     super.dispose();
   }
-}
-
-class QrScannerOverlayShape extends ShapeBorder {
-  const QrScannerOverlayShape({
-    this.borderColor = const Color(0x00000000),
-    this.borderWidth = 0,
-    this.overlayColor = const Color(0x00000000),
-    this.borderRadius = 0,
-    this.borderLength = 0,
-    double? cutOutSize,
-    double? cutOutWidth,
-    double? cutOutHeight,
-    this.cutOutBottomOffset = 0,
-  })  : cutOutWidth = cutOutWidth ?? cutOutSize ?? 0,
-        cutOutHeight = cutOutHeight ?? cutOutSize ?? 0;
-
-  final Color borderColor;
-  final double borderWidth;
-  final Color overlayColor;
-  final double borderRadius;
-  final double borderLength;
-  final double cutOutWidth;
-  final double cutOutHeight;
-  final double cutOutBottomOffset;
-
-  @override
-  EdgeInsetsGeometry get dimensions => EdgeInsets.zero;
-
-  @override
-  Path getInnerPath(Rect rect, {TextDirection? textDirection}) => Path();
-
-  @override
-  Path getOuterPath(Rect rect, {TextDirection? textDirection}) => Path();
-
-  @override
-  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {}
-
-  @override
-  ShapeBorder scale(double t) => this;
 }
