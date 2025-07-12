@@ -7,6 +7,7 @@ import 'dart:js_util';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../qr_code_scanner.dart';
 import 'jsqr.dart';
@@ -60,7 +61,6 @@ class _WebQrViewState extends State<WebQrView> {
   QRViewControllerWeb? _controller;
 
   late Size _size = const Size(0, 0);
-  Timer? timer;
   String? code;
   String? _errorMsg;
   html.VideoElement video = html.VideoElement();
@@ -71,6 +71,12 @@ class _WebQrViewState extends State<WebQrView> {
   late CameraFacing facing;
 
   Timer? _frameIntervall;
+
+  @visibleForTesting
+  Timer? get frameInterval => _frameIntervall;
+
+  @visibleForTesting
+  set frameInterval(Timer? timer) => _frameIntervall = timer;
 
   @override
   void initState() {
@@ -99,10 +105,8 @@ class _WebQrViewState extends State<WebQrView> {
   }
 
   void cancel() {
-    if (timer != null) {
-      timer!.cancel();
-      timer = null;
-    }
+    _frameIntervall?.cancel();
+    _frameIntervall = null;
     if (_currentlyProcessing) {
       _stopStream();
     }
