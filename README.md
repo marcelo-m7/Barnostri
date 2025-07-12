@@ -20,7 +20,14 @@ flutter run -d ios               # iOS (requer macOS)
 ```
 
 
-Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consulte `docs/CODE_REVIEW.md` para um resumo de inconsistências identificadas.
+Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. O resumo abaixo destaca pontos observados durante o code review.
+
+### Resumo do code review
+
+- Vários arquivos e tabelas utilizam nomes em português. Padronizar os identificadores em inglês é recomendado.
+- Os testes e a análise estática dependem do Flutter instalado no ambiente.
+- As migrações do Supabase também seguem nomenclatura em português e podem ser atualizadas.
+- Enums como `OrderStatus` e `PaymentMethod` aceitam valores em português para compatibilidade com dados existentes.
 
 ## Environment setup
 
