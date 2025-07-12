@@ -50,8 +50,12 @@ dart format --set-exit-if-changed apps/barnostri_app || true
 dart fix --dry-run
 dart fix --apply
 
-echo "📝​ Aplicando Flutter Create.."
-flutter create --org com.barnostri --project-name barnostri_app --platforms=web apps/barnostri_app
+if [ -f apps/barnostri_app/pubspec.yaml ]; then
+  echo "📝️ Projeto Flutter já existe; ignorando flutter create"
+else
+  echo "📝️ Aplicando Flutter Create..."
+  flutter create --org com.barnostri --project-name barnostri_app --platforms=web apps/barnostri_app
+fi
 
 echo "🔍 Analisa"
 flutter analyze packages/shared_models

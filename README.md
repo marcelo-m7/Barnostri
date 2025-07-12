@@ -13,23 +13,26 @@ Aplicativo Flutter integrado ao Supabase. Todo o código e scripts do banco fica
 
 Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consulte `docs/CODE_REVIEW.md` para um resumo de inconsistências identificadas.
 
-## Executando o aplicativo Flutter
+## Environment setup
 
-1. Execute o script `./setup_environment.sh` para instalar o Flutter e todas as dependências necessárias.
-2. Baixe as dependências:
+1. Execute `./setup_environment.sh` para instalar o Flutter e dependências do sistema. O script cria `apps/barnostri_app` apenas se ela ainda não existir.
+2. Baixe as dependências do projeto:
 
    ```bash
    (cd apps/barnostri_app && flutter pub get)
    (cd packages/shared_models && dart pub get)
    ```
-3. Configure o Supabase preenchendo as variáveis em [`apps/barnostri_app/supabase/supabase-config.json`](apps/barnostri_app/supabase/supabase-config.json).
+
+## Executando o aplicativo Flutter
+
+1. Configure o Supabase preenchendo as variáveis em [`apps/barnostri_app/supabase/supabase-config.json`](apps/barnostri_app/supabase/supabase-config.json).
    Este é o único arquivo de configuração usado pelo app.
-4. Inicie o Supabase local (requer o [Supabase CLI](https://supabase.com/docs/guides/cli)):
+2. Inicie o Supabase local (requer o [Supabase CLI](https://supabase.com/docs/guides/cli)):
 
    ```bash
    supabase start
    ```
-5. Execute no navegador:
+3. Execute no navegador:
 
   ```bash
   cd apps/barnostri_app
