@@ -1,16 +1,35 @@
-# barnostri_app
+# Barnostri App
 
-A new Flutter project.
+Flutter client for the Barnostri project.
 
-## Getting Started
+## Setup
 
-This project is a starting point for a Flutter application.
+1. Run `./setup_environment.sh` from the repository root to install Flutter and system dependencies.
+2. Fetch dependencies:
+   ```bash
+   (cd apps/barnostri_app && flutter pub get)
+   (cd packages/shared_models && dart pub get)
+   ```
+3. Fill `apps/barnostri_app/supabase/supabase-config.json` with your Supabase credentials.
+4. Start Supabase locally:
+   ```bash
+   supabase start
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+## Running
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+From `apps/barnostri_app` run one of:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter run -d chrome            # Web
+flutter run -d android-emulator  # Android
+flutter run -d ios               # iOS (macOS only)
+```
+
+## Tests
+
+```bash
+flutter test
+flutter test integration_test
+flutter test packages/shared_models
+```
