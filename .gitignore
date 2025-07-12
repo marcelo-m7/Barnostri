@@ -10,6 +10,8 @@ build/
 pubspec.lock
 .flutter-plugins-dependencies
 untranslated.txt
+# Golden test images
+apps/barnostri_app/test/golden/goldens/*.png
 *.png
 *.jpg
 *.jpeg
@@ -19,7 +21,6 @@ untranslated.txt
 *.webp
 *.heic
 *.tiff
-!apps/barnostri_app/test/golden/goldens/*.png
 *.otf
 *.ttf
 *.pdf

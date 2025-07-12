@@ -37,11 +37,49 @@ jobs:
       - run: flutter test
         working-directory: packages/shared_models
 
-      - run: flutter test
+      - run: flutter test --exclude-tags=golden
         working-directory: apps/barnostri_app
         
-      - run: flutter test -d chrome
+      - run: flutter test --exclude-tags=golden -d chrome
         working-directory: apps/barnostri_app
+
+  golden_tests:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+        working-directory: apps/barnostri_app
+
+      - name: Download reference goldens
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RUN_ID=$(gh run list -w flutter.yml -b main -s success -L 1 --json databaseId -q '.[0].databaseId')
+          if [ -n "$RUN_ID" ]; then
+            gh run download "$RUN_ID" -n goldens -D apps/barnostri_app/test/golden/goldens
+          else
+            echo "No golden artifact found"
+          fi
+
+      - run: flutter test --update-goldens --tags=golden
+        working-directory: apps/barnostri_app
+
+      - run: flutter test --tags=golden
+        working-directory: apps/barnostri_app
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: goldens
+          path: apps/barnostri_app/test/golden/goldens
   
   build:
     needs: tests
