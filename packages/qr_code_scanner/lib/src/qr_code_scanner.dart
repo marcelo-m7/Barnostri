@@ -154,10 +154,7 @@ class _QRViewState extends State<QRView> {
 
     // Start scan after creation of the view
     final controller = QRViewController._(
-        _channel,
-        widget.key as GlobalKey<State<StatefulWidget>>?,
-        widget.onPermissionSet,
-        widget.cameraFacing)
+        _channel, widget.onPermissionSet, widget.cameraFacing)
       .._startScan(widget.key as GlobalKey<State<StatefulWidget>>,
           widget.overlay, widget.formatsAllowed);
 
@@ -181,7 +178,7 @@ class _QrCameraSettings {
 }
 
 class QRViewController {
-  QRViewController._(MethodChannel channel, GlobalKey? qrKey,
+  QRViewController._(MethodChannel channel,
       PermissionSetCallback? onPermissionSet, CameraFacing cameraFacing)
       : _channel = channel,
         _cameraFacing = cameraFacing {
