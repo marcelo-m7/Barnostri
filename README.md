@@ -8,7 +8,8 @@ Consulte `docs/README.md` para uma visão geral da estrutura.
 
 Aplicativo Flutter integrado ao Supabase. Todo o código e scripts do banco ficam neste monorepo.
 
-> **Nota:** Esta versão mantém apenas a configuração para web. As pastas e arquivos referentes ao Android foram removidos.
+> **Nota:** atualmente apenas a plataforma **web** é suportada. Outros alvos
+> (Android, iOS e desktop) não estão configurados neste repositório.
 
 Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consulte `docs/CODE_REVIEW.md` para um resumo de inconsistências identificadas.
 
