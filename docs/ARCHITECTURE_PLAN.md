@@ -46,12 +46,3 @@ barnostri/
 ## Packages
 - `packages/shared_models` exposes models and repository helpers shared by the apps.
 - Both the customer and admin apps import this package to avoid duplication.
-
-## Next Steps
-1. Create the folders above if they do not exist.
-2. Move current models and Supabase helpers to `packages/shared_models`.
-3. Split SQL files into migrations and seed data.
-4. Update the Flutter app imports to use the shared package.
-5. Configure CI to run `dart format` and `flutter analyze`.
-
-This plan provides a clean separation of concerns and makes it easier to scale the project.
