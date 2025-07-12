@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use, avoid_web_libraries_in_flutter
 @TestOn('browser')
+library qr_scanner_web_test;
+
 import 'dart:html' as html;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -10,7 +13,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('jsQR decodes sample image', (tester) async {
-    final img = html.ImageElement(src: 'data:image/png;base64,' + _qrBase64);
+    final img = html.ImageElement(src: 'data:image/png;base64,$_qrBase64');
     await img.onLoad.first;
     final canvas = html.CanvasElement(width: img.width!, height: img.height!);
     final ctx = canvas.context2D;

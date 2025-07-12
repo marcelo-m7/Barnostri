@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, avoid_web_libraries_in_flutter
+
 import 'dart:async';
 import 'dart:html' as html;
 
@@ -71,8 +73,9 @@ class _MobileScannerState extends State<MobileScanner> {
 
   Future<void> _checkSupport() async {
     try {
-      supported = html.window.navigator.mediaDevices != null &&
-          await qr.WebQrView.cameraAvailable();
+      final devices =
+          await html.window.navigator.mediaDevices?.enumerateDevices();
+      supported = devices?.any((e) => e.kind == 'videoinput') ?? false;
     } catch (_) {
       supported = false;
     }
@@ -86,7 +89,7 @@ class _MobileScannerState extends State<MobileScanner> {
     }
     if (supported == false) {
       return stub.MobileScanner(
-        controller: stub.MobileScannerController(),
+        controller: const stub.MobileScannerController(),
         onDetect: widget.onDetect,
         overlay: widget.overlay,
       );
