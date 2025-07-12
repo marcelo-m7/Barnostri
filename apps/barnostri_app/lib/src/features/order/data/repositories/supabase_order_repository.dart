@@ -47,7 +47,7 @@ class SupabaseOrderRepository implements OrderRepository {
       await _client!.from('order_items').insert(itemsData);
       return orderId;
     } catch (e) {
-      logger.severe('Erro ao criar pedido: $e');
+      logger.severe('Error creating order: $e');
       return null;
     }
   }
@@ -66,7 +66,7 @@ class SupabaseOrderRepository implements OrderRepository {
           .update({'status': newStatus}).eq('id', orderId);
       return true;
     } catch (e) {
-      logger.severe('Erro ao atualizar status do pedido: $e');
+      logger.severe('Error updating order status: $e');
       return false;
     }
   }
@@ -144,7 +144,7 @@ class SupabaseOrderRepository implements OrderRepository {
           .order('created_at', ascending: false);
       return response.map<Order>((e) => Order.fromJson(e)).toList();
     } catch (e) {
-      logger.severe('Erro ao buscar pedidos: $e');
+      logger.severe('Error fetching orders: $e');
       return [];
     }
   }

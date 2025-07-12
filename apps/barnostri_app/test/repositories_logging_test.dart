@@ -23,7 +23,7 @@ void main() {
     expect(
       logs.any((r) =>
           r.level == Level.SEVERE &&
-          r.message.contains('Erro ao buscar mesas')),
+          r.message.contains('Error fetching tables')), 
       isTrue,
     );
   });
@@ -56,7 +56,7 @@ void main() {
     expect(
       logs.any((r) =>
           r.level == Level.SEVERE &&
-          r.message.contains('Erro ao criar pedido')),
+          r.message.contains('Error creating order')), 
       isTrue,
     );
   });
