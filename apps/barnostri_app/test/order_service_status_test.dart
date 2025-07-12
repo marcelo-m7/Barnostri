@@ -17,7 +17,8 @@ class FakeOrderRepository implements OrderRepository {
     required List<CartItem> items,
     required double total,
     required String paymentMethod,
-  }) async => null;
+  }) async =>
+      null;
 
   @override
   Future<bool> updateStatus(String orderId, String newStatus) async {
