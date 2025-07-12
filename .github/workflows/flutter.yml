@@ -42,6 +42,32 @@ jobs:
         
       - run: flutter test -d chrome
         working-directory: apps/barnostri_app
+
+  golden_tests:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+        working-directory: packages/shared_models
+
+      - run: flutter pub get
+        working-directory: apps/barnostri_app
+
+      - run: flutter test --update-goldens
+        working-directory: apps/barnostri_app
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: goldens
+          path: apps/barnostri_app/test/golden/goldens
+          if-no-files-found: ignore
   
   build:
     needs: tests

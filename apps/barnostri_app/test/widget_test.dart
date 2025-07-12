@@ -21,5 +21,10 @@ void main() {
     await tester.pumpWidget(const ProviderScope(child: BarnostriApp()));
 
     expect(find.text('Barnostri'), findsOneWidget);
+
+    await expectLater(
+      find.byType(BarnostriApp),
+      matchesGoldenFile('goldens/home_page.png'),
+    );
   });
 }
