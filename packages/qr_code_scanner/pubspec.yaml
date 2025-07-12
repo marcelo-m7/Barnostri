@@ -24,8 +24,5 @@ dev_dependencies:
 flutter:
   plugin:
     platforms:
-      android:
-        package: net.touchcapture.qr.flutterqr
-        pluginClass: FlutterQrPlugin
       ios:
         pluginClass: FlutterQrPlugin
