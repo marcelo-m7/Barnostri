@@ -39,6 +39,17 @@ Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. O resum
    (cd packages/shared_models && dart pub get)
    ```
 
+## Rodando `setup_environment.sh` e os testes
+
+O script `setup_environment.sh` automatiza a instalação do Flutter SDK, do Google Chrome e de dependências do sistema. Ele deve ser executado no diretório raiz do repositório e requer permissões para instalar pacotes via `apt`.
+
+```bash
+chmod +x setup_environment.sh
+./setup_environment.sh
+```
+
+Ao final da execução o Flutter estará disponível no `PATH`, o código será formatado e todos os testes unitários e de integração serão executados, por padrão usando o navegador Chrome.
+
 ## Executando o aplicativo Flutter
 
 1. Configure o Supabase preenchendo as variáveis em [`apps/barnostri_app/supabase/supabase-config.json`](apps/barnostri_app/supabase/supabase-config.json).
@@ -143,14 +154,29 @@ Esse método foi atualizado para buscar apenas esse caminho, evitando duplicaç�
 
 ## Executando os testes
 
-Os testes unitários estão em `packages/shared_models/test` e podem ser executados com:
+Para rodar todos os testes de uma vez certifique-se de que o Flutter SDK esteja configurado:
+
+```bash
+flutter test
+```
+
+Para executar apenas os testes unitários do pacote compartilhado use:
 
 ```bash
 flutter test packages/shared_models
 ```
 
-Os testes cobrem também a conversão de valores em inglês e português para os enums
-`OrderStatus` e `PaymentMethod`, garantindo compatibilidade com os dados do Supabase.
+### Testes de integração
+
+Os testes de integração podem ser validados em diferentes plataformas. É necessário ter o Chrome instalado para testes web e um emulador ou dispositivo para Android/iOS.
+
+```bash
+flutter test integration_test -d chrome            # Web
+flutter test integration_test -d android-emulator  # Android
+flutter test integration_test -d ios               # iOS (requer macOS)
+```
+
+Esses testes cobrem, entre outros pontos, a conversão de valores em inglês e português para os enums `OrderStatus` e `PaymentMethod`, garantindo compatibilidade com os dados do Supabase.
 
 ## Integração contínua
 
