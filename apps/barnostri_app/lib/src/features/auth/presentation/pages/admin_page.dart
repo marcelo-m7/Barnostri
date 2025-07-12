@@ -546,9 +546,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
   }
 
   void _showAddItemDialog(BuildContext context, MenuService menuService) {
-    final nomeController = TextEditingController();
-    final descricaoController = TextEditingController();
-    final precoController = TextEditingController();
+    final nameController = TextEditingController();
+    final descriptionController = TextEditingController();
+    final priceController = TextEditingController();
     String? selectedCategoryId;
 
     showDialog(
@@ -560,20 +560,20 @@ class _AdminPageState extends ConsumerState<AdminPage>
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                controller: nomeController,
+                controller: nameController,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context).name,
                 ),
               ),
               TextField(
-                controller: descricaoController,
+                controller: descriptionController,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context).description,
                 ),
                 maxLines: 3,
               ),
               TextField(
-                controller: precoController,
+                controller: priceController,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context).price,
                 ),
@@ -609,9 +609,9 @@ class _AdminPageState extends ConsumerState<AdminPage>
             onPressed: () async {
               if (selectedCategoryId != null) {
                 await menuService.addMenuItem(
-                  name: nomeController.text,
-                  description: descricaoController.text,
-                  price: double.tryParse(precoController.text) ?? 0.0,
+                  name: nameController.text,
+                  description: descriptionController.text,
+                  price: double.tryParse(priceController.text) ?? 0.0,
                   categoryId: selectedCategoryId!,
                 );
                 if (!context.mounted) return;
@@ -626,8 +626,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
   }
 
   void _showAddCategoryDialog(BuildContext context, MenuService menuService) {
-    final nomeController = TextEditingController();
-    final ordemController = TextEditingController();
+    final nameController = TextEditingController();
+    final orderController = TextEditingController();
 
     showDialog(
       context: context,
@@ -637,13 +637,13 @@ class _AdminPageState extends ConsumerState<AdminPage>
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              controller: nomeController,
+              controller: nameController,
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context).name,
               ),
             ),
             TextField(
-              controller: ordemController,
+              controller: orderController,
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context).orderField,
               ),
@@ -659,8 +659,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
           ElevatedButton(
             onPressed: () async {
               await menuService.addCategory(
-                name: nomeController.text,
-                sortOrder: int.tryParse(ordemController.text) ?? 0,
+                name: nameController.text,
+                sortOrder: int.tryParse(orderController.text) ?? 0,
               );
               if (!context.mounted) return;
               Navigator.pop(context);
@@ -673,7 +673,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
   }
 
   void _showAddTableDialog(BuildContext context, MenuService menuService) {
-    final numeroController = TextEditingController();
+    final numberController = TextEditingController();
     final qrTokenController = TextEditingController();
 
     showDialog(
@@ -684,7 +684,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              controller: numeroController,
+              controller: numberController,
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context).tableNumberLabel,
               ),
@@ -705,7 +705,7 @@ class _AdminPageState extends ConsumerState<AdminPage>
           ElevatedButton(
             onPressed: () async {
               await menuService.addTable(
-                number: numeroController.text,
+                number: numberController.text,
                 qrToken: qrTokenController.text,
               );
 
