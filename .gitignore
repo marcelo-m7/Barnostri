@@ -36,5 +36,6 @@ untranslated.txt
 .env
 .env.local
 .env.*.local
-# supabase-config.json
+# Supabase credentials
+apps/barnostri_app/supabase/supabase-config.json
 .flutter-plugins
