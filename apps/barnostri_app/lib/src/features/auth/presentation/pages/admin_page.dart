@@ -6,6 +6,7 @@ import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_se
 import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_service.dart';
 import 'package:barnostri_app/src/widgets/order_status_widget.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class AdminPage extends ConsumerStatefulWidget {
   const AdminPage({super.key});
@@ -432,7 +433,15 @@ class _AdminPageState extends ConsumerState<AdminPage>
                 ),
               ),
               title: Text(item.name),
-              subtitle: Text(formatCurrency(item.price)),
+              subtitle: Text(
+                formatCurrency(
+                  item.price,
+                  locale: Localizations.localeOf(context).toString(),
+                  symbol: NumberFormat.simpleCurrency(
+                          locale: Localizations.localeOf(context).toString())
+                      .currencySymbol,
+                ),
+              ),
               trailing: Switch(
                 value: item.available,
                 onChanged: (value) {

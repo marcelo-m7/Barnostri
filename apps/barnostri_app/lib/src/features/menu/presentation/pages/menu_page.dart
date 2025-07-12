@@ -6,6 +6,7 @@ import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_se
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
 import 'package:barnostri_app/src/widgets/menu_item_card.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
@@ -298,7 +299,13 @@ class _MenuPageState extends ConsumerState<MenuPage>
                   ),
                 ),
                 Text(
-                  formatCurrency(orderState.cartTotal),
+                  formatCurrency(
+                    orderState.cartTotal,
+                    locale: Localizations.localeOf(context).toString(),
+                    symbol: NumberFormat.simpleCurrency(
+                            locale: Localizations.localeOf(context).toString())
+                        .currencySymbol,
+                  ),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -498,7 +505,14 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                       ),
                       const SizedBox(width: 16),
                       Text(
-                        formatCurrency(widget.item.price),
+                        formatCurrency(
+                          widget.item.price,
+                          locale: Localizations.localeOf(context).toString(),
+                          symbol: NumberFormat.simpleCurrency(
+                                  locale: Localizations.localeOf(context)
+                                      .toString())
+                              .currencySymbol,
+                        ),
                         style:
                             Theme.of(context).textTheme.headlineSmall?.copyWith(
                                   color: Theme.of(context).colorScheme.primary,
@@ -633,7 +647,15 @@ class _ItemDetailsSheetState extends ConsumerState<_ItemDetailsSheet> {
                       ),
                       child: Text(
                         widget.item.available
-                            ? '${AppLocalizations.of(context).addToCart} - ${formatCurrency(widget.item.price * _quantity)}'
+                            ? '${AppLocalizations.of(context).addToCart} - ${formatCurrency(
+                                widget.item.price * _quantity,
+                                locale:
+                                    Localizations.localeOf(context).toString(),
+                                symbol: NumberFormat.simpleCurrency(
+                                        locale: Localizations.localeOf(context)
+                                            .toString())
+                                    .currencySymbol,
+                              )}'
                             : AppLocalizations.of(context).itemUnavailable,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               fontWeight: FontWeight.bold,

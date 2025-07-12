@@ -4,6 +4,7 @@ import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
 import 'package:barnostri_app/src/widgets/order_status_widget.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class CartPage extends ConsumerStatefulWidget {
   const CartPage({super.key});
@@ -260,7 +261,13 @@ class _CartPageState extends ConsumerState<CartPage> {
               ),
               const SizedBox(width: 16),
               Text(
-                formatCurrency(cartItem.subtotal),
+                formatCurrency(
+                  cartItem.subtotal,
+                  locale: Localizations.localeOf(context).toString(),
+                  symbol: NumberFormat.simpleCurrency(
+                          locale: Localizations.localeOf(context).toString())
+                      .currencySymbol,
+                ),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary,
@@ -417,7 +424,13 @@ class _CartPageState extends ConsumerState<CartPage> {
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                formatCurrency(orderState.cartTotal),
+                formatCurrency(
+                  orderState.cartTotal,
+                  locale: Localizations.localeOf(context).toString(),
+                  symbol: NumberFormat.simpleCurrency(
+                          locale: Localizations.localeOf(context).toString())
+                      .currencySymbol,
+                ),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary,
@@ -471,7 +484,14 @@ class _CartPageState extends ConsumerState<CartPage> {
                     ),
                   )
                 : Text(
-                    '${l10n.checkout} - ${formatCurrency(orderState.cartTotal)}',
+                    '${l10n.checkout} - ${formatCurrency(
+                      orderState.cartTotal,
+                      locale: Localizations.localeOf(context).toString(),
+                      symbol: NumberFormat.simpleCurrency(
+                              locale:
+                                  Localizations.localeOf(context).toString())
+                          .currencySymbol,
+                    )}',
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
