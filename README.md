@@ -8,8 +8,6 @@ Consulte `docs/README.md` para uma visão geral da estrutura.
 
 Aplicativo Flutter integrado ao Supabase. Todo o código e scripts do banco ficam neste monorepo.
 
-> **Nota:** atualmente apenas a plataforma **web** é suportada. Outros alvos
-> (Android, iOS e desktop) não estão configurados neste repositório.
 
 Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consulte `docs/CODE_REVIEW.md` para um resumo de inconsistências identificadas.
 
@@ -32,11 +30,13 @@ Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consult
    ```bash
    supabase start
    ```
-3. Execute no navegador:
+3. Execute no navegador ou em dispositivos:
 
   ```bash
   cd apps/barnostri_app
-  flutter run -d web-server
+  flutter run -d web-server        # web
+  flutter run -d android-emulator  # Android
+  flutter run -d ios               # iOS (requer macOS)
   ```
 
 Para compilar a aplicação web utilize:
@@ -44,6 +44,14 @@ Para compilar a aplicação web utilize:
 ```bash
 cd apps/barnostri_app
 flutter build web
+```
+
+Para gerar um APK Android ou uma build iOS utilize:
+
+```bash
+cd apps/barnostri_app
+flutter build apk            # Android
+flutter build ios            # iOS (requer macOS)
 ```
 
 Para testar o build web localmente, sirva o diretório `build/web` em um servidor
