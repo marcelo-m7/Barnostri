@@ -4,7 +4,7 @@ Flutter client for the Barnostri project.
 
 ## Setup
 
-1. Run `./setup_environment.sh` from the repository root to install Flutter and system dependencies.
+1. Run `./setup_environment.sh` from the repository root to install Flutter and system dependencies. The script formats `packages/shared_models` and `apps/barnostri_app` automatically.
 2. Fetch dependencies:
    ```bash
    (cd apps/barnostri_app && flutter pub get)

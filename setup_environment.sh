@@ -43,12 +43,9 @@ git config --global --add safe.directory /root/flutter
 echo "🧪 Verificando instalação com flutter doctor..."
 flutter doctor
 
-echo "🎨 Formata tudo"
+echo "🎨 Formatando código (pode modificar arquivos)"
 dart format --set-exit-if-changed packages/shared_models || true
 dart format --set-exit-if-changed apps/barnostri_app || true
-
-dart fix --dry-run
-dart fix --apply
 
 if [ -f apps/barnostri_app/pubspec.yaml ]; then
   echo "📝️ Projeto Flutter já existe; ignorando flutter create"

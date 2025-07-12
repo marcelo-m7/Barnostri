@@ -24,7 +24,7 @@ Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consult
 
 ## Environment setup
 
-1. Execute `./setup_environment.sh` para instalar o Flutter e dependências do sistema. O script cria `apps/barnostri_app` apenas se ela ainda não existir.
+1. Execute `./setup_environment.sh` para instalar o Flutter e dependências do sistema. O script formata os diretórios `packages/shared_models` e `apps/barnostri_app`, criando `apps/barnostri_app` apenas se ela ainda não existir.
 2. Baixe as dependências do projeto:
 
    ```bash
