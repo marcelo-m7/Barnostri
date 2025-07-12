@@ -179,14 +179,18 @@ class OrderService extends StateNotifier<OrderState>
     required PaymentMethod method,
     required double amount,
   }) async {
-    state = state.copyWith(isLoading: true);
-    await Future.delayed(const Duration(seconds: 2));
-    const success = true;
-    // if (!success) {
-    //   state = state.copyWith(error: _l10n.paymentFailureRetry);
-    // }
-    state = state.copyWith(isLoading: false);
-    return success;
+    final result = await guard<bool>(() async {
+      await Future.delayed(const Duration(seconds: 2));
+
+      final success = amount > 0;
+      if (!success) {
+        state = state.copyWith(error: _l10n.paymentFailureRetry);
+      }
+
+      return success;
+    }, onError: (e) => _l10n.paymentFailureRetry);
+
+    return result ?? false;
   }
 
   void clearError() {
