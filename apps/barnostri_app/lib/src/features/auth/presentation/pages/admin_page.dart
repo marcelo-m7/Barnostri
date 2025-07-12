@@ -26,6 +26,10 @@ class _AdminPageState extends ConsumerState<AdminPage>
     emailController = TextEditingController();
     passwordController = TextEditingController();
     _tabController = TabController(length: 3, vsync: this);
+    // Carrega dados iniciais fora do ciclo de construcao dos widgets
+    Future.microtask(
+      () => ref.read(menuServiceProvider.notifier).loadAll(),
+    );
   }
 
   @override
@@ -376,41 +380,34 @@ class _AdminPageState extends ConsumerState<AdminPage>
   }
 
   Widget _buildMenuTab() {
-    return Builder(
-      builder: (context) {
-        final menuService = ref.watch(menuServiceProvider.notifier);
-        final l10n = AppLocalizations.of(context);
-        return FutureBuilder(
-          future: menuService.loadAll(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    final l10n = AppLocalizations.of(context);
+    final menuService = ref.watch(menuServiceProvider.notifier);
+    final menuState = ref.watch(menuServiceProvider);
 
-            return DefaultTabController(
-              length: 2,
-              child: Column(
-                children: [
-                  TabBar(
-                    tabs: [
-                      Tab(text: l10n.items),
-                      Tab(text: l10n.categories),
-                    ],
-                  ),
-                  Expanded(
-                    child: TabBarView(
-                      children: [
-                        _buildMenuItemsList(menuService),
-                        _buildCategoriesList(menuService),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
+    if (menuState.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          TabBar(
+            tabs: [
+              Tab(text: l10n.items),
+              Tab(text: l10n.categories),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                _buildMenuItemsList(menuService),
+                _buildCategoriesList(menuService),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -498,61 +495,53 @@ class _AdminPageState extends ConsumerState<AdminPage>
   }
 
   Widget _buildTablesTab() {
-    return Builder(
-      builder: (context) {
-        final menuService = ref.watch(menuServiceProvider.notifier);
-        final menuState = ref.watch(menuServiceProvider);
-        return FutureBuilder(
-          future: menuService.loadTables(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    final menuService = ref.watch(menuServiceProvider.notifier);
+    final menuState = ref.watch(menuServiceProvider);
 
-            return Scaffold(
-              body: ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: menuState.tables.length,
-                itemBuilder: (context, index) {
-                  final table = menuState.tables[index];
-                  return Card(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: table.active
-                            ? Theme.of(context).colorScheme.primary.withAlpha(
-                                  (0.1 * 255).round(),
-                                )
-                            : Colors.grey.withAlpha((0.1 * 255).round()),
-                        child: Icon(
-                          Icons.table_restaurant,
-                          color: table.active
-                              ? Theme.of(context).colorScheme.primary
-                              : Colors.grey,
-                        ),
-                      ),
-                      title: Text(
-                        AppLocalizations.of(context).tableNumber(table.number),
-                      ),
-                      subtitle: Text('QR: ${table.qrToken}'),
-                      trailing: Icon(
-                        table.active ? Icons.check_circle : Icons.cancel,
-                        color: table.active ? Colors.green : Colors.red,
-                      ),
-                    ),
-                  );
-                },
+    if (menuState.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return Scaffold(
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: menuState.tables.length,
+        itemBuilder: (context, index) {
+          final table = menuState.tables[index];
+          return Card(
+            margin: const EdgeInsets.only(bottom: 8),
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: table.active
+                    ? Theme.of(context).colorScheme.primary.withAlpha(
+                          (0.1 * 255).round(),
+                        )
+                    : Colors.grey.withAlpha((0.1 * 255).round()),
+                child: Icon(
+                  Icons.table_restaurant,
+                  color: table.active
+                      ? Theme.of(context).colorScheme.primary
+                      : Colors.grey,
+                ),
               ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () => _showAddTableDialog(context, menuService),
-                backgroundColor: Theme.of(context).colorScheme.tertiary,
-                foregroundColor: Theme.of(context).colorScheme.onTertiary,
-                child: const Icon(Icons.add),
+              title: Text(
+                AppLocalizations.of(context).tableNumber(table.number),
               ),
-            );
-          },
-        );
-      },
+              subtitle: Text('QR: ${table.qrToken}'),
+              trailing: Icon(
+                table.active ? Icons.check_circle : Icons.cancel,
+                color: table.active ? Colors.green : Colors.red,
+              ),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAddTableDialog(context, menuService),
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        foregroundColor: Theme.of(context).colorScheme.onTertiary,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
