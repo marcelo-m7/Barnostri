@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 
 import 'package:barnostri_app/main.dart';
 
@@ -19,6 +20,7 @@ Future<void> _reset(WidgetTester tester) async {
 }
 
 void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   const smallSize = Size(400, 800);
   const largeSize = Size(1200, 800);
 

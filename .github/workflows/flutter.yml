@@ -42,6 +42,11 @@ jobs:
         
       - run: flutter test -d chrome
         working-directory: apps/barnostri_app
+      # Uncomment the lines below to run integration tests on mobile emulators when available
+      # - run: flutter test integration_test -d android-emulator
+      #   working-directory: apps/barnostri_app
+      # - run: flutter test integration_test -d ios
+      #   working-directory: apps/barnostri_app
   
   build:
     needs: tests
