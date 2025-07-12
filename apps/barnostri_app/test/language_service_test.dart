@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
+import 'package:flutter/foundation.dart';
 import 'package:barnostri_app/src/core/services/language_service.dart';
 
 class FailingStore extends InMemorySharedPreferencesStore {
