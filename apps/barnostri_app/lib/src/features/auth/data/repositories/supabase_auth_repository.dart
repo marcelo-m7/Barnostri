@@ -14,7 +14,7 @@ class SupabaseAuthRepository implements AuthRepository {
   }) async {
     if (_client == null) {
       if (kDebugMode) {
-        print('🔒 Mock authentication: $email');
+        debugPrint('🔒 Mock authentication: $email');
       }
       if (email == 'admin@barnostri.com' && password == 'admin123') {
         await Future.delayed(const Duration(seconds: 1));
@@ -54,7 +54,7 @@ class SupabaseAuthRepository implements AuthRepository {
       return response;
     } catch (e) {
       if (kDebugMode) {
-        print('Erro ao fazer login: $e');
+        debugPrint('Erro ao fazer login: $e');
       }
       rethrow;
     }
@@ -64,7 +64,7 @@ class SupabaseAuthRepository implements AuthRepository {
   Future<void> signOut() async {
     if (_client == null) {
       if (kDebugMode) {
-        print('🔓 Mock sign out');
+        debugPrint('🔓 Mock sign out');
       }
       return;
     }
@@ -72,7 +72,7 @@ class SupabaseAuthRepository implements AuthRepository {
       await _client!.auth.signOut();
     } catch (e) {
       if (kDebugMode) {
-        print('Erro ao fazer logout: $e');
+        debugPrint('Erro ao fazer logout: $e');
       }
       rethrow;
     }

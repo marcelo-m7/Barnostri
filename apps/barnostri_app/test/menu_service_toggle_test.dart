@@ -3,7 +3,7 @@ import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_se
 import 'package:shared_models/shared_models.dart';
 
 class FakeMenuRepository implements MenuRepository {
-  List<MenuItem> _items;
+  final List<MenuItem> _items;
   FakeMenuRepository(this._items);
 
   @override
