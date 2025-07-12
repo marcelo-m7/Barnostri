@@ -13,15 +13,14 @@ class QrScannerPage extends ConsumerStatefulWidget {
 }
 
 class _QrScannerPageState extends ConsumerState<QrScannerPage> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
+  late final MobileScannerController controller = MobileScannerController();
   bool isProcessing = false;
 
   @override
   void reassemble() {
     super.reassemble();
-    controller?.pauseCamera();
-    controller?.resumeCamera();
+    controller.stop();
+    controller.start();
   }
 
   @override
@@ -66,15 +65,23 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: QRView(
-                      key: qrKey,
-                      onQRViewCreated: _onQRViewCreated,
-                      overlay: QrScannerOverlayShape(
-                        borderColor: Theme.of(context).colorScheme.primary,
-                        borderRadius: 16,
-                        borderLength: 30,
-                        borderWidth: 8,
-                        cutOutSize: MediaQuery.of(context).size.width * 0.6,
+                    child: MobileScanner(
+                      controller: controller,
+                      onDetect: (capture) {
+                        if (!isProcessing && capture.barcodes.isNotEmpty) {
+                          _handleQRCode(capture.barcodes.first.rawValue);
+                        }
+                      },
+                      overlay: Container(
+                        decoration: ShapeDecoration(
+                          shape: QrScannerOverlayShape(
+                            borderColor: Theme.of(context).colorScheme.primary,
+                            borderRadius: 16,
+                            borderLength: 30,
+                            borderWidth: 8,
+                            cutOutSize: MediaQuery.of(context).size.width * 0.6,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -233,15 +240,6 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      if (!isProcessing) {
-        _handleQRCode(scanData.code);
-      }
-    });
-  }
-
   void _handleQRCode(String? code) async {
     if (code == null || isProcessing) return;
 
@@ -249,7 +247,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
       isProcessing = true;
     });
 
-    controller?.pauseCamera();
+    controller.stop();
 
     final orderService = ref.read(orderServiceProvider.notifier);
     final table = await orderService.getTableByQrToken(code);
@@ -263,7 +261,7 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
     } else {
       // Show error and resume camera
       await Future.delayed(const Duration(seconds: 2));
-      controller?.resumeCamera();
+      controller.start();
       setState(() {
         isProcessing = false;
       });
@@ -344,7 +342,46 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller.dispose();
     super.dispose();
   }
+}
+
+class QrScannerOverlayShape extends ShapeBorder {
+  const QrScannerOverlayShape({
+    this.borderColor = const Color(0x00000000),
+    this.borderWidth = 0,
+    this.overlayColor = const Color(0x00000000),
+    this.borderRadius = 0,
+    this.borderLength = 0,
+    double? cutOutSize,
+    double? cutOutWidth,
+    double? cutOutHeight,
+    this.cutOutBottomOffset = 0,
+  })  : cutOutWidth = cutOutWidth ?? cutOutSize ?? 0,
+        cutOutHeight = cutOutHeight ?? cutOutSize ?? 0;
+
+  final Color borderColor;
+  final double borderWidth;
+  final Color overlayColor;
+  final double borderRadius;
+  final double borderLength;
+  final double cutOutWidth;
+  final double cutOutHeight;
+  final double cutOutBottomOffset;
+
+  @override
+  EdgeInsetsGeometry get dimensions => EdgeInsets.zero;
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) => Path();
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) => Path();
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {}
+
+  @override
+  ShapeBorder scale(double t) => this;
 }

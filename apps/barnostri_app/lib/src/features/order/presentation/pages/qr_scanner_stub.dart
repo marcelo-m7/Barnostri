@@ -2,31 +2,48 @@ import 'package:flutter/widgets.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 
 class Barcode {
-  final String? code;
-  const Barcode(this.code);
+  final String? rawValue;
+  const Barcode({this.rawValue});
 }
 
-class QRViewController {
-  const QRViewController();
-  Stream<Barcode> get scannedDataStream => const Stream.empty();
-  void pauseCamera() {}
-  void resumeCamera() {}
+class BarcodeCapture {
+  final List<Barcode> barcodes;
+  const BarcodeCapture({this.barcodes = const []});
+}
+
+class MobileScannerController {
+  const MobileScannerController();
+  Stream<BarcodeCapture> get barcodes => const Stream.empty();
+  Future<void> start() async {}
+  Future<void> stop() async {}
+  Future<void> pause() async {}
   void dispose() {}
 }
 
-typedef QRViewCreatedCallback = void Function(QRViewController controller);
+typedef BarcodeCaptureCallback = void Function(BarcodeCapture capture);
 
-class QRView extends StatelessWidget {
-  final QRViewCreatedCallback? onQRViewCreated;
-  final QrScannerOverlayShape? overlay;
-  const QRView({super.key, this.onQRViewCreated, this.overlay});
+class MobileScanner extends StatelessWidget {
+  final MobileScannerController? controller;
+  final BarcodeCaptureCallback? onDetect;
+  final LayoutWidgetBuilder? overlayBuilder;
+  const MobileScanner({
+    super.key,
+    this.controller,
+    this.onDetect,
+    this.overlayBuilder,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // Notify that scanning is not available on web
-    onQRViewCreated?.call(const QRViewController());
+    onDetect?.call(const BarcodeCapture());
     final l10n = AppLocalizations.of(context);
-    return Center(child: Text(l10n.qrScanningNotSupportedOnWeb));
+    final overlay = overlayBuilder?.call(context, const BoxConstraints());
+    return Stack(
+      children: [
+        Center(child: Text(l10n.qrScanningNotSupportedOnWeb)),
+        if (overlay != null) overlay,
+      ],
+    );
   }
 }
 
