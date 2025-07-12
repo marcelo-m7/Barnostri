@@ -52,8 +52,7 @@ class _MenuPageState extends ConsumerState<MenuPage>
     }
   }
 
-  int _getCrossAxisCount(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+  int _getCrossAxisCount(double width) {
     return menuCrossAxisCount(width);
   }
 
@@ -310,24 +309,28 @@ class _MenuPageState extends ConsumerState<MenuPage>
 
   Widget _buildSearchResults(MenuService menuService, MenuState menuState) {
     final filteredItems = menuService.searchItems(_searchQuery);
-    final columns = _getCrossAxisCount(context);
 
-    return SliverPadding(
-      padding: const EdgeInsets.all(16),
-      sliver: SliverGrid(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: columns,
-          childAspectRatio: 1.2,
-          mainAxisSpacing: 16,
-        ),
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final item = filteredItems[index];
-            return MenuItemCard(
-                item: item, onTap: () => _showItemDetails(item));
-          },
-          childCount: filteredItems.length,
-        ),
+    return SliverToBoxAdapter(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final columns = _getCrossAxisCount(constraints.maxWidth);
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(16),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: columns,
+              childAspectRatio: 1.2,
+              mainAxisSpacing: 16,
+            ),
+            itemCount: filteredItems.length,
+            itemBuilder: (context, index) {
+              final item = filteredItems[index];
+              return MenuItemCard(
+                  item: item, onTap: () => _showItemDetails(item));
+            },
+          );
+        },
       ),
     );
   }
@@ -370,18 +373,23 @@ class _MenuPageState extends ConsumerState<MenuPage>
                       ],
                     ),
                   )
-                : GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: _getCrossAxisCount(context),
-                      childAspectRatio: 1.2,
-                      mainAxisSpacing: 16,
-                    ),
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      final item = items[index];
-                      return MenuItemCard(
-                        item: item,
-                        onTap: () => _showItemDetails(item),
+                : LayoutBuilder(
+                    builder: (context, constraints) {
+                      final columns = _getCrossAxisCount(constraints.maxWidth);
+                      return GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: columns,
+                          childAspectRatio: 1.2,
+                          mainAxisSpacing: 16,
+                        ),
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          return MenuItemCard(
+                            item: item,
+                            onTap: () => _showItemDetails(item),
+                          );
+                        },
                       );
                     },
                   ),

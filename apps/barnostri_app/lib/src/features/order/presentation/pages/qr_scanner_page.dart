@@ -74,7 +74,8 @@ class _QrScannerPageState extends ConsumerState<QrScannerPage> {
                         borderRadius: 16,
                         borderLength: 30,
                         borderWidth: 8,
-                        cutOutSize: MediaQuery.of(context).size.width * 0.6,
+                        cutOutSize:
+                            MediaQuery.of(context).size.shortestSide * 0.6,
                       ),
                     ),
                   ),
