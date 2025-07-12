@@ -30,6 +30,23 @@ flutter run -d ios               # iOS (macOS only)
 
 ```bash
 flutter test
-flutter test integration_test
 flutter test packages/shared_models
+```
+
+Run integration tests on Chrome (requires Chrome installed) with:
+
+```bash
+flutter test integration_test -d chrome
+```
+
+For Android emulators or connected devices (a configured emulator or device must be running):
+
+```bash
+flutter test integration_test -d android-emulator  # or the device id
+```
+
+On macOS you can also run on an iOS simulator or device:
+
+```bash
+flutter test integration_test -d ios
 ```
