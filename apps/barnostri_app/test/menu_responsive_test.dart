@@ -24,10 +24,10 @@ void main() {
   });
 
   group('menuCrossAxisCount high density portrait', () {
-    test('returns expected values', () {
-      final binding = TestWidgetsFlutterBinding.ensureInitialized();
-      binding.window.devicePixelRatioTestValue = 2.0;
-      addTearDown(binding.window.clearDevicePixelRatioTestValue);
+    testWidgets('returns expected values', (tester) async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      tester.view.devicePixelRatio = 2.0;
+      addTearDown(tester.view.resetDevicePixelRatio);
 
       expect(menuCrossAxisCount(1200, Orientation.portrait), 5);
       expect(menuCrossAxisCount(1000, Orientation.portrait), 4);
@@ -38,10 +38,10 @@ void main() {
   });
 
   group('menuCrossAxisCount high density landscape', () {
-    test('returns expected values', () {
-      final binding = TestWidgetsFlutterBinding.ensureInitialized();
-      binding.window.devicePixelRatioTestValue = 2.0;
-      addTearDown(binding.window.clearDevicePixelRatioTestValue);
+    testWidgets('returns expected values', (tester) async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      tester.view.devicePixelRatio = 2.0;
+      addTearDown(tester.view.resetDevicePixelRatio);
 
       expect(menuCrossAxisCount(1200, Orientation.landscape), 5);
       expect(menuCrossAxisCount(1000, Orientation.landscape), 5);
