@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
 import 'package:barnostri_app/src/core/services/language_service.dart';
+
+class FailingStore extends InMemorySharedPreferencesStore {
+  FailingStore() : super.empty();
+
+  @override
+  Future<Map<String, Object>> getAll() =>
+      Future<Map<String, Object>>.error(Exception('getAll failed'));
+
+  @override
+  Future<bool> setValue(String valueType, String key, Object value) =>
+      Future<bool>.error(Exception('setValue failed'));
+}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -68,6 +81,41 @@ void main() {
         const Locale('de', 'DE'),
       ]);
       expect(result, LanguageService.defaultLocale);
+    });
+
+    test('initialize logs error when SharedPreferences fails', () async {
+      SharedPreferences.resetStatic();
+      SharedPreferencesStorePlatform.instance = FailingStore();
+      final logs = <String>[];
+      final original = debugPrint;
+      debugPrint = (String? message, {int? wrapWidth}) {
+        if (message != null) logs.add(message);
+      };
+
+      final service = LanguageService();
+      await service.initialize();
+
+      debugPrint = original;
+      expect(logs.any((l) => l.contains('Erro')), isTrue);
+    });
+
+    test('changeLanguage logs error when saving fails', () async {
+      SharedPreferences.setMockInitialValues({});
+      final service = LanguageService();
+      await service.initialize();
+
+      SharedPreferences.resetStatic();
+      SharedPreferencesStorePlatform.instance = FailingStore();
+      final logs = <String>[];
+      final original = debugPrint;
+      debugPrint = (String? message, {int? wrapWidth}) {
+        if (message != null) logs.add(message);
+      };
+
+      await service.changeLanguage(const Locale('en', 'GB'));
+
+      debugPrint = original;
+      expect(logs.any((l) => l.contains('Erro')), isTrue);
     });
   });
 }
