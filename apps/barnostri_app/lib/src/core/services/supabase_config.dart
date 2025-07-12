@@ -15,6 +15,13 @@ class SupabaseConfig {
   /// Throws an [Exception] with a descriptive message when the configuration
   /// file is missing or malformed.
   static Future<SupabaseClient?> createClient({String env = 'dev'}) async {
+    if (_isConfigured) {
+      try {
+        return Supabase.instance.client;
+      } on AssertionError {
+        _isConfigured = false;
+      }
+    }
     try {
       final configJson = await rootBundle.loadString(
         'supabase/supabase-config.json',
