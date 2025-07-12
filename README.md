@@ -107,13 +107,15 @@ navegador Chrome (é necessário ter o Chrome instalado) basta rodar:
 flutter test integration_test -d chrome
 ```
 
-Caso possua um emulador ou dispositivo Android conectado execute:
+Caso possua um emulador ou dispositivo Android conectado, execute para validar 
+os fluxos de navegação e os layouts responsivos no Android:
 
 ```bash
 flutter test integration_test -d android-emulator     # ou o ID do dispositivo
 ```
 
-Em sistemas macOS também é possível rodar no simulador ou em um iPhone real:
+Em sistemas macOS também é possível rodar no simulador ou em um iPhone real 
+para verificar a mesma experiência no iOS:
 
 ```bash
 flutter test integration_test -d ios

@@ -61,6 +61,10 @@ flutter analyze apps/barnostri_app
 echo "🧪 Testa"
 (cd packages/shared_models && flutter test)
 (cd apps/barnostri_app && flutter test)
+# Run integration tests on Chrome by default
 (cd apps/barnostri_app && flutter test integration_test -d chrome)
+# Uncomment the lines below to run on mobile devices when available
+# (cd apps/barnostri_app && flutter test integration_test -d android-emulator)
+# (cd apps/barnostri_app && flutter test integration_test -d ios)
 
 echo "✅ PRONTO"
