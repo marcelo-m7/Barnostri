@@ -35,8 +35,8 @@ class _CartPageState extends ConsumerState<CartPage> {
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
-      body: Builder(
-        builder: (context) {
+      body: LayoutBuilder(
+        builder: (context, constraints) {
           final orderState = ref.watch(orderServiceProvider);
           final orderNotifier = ref.watch(orderServiceProvider.notifier);
           if (_currentOrderId != null) {
@@ -47,7 +47,7 @@ class _CartPageState extends ConsumerState<CartPage> {
             return _buildEmptyCart();
           }
 
-          return _buildCartContent(orderNotifier, orderState);
+          return _buildCartContent(orderNotifier, orderState, constraints);
         },
       ),
     );
@@ -101,83 +101,109 @@ class _CartPageState extends ConsumerState<CartPage> {
     );
   }
 
-  Widget _buildCartContent(OrderService orderNotifier, OrderState orderState) {
+  Widget _buildCartContent(
+    OrderService orderNotifier,
+    OrderState orderState,
+    BoxConstraints constraints,
+  ) {
+    final isWide = constraints.maxWidth >= 700;
+
+    Widget buildList({required bool includeSummary}) {
+      return ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          // Mesa info
+          if (orderState.currentTable != null)
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Theme.of(
+                  context,
+                ).colorScheme.primary.withAlpha((0.1 * 255).round()),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.table_restaurant,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    l10n.tableNumber(orderState.currentTable!.number),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+
+          const SizedBox(height: 24),
+
+          // Cart items
+          Text(
+            l10n.orderItems,
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+
+          ...orderState.cartItems.asMap().entries.map((entry) {
+            final index = entry.key;
+            final cartItem = entry.value;
+            return _buildCartItem(orderNotifier, cartItem, index);
+          }),
+
+          const SizedBox(height: 24),
+
+          // Payment method selection
+          Text(
+            l10n.paymentMethod,
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+
+          ...PaymentMethod.values.map(
+            (method) => _buildPaymentOption(method),
+          ),
+
+          const SizedBox(height: 24),
+
+          if (includeSummary) _buildOrderSummary(orderState),
+        ],
+      );
+    }
+
+    if (isWide) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: buildList(includeSummary: false)),
+          SizedBox(
+            width: 340,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  _buildOrderSummary(orderState),
+                  const SizedBox(height: 16),
+                  _buildCheckoutButton(orderNotifier, orderState),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
     return Column(
       children: [
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              // Mesa info
-              if (orderState.currentTable != null)
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withAlpha((0.1 * 255).round()),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.table_restaurant,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        l10n.tableNumber(orderState.currentTable!.number),
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                      ),
-                    ],
-                  ),
-                ),
-
-              const SizedBox(height: 24),
-
-              // Cart items
-              Text(
-                l10n.orderItems,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-
-              ...orderState.cartItems.asMap().entries.map((entry) {
-                final index = entry.key;
-                final cartItem = entry.value;
-                return _buildCartItem(orderNotifier, cartItem, index);
-              }),
-
-              const SizedBox(height: 24),
-
-              // Payment method selection
-              Text(
-                l10n.paymentMethod,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-
-              ...PaymentMethod.values.map(
-                (method) => _buildPaymentOption(method),
-              ),
-
-              const SizedBox(height: 24),
-
-              // Order summary
-              _buildOrderSummary(orderState),
-            ],
-          ),
-        ),
-
-        // Bottom checkout button
+        Expanded(child: buildList(includeSummary: true)),
         _buildCheckoutButton(orderNotifier, orderState),
       ],
     );
