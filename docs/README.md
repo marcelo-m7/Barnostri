@@ -24,7 +24,8 @@ supabase/
   seed/
   functions/
 apps/barnostri_app/supabase/
-  supabase-config.json
+  supabase-config.example.json
+  supabase-config.json (ignored)
 ```
 
 ### Diretórios

@@ -52,8 +52,9 @@ Ao final da execução o Flutter estará disponível no `PATH`, o código será 
 
 ## Executando o aplicativo Flutter
 
-1. Configure o Supabase preenchendo as variáveis em [`apps/barnostri_app/supabase/supabase-config.json`](apps/barnostri_app/supabase/supabase-config.json).
-   Este é o único arquivo de configuração usado pelo app.
+1. Copie o arquivo de exemplo [`apps/barnostri_app/supabase/supabase-config.example.json`](apps/barnostri_app/supabase/supabase-config.example.json)
+   para `apps/barnostri_app/supabase/supabase-config.json` e preencha suas credenciais.
+   Este arquivo não é versionado e mantém as chaves do Supabase fora do controle de código.
 2. Inicie o Supabase local (requer o [Supabase CLI](https://supabase.com/docs/guides/cli)):
 
    ```bash
@@ -149,8 +150,8 @@ flutter gen-l10n
 Isso atualizará o conteúdo de `lib/l10n/generated`, que deve ser versionado em
 seguida.
 
-O arquivo `apps/barnostri_app/supabase/supabase-config.json` é carregado pelo serviço `SupabaseConfig.createClient()` dentro do aplicativo.
-Esse método foi atualizado para buscar apenas esse caminho, evitando duplicação de arquivos.
+O arquivo `apps/barnostri_app/supabase/supabase-config.json` (gerado a partir do exemplo) é carregado pelo serviço `SupabaseConfig.createClient()` dentro do aplicativo.
+Mantenha este arquivo fora do versionamento para evitar vazamento de chaves.
 
 ## Executando os testes
 

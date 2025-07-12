@@ -38,7 +38,8 @@ barnostri/
 │   ├── seed/
 │   ├── functions/
 ├── apps/barnostri_app/supabase/
-│   └── supabase-config.json
+│   ├── supabase-config.example.json
+│   └── supabase-config.json (ignored)
 ```
 
 ## Flutter App
@@ -50,7 +51,7 @@ barnostri/
 - All SQL migrations live under `supabase/migrations/` and are versioned with the Supabase CLI.
 - Example data goes in `supabase/seed/`.
 - Edge functions (if any) stay under `supabase/functions/`.
-- Environment variables are stored in `apps/barnostri_app/supabase/supabase-config.json` (one per environment).
+- Environment variables are stored in `apps/barnostri_app/supabase/supabase-config.json` (one per environment). Copy them from `supabase-config.example.json` and keep the file untracked.
 
 ## Packages
 - `packages/shared_models` exposes models and repository helpers shared by the apps.
