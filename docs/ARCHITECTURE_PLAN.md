@@ -2,10 +2,9 @@
 
 This project uses a Flutter + Supabase monorepo. The mobile app and backend resources live together and shared code sits inside packages.
 
-**Supported platforms**: the Barnostri app is built with Flutter and is intended to
-run on **Android**, **iOS** and the **Web**. The web target is the most used one,
-but Android and iOS builds are kept working and can be launched with the same
-codebase.
+**Supported platforms**: the Barnostri app is built with Flutter and runs from a
+single codebase on **Android**, **iOS** and the **Web**. The commands below
+illustrate how to launch each target.
 
 ```bash
 cd apps/barnostri_app
