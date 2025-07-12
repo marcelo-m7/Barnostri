@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/core/repositories.dart';
 import 'package:barnostri_app/src/core/services/guard_mixin.dart';
+import 'package:diacritic/diacritic.dart';
 
 class MenuState {
   final List<CategoryModel> categories;
@@ -90,10 +91,17 @@ class MenuService extends StateNotifier<MenuState> with GuardMixin<MenuState> {
 
   List<MenuItem> searchItems(String query) {
     if (query.isEmpty) return state.menuItems;
-    final lowerQuery = query.toLowerCase();
+
+    final normalizedQuery = removeDiacritics(query).toLowerCase();
+
     return state.menuItems.where((item) {
-      return item.name.toLowerCase().contains(lowerQuery) ||
-          (item.description?.toLowerCase().contains(lowerQuery) ?? false);
+      final normalizedName = removeDiacritics(item.name).toLowerCase();
+      final normalizedDescription = item.description == null
+          ? null
+          : removeDiacritics(item.description!).toLowerCase();
+
+      return normalizedName.contains(normalizedQuery) ||
+          (normalizedDescription?.contains(normalizedQuery) ?? false);
     }).toList();
   }
 
