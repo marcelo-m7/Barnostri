@@ -17,7 +17,7 @@ class SupabaseConfig {
   static Future<SupabaseClient?> createClient({String env = 'dev'}) async {
     try {
       final configJson = await rootBundle.loadString(
-        'packages/barnostri_app/supabase/supabase-config.json',
+        'supabase/supabase-config.json',
       );
       final data = jsonDecode(configJson) as Map<String, dynamic>;
       final rawEnv = data[env];
