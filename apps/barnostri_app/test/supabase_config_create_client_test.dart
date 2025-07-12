@@ -53,7 +53,7 @@ void main() {
       expect(client, isA<SupabaseClient>());
     });
 
-    test('returns null when asset path is wrong', () async {
+    test('throws when asset path is wrong', () async {
       final config = jsonEncode({
         'dev': {
           'SUPABASE_URL': 'https://example.com',
@@ -75,9 +75,36 @@ void main() {
         },
       );
 
-      final client = await SupabaseConfig.createClient();
+      expect(
+        () => SupabaseConfig.createClient(),
+        throwsA(predicate((e) {
+          return e.toString().contains('supabase-config.json');
+        })),
+      );
       expect(received, 'packages/barnostri_app/supabase/supabase-config.json');
-      expect(client, isNull);
+    });
+
+    test('throws when JSON is malformed', () async {
+      const invalidJson = '{invalid';
+      final data = Uint8List.fromList(utf8.encode(invalidJson));
+
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMessageHandler(
+        channel,
+        (ByteData? message) async {
+          final received = utf8.decode(message!.buffer.asUint8List());
+          if (received ==
+              'packages/barnostri_app/supabase/supabase-config.json') {
+            return ByteData.view(data.buffer);
+          }
+          return null;
+        },
+      );
+
+      await expectLater(
+        () => SupabaseConfig.createClient(),
+        throwsA(isA<FormatException>()),
+      );
     });
   });
 }

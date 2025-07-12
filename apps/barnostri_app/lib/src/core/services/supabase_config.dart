@@ -11,7 +11,9 @@ class SupabaseConfig {
 
   /// Loads the configuration and returns a [SupabaseClient] instance.
   ///
-  /// Returns `null` if the configuration file cannot be read.
+  /// Returns `null` if an unexpected error occurs while initializing Supabase.
+  /// Throws an [Exception] with a descriptive message when the configuration
+  /// file is missing or malformed.
   static Future<SupabaseClient?> createClient({String env = 'dev'}) async {
     try {
       final configJson = await rootBundle.loadString(
@@ -32,6 +34,21 @@ class SupabaseConfig {
       await Supabase.initialize(url: supabaseUrl, anonKey: anonKey);
       _isConfigured = true;
       return Supabase.instance.client;
+    } on FlutterError catch (e) {
+      _isConfigured = false;
+      final msg =
+          'Unable to load supabase-config.json: ${e.message}. Ensure the file exists.';
+      if (kDebugMode) {
+        debugPrint('❌ $msg');
+      }
+      throw Exception(msg);
+    } on FormatException catch (e) {
+      _isConfigured = false;
+      final msg = 'Malformed Supabase configuration: ${e.message}';
+      if (kDebugMode) {
+        debugPrint('❌ $msg');
+      }
+      throw FormatException(msg);
     } catch (e) {
       _isConfigured = false;
       if (kDebugMode) {
