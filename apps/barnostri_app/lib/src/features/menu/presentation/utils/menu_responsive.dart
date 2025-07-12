@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 int menuCrossAxisCount(
   double width,
-  Orientation orientation, [
-  double devicePixelRatio = 1.0,
-]) {
-  final adjustedWidth = width * devicePixelRatio;
+  Orientation orientation,
+) {
+  final adjustedWidth = width;
 
   int count;
   if (adjustedWidth >= 1200) {
