@@ -37,7 +37,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .order('number');
       return response.map<TableModel>((e) => TableModel.fromJson(e)).toList();
     } catch (e) {
-      logger.severe('Erro ao buscar mesas: $e');
+      logger.severe('Error fetching tables: $e');
       rethrow;
     }
   }
@@ -75,7 +75,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .single();
       return TableModel.fromJson(response);
     } catch (e) {
-      logger.severe('Erro ao buscar mesa por QR: $e');
+      logger.severe('Error fetching table by QR: $e');
       return null;
     }
   }
@@ -128,7 +128,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .map<CategoryModel>((e) => CategoryModel.fromJson(e))
           .toList();
     } catch (e) {
-      logger.severe('Erro ao buscar categorias: $e');
+      logger.severe('Error fetching categories: $e');
       return [];
     }
   }
@@ -191,7 +191,7 @@ class SupabaseMenuRepository implements MenuRepository {
           .order('name');
       return response.map<MenuItem>((e) => MenuItem.fromJson(e)).toList();
     } catch (e) {
-      logger.severe('Erro ao buscar itens do cardápio: $e');
+      logger.severe('Error fetching menu items: $e');
       rethrow;
     }
   }
@@ -228,7 +228,7 @@ class SupabaseMenuRepository implements MenuRepository {
   }) async {
     if (_client == null) {
       if (kDebugMode) {
-        logger.info('📝 Mock update categoria $id');
+        logger.info('📝 Mock update category $id');
       }
       return true;
     }
@@ -244,7 +244,7 @@ class SupabaseMenuRepository implements MenuRepository {
   Future<bool> deleteCategory(String id) async {
     if (_client == null) {
       if (kDebugMode) {
-        logger.info('🗑️ Mock delete categoria $id');
+        logger.info('🗑️ Mock delete category $id');
       }
       return true;
     }
@@ -359,7 +359,7 @@ class SupabaseMenuRepository implements MenuRepository {
   }) async {
     if (_client == null) {
       if (kDebugMode) {
-        logger.info('📝 Mock update mesa $id');
+        logger.info('📝 Mock update table $id');
       }
       return true;
     }
@@ -375,7 +375,7 @@ class SupabaseMenuRepository implements MenuRepository {
   Future<bool> deleteTable(String id) async {
     if (_client == null) {
       if (kDebugMode) {
-        logger.info('🗑️ Mock delete mesa $id');
+        logger.info('🗑️ Mock delete table $id');
       }
       return true;
     }

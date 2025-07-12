@@ -32,7 +32,7 @@ class LanguageService extends StateNotifier<Locale> {
       }
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('Erro ao carregar idioma salvo: $e');
+        debugPrint('Error loading saved language: $e');
       }
     }
     state = defaultLocale;
@@ -51,7 +51,7 @@ class LanguageService extends StateNotifier<Locale> {
       );
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('Erro ao salvar idioma: $e');
+        debugPrint('Error saving language: $e');
       }
     }
   }
