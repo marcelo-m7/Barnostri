@@ -95,7 +95,7 @@ void main() {
       ),
     );
     await screenMatchesGolden(tester, 'home_page');
-  }, skip: true);
+  });
 
   testGoldens('MenuPage golden', (tester) async {
     final builder = DeviceBuilder()
@@ -122,7 +122,7 @@ void main() {
       ),
     );
     await screenMatchesGolden(tester, 'menu_page');
-  }, skip: true);
+  });
 
   testGoldens('CartPage golden', (tester) async {
     final builder = DeviceBuilder()
@@ -149,7 +149,7 @@ void main() {
       ),
     );
     await screenMatchesGolden(tester, 'cart_page');
-  }, skip: true);
+  });
 
   testGoldens('AdminPage golden', (tester) async {
     final builder = DeviceBuilder()
@@ -177,5 +177,5 @@ void main() {
       ),
     );
     await screenMatchesGolden(tester, 'admin_page');
-  }, skip: true);
+  });
 }
