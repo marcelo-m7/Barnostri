@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 
 class Barcode {
   final String? code;
@@ -24,7 +25,8 @@ class QRView extends StatelessWidget {
   Widget build(BuildContext context) {
     // Notify that scanning is not available on web
     onQRViewCreated?.call(const QRViewController());
-    return const Center(child: Text('QR scanning not supported on web'));
+    final l10n = AppLocalizations.of(context);
+    return Center(child: Text(l10n.qrScanningNotSupportedOnWeb));
   }
 }
 
