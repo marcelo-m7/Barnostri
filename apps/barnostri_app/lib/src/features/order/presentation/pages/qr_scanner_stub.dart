@@ -25,23 +25,22 @@ typedef BarcodeCaptureCallback = void Function(BarcodeCapture capture);
 class MobileScanner extends StatelessWidget {
   final MobileScannerController? controller;
   final BarcodeCaptureCallback? onDetect;
-  final LayoutWidgetBuilder? overlayBuilder;
+  final Widget? overlay;
   const MobileScanner({
     super.key,
     this.controller,
     this.onDetect,
-    this.overlayBuilder,
+    this.overlay,
   });
 
   @override
   Widget build(BuildContext context) {
     onDetect?.call(const BarcodeCapture());
     final l10n = AppLocalizations.of(context);
-    final overlay = overlayBuilder?.call(context, const BoxConstraints());
     return Stack(
       children: [
         Center(child: Text(l10n.qrScanningNotSupportedOnWeb)),
-        if (overlay != null) overlay,
+        if (overlay != null) overlay!,
       ],
     );
   }
