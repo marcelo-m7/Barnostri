@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class MenuItemCard extends StatefulWidget {
   final MenuItem item;
@@ -139,7 +140,16 @@ class _MenuItemCardState extends State<MenuItemCard>
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                formatCurrency(widget.item.price),
+                                formatCurrency(
+                                  widget.item.price,
+                                  locale: Localizations.localeOf(context)
+                                      .toString(),
+                                  symbol: NumberFormat.simpleCurrency(
+                                          locale:
+                                              Localizations.localeOf(context)
+                                                  .toString())
+                                      .currencySymbol,
+                                ),
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium

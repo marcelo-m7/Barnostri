@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class OrderStatusWidget extends ConsumerWidget {
   final Order order;
@@ -383,7 +384,13 @@ class OrderStatusWidget extends ConsumerWidget {
                 ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                formatCurrency(order.total),
+                formatCurrency(
+                  order.total,
+                  locale: Localizations.localeOf(context).toString(),
+                  symbol: NumberFormat.simpleCurrency(
+                          locale: Localizations.localeOf(context).toString())
+                      .currencySymbol,
+                ),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary,
@@ -452,7 +459,13 @@ class OrderStatusWidget extends ConsumerWidget {
           ),
           const SizedBox(width: 12),
           Text(
-            formatCurrency(item.subtotal),
+            formatCurrency(
+              item.subtotal,
+              locale: Localizations.localeOf(context).toString(),
+              symbol: NumberFormat.simpleCurrency(
+                      locale: Localizations.localeOf(context).toString())
+                  .currencySymbol,
+            ),
             style: Theme.of(
               context,
             ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
