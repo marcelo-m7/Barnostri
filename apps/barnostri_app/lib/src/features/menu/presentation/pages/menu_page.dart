@@ -53,8 +53,12 @@ class _MenuPageState extends ConsumerState<MenuPage>
   }
 
   int _getCrossAxisCount(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    return menuCrossAxisCount(width);
+    final media = MediaQuery.of(context);
+    return menuCrossAxisCount(
+      media.size.width,
+      media.orientation,
+      media.devicePixelRatio,
+    );
   }
 
   @override
