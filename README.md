@@ -91,8 +91,29 @@ Para rodar todos os testes (unitários, widgets e integração) utilize:
 
 ```bash
 flutter test
-flutter test integration_test
 ```
+
+Os testes de integração podem ser executados em diferentes dispositivos. Para o
+navegador Chrome (é necessário ter o Chrome instalado) basta rodar:
+
+```bash
+flutter test integration_test -d chrome
+```
+
+Caso possua um emulador ou dispositivo Android conectado execute:
+
+```bash
+flutter test integration_test -d android-emulator     # ou o ID do dispositivo
+```
+
+Em sistemas macOS também é possível rodar no simulador ou em um iPhone real:
+
+```bash
+flutter test integration_test -d ios
+```
+
+Se nenhum dispositivo móvel estiver disponível, os testes no Chrome podem ser u
+m caminho alternativo.
 
 ### Atualizando arquivos de localização
 
