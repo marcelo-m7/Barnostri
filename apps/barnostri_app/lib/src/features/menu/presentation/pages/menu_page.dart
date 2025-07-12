@@ -57,7 +57,6 @@ class _MenuPageState extends ConsumerState<MenuPage>
     return menuCrossAxisCount(
       media.size.width,
       media.orientation,
-      media.devicePixelRatio,
     );
   }
 
