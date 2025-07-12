@@ -47,3 +47,4 @@ flutter:
   generate: true
   assets:
     - supabase/supabase-config.json
+    - assets/placeholder_food.png

@@ -270,57 +270,16 @@ class _MenuItemCardState extends State<MenuItemCard>
   }
 
   Widget _buildPlaceholderImage() {
-    // Get food-related image based on item name
-    String keyword = widget.item.name.toLowerCase();
-
-    if (keyword.contains('bebida') ||
-        keyword.contains('cerveja') ||
-        keyword.contains('caipirinha') ||
-        keyword.contains('suco') ||
-        keyword.contains('refrigerante') ||
-        keyword.contains('água')) {
-      keyword = 'brazilian drinks';
-    } else if (keyword.contains('sobremesa') ||
-        keyword.contains('pudim') ||
-        keyword.contains('brigadeiro') ||
-        keyword.contains('sorvete')) {
-      keyword = 'brazilian desserts';
-    } else if (keyword.contains('camarão') ||
-        keyword.contains('peixe') ||
-        keyword.contains('moqueca') ||
-        keyword.contains('siri')) {
-      keyword = 'brazilian seafood';
-    } else if (keyword.contains('entrada') ||
-        keyword.contains('petisco') ||
-        keyword.contains('pastel') ||
-        keyword.contains('bolinho')) {
-      keyword = 'brazilian appetizers';
-    } else {
-      keyword = 'brazilian food';
-    }
-
     return Container(
       color: Theme.of(context).colorScheme.surface,
       child: Stack(
         children: [
-          Image.network(
-            "https://images.unsplash.com/photo-1636892909247-8357a029ce91?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NTE3OTk3OTZ8&ixlib=rb-4.1.0&q=80&w=1080",
+          Image.asset(
+            'assets/placeholder_food.png',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
-            errorBuilder: (context, error, stackTrace) => Container(
-              color: Theme.of(
-                context,
-              ).colorScheme.primary.withAlpha((0.1 * 255).round()),
-              child: Icon(
-                Icons.restaurant_menu,
-                size: 48,
-                color: Theme.of(
-                  context,
-                ).colorScheme.primary.withAlpha((0.5 * 255).round()),
-              ),
-            ),
-          ),
+                     ),
           if (!widget.item.available)
             Container(
               color: Colors.black.withAlpha((0.5 * 255).round()),
