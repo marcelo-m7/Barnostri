@@ -110,5 +110,39 @@ void main() {
         ),
       );
     });
+
+    test('returns existing client when already configured', () async {
+      final config = jsonEncode({
+        'dev': {
+          'SUPABASE_URL': 'https://example.com',
+          'SUPABASE_ANON_KEY': 'KEY',
+        }
+      });
+      final data = Uint8List.fromList(utf8.encode(config));
+
+      var loadCount = 0;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMessageHandler(
+        channel,
+        (ByteData? message) async {
+          final received = utf8.decode(message!.buffer.asUint8List());
+          if (received == 'supabase/supabase-config.json') {
+            loadCount++;
+            return ByteData.view(data.buffer);
+          }
+          return null;
+        },
+      );
+
+      final first = await SupabaseConfig.createClient();
+      expect(first, isA<SupabaseClient>());
+      expect(loadCount, 1);
+
+      rootBundle.clear();
+
+      final second = await SupabaseConfig.createClient();
+      expect(identical(first, second), isTrue);
+      expect(loadCount, 1);
+    });
   });
 }
