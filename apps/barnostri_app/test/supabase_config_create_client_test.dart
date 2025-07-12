@@ -101,7 +101,13 @@ void main() {
 
       await expectLater(
         () => SupabaseConfig.createClient(),
-        throwsA(isA<FormatException>()),
+        throwsA(
+          isA<FormatException>().having(
+            (e) => e.message,
+            'message',
+            contains('Malformed Supabase configuration'),
+          ),
+        ),
       );
     });
   });
