@@ -51,7 +51,7 @@ dart fix --dry-run
 dart fix --apply
 
 echo "📝​ Aplicando Flutter Create.."
-flutter create --org com.barnostri --project-name barnostri_app --platforms=web,linux,macos,windows,android apps/barnostri_app
+flutter create --org com.barnostri --project-name barnostri_app --platforms=web apps/barnostri_app
 
 echo "🔍 Analisa"
 flutter analyze packages/shared_models
