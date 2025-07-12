@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:barnostri_app/main.dart';
+import 'package:barnostri_app/src/core/services/supabase_config.dart';
 import 'package:barnostri_app/src/features/auth/presentation/pages/admin_page.dart';
 import 'package:barnostri_app/src/features/menu/presentation/pages/menu_page.dart';
 import 'package:barnostri_app/src/features/order/presentation/pages/cart_page.dart';
@@ -16,7 +17,13 @@ Future<void> _pumpApp(
 ) async {
   await tester.binding.setSurfaceSize(size);
   debugDefaultTargetPlatformOverride = platform;
-  await tester.pumpWidget(const ProviderScope(child: BarnostriApp()));
+  final client = await SupabaseConfig.createClient();
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [supabaseClientProvider.overrideWithValue(client)],
+      child: const BarnostriApp(),
+    ),
+  );
   await tester.pumpAndSettle();
 }
 

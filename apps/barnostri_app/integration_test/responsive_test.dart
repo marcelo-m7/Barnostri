@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:barnostri_app/main.dart';
+import 'package:barnostri_app/src/core/services/supabase_config.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +21,13 @@ void main() {
         debugDefaultTargetPlatformOverride = platform;
 
         await tester.binding.setSurfaceSize(const Size(400, 800));
-        await tester.pumpWidget(const ProviderScope(child: BarnostriApp()));
+        final client = await SupabaseConfig.createClient();
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [supabaseClientProvider.overrideWithValue(client)],
+            child: const BarnostriApp(),
+          ),
+        );
         expect(find.text('Barnostri'), findsOneWidget);
 
         await tester.binding.setSurfaceSize(const Size(1200, 800));
