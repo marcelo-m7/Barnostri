@@ -22,4 +22,32 @@ void main() {
       expect(menuCrossAxisCount(400, Orientation.landscape), 2);
     });
   });
+
+  group('menuCrossAxisCount high density portrait', () {
+    testWidgets('returns expected values', (tester) async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      tester.view.devicePixelRatio = 2.0;
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      expect(menuCrossAxisCount(1200, Orientation.portrait), 5);
+      expect(menuCrossAxisCount(1000, Orientation.portrait), 4);
+      expect(menuCrossAxisCount(800, Orientation.portrait), 3);
+      expect(menuCrossAxisCount(600, Orientation.portrait), 2);
+      expect(menuCrossAxisCount(400, Orientation.portrait), 1);
+    });
+  });
+
+  group('menuCrossAxisCount high density landscape', () {
+    testWidgets('returns expected values', (tester) async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      tester.view.devicePixelRatio = 2.0;
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      expect(menuCrossAxisCount(1200, Orientation.landscape), 5);
+      expect(menuCrossAxisCount(1000, Orientation.landscape), 5);
+      expect(menuCrossAxisCount(800, Orientation.landscape), 4);
+      expect(menuCrossAxisCount(600, Orientation.landscape), 3);
+      expect(menuCrossAxisCount(400, Orientation.landscape), 2);
+    });
+  });
 }
