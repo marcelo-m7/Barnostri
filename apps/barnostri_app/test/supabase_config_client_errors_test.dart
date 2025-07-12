@@ -32,7 +32,9 @@ void main() {
           .setMockMessageHandler(channel, (ByteData? message) async => null);
 
       await expectLater(
-        () => SupabaseConfig.createClient(),
+        () => SupabaseConfig.createClient(
+          assetPath: 'supabase/supabase-config.json',
+        ),
         throwsA(
           isA<Exception>().having(
             (e) => e.toString(),
@@ -64,7 +66,9 @@ void main() {
       });
 
       await expectLater(
-        () => SupabaseConfig.createClient(),
+        () => SupabaseConfig.createClient(
+          assetPath: 'supabase/supabase-config.json',
+        ),
         throwsA(isA<FormatException>()),
       );
     });

@@ -67,20 +67,17 @@ void main() {
         channel,
         (ByteData? message) async {
           received = utf8.decode(message!.buffer.asUint8List());
-          if (received == 'wrong/path.json') {
-            return ByteData.view(data.buffer);
-          }
           return null;
         },
       );
 
       expect(
-        () => SupabaseConfig.createClient(),
+        () => SupabaseConfig.createClient(assetPath: 'wrong/path.json'),
         throwsA(predicate((e) {
           return e.toString().contains('supabase-config.json');
         })),
       );
-      expect(received, 'supabase/supabase-config.json');
+      expect(received, 'wrong/path.json');
     });
 
     test('throws when JSON is malformed', () async {

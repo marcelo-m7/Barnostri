@@ -14,7 +14,10 @@ class SupabaseConfig {
   /// Returns `null` if an unexpected error occurs while initializing Supabase.
   /// Throws an [Exception] with a descriptive message when the configuration
   /// file is missing or malformed.
-  static Future<SupabaseClient?> createClient({String env = 'dev'}) async {
+  static Future<SupabaseClient?> createClient({
+    String env = 'dev',
+    String? assetPath,
+  }) async {
     if (_isConfigured) {
       try {
         return Supabase.instance.client;
@@ -24,7 +27,7 @@ class SupabaseConfig {
     }
     try {
       final configJson = await rootBundle.loadString(
-        'supabase/supabase-config.json',
+        assetPath ?? 'supabase/supabase-config.json',
       );
       final data = jsonDecode(configJson) as Map<String, dynamic>;
       final rawEnv = data[env];
