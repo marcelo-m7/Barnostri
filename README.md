@@ -8,6 +8,18 @@ Consulte `docs/README.md` para uma visão geral da estrutura.
 
 Aplicativo Flutter integrado ao Supabase. Todo o código e scripts do banco ficam neste monorepo.
 
+### Plataformas suportadas
+
+O objetivo é manter o aplicativo executável em **Android**, **iOS** e **Web**. O alvo web é o mais utilizado e testado, mas builds para Android e iOS também estão disponíveis. Utilize os comandos abaixo para iniciar em cada plataforma:
+
+```bash
+cd apps/barnostri_app
+flutter run -d chrome            # Web
+flutter run -d android-emulator  # Android
+flutter run -d ios               # iOS (requer macOS)
+```
+
+
 Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consulte `docs/CODE_REVIEW.md` para um resumo de inconsistências identificadas.
 
 ## Environment setup
