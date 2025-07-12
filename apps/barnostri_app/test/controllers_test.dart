@@ -76,5 +76,32 @@ void main() {
       expect(id, isNotNull);
       expect(service.state.cartItems, isEmpty);
     });
+
+    test('process payment success and failure', () async {
+      final container = ProviderContainer();
+      final orderRepo = SupabaseOrderRepository(null);
+      final menuRepo = SupabaseMenuRepository(null);
+      final create = CreateOrderUseCase(orderRepo);
+      final update = UpdateOrderStatusUseCase(orderRepo);
+      final service = OrderService(
+        container.read,
+        orderRepo,
+        menuRepo,
+        create,
+        update,
+      );
+
+      final ok = await service.processPayment(
+        method: PaymentMethod.pix,
+        amount: 10,
+      );
+      expect(ok, isTrue);
+
+      final fail = await service.processPayment(
+        method: PaymentMethod.pix,
+        amount: 0,
+      );
+      expect(fail, isFalse);
+    });
   });
 }
