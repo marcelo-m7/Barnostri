@@ -35,7 +35,7 @@ class SupabaseConfig {
     } catch (e) {
       _isConfigured = false;
       if (kDebugMode) {
-        print('❌ Failed to initialize Supabase: $e');
+        debugPrint('❌ Failed to initialize Supabase: $e');
       }
       return null;
     }
