@@ -153,11 +153,30 @@ class _AdminPageState extends ConsumerState<AdminPage>
                       onPressed: authState.isLoading
                           ? null
                           : () async {
+                              final email = emailController.text.trim();
+                              final password = passwordController.text.trim();
+
+                              if (email.isEmpty || password.isEmpty) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        AppLocalizations.of(context)
+                                            .fillAllFields,
+                                      ),
+                                      backgroundColor:
+                                          Theme.of(context).colorScheme.error,
+                                    ),
+                                  );
+                                }
+                                return;
+                              }
+
                               await ref
                                   .read(authServiceProvider.notifier)
                                   .login(
-                                    email: emailController.text.trim(),
-                                    password: passwordController.text.trim(),
+                                    email: email,
+                                    password: password,
                                   );
                               if (!context.mounted) return;
                               final error = ref.read(authServiceProvider).error;
@@ -168,9 +187,8 @@ class _AdminPageState extends ConsumerState<AdminPage>
                                       AppLocalizations.of(context)
                                           .loginErrorDetailed(error),
                                     ),
-                                    backgroundColor: Theme.of(
-                                      context,
-                                    ).colorScheme.error,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.error,
                                   ),
                                 );
                               }
