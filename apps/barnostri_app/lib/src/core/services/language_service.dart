@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 
 class LanguageService extends StateNotifier<Locale> {
   LanguageService() : super(defaultLocale);
@@ -29,7 +30,11 @@ class LanguageService extends StateNotifier<Locale> {
           }
         }
       }
-    } catch (_) {}
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('Erro ao carregar idioma salvo: $e');
+      }
+    }
     state = defaultLocale;
   }
 
@@ -44,7 +49,11 @@ class LanguageService extends StateNotifier<Locale> {
         _languageKey,
         '${locale.languageCode}_${locale.countryCode}',
       );
-    } catch (_) {}
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('Erro ao salvar idioma: $e');
+      }
+    }
   }
 
   String getLanguageDisplayName(Locale locale) {
