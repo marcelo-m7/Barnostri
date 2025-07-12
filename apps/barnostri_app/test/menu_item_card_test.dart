@@ -8,7 +8,7 @@ import 'package:shared_models/shared_models.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('placeholder asset displayed when imageUrl is null',
+  testWidgets('placeholder icon displayed when imageUrl is null',
       (tester) async {
     tester.view.physicalSize = const Size(800, 1200);
     tester.view.devicePixelRatio = 1.0;
@@ -38,9 +38,6 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    final imageWidget = tester.widget<Image>(find.byType(Image).first);
-    expect(imageWidget.image, isA<AssetImage>());
-    final asset = imageWidget.image as AssetImage;
-    expect(asset.assetName, 'assets/placeholder_food.png');
+    expect(find.byIcon(Icons.fastfood), findsOneWidget);
   });
 }

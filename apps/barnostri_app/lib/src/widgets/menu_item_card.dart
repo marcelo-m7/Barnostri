@@ -273,13 +273,18 @@ class _MenuItemCardState extends State<MenuItemCard>
     return Container(
       color: Theme.of(context).colorScheme.surface,
       child: Stack(
+        fit: StackFit.expand,
         children: [
-          Image.asset(
-            'assets/placeholder_food.png',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-                     ),
+          Center(
+            child: Icon(
+              Icons.fastfood,
+              size: 64,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withAlpha((0.3 * 255).round()),
+            ),
+          ),
           if (!widget.item.available)
             Container(
               color: Colors.black.withAlpha((0.5 * 255).round()),
