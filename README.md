@@ -29,11 +29,13 @@ Veja `docs/ARCHITECTURE_PLAN.md` para uma visão geral da organização. Consult
    ```bash
    supabase start
    ```
-3. Execute no navegador:
+3. Execute no navegador ou em dispositivos:
 
  ```bash
   cd apps/barnostri_app
-  flutter run -d web-server
+  flutter run -d web-server        # web
+  flutter run -d android-emulator  # Android
+  flutter run -d ios               # iOS (requer macOS)
   ```
 4. Execute em um dispositivo ou emulador Android:
 
@@ -55,17 +57,12 @@ cd apps/barnostri_app
 flutter build web
 ```
 
-Para gerar um APK Android:
+Para gerar um APK Android ou uma build iOS utilize:
 
 ```bash
 cd apps/barnostri_app
-flutter build apk
-```
-Em macOS, para gerar um build iOS:
-
-```bash
-cd apps/barnostri_app
-flutter build ios
+flutter build apk            # Android
+flutter build ios            # iOS (requer macOS)
 ```
 
 Para testar o build web localmente, sirva o diretório `build/web` em um servidor
@@ -116,6 +113,3 @@ Os testes cobrem também a conversão de valores em inglês e português para os
 ## Integração contínua
 
 O workflow [`flutter.yml`](.github/workflows/flutter.yml) é acionado a cada *push* ou *pull request*. Ele instala dependências, formata o código, roda `flutter analyze` e executa os testes.
-
-## Próximas melhorias
-Consulte [docs/REVIEW_TASKS.md](docs/REVIEW_TASKS.md) para uma lista de tarefas de aprimoramento sugeridas.
