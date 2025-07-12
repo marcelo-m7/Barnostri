@@ -40,8 +40,7 @@ void main() {
         channel,
         (ByteData? message) async {
           received = utf8.decode(message!.buffer.asUint8List());
-          if (received ==
-              'packages/barnostri_app/supabase/supabase-config.json') {
+          if (received == 'supabase/supabase-config.json') {
             return ByteData.view(data.buffer);
           }
           return null;
@@ -49,7 +48,7 @@ void main() {
       );
 
       final client = await SupabaseConfig.createClient();
-      expect(received, 'packages/barnostri_app/supabase/supabase-config.json');
+      expect(received, 'supabase/supabase-config.json');
       expect(client, isA<SupabaseClient>());
     });
 
@@ -81,7 +80,7 @@ void main() {
           return e.toString().contains('supabase-config.json');
         })),
       );
-      expect(received, 'packages/barnostri_app/supabase/supabase-config.json');
+      expect(received, 'supabase/supabase-config.json');
     });
 
     test('throws when JSON is malformed', () async {
@@ -93,8 +92,7 @@ void main() {
         channel,
         (ByteData? message) async {
           final received = utf8.decode(message!.buffer.asUint8List());
-          if (received ==
-              'packages/barnostri_app/supabase/supabase-config.json') {
+          if (received == 'supabase/supabase-config.json') {
             return ByteData.view(data.buffer);
           }
           return null;
