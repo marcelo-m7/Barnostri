@@ -15,6 +15,11 @@ jobs:
           channel: stable
           cache: true
 
+      - name: Install fonts for golden tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-color-emoji
+
       # Get dependencies for both packages
       - run: flutter pub get
         working-directory: packages/shared_models

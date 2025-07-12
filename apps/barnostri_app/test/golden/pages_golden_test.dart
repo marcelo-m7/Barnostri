@@ -67,10 +67,6 @@ class FakeAuthService extends AuthService {
 }
 
 void main() {
-  setUpAll(() async {
-    await loadAppFonts();
-  });
-
   final devices = [
     const Device(name: 'mobile', size: Size(375, 812), devicePixelRatio: 1),
     const Device(name: 'web', size: Size(1200, 800), devicePixelRatio: 1),
@@ -95,7 +91,7 @@ void main() {
       ),
     );
     await screenMatchesGolden(tester, 'home_page');
-  }, skip: true);
+  });
 
   testGoldens('MenuPage golden', (tester) async {
     final builder = DeviceBuilder()
@@ -122,7 +118,7 @@ void main() {
       ),
     );
     await screenMatchesGolden(tester, 'menu_page');
-  }, skip: true);
+  });
 
   testGoldens('CartPage golden', (tester) async {
     final builder = DeviceBuilder()
@@ -149,7 +145,7 @@ void main() {
       ),
     );
     await screenMatchesGolden(tester, 'cart_page');
-  }, skip: true);
+  });
 
   testGoldens('AdminPage golden', (tester) async {
     final builder = DeviceBuilder()
@@ -177,5 +173,5 @@ void main() {
       ),
     );
     await screenMatchesGolden(tester, 'admin_page');
-  }, skip: true);
+  });
 }
