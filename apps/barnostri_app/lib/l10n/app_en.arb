@@ -661,5 +661,13 @@
   "@loginErrorDetailed": {
     "description": "Snackbar message when login fails with details",
     "placeholders": {"error": {}}
+  },
+  "pageNotFound": "Page not found",
+  "@pageNotFound": {
+    "description": "Displayed on a page that does not exist"
+  },
+  "qrScanningNotSupportedOnWeb": "QR scanning not supported on web",
+  "@qrScanningNotSupportedOnWeb": {
+    "description": "Shown when QR scanning is not available on web"
   }
 }

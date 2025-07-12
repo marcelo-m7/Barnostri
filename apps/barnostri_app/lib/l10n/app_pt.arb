@@ -267,5 +267,13 @@
   "@loginErrorDetailed": {
     "description": "Mensagem exibida quando o login falha",
     "placeholders": {"error": {}}
+  },
+  "pageNotFound": "Página não encontrada",
+  "@pageNotFound": {
+    "description": "Exibido quando uma página não existe"
+  },
+  "qrScanningNotSupportedOnWeb": "Leitura de QR não suportada na web",
+  "@qrScanningNotSupportedOnWeb": {
+    "description": "Mensagem mostrada quando a leitura de QR não está disponível na web"
   }
 }
