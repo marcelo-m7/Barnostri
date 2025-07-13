@@ -4,6 +4,7 @@ import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/auth/data/repositories/supabase_auth_repository.dart';
 import 'package:barnostri_app/src/features/menu/data/repositories/supabase_menu_repository.dart';
 import 'package:barnostri_app/src/features/order/data/repositories/supabase_order_repository.dart';
+import 'package:barnostri_app/src/features/auth/data/repositories/supabase_profile_repository.dart';
 import 'package:barnostri_app/src/features/menu/presentation/controllers/menu_service.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
 import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
@@ -14,8 +15,10 @@ void main() {
   group('AuthService', () {
     test('login and logout flow', () async {
       final repo = SupabaseAuthRepository(null);
+      final profileRepo = SupabaseProfileRepository(null);
       final loginUseCase = LoginUseCase(repo);
-      final service = AuthService(repo, loginUseCase);
+      final signUpUseCase = SignUpUseCase(repo);
+      final service = AuthService(repo, loginUseCase, signUpUseCase, profileRepo);
       await service.login(email: 'admin@barnostri.com', password: 'admin123');
       expect(service.state.isAuthenticated, isTrue);
       await service.logout();

@@ -15,6 +15,7 @@ import 'package:shared_models/shared_models.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 import 'package:barnostri_app/src/core/services/language_service.dart';
+import 'package:barnostri_app/src/features/auth/data/repositories/supabase_profile_repository.dart';
 
 class _FakeAuthRepository implements AuthRepository {
   bool loggedIn;
@@ -64,6 +65,8 @@ class FakeAuthService extends AuthService {
       : super(
           _FakeAuthRepository(loggedIn),
           LoginUseCase(_FakeAuthRepository(loggedIn)),
+          SignUpUseCase(_FakeAuthRepository(loggedIn)),
+          SupabaseProfileRepository(null),
         ) {
     state = state.copyWith(isAuthenticated: loggedIn);
   }

@@ -5,6 +5,7 @@ import 'dart:core';
 import 'dart:html' as html;
 import 'dart:js_util';
 import 'dart:ui_web' as ui; // ignore: uri_does_not_exist
+import 'dart:ui' show Size;
 
 import 'package:flutter/material.dart';
 
@@ -243,7 +244,7 @@ class _WebQrViewState extends State<WebQrView> {
     );
   }
 
-  void _setCanvasSize(ui.Size size) {
+  void _setCanvasSize(Size size) {
     setState(() {
       _size = size;
     });
