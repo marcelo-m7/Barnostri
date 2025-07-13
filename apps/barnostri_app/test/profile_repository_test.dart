@@ -12,7 +12,7 @@ void main() {
         id: 'u1',
         name: 'User',
         phone: '123',
-        userType: 'cliente',
+        userType: UserType.cliente,
         storeName: null,
         createdAt: DateTime.now(),
       );
@@ -22,7 +22,7 @@ void main() {
     test('fetchProfile returns mock profile', () async {
       final profile = await repo.fetchProfile('u1');
       expect(profile?.id, 'u1');
-      expect(profile?.userType, 'cliente');
+      expect(profile?.userType, UserType.cliente);
     });
   });
 }

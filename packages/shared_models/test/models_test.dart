@@ -276,7 +276,7 @@ void main() {
     test('fromJson and toJson', () {
       final profile = UserProfile.fromJson(json);
       expect(profile.id, 'u1');
-      expect(profile.userType, 'cliente');
+      expect(profile.userType, UserType.cliente);
       expect(profile.toJson(), json);
     });
   });

@@ -77,7 +77,7 @@ void main() {
         id: '',
         name: 'User',
         phone: '123',
-        userType: 'cliente',
+        userType: UserType.cliente,
         storeName: null,
         createdAt: DateTime.now(),
       );
@@ -107,7 +107,7 @@ void main() {
         id: '',
         name: 'User',
         phone: '123',
-        userType: 'cliente',
+        userType: UserType.cliente,
         storeName: null,
         createdAt: DateTime.now(),
       );

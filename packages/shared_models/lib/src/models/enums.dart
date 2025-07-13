@@ -55,3 +55,18 @@ enum PaymentMethod {
     }
   }
 }
+
+enum UserType {
+  cliente,
+  lojista;
+
+  static UserType fromString(String type) {
+    switch (type) {
+      case 'lojista':
+        return UserType.lojista;
+      case 'cliente':
+      default:
+        return UserType.cliente;
+    }
+  }
+}
