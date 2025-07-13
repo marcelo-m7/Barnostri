@@ -10,11 +10,8 @@ Flutter client for the Barnostri project.
    (cd apps/barnostri_app && flutter pub get)
    (cd packages/shared_models && dart pub get)
    ```
-3. Fill `apps/barnostri_app/supabase/supabase-config.json` with your Supabase credentials.
-4. Start Supabase locally:
-   ```bash
-   supabase start
-   ```
+3. Copy `supabase-config.example.json` to `supabase-config.json`.
+   The example already includes the demo Supabase URL and anon key.
 
 ## Running
 
