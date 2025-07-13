@@ -8,6 +8,51 @@ class SupabaseAuthRepository implements AuthRepository {
   SupabaseAuthRepository(this._client);
 
   @override
+  Future<AuthResponse> signUp({
+    required String email,
+    required String password,
+  }) async {
+    if (_client == null) {
+      if (kDebugMode) {
+        debugPrint('🆕 Mock sign up: $email');
+      }
+      if (email.endsWith('@example.com')) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        return AuthResponse(
+          user: User(
+            id: 'demo-user-id',
+            appMetadata: const {},
+            userMetadata: const {},
+            aud: 'authenticated',
+            createdAt: DateTime.now().toIso8601String(),
+            email: email,
+          ),
+          session: null,
+        );
+      }
+      throw const AuthException('Invalid credentials');
+    }
+    try {
+      final response = await _client!.auth.signUp(
+        email: email,
+        password: password,
+      );
+      final userId = response.user?.id;
+      if (userId != null) {
+        await _client!.from('profiles').insert({
+          'id': userId,
+        });
+      }
+      return response;
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('Erro ao criar conta: $e');
+      }
+      rethrow;
+    }
+  }
+
+  @override
   Future<AuthResponse> signIn({
     required String email,
     required String password,

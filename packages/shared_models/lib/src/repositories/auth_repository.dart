@@ -5,6 +5,10 @@ abstract class AuthRepository {
     required String email,
     required String password,
   });
+  Future<AuthResponse> signUp({
+    required String email,
+    required String password,
+  });
   Future<void> signOut();
   User? getCurrentUser();
   Stream<AuthState> get authStateChanges;

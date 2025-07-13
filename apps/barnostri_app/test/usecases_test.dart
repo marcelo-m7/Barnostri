@@ -19,6 +19,18 @@ void main() {
     });
   });
 
+  group('SignUpUseCase', () {
+    test('sign up returns user id with mock repo', () async {
+      final repo = SupabaseAuthRepository(null);
+      final usecase = SignUpUseCase(repo);
+      final res = await usecase(
+        email: 'new@example.com',
+        password: 'secret',
+      );
+      expect(res.user?.id, 'demo-user-id');
+    });
+  });
+
   group('LoadMenuUseCase', () {
     test('loads categories, items and tables', () async {
       final repo = SupabaseMenuRepository(null);
