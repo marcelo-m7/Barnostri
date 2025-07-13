@@ -5,8 +5,10 @@ import 'package:barnostri_app/src/core/logger.dart';
 
 class SupabaseProfileRepository implements ProfileRepository {
   final SupabaseClient? _client;
+  final String? _serviceRoleKey;
 
-  SupabaseProfileRepository(this._client);
+  SupabaseProfileRepository(this._client, {String? serviceRoleKey})
+      : _serviceRoleKey = serviceRoleKey;
 
   @override
   Future<void> createProfile(UserProfile profile) async {
@@ -17,7 +19,15 @@ class SupabaseProfileRepository implements ProfileRepository {
       return;
     }
     try {
-      await _client!.from('profiles').insert(profile.toJson());
+      if (_serviceRoleKey != null && _serviceRoleKey!.isNotEmpty) {
+        await _client!.functions.invoke(
+          'create_user_profile',
+          body: profile.toJson(),
+          headers: {'Authorization': 'Bearer $_serviceRoleKey'},
+        );
+      } else {
+        await _client!.from('profiles').insert(profile.toJson());
+      }
     } catch (e) {
       logger.severe('Error creating profile: $e');
       rethrow;
