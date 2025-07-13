@@ -7,12 +7,33 @@ import 'package:integration_test/integration_test.dart';
 import 'package:barnostri_app/main.dart';
 import 'package:barnostri_app/src/features/auth/presentation/pages/admin_page.dart';
 import 'package:barnostri_app/src/features/menu/presentation/pages/menu_page.dart';
+import 'package:barnostri_app/src/core/repositories.dart';
+import 'package:shared_models/shared_models.dart';
 
-Future<void> _pumpApp(
-    WidgetTester tester, Size size, TargetPlatform? platform) async {
+class _FakeProfileRepository implements ProfileRepository {
+  int calls = 0;
+  @override
+  Future<void> createProfile(UserProfile profile) async {
+    calls++;
+  }
+
+  @override
+  Future<UserProfile?> fetchProfile(String id) async => null;
+}
+
+Future<void> _pumpApp(WidgetTester tester, Size size, TargetPlatform? platform,
+    {ProfileRepository? profileRepo}) async {
   await tester.binding.setSurfaceSize(size);
   debugDefaultTargetPlatformOverride = platform;
-  await tester.pumpWidget(const ProviderScope(child: BarnostriApp()));
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        if (profileRepo != null)
+          profileRepositoryProvider.overrideWithValue(profileRepo),
+      ],
+      child: const BarnostriApp(),
+    ),
+  );
   await tester.pumpAndSettle();
 }
 
@@ -36,7 +57,8 @@ void main() {
       testWidgets('customer redirects to menu', (tester) async {
         addTearDown(() async => _reset(tester));
 
-        await _pumpApp(tester, size, platform);
+        final profileRepo = _FakeProfileRepository();
+        await _pumpApp(tester, size, platform, profileRepo: profileRepo);
         appRouter.go('/signup');
         await tester.pumpAndSettle();
 
@@ -49,12 +71,14 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.byType(MenuPage), findsOneWidget);
+        expect(profileRepo.calls, 1);
       });
 
       testWidgets('merchant redirects to admin', (tester) async {
         addTearDown(() async => _reset(tester));
 
-        await _pumpApp(tester, size, platform);
+        final profileRepo = _FakeProfileRepository();
+        await _pumpApp(tester, size, platform, profileRepo: profileRepo);
         appRouter.go('/signup');
         await tester.pumpAndSettle();
 
@@ -72,6 +96,7 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.byType(AdminPage), findsOneWidget);
+        expect(profileRepo.calls, 1);
       });
     });
   });

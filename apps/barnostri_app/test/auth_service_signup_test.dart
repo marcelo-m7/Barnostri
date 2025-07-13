@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
-import 'package:barnostri_app/src/features/auth/data/repositories/supabase_profile_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 class _FakeAuthRepository implements AuthRepository {
@@ -47,17 +46,32 @@ class _FakeAuthRepository implements AuthRepository {
   Stream<supabase.AuthState> get authStateChanges => const Stream.empty();
 }
 
+class _FakeProfileRepository implements ProfileRepository {
+  int calls = 0;
+  UserProfile? lastProfile;
+
+  @override
+  Future<void> createProfile(UserProfile profile) async {
+    calls++;
+    lastProfile = profile;
+  }
+
+  @override
+  Future<UserProfile?> fetchProfile(String id) async => null;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('AuthService.signUp', () {
     test('successful signup updates state', () async {
       final repo = _FakeAuthRepository('u1');
+      final profileRepo = _FakeProfileRepository();
       final service = AuthService(
         repo,
         LoginUseCase(repo),
         SignUpUseCase(repo),
-        SupabaseProfileRepository(null),
+        profileRepo,
       );
       final profile = UserProfile(
         id: '',
@@ -75,16 +89,19 @@ void main() {
       );
 
       expect(repo.signedUp, isTrue);
+      expect(profileRepo.calls, 1);
+      expect(profileRepo.lastProfile?.id, 'u1');
       expect(service.state.isAuthenticated, isTrue);
     });
 
     test('failed signup sets error', () async {
       final repo = _FakeAuthRepository(null);
+      final profileRepo = _FakeProfileRepository();
       final service = AuthService(
         repo,
         LoginUseCase(repo),
         SignUpUseCase(repo),
-        SupabaseProfileRepository(null),
+        profileRepo,
       );
       final profile = UserProfile(
         id: '',
@@ -103,6 +120,7 @@ void main() {
       await Future.delayed(Duration.zero);
 
       expect(service.state.isAuthenticated, isFalse);
+      expect(profileRepo.calls, 0);
     });
   });
 }
