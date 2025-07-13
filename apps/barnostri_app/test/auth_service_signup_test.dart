@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
-import 'package:barnostri_app/src/features/auth/data/repositories/supabase_profile_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 class _FakeAuthRepository implements AuthRepository {
