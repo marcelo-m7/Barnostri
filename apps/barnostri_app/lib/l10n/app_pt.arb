@@ -275,5 +275,9 @@
   "qrScanningNotSupportedOnWeb": "Leitura de QR não suportada na web",
   "@qrScanningNotSupportedOnWeb": {
     "description": "Mensagem mostrada quando a leitura de QR não está disponível na web"
+  },
+  "loginRequired": "É necessário fazer login para continuar",
+  "@loginRequired": {
+    "description": "Exibido ao tentar finalizar pedido sem estar autenticado"
   }
 }

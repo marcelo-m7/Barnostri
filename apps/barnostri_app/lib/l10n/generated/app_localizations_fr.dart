@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'app_localizations.dart';
 
 /// The translations for French (`fr`).
@@ -16,8 +14,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scanQRCode => 'Scanner le QR Code';
 
   @override
-  String get scanQRCodeDescription =>
-      'Scannez le QR code de votre table pour commencer à commander';
+  String get scanQRCodeDescription => 'Scannez le QR code de votre table pour commencer à commander';
 
   @override
   String get adminAccess => 'Accès Administrateur';
@@ -74,8 +71,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get emptyCart => 'Votre panier est vide';
 
   @override
-  String get emptyCartDescription =>
-      'Ajoutez des articles du menu pour commencer votre commande';
+  String get emptyCartDescription => 'Ajoutez des articles du menu pour commencer votre commande';
 
   @override
   String get startOrdering => 'Commencer la Commande';
@@ -105,8 +101,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get orderPlaced => 'Commande Passée!';
 
   @override
-  String get orderPlacedDescription =>
-      'Votre commande a été passée avec succès et est en cours de préparation';
+  String get orderPlacedDescription => 'Votre commande a été passée avec succès et est en cours de préparation';
 
   @override
   String get orderNumber => 'Numéro de Commande';
@@ -272,8 +267,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scanQRTitle => 'Scanner le QR Code';
 
   @override
-  String get scanQRInstructions =>
-      'Positionnez le QR code dans le cadre pour scanner';
+  String get scanQRInstructions => 'Positionnez le QR code dans le cadre pour scanner';
 
   @override
   String get manualEntry => 'Saisie Manuelle';
@@ -327,8 +321,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get orderUpdated => 'Statut de la commande mis à jour avec succès';
 
   @override
-  String get orderUpdateError =>
-      'Échec de la mise à jour du statut de la commande';
+  String get orderUpdateError => 'Échec de la mise à jour du statut de la commande';
 
   @override
   String get orderCreationFailure => 'Échec de la création de la commande';
@@ -378,8 +371,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get french => 'Français';
 
   @override
-  String get demoModeCredentials =>
-      'Mode démo - Configurez les identifiants Supabase pour accéder à toutes les fonctionnalités';
+  String get demoModeCredentials => 'Mode démo - Configurez les identifiants Supabase pour accéder à toutes les fonctionnalités';
 
   @override
   String get footerTagline => '🏖️ Plage • Saveur • Tradition';
@@ -482,8 +474,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get orderConfirmedKitchen =>
-      'Votre commande a été confirmée et envoyée à la cuisine. Vous pouvez suivre son statut ci-dessous.';
+  String get orderConfirmedKitchen => 'Votre commande a été confirmée et envoyée à la cuisine. Vous pouvez suivre son statut ci-dessous.';
 
   @override
   String get qrToken => 'Jeton QR';
@@ -520,6 +511,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pageNotFound => 'Page non trouvée';
 
   @override
-  String get qrScanningNotSupportedOnWeb =>
-      'Le scan QR n\'est pas pris en charge sur le web';
+  String get qrScanningNotSupportedOnWeb => 'Le scan QR n\'est pas pris en charge sur le web';
+
+  @override
+  String get loginRequired => 'Connectez-vous pour continuer';
 }

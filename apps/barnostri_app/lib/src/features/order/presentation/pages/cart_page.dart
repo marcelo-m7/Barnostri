@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
+import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
 import 'package:barnostri_app/src/widgets/order_status_widget.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -554,6 +555,16 @@ class _CartPageState extends ConsumerState<CartPage> {
   }
 
   Future<void> _processCheckout(OrderService orderNotifier) async {
+    if (!ref.read(authServiceProvider).isAuthenticated) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).loginRequired),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
+      return;
+    }
+
     setState(() {
       _isProcessingPayment = true;
     });

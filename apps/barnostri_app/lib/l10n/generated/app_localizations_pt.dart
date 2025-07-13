@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'app_localizations.dart';
 
 /// The translations for Portuguese (`pt`).
@@ -16,8 +14,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get scanQRCode => 'Escanear QR Code';
 
   @override
-  String get scanQRCodeDescription =>
-      'Escaneie o QR code da sua mesa para começar a fazer o pedido';
+  String get scanQRCodeDescription => 'Escaneie o QR code da sua mesa para começar a fazer o pedido';
 
   @override
   String get adminAccess => 'Acesso Administrativo';
@@ -74,8 +71,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get emptyCart => 'Seu carrinho está vazio';
 
   @override
-  String get emptyCartDescription =>
-      'Adicione itens do cardápio para começar seu pedido';
+  String get emptyCartDescription => 'Adicione itens do cardápio para começar seu pedido';
 
   @override
   String get startOrdering => 'Começar Pedido';
@@ -105,8 +101,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get orderPlaced => 'Pedido Realizado!';
 
   @override
-  String get orderPlacedDescription =>
-      'Seu pedido foi realizado com sucesso e está sendo preparado';
+  String get orderPlacedDescription => 'Seu pedido foi realizado com sucesso e está sendo preparado';
 
   @override
   String get orderNumber => 'Número do Pedido';
@@ -272,8 +267,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get scanQRTitle => 'Escanear QR Code';
 
   @override
-  String get scanQRInstructions =>
-      'Posicione o QR code dentro do quadro para escanear';
+  String get scanQRInstructions => 'Posicione o QR code dentro do quadro para escanear';
 
   @override
   String get manualEntry => 'Entrada Manual';
@@ -359,8 +353,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get tableAdded => 'Mesa adicionada com sucesso';
 
   @override
-  String get fillAllFields =>
-      'Por favor, preencha todos os campos obrigatórios';
+  String get fillAllFields => 'Por favor, preencha todos os campos obrigatórios';
 
   @override
   String get language => 'Idioma';
@@ -378,8 +371,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get french => 'Francês';
 
   @override
-  String get demoModeCredentials =>
-      'Modo demonstração - Configure as credenciais do Supabase para usar recursos completos';
+  String get demoModeCredentials => 'Modo demonstração - Configure as credenciais do Supabase para usar recursos completos';
 
   @override
   String get footerTagline => '🏖️ Praia • Sabor • Tradição';
@@ -482,8 +474,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get orderConfirmedKitchen =>
-      'Seu pedido foi confirmado e enviado para a cozinha. Você pode acompanhar o status abaixo.';
+  String get orderConfirmedKitchen => 'Seu pedido foi confirmado e enviado para a cozinha. Você pode acompanhar o status abaixo.';
 
   @override
   String get qrToken => 'Token QR';
@@ -520,6 +511,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pageNotFound => 'Página não encontrada';
 
   @override
-  String get qrScanningNotSupportedOnWeb =>
-      'Leitura de QR não suportada na web';
+  String get qrScanningNotSupportedOnWeb => 'Leitura de QR não suportada na web';
+
+  @override
+  String get loginRequired => 'É necessário fazer login para continuar';
 }
