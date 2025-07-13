@@ -34,9 +34,10 @@ class AuthState {
 class AuthService extends StateNotifier<AuthState> with GuardMixin<AuthState> {
   final AuthRepository _authRepository;
   final LoginUseCase _loginUseCase;
+  final RegisterUseCase _registerUseCase;
   late final StreamSubscription<supabase.AuthState> _authSub;
 
-  AuthService(this._authRepository, this._loginUseCase)
+  AuthService(this._authRepository, this._loginUseCase, this._registerUseCase)
       : super(const AuthState()) {
     final user = _authRepository.getCurrentUser();
     state = state.copyWith(isAuthenticated: user != null);
@@ -63,6 +64,27 @@ class AuthService extends StateNotifier<AuthState> with GuardMixin<AuthState> {
     });
   }
 
+  Future<void> register({
+    required String email,
+    required String password,
+    required String name,
+    required UserType userType,
+    String? phone,
+    String? storeName,
+  }) async {
+    await guard<void>(() async {
+      await _registerUseCase(
+        email: email,
+        password: password,
+        name: name,
+        userType: userType,
+        phone: phone,
+        storeName: storeName,
+      );
+      state = state.copyWith(isAuthenticated: true);
+    });
+  }
+
   Future<void> logout() async {
     await guard<void>(() async {
       await _authRepository.signOut();
@@ -76,5 +98,6 @@ final authServiceProvider = StateNotifierProvider<AuthService, AuthState>((
 ) {
   final repo = ref.watch(authRepositoryProvider);
   final login = LoginUseCase(repo);
-  return AuthService(repo, login);
+  final register = RegisterUseCase(repo);
+  return AuthService(repo, login, register);
 });

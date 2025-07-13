@@ -61,6 +61,61 @@ class SupabaseAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<AuthResponse> signUp({
+    required String email,
+    required String password,
+    required String name,
+    required UserType userType,
+    String? phone,
+    String? storeName,
+  }) async {
+    if (_client == null) {
+      if (kDebugMode) {
+        debugPrint('📝 Mock sign up: $email');
+      }
+      final user = User(
+        id: 'demo-${email.hashCode}',
+        appMetadata: {},
+        userMetadata: {},
+        aud: 'authenticated',
+        createdAt: DateTime.now().toIso8601String(),
+        email: email,
+      );
+      return AuthResponse(
+        user: user,
+        session: Session(
+          accessToken: 'demo-access-token',
+          refreshToken: 'demo-refresh-token',
+          expiresIn: 3600,
+          tokenType: 'Bearer',
+          user: user,
+        ),
+      );
+    }
+    final response = await _client!.auth.signUp(
+      email: email,
+      password: password,
+      data: {
+        'name': name,
+        'user_type': userType.value,
+        if (phone != null) 'phone': phone,
+        if (storeName != null) 'store_name': storeName,
+      },
+    );
+    final userId = response.user?.id;
+    if (userId != null) {
+      await _client!.from('profiles').upsert({
+        'id': userId,
+        'name': name,
+        'user_type': userType.value,
+        'phone': phone,
+        'store_name': storeName,
+      });
+    }
+    return response;
+  }
+
+  @override
   Future<void> signOut() async {
     if (_client == null) {
       if (kDebugMode) {

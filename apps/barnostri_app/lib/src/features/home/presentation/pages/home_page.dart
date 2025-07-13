@@ -241,6 +241,16 @@ class HomePage extends ConsumerWidget {
                                         ),
                                       ),
                                     ),
+                                    const SizedBox(height: 12),
+                                    TextButton(
+                                      onPressed: () => context.push('/register'),
+                                      child: Text(
+                                        'Criar conta',
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

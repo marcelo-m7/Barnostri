@@ -8,6 +8,10 @@ Consulte `docs/README.md` para uma visão geral da estrutura.
 
 Aplicativo Flutter integrado ao Supabase. Todo o código e scripts do banco ficam neste monorepo.
 
+### Tabela `profiles`
+
+A tabela `profiles` guarda dados adicionais dos usuários, como nome, telefone e tipo de conta (cliente ou lojista). Ela é vinculada ao `auth.users` e protegida por Row Level Security.
+
 ### Plataformas suportadas
 
 O objetivo é manter o aplicativo executável em **Android**, **iOS** e **Web**. O alvo web é o mais utilizado e testado, mas builds para Android e iOS também estão disponíveis. Utilize os comandos abaixo para iniciar em cada plataforma:

@@ -17,3 +17,4 @@ export 'src/usecases/login_use_case.dart';
 export 'src/usecases/load_menu_use_case.dart';
 export 'src/usecases/create_order_use_case.dart';
 export 'src/usecases/update_order_status_use_case.dart';
+export 'src/usecases/register_use_case.dart';

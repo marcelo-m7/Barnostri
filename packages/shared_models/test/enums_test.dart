@@ -29,4 +29,14 @@ void main() {
       expect(PaymentMethod.fromString('bitcoin'), PaymentMethod.pix);
     });
   });
+
+  group('UserType enum', () {
+    test('fromString returns correct value', () {
+      expect(UserType.fromString('lojista'), UserType.lojista);
+    });
+
+    test('defaults to cliente', () {
+      expect(UserType.fromString('unknown'), UserType.cliente);
+    });
+  });
 }

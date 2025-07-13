@@ -51,3 +51,7 @@ lib/src/features/profile/
   domain/load_profile_use_case.dart
   data/profile_repository_impl.dart
 ```
+
+### Supabase
+
+A tabela `profiles` armazena os dados de cadastro dos clientes e lojistas.
