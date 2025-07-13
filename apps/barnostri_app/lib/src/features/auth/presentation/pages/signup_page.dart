@@ -20,7 +20,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   final phoneController = TextEditingController();
   final storeNameController = TextEditingController();
 
-  String _userType = 'cliente';
+  UserType _userType = UserType.cliente;
 
   @override
   void dispose() {
@@ -69,16 +69,16 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 obscureText: true,
               ),
               const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
+              DropdownButtonFormField<UserType>(
                 value: _userType,
                 decoration: const InputDecoration(labelText: 'User Type'),
                 items: const [
                   DropdownMenuItem(
-                    value: 'cliente',
+                    value: UserType.cliente,
                     child: Text('Customer'),
                   ),
                   DropdownMenuItem(
-                    value: 'lojista',
+                    value: UserType.lojista,
                     child: Text('Merchant'),
                   ),
                 ],
@@ -90,7 +90,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   }
                 },
               ),
-              if (_userType == 'lojista') ...[
+              if (_userType == UserType.lojista) ...[
                 const SizedBox(height: 16),
                 TextField(
                   controller: storeNameController,
@@ -112,7 +112,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                   name: nameController.text.trim(),
                                   phone: phoneController.text.trim(),
                                   userType: _userType,
-                                  storeName: _userType == 'lojista'
+                                  storeName: _userType == UserType.lojista
                                       ? storeNameController.text.trim()
                                       : null,
                                   createdAt: DateTime.now(),
@@ -136,7 +136,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                     Theme.of(context).colorScheme.primary,
                               ),
                             );
-                            if (_userType == 'lojista') {
+                            if (_userType == UserType.lojista) {
                               context.go('/admin');
                             } else {
                               context.go('/menu');

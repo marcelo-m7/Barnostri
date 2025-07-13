@@ -41,7 +41,7 @@ class SupabaseProfileRepository implements ProfileRepository {
         id: id,
         name: 'Mock User',
         phone: '000000000',
-        userType: 'cliente',
+        userType: UserType.cliente,
         storeName: null,
         createdAt: DateTime.now(),
       );
