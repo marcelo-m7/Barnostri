@@ -202,3 +202,22 @@ Para testar o cadastro localmente:
 Mantenha a chave **service role** fora do aplicativo Flutter. Utilize variáveis
 de ambiente ou uma [Edge Function](supabase/functions/create_user_profile) para
 executar tarefas que exijam essa chave de forma segura.
+
+## User Registration
+
+Customers must provide **name**, **phone**, **email** and **password**. Merchants
+must also fill **store_name** and select the **lojista** user type. These values
+are stored in the `profiles` table with the following columns:
+
+- `id` (references `auth.users`)
+- `name`
+- `phone`
+- `user_type` (`cliente` or `lojista`)
+- `store_name` (nullable for customers)
+- `created_at`
+
+When the app signs up a user it inserts these fields into `profiles`. The
+[create_user_profile](supabase/functions/create_user_profile) Edge Function is
+provided to perform this insert using the service role key outside of the app.
+Avoid shipping that key in the Flutter project and call the function when you
+need elevated privileges.

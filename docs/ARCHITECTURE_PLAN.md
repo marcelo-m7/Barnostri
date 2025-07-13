@@ -52,6 +52,8 @@ barnostri/
 - Example data goes in `supabase/seed/`.
 - Edge functions (if any) stay under `supabase/functions/`.
 - Environment variables are stored in `apps/barnostri_app/supabase/supabase-config.json` (one per environment). Copy them from `supabase-config.example.json` and keep the file untracked.
+- See the **User Registration** section in the root `README.md` for details on the
+  required profile fields and the `create_user_profile` Edge Function.
 
 ## Packages
 - `packages/shared_models` exposes models and repository helpers shared by the apps.
