@@ -149,7 +149,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tap(find.textContaining('Checkout'));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     final l10n = AppLocalizations.of(tester.element(find.byType(CartPage)));
     expect(find.text(l10n.loginRequired), findsOneWidget);
