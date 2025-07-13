@@ -34,9 +34,16 @@ class AuthState {
 class AuthService extends StateNotifier<AuthState> with GuardMixin<AuthState> {
   final AuthRepository _authRepository;
   final LoginUseCase _loginUseCase;
+  final SignUpUseCase _signUpUseCase;
+  final ProfileRepository _profileRepository;
   late final StreamSubscription<supabase.AuthState> _authSub;
 
-  AuthService(this._authRepository, this._loginUseCase)
+  AuthService(
+    this._authRepository,
+    this._loginUseCase,
+    this._signUpUseCase,
+    this._profileRepository,
+  )
       : super(const AuthState()) {
     final user = _authRepository.getCurrentUser();
     state = state.copyWith(isAuthenticated: user != null);
@@ -63,6 +70,29 @@ class AuthService extends StateNotifier<AuthState> with GuardMixin<AuthState> {
     });
   }
 
+  Future<void> signUp({
+    required String email,
+    required String password,
+    required UserProfile profile,
+  }) async {
+    await guard<void>(() async {
+      final res = await _signUpUseCase(email: email, password: password);
+      final userId = res.user?.id;
+      if (userId == null) throw Exception('Failed to create user');
+      await _profileRepository.createProfile(
+        UserProfile(
+          id: userId,
+          name: profile.name,
+          phone: profile.phone,
+          userType: profile.userType,
+          storeName: profile.storeName,
+          createdAt: profile.createdAt,
+        ),
+      );
+      state = state.copyWith(isAuthenticated: true);
+    });
+  }
+
   Future<void> logout() async {
     await guard<void>(() async {
       await _authRepository.signOut();
@@ -76,5 +106,7 @@ final authServiceProvider = StateNotifierProvider<AuthService, AuthState>((
 ) {
   final repo = ref.watch(authRepositoryProvider);
   final login = LoginUseCase(repo);
-  return AuthService(repo, login);
+  final signUp = SignUpUseCase(repo);
+  final profileRepo = ref.watch(profileRepositoryProvider);
+  return AuthService(repo, login, signUp, profileRepo);
 });
