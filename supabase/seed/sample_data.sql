@@ -30,12 +30,20 @@ WITH admin_user AS (
 INSERT INTO users (id, name, email, role)
 SELECT user_id, 'Administrador', 'admin@barnostri.com', 'admin' FROM admin_user;
 
+-- Perfil inicial para admin
+INSERT INTO profiles (id, name, phone, user_type, store_name)
+SELECT user_id, 'Administrador', '550000000000', 'lojista', 'Bar Nostri' FROM admin_user;
+
 -- Insert funcionario user
 WITH funcionario_user AS (
   SELECT insert_user_to_auth('funcionario@barnostri.com', 'func123') as user_id
 )
 INSERT INTO users (id, name, email, role)
 SELECT user_id, 'Funcionário', 'funcionario@barnostri.com', 'funcionario' FROM funcionario_user;
+
+-- Perfil inicial para funcionário
+INSERT INTO profiles (id, name, phone, user_type, store_name)
+SELECT user_id, 'Funcionário', '551111111111', 'lojista', 'Bar Nostri' FROM funcionario_user;
 
 -- Insert sample tables (tables)
 INSERT INTO tables (number, qr_token, active) VALUES
