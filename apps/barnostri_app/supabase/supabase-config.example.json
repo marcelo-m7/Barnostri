@@ -1,7 +1,7 @@
 {
   "dev": {
-    "SUPABASE_URL": "https://YOUR_DEV_INSTANCE.supabase.co",
-    "SUPABASE_ANON_KEY": "YOUR_DEV_ANON_KEY"
+    "SUPABASE_URL": "https://wckqbyreduiksplcqmbw.supabase.co",
+    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indja3FieXJlZHVpa3NwbGNxbWJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3OTc3ODEsImV4cCI6MjA2NzM3Mzc4MX0.Q9f7JPG7ZRYRzcR1MSQSlOqHcEUL-fQKzzeoePV4LF4"
   },
   "staging": {
     "SUPABASE_URL": "https://staging.example.com",

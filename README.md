@@ -53,14 +53,10 @@ Ao final da execução o Flutter estará disponível no `PATH`, o código será 
 ## Executando o aplicativo Flutter
 
 1. Copie o arquivo de exemplo [`apps/barnostri_app/supabase/supabase-config.example.json`](apps/barnostri_app/supabase/supabase-config.example.json)
-   para `apps/barnostri_app/supabase/supabase-config.json` e preencha suas credenciais.
-   Este arquivo não é versionado e mantém as chaves do Supabase fora do controle de código.
-2. Inicie o Supabase local (requer o [Supabase CLI](https://supabase.com/docs/guides/cli)):
-
-   ```bash
-   supabase start
-   ```
-3. Execute no navegador ou em dispositivos:
+   para `apps/barnostri_app/supabase/supabase-config.json`. O arquivo já contém
+   a URL e a anon key do projeto Supabase de demonstração.
+   Mantenha-o fora do versionamento para evitar expor outras chaves.
+2. Execute no navegador ou em dispositivos:
 
  ```bash
   cd apps/barnostri_app
@@ -68,13 +64,13 @@ Ao final da execução o Flutter estará disponível no `PATH`, o código será 
   flutter run -d android-emulator  # Android
   flutter run -d ios               # iOS (requer macOS)
   ```
-4. Execute em um dispositivo ou emulador Android:
+3. Execute em um dispositivo ou emulador Android:
 
 ```bash
 cd apps/barnostri_app
 flutter run -d <id_android>
 ```
-5. Em sistemas macOS, execute no simulador ou dispositivo iOS:
+4. Em sistemas macOS, execute no simulador ou dispositivo iOS:
 
 ```bash
 cd apps/barnostri_app
