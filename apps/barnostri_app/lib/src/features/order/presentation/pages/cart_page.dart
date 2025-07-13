@@ -403,9 +403,11 @@ class _CartPageState extends ConsumerState<CartPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                l10n.totalItems,
-                style: Theme.of(context).textTheme.bodyLarge,
+              Expanded(
+                child: Text(
+                  l10n.totalItems,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               ),
               Text(
                 l10n.itemsCount(orderState.cartItemCount),
@@ -419,11 +421,13 @@ class _CartPageState extends ConsumerState<CartPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                l10n.total,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              Expanded(
+                child: Text(
+                  l10n.total,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
               Text(
                 formatCurrency(
