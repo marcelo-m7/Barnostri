@@ -20,6 +20,14 @@ void main() {
       expect(res.user?.id, 'demo-admin-id');
     });
 
+    test('signUp returns mock user', () async {
+      final res = await authRepo.signUp(
+        email: 'new@example.com',
+        password: 'secret',
+      );
+      expect(res.user?.id, 'demo-user-id');
+    });
+
     test('signIn invalid throws', () async {
       expect(
         () => authRepo.signIn(email: 'wrong', password: 'bad'),

@@ -30,6 +30,15 @@ class _FakeAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<supabase.AuthResponse> signUp({
+    required String email,
+    required String password,
+  }) async {
+    loggedIn = true;
+    return supabase.AuthResponse();
+  }
+
+  @override
   Future<void> signOut() async {
     loggedIn = false;
   }

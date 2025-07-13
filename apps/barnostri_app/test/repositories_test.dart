@@ -20,6 +20,14 @@ void main() {
       expect(res.user?.id, 'demo-admin-id');
     });
 
+    test('signUp returns user for mock repo', () async {
+      final res = await auth.signUp(
+        email: 'new@example.com',
+        password: 'secret',
+      );
+      expect(res.user?.id, 'demo-user-id');
+    });
+
     test('invalid login throws', () async {
       expect(
         () => auth.signIn(email: 'x', password: 'y'),
