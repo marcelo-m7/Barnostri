@@ -37,12 +37,6 @@ class SupabaseAuthRepository implements AuthRepository {
         email: email,
         password: password,
       );
-      final userId = response.user?.id;
-      if (userId != null) {
-        await _client!.from('profiles').insert({
-          'id': userId,
-        });
-      }
       return response;
     } catch (e) {
       if (kDebugMode) {
