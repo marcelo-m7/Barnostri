@@ -262,4 +262,22 @@ void main() {
       expect(orderItem.subtotal, 20.0);
     });
   });
+
+  group('UserProfile', () {
+    const json = {
+      'id': 'u1',
+      'name': 'User',
+      'phone': '123',
+      'user_type': 'cliente',
+      'store_name': null,
+      'created_at': '2024-01-01T00:00:00.000Z',
+    };
+
+    test('fromJson and toJson', () {
+      final profile = UserProfile.fromJson(json);
+      expect(profile.id, 'u1');
+      expect(profile.userType, 'cliente');
+      expect(profile.toJson(), json);
+    });
+  });
 }
