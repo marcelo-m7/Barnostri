@@ -1,5 +1,3 @@
-// ignore_for_file: use_super_parameters
-
 import 'app_localizations.dart';
 
 /// The translations for English (`en`).
@@ -16,8 +14,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanQRCode => 'Scan QR Code';
 
   @override
-  String get scanQRCodeDescription =>
-      'Scan the QR code on your table to start ordering';
+  String get scanQRCodeDescription => 'Scan the QR code on your table to start ordering';
 
   @override
   String get adminAccess => 'Admin Access';
@@ -74,8 +71,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emptyCart => 'Your cart is empty';
 
   @override
-  String get emptyCartDescription =>
-      'Add items from the menu to start your order';
+  String get emptyCartDescription => 'Add items from the menu to start your order';
 
   @override
   String get startOrdering => 'Start Ordering';
@@ -105,8 +101,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get orderPlaced => 'Order Placed!';
 
   @override
-  String get orderPlacedDescription =>
-      'Your order has been successfully placed and is being prepared';
+  String get orderPlacedDescription => 'Your order has been successfully placed and is being prepared';
 
   @override
   String get orderNumber => 'Order Number';
@@ -272,8 +267,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanQRTitle => 'Scan QR Code';
 
   @override
-  String get scanQRInstructions =>
-      'Position the QR code within the frame to scan';
+  String get scanQRInstructions => 'Position the QR code within the frame to scan';
 
   @override
   String get manualEntry => 'Manual Entry';
@@ -377,8 +371,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get french => 'French';
 
   @override
-  String get demoModeCredentials =>
-      'Demo mode - Configure Supabase credentials for full features';
+  String get demoModeCredentials => 'Demo mode - Configure Supabase credentials for full features';
 
   @override
   String get footerTagline => '🏖️ Beach • Flavor • Tradition';
@@ -481,8 +474,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get orderConfirmedKitchen =>
-      'Your order has been confirmed and sent to the kitchen. You can track its status below.';
+  String get orderConfirmedKitchen => 'Your order has been confirmed and sent to the kitchen. You can track its status below.';
 
   @override
   String get qrToken => 'QR Token';
@@ -520,4 +512,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qrScanningNotSupportedOnWeb => 'QR scanning not supported on web';
+
+  @override
+  String get loginRequired => 'Please login to continue';
 }

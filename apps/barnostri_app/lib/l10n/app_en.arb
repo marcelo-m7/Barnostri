@@ -669,5 +669,9 @@
   "qrScanningNotSupportedOnWeb": "QR scanning not supported on web",
   "@qrScanningNotSupportedOnWeb": {
     "description": "Shown when QR scanning is not available on web"
+  },
+  "loginRequired": "Please login to continue",
+  "@loginRequired": {
+    "description": "Shown when an unauthenticated user tries to checkout"
   }
 }

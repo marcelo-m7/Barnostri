@@ -277,5 +277,9 @@
   "qrScanningNotSupportedOnWeb": "Le scan QR n'est pas pris en charge sur le web",
   "@qrScanningNotSupportedOnWeb": {
     "description": "Message indiquant que la lecture QR n'est pas disponible sur le web"
+  },
+  "loginRequired": "Connectez-vous pour continuer",
+  "@loginRequired": {
+    "description": "Affiché lorsqu'un utilisateur non authentifié tente de payer"
   }
 }

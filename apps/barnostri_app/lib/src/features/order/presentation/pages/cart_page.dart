@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_models/shared_models.dart';
 import 'package:barnostri_app/src/features/order/presentation/controllers/order_service.dart';
+import 'package:barnostri_app/src/features/auth/presentation/controllers/auth_service.dart';
 import 'package:barnostri_app/src/widgets/order_status_widget.dart';
 import 'package:barnostri_app/l10n/generated/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -554,6 +556,11 @@ class _CartPageState extends ConsumerState<CartPage> {
   }
 
   Future<void> _processCheckout(OrderService orderNotifier) async {
+    if (!ref.read(authServiceProvider).isAuthenticated) {
+      _showLoginDialog();
+      return;
+    }
+
     setState(() {
       _isProcessingPayment = true;
     });
@@ -645,6 +652,29 @@ class _CartPageState extends ConsumerState<CartPage> {
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(AppLocalizations.of(context).ok),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showLoginDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        content: Text(AppLocalizations.of(context).loginRequired),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(AppLocalizations.of(context).cancel),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              context.go('/admin');
+            },
+            child: Text(AppLocalizations.of(context).login),
           ),
         ],
       ),
