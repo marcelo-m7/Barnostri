@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_models/shared_models.dart';
@@ -8,6 +10,9 @@ class SupabaseProfileRepository implements ProfileRepository {
 
   SupabaseProfileRepository(this._client);
 
+  bool get _useEdgeFunction =>
+      Platform.environment.containsKey('SUPABASE_SERVICE_ROLE_KEY');
+
   @override
   Future<void> createProfile(UserProfile profile) async {
     if (_client == null) {
@@ -17,7 +22,12 @@ class SupabaseProfileRepository implements ProfileRepository {
       return;
     }
     try {
-      await _client!.from('profiles').insert(profile.toJson());
+      if (_useEdgeFunction) {
+        await _client!.functions
+            .invoke('create_user_profile', body: profile.toJson());
+      } else {
+        await _client!.from('profiles').insert(profile.toJson());
+      }
     } catch (e) {
       logger.severe('Error creating profile: $e');
       rethrow;
