@@ -51,3 +51,15 @@ lib/src/features/profile/
   domain/load_profile_use_case.dart
   data/profile_repository_impl.dart
 ```
+
+### Cadastro de usuários e tabela `profiles`
+
+A tabela `profiles` guarda informações extras de cada usuário e possui os campos
+`id`, `name`, `phone`, `user_type`, `store_name` e `created_at`. O campo
+`user_type` aceita apenas `cliente` ou `lojista` e define se o usuário acessará
+o menu (cliente) ou a área administrativa (lojista). As políticas RLS permitem
+que cada usuário visualize e atualize somente o seu próprio perfil.
+
+O fluxo de cadastro no app cria a conta via `supabase.auth.signUp` e insere o
+perfil na tabela. Caso precise manipular a chave de **service role**, utilize
+variáveis de ambiente ou uma função Edge, mantendo-a fora do aplicativo Flutter.

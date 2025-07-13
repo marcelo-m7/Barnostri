@@ -178,3 +178,27 @@ Esses testes cobrem, entre outros pontos, a conversão de valores em inglês e p
 ## Integração contínua
 
 O workflow [`flutter.yml`](.github/workflows/flutter.yml) é acionado a cada *push* ou *pull request*. Ele instala dependências, formata o código, roda `flutter analyze` e executa os testes.
+
+## Tabela `profiles` e fluxo de cadastro
+
+A migração [`supabase/migrations/20240102000000_create_profiles.sql`](supabase/migrations/20240102000000_create_profiles.sql)
+cria a tabela `profiles` com os campos `id`, `name`, `phone`, `user_type`,
+`store_name` e `created_at`. O campo `user_type` aceita apenas os valores
+`'cliente'` ou `'lojista'`. As Row Level Policies garantem que cada usuário só
+consiga ler e atualizar o seu próprio perfil.
+
+Para testar o cadastro localmente:
+
+1. Copie `apps/barnostri_app/supabase/supabase-config.example.json` para
+   `apps/barnostri_app/supabase/supabase-config.json` e preencha com a URL e a
+   anon key do seu projeto.
+2. Execute `flutter run` dentro de `apps/barnostri_app`.
+3. Na tela de login, escolha **Sign Up** e informe nome, telefone, e-mail e
+   senha. Usuários do tipo **lojista** devem selecionar o tipo "Lojista" e
+   preencher `store_name`.
+4. O app chama `supabase.auth.signUp` e insere o registro correspondente na
+   tabela `profiles`.
+
+Mantenha a chave **service role** fora do aplicativo Flutter. Utilize variáveis
+de ambiente ou uma [Edge Function](supabase/functions/create_user_profile) para
+executar tarefas que exijam essa chave de forma segura.
