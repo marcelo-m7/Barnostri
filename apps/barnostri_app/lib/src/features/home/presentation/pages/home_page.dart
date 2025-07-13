@@ -313,6 +313,21 @@ class HomePage extends ConsumerWidget {
                                         ),
                                       ),
                                     ),
+                                    const SizedBox(height: 8),
+                                    TextButton(
+                                      onPressed: () {
+                                        context.push('/signup');
+                                      },
+                                      child: Text(
+                                        'Create Account',
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
